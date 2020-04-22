@@ -17,12 +17,16 @@
 <style scoped lang="less">
     @color:white;
     .LogoDiv {
+        border-width: 2px;
+        border-color: black;
         display: flex;
         margin: auto 0;
+        cursor:pointer;
         img {
             height: 33px;
         }
     }
+
     .NavIcon {
         height: 30px;
         background-color: @color;
