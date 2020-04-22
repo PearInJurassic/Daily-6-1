@@ -1,15 +1,15 @@
 <template>
   <div>
-    <nav-bar></nav-bar>
+    <Nav-bar></Nav-bar>
   </div>
 </template>
 
 <script>
-import navBar from './components/nav-bar'
+import NavBar from './components/Navigation/NavBar'
 export default {
   name: 'App',
   components: {
-    navBar,
+    NavBar,
   }
 }
 </script>
@@ -23,4 +23,8 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+  body,html{
+    border: 0;
+    margin:0;
+  }
 </style>

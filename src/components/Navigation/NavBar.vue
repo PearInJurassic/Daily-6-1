@@ -1,0 +1,54 @@
+<template>
+    <div class="NavBar">
+        <div class="MidDiv">
+            <NavLogo></NavLogo>
+            <NavSearch></NavSearch>
+            <NavOption></NavOption>
+        </div>
+    </div>
+</template>
+
+<script>
+  import NavLogo from "@/components/Navigation/NavLogo";
+  import NavSearch from "@/components/Navigation/NavSearch";
+  import NavOption from "@/components/Navigation/NavOption";
+  export default {
+    name: "NavBar",
+    components: {
+      NavLogo,
+      NavSearch,
+      NavOption
+    },
+
+  }
+</script>
+
+<style lang="less" scoped>
+    @color: #white;
+    @layout: center;
+    @borderColor:#989899;
+
+    .NavStyle(@padding:0 20px,@height:54px) {
+        display: flex;
+        height: @height;
+        padding: @padding;
+    }
+
+    .MidDiv {
+        width: 100%;
+        align-items: center;
+        .NavStyle();
+        max-width: 975px;
+        margin: 0 auto;
+    }
+
+    .NavBar {
+        margin: 0;
+        background-color: @color;
+        border-bottom: solid 1px @borderColor;
+        border-top: solid 1px @borderColor;
+        align-items: center;
+        .NavStyle();
+    }
+
+</style>
