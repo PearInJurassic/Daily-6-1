@@ -29,7 +29,7 @@
         padding: 0 2px;
         margin: 0 3px;
         cursor:pointer;
-        transition: all .7s ease;
+        transition: all .5s ease;
 
     }
     .OptionButton {
@@ -41,6 +41,6 @@
     }
     .OptionButton:hover {
         background-color: @itemBackColor;
-        transition: all .7s ease;
+        transition: all .5s ease;
     }
 </style>

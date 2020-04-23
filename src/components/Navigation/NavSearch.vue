@@ -29,7 +29,7 @@
             padding: 3px 10px 3px 26px;
             display: flex;
             max-width: 300px;
-            min-width: 175px;
+            min-width: 150px;
         }
     }
 

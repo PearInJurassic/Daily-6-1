@@ -1,12 +1,19 @@
 <template>
     <div class="SideBar">
-
+        <SideBarInformation></SideBarInformation>
+        <SideBarRecent></SideBarRecent>
     </div>
 </template>
 
 <script>
-  export default {
-    name: "SideBar"
+    import SideBarInformation from "@/components/SideBar/SideBarInformation";
+    import SideBarRecent from "@/components/SideBar/SideBarRecent";
+    export default {
+    name: "SideBar",
+    components:{
+      SideBarInformation,
+      SideBarRecent
+    }
   }
 </script>
 
