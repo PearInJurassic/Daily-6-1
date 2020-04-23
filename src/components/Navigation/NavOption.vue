@@ -1,7 +1,7 @@
 <template>
     <div class="NavOption">
         <slot>
-            <NavOptionChild><img alt="匿名状态" src="../../assets/NavBar/Non-Anonymous.png"></NavOptionChild>
+            <NavOptionChild><img alt="匿名状态" src="../../assets/NavBar/Anonymous.png"></NavOptionChild>
             <NavOptionChild><img alt="可视化地图" src="../../assets/NavBar/Location.png"></NavOptionChild>
             <NavOptionChild><img alt="时间轴" src="../../assets/NavBar/TimeLine.png"></NavOptionChild>
             <NavOptionChild><img alt="个人空间" src="../../assets/NavBar/PersonSpace.png"></NavOptionChild>

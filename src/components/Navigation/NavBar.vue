@@ -49,6 +49,7 @@
         border-top: solid 1px @borderColor;
         align-items: center;
         .NavStyle();
+        box-shadow: 0 0 3px #2c2d2c;
     }
 
 </style>
