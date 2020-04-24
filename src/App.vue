@@ -1,23 +1,18 @@
 <template>
   <div id="app">
     <Nav-bar></Nav-bar>
-    <div id="center">
-
-    <ContentMain></ContentMain>
-    <SideBar></SideBar>
-
-    </div>
+    <div class="blank" style="height: 55px"></div>
+    <PostPageCenter></PostPageCenter>
   </div>
 </template>
 
 <script>
 import NavBar from './components/Navigation/NavBar'
-import ContentMain from "@/components/Content/ContentMain";
-import SideBar from "@/components/SideBar/SideBar";
+import PostPageCenter from "@/components/PostPageCenter/PostPageCenter";
 export default {
   name: 'App',
   components: {
-    NavBar,ContentMain,SideBar
+    NavBar,PostPageCenter
   }
 }
 </script>
@@ -36,6 +31,11 @@ export default {
   #center {
     max-width: 1000px;
     display: flex;
+    justify-content: right;
     margin: 0 auto;
+  }
+  .SpaceForSideBar {
+    width: 315px;
+    padding-top: 30px;
   }
 </style>

@@ -24,13 +24,14 @@
 </script>
 
 <style lang="less" scoped>
-    @color: #white;
+    @color: white;
     @layout: center;
     @borderColor:#989899;
 
-    .NavStyle(@padding:0 20px,@height:54px) {
+    .NavStyle(@padding:0 20px,@height:54px,@width:100%) {
         display: flex;
         height: @height;
+        width: @width;
         padding: @padding;
     }
 
@@ -44,6 +45,8 @@
 
     .NavBar {
         .NavStyle();
+        position: fixed;
+        z-index: 999;
         margin: 0;
         background-color: @color;
         border-bottom: solid 1px @borderColor;

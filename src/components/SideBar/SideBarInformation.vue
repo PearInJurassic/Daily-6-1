@@ -2,50 +2,55 @@
     <div class="Information">
         <div class="InformationMain"></div>
         <div class="InformationButton">
-        <slot name="AddButton">
-            <button class="CommonButton">
-                新增帖子
-            </button>
-        </slot>
+            <slot name="AddButton">
+                <button class="CommonButton">
+                    新增帖子
+                </button>
+            </slot>
         </div>
     </div>
 </template>
 
 <script>
   export default {
-    name: "SideBarInformation"
+    name: "SideBarInformation",
+    components: {}
   }
 </script>
 
-<style scoped lang="less">
-    .setBorder(@borderWidth:1px){
+<style lang="less" scoped>
+    .setBorder(@borderWidth:1px) {
         border-width: @borderWidth;
         border-color: black;
         border-style: solid;
     }
+
     .setSize(@width,@height) {
         height: @height;
         width: @width;
     }
+
     .Information {
-        .setSize(270px,80px);
+        .setSize(270px, 80px);
         .setBorder();
         display: flex;
         justify-content: space-between;
         margin: 0 auto;
     }
-    .InformationMain{
-        .setSize(170px,70px);
+
+    .InformationMain {
+        .setSize(170px, 70px);
         .setBorder();
         margin: auto 3px;
     }
-    .InformationButton{
-        .setSize(100px,70px);
+
+    .InformationButton {
+        .setSize(100px, 70px);
         margin: auto 0;
-        //.setBorder()
     }
-    .CommonButton{
-        .setSize(100%,30px);
+
+    .CommonButton {
+        .setSize(100%, 30px);
         letter-spacing: 1px;
         padding: 2px;
         font-weight: bold;
@@ -54,6 +59,7 @@
         cursor: pointer;
         transition: all .2s ease;
     }
+
     .CommonButton:active {
         background-color: black;
         color: white;
