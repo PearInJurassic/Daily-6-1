@@ -7,11 +7,12 @@
 </template>
 
 <script>
-    import ContentMain from "@/components/Content/ContentMain";
-    import SideBar from "@/components/SideBar/SideBar";
+  import ContentMain from "@/components/Content/ContentMain";
+  import SideBar from "@/components/SideBar/SideBar";
+
   export default {
     name: "PostPageCenter",
-    components:{
+    components: {
       ContentMain,
       SideBar,
     }

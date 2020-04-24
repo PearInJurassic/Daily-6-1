@@ -3,7 +3,7 @@
         <div class="InformationMain"></div>
         <div class="InformationButton">
             <slot name="AddButton">
-                <button class="CommonButton">
+                <button class="CommonButton" @click="showEditPanel">
                     新增帖子
                 </button>
             </slot>
@@ -12,13 +12,20 @@
 </template>
 
 <script>
+    import Bus from "@/JS/bus.js"
   export default {
     name: "SideBarInformation",
-    components: {}
+    components: {},
+    methods:{
+      showEditPanel(){
+        Bus.$emit('showEditPanel','true')
+      }
+    }
   }
 </script>
 
 <style lang="less" scoped>
+    @import "../../CSS/Common";
     .setBorder(@borderWidth:1px) {
         border-width: @borderWidth;
         border-color: black;
@@ -49,19 +56,4 @@
         margin: auto 0;
     }
 
-    .CommonButton {
-        .setSize(100%, 30px);
-        letter-spacing: 1px;
-        padding: 2px;
-        font-weight: bold;
-        border-radius: 4px;
-        border: 0 solid black;
-        cursor: pointer;
-        transition: all .2s ease;
-    }
-
-    .CommonButton:active {
-        background-color: black;
-        color: white;
-    }
 </style>

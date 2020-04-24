@@ -29,7 +29,7 @@
     @outlineColor:#989899;
     .SideBar {
         position: fixed;
-        z-index: 999;
+        z-index: 5;
         width: 315px;
         height: 600px;
         border:1px solid @outlineColor;

@@ -46,7 +46,7 @@
     .NavBar {
         .NavStyle();
         position: fixed;
-        z-index: 999;
+        z-index: 5;
         margin: 0;
         background-color: @color;
         border-bottom: solid 1px @borderColor;

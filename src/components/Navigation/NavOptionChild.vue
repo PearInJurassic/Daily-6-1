@@ -28,7 +28,6 @@
     .OptionChild {
         padding: 0 2px;
         margin: 0 3px;
-        cursor:pointer;
         transition: all .5s ease;
 
     }
@@ -38,6 +37,7 @@
         border: 0 white;
         border-radius: 3px;
         box-sizing: border-box;
+        cursor:pointer;
     }
     .OptionButton:hover {
         background-color: @itemBackColor;
