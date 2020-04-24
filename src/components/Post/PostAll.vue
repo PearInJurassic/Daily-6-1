@@ -16,6 +16,7 @@
     @import "../../CSS/Common";
     .PostContent {
         .setSize(650px,900px);
+        margin-bottom: 60px;
         min-height: 900px;
         .setBorder();
     }
