@@ -12,8 +12,33 @@
 		SELECT *
 		FROM tb_post
 		WHERE
+		user_id=#{userId}
+	</select>
+	<select id="queryUserByPostId" resultType="java.lang.Integer">
+		SELECT user_id
+		FROM tb_post
+		WHERE
 		post_id=#{postId}
 	</select>
+	<insert id="insertPost" useGeneratedKeys="true" keyProperty="postId"
+		keyColumn="post_id" parameterType="com.daily.entity.Post">
+		INSERT INTO
+		tb_post(post_create_time,post_update_time,post_content,anonym,area_id,
+		user_id,forward)
+		VALUES
+		(#{postCreateTime},#{postUpdateTime},#{postContent},#{anonym},#{areaId},
+		#{userId},#{forward})
+	</insert>
+	<update id="updatePost" parameterType="com.daily.entity.Post">
+		update tb_post
+		<set>
+			<if test="postContent != null">post_conntent=#{postContent},</if>
+			<if test="postImg != null">post_img=#{postImg},</if>
+			<if test="anonym != null">anonym=#{anonym},</if>
+			<if test="postUpdateTime != null">post_update_time=#{postUpdateTime}</if>
+		</set>
+		where post_id=#{postId}
+	</update>
 	<update id="updateCommentNum" parameterType="com.daily.entity.Post">
 		update tb_post
 		<set>
@@ -24,6 +49,20 @@
 	</update>
 	<select id="queryCommentNum" resultType="java.lang.Integer">
 		SELECT comment_num
+		FROM tb_post
+		WHERE
+		post_id=#{postId}
+	</select>
+	<update id="updateLikeNum" parameterType="com.daily.entity.Post">
+		update tb_post
+		<set>
+			 
+			like_num=like_num + #{likeNum}
+		</set>
+		where post_id=#{postId}
+	</update>
+	<select id="queryLikeNum" resultType="java.lang.Integer">
+		SELECT like_num
 		FROM tb_post
 		WHERE
 		post_id=#{postId}

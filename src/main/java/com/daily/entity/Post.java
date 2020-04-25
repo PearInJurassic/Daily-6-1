@@ -43,6 +43,8 @@ public class Post {
 
     private Integer userId;
 
+    private Integer forward;
+
     /**
      * @return the postId
      */
@@ -225,5 +227,4 @@ public class Post {
         this.forward = forward;
     }
 
-    private Integer forward;
 }

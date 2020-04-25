@@ -64,7 +64,7 @@ public interface PostDao {
      * @param postId
      * @return
      */
-    int deleteArea(int postId);
+    int deletePost(int postId);
 
     /**
      * 更新评论数
