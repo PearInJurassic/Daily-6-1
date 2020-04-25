@@ -1,6 +1,6 @@
 <template>
-    <div id="app">
-        <PostPanel v-if="isEditPanelShow"></PostPanel>
+    <div id="PostPage">
+        <PostPanel v-show="isEditPanelShow"></PostPanel>
         <Nav-bar></Nav-bar>
         <div class="blank" style="padding-top: 55px"></div>
         <PageCenterPost></PageCenterPost>
@@ -14,7 +14,7 @@
   import PostPanel from "@/components/Panel/PostPanel";
 
   export default {
-    name: 'App',
+    name: 'PostPage',
     data() {
       return {
         isEditPanelShow: false,
@@ -28,9 +28,12 @@
       Bus.$on("showEditPanel", () => {
         this.isEditPanelShow = true;
       });
-      Bus.$on("closeEditPanel", () => {
-        this.isEditPanelShow = false;
-        console.log("success");
+      Bus.$on("finishEdit", (flag) => {
+        if (flag === "close") {
+          this.isEditPanelShow = false;
+        } else if (flag === "finish") {
+          this.isEditPanelShow = false;
+        }
       })
     }
   }
