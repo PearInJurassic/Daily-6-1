@@ -11,7 +11,7 @@
   import Bus from '@/JS/bus.js'
   import NavBar from '@/components/Navigation/NavBar'
   import PageCenterPost from "@/components/PageCenterPost/PageCenterPost";
-  import PostPanel from "@/components/Panel/PostPanel";
+  import PostPanel from "@/components/Panel/PanelPostEdit";
 
   export default {
     name: 'PostPage',

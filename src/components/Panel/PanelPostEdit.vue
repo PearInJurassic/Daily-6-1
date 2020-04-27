@@ -14,7 +14,8 @@
                 <label>
                     <input type="text">
                 </label>
-                <input @click="finishEdit(`finish`)" class="CommonButton" id="TextEditButton" type="submit">
+                <input @click="finishEdit(`finish`)" class="CommonButton" id="TextEditButton" type="submit"
+                value="完成">
             </div>
         </div>
     </div>
@@ -47,17 +48,6 @@
 <style lang="less" scoped>
     @import "../../CSS/Common";
 
-    .Mask {
-        background-color: #000000;
-        opacity: 0.3;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 10;
-    }
-
     .EditPanel {
         background-color: whitesmoke;
         .setMinSize(850px, 500px);
@@ -65,7 +55,7 @@
         border-radius: 2px;
         box-shadow: 0 0 3px #2c2d2c;
         position: fixed;
-        top: 75px;
+        top: calc(50% - 250px);
         left: calc(50% - 425px);
         z-index: 15;
         display: flex;
