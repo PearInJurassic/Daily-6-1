@@ -22,6 +22,14 @@ public interface CommentDao {
     List<Comment> getCommentByPostId(int postId);
 
     /*
+     * 通过用户ID得到评论列表
+     *
+     * @param postId
+     * @return List<Comment>
+     */
+    List<Comment> getCommentByUserId(int userId);
+
+    /*
      * 新增评论
      *
      * @param Comment

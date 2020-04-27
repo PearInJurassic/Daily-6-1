@@ -40,6 +40,12 @@ public class CommentDaoTest {
     }
 
     @Test
+    public void getCommentByUserId() {
+        List<Comment> commentList = commentDao.getCommentByPostId(3);
+        assertEquals(0,commentList.size());
+    }
+
+    @Test
     @Ignore
     public void createComment() {
         Comment comment = new Comment();
@@ -53,6 +59,7 @@ public class CommentDaoTest {
     }
 
     @Test
+    @Ignore
     public void updateComment() {
         Comment comment = commentDao.getCommentByCommentId(6);
         comment.setCommentContent("更新");

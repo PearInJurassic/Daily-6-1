@@ -17,6 +17,13 @@
         WHERE
         post_id=#{postId}
     </select>
+    <select id="getCommentByUserId" resultType="com.daily.entity.Comment">
+        SELECT comment_id, comment_content, comment_create_time,
+        commnet_update_time, post_id, user_id, anonym
+        FROM tb_comment
+        WHERE
+        user_id=#{userId}
+    </select>
     <insert id="createComment" useGeneratedKeys="true" keyProperty="commentId"
             keyColumn="comment_id" parameterType="com.daily.entity.Comment">
         INSERT INTO
