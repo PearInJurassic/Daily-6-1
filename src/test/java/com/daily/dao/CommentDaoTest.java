@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import static org.junit.Assert.*;
 
@@ -41,8 +40,8 @@ public class CommentDaoTest {
 
     @Test
     public void getCommentByUserId() {
-        List<Comment> commentList = commentDao.getCommentByPostId(3);
-        assertEquals(0,commentList.size());
+        List<Comment> commentList = commentDao.getCommentByUserId(2);
+        assertEquals(2,commentList.size());
     }
 
     @Test
