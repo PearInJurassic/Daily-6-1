@@ -55,7 +55,6 @@ public class DataSourceConfiguration {
 		dataSource.setAutoCommitOnClose(false);
 		// 连接超时时间
 		dataSource.setCheckoutTimeout(10000);
-
 		// 连接失败重试次数
 		dataSource.setAcquireRetryAttempts(2);
 		return dataSource;
