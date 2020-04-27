@@ -23,7 +23,6 @@ public class CommentDaoTest {
     private CommentDao commentDao;
     //设置日期格式
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    //设置时区
 
 
     @Test
@@ -54,9 +53,8 @@ public class CommentDaoTest {
     }
 
     @Test
-    @Ignore
     public void updateComment() {
-        Comment comment = commentDao.getCommentByCommentId(4);
+        Comment comment = commentDao.getCommentByCommentId(6);
         comment.setCommentContent("更新");
         comment.setCommentUpdateTime(new Date());
         assertEquals(true, commentDao.updateComment(comment));
