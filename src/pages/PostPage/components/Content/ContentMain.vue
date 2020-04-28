@@ -4,7 +4,9 @@
             <PostAll></PostAll>
             <component :is="PostAll"
                        :key="index"
-                       v-for="(index) in postNum"></component>
+                       v-for="(index) in postNum">
+
+            </component>
         </div>
     </div>
 </template>
@@ -26,7 +28,7 @@
     },
     mounted() {
       Bus.$on("finishEdit", () => {
-        console.log("success");
+        //TODO 将帖子的id压入而非压入1防止错误。
         this.postNum.push(1);
       });
     }

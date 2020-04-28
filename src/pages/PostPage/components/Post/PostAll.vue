@@ -1,7 +1,8 @@
 <template>
     <div class="PostContent">
-        <div @click="openDetail"
-             class="PictureContent"></div>
+        <div class="Content"
+             @click="openDetail">
+        <div class="PictureContent"></div>
         <div class="PostInfo" style="display: flex">
             <div class="Avatar">
                 <el-avatar :size="68" :src="headUrl"></el-avatar>
@@ -16,6 +17,7 @@
                     <img src="@/assets/Post/resend.png" alt="转发按钮">
                 </button>
             </div>
+        </div>
         </div>
         <PostDetail @detailState="changeDetailState"
                     v-if="detailShowState"></PostDetail>
@@ -46,7 +48,6 @@
        */
       pressLikeButton() {
         this.like ? this.like = 0 : this.like = 1;
-        console.log(`../../assets/Post/${this.likeImgArr[this.like]}`)
       },
       /**
        * @description 传递帖子详情界面的状态
@@ -76,26 +77,12 @@
         min-height: 900px;
         .setBorder();
     }
+    .Content :hover {
+        cursor:pointer;
+    }
 
     .PictureContent {
         .setSize(650px, 750px);
         .setBorder();
-    }
-
-    .Avatar {
-        margin: 5px 5px;
-    }
-
-    .Icon {
-        margin: 5px 5px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-
-        #ResendButton {
-            img {
-                height: 32px;
-            }
-        }
     }
 </style>
