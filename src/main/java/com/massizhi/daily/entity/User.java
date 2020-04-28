@@ -11,7 +11,7 @@ public class User {
     private String userName;
     //用户密码
     private String userPwd;
-    //用户头像
+    //用户头像URL
     private String userImg;
     //用户所属地区ID
     private String areaId;
