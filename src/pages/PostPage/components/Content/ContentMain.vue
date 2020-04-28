@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import PostAll from "@/components/Post/PostAll";
+  import PostAll from "@/pages/PostPage/components/Post/PostAll";
   import Bus from "@/JS/bus.js";
 
   export default {

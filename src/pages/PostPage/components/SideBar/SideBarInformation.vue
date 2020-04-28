@@ -17,6 +17,9 @@
     name: "SideBarInformation",
     components: {},
     methods:{
+      /**
+       * @description 显示编辑帖子栏
+       */
       showEditPanel(){
         Bus.$emit('showEditPanel','true')
       }
@@ -25,7 +28,7 @@
 </script>
 
 <style lang="less" scoped>
-    @import "../../CSS/Common";
+    @import "~@/CSS/Common.less";
     .setBorder(@borderWidth:1px) {
         border-width: @borderWidth;
         border-color: black;

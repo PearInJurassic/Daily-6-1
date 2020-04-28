@@ -13,7 +13,7 @@
             </div>
             <div class="Icon">
                 <button class="IconButton" id="ResendButton">
-                    <img alt="转发按钮" src="../../assets/Post/resend.png">
+                    <img src="@/assets/Post/resend.png" alt="转发按钮">
                 </button>
             </div>
         </div>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-  import PostDetail from "@/components/Post/PostDetail";
+  import PostDetail from "@/pages/PostPage/components/Post/PostDetail";
 
   export default {
     name: "PostAll",
@@ -37,7 +37,7 @@
     },
     computed: {
       likeUrl() {
-        return require(`../../assets/Post/${this.likeImgArr[this.like]}`);
+        return require(`@/assets/Post/${this.likeImgArr[this.like]}`);
       }
     },
     methods: {
@@ -68,7 +68,7 @@
 </script>
 
 <style lang="less" scoped>
-    @import "../../CSS/Common";
+    @import "~@/CSS/Common.less";
 
     .PostContent {
         .setSize(650px, 900px);

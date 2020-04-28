@@ -46,7 +46,7 @@
 </script>
 
 <style lang="less" scoped>
-    @import "../../CSS/Common";
+    @import "~@/CSS/Common.less";
 
     .EditPanel {
         background-color: whitesmoke;

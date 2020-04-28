@@ -6,8 +6,8 @@
 </template>
 
 <script>
-    import SideBarInformation from "@/components/SideBar/SideBarInformation";
-    import SideBarRecent from "@/components/SideBar/SideBarRecent";
+    import SideBarInformation from "@/pages/PostPage/components/SideBar/SideBarInformation";
+    import SideBarRecent from "@/pages/PostPage/components/SideBar/SideBarRecent";
     import $ from 'jquery';
 
     $(window).resize(function () {

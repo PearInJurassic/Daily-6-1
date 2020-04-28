@@ -36,7 +36,7 @@
 </script>
 
 <style lang="less" scoped>
-    @import "../../CSS/Common.less";
+    @import "~@/CSS/Common.less";
 
     .PostDetail {
         .setSize(600px, 400px);
