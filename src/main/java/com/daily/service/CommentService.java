@@ -27,7 +27,7 @@ public interface CommentService {
      * @param postId
      * @return List<Comment>
      */
-    List<Comment> getCommentByUserId(int userId, int anonym);
+    List<Comment> getCommentByUserId(int userId);
 
     /*
      * 新增评论

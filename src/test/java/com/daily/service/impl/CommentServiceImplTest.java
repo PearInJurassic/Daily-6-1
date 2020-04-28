@@ -62,6 +62,7 @@ public class CommentServiceImplTest {
     }
 
     @Test
+    @Ignore
     public void deleteComment() {
         assertEquals(true, commentService.deleteComment(9));
     }
