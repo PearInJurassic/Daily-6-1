@@ -38,7 +38,7 @@ public class CommentServiceImplTest {
     @Test
     @Ignore
     public void getCommentByUserId() {
-        List<Comment> commentList = commentService.getCommentByUserId(2,0);
+        List<Comment> commentList = commentService.getCommentByUserId(2);
         assertEquals(3,commentList.size());
     }
 
@@ -65,5 +65,11 @@ public class CommentServiceImplTest {
     @Ignore
     public void deleteComment() {
         assertEquals(true, commentService.deleteComment(9));
+    }
+
+    @Test
+    @Ignore
+    public void getCommentNumByPostId() {
+        assertEquals(2,commentService.getCommentNumByPostId(2));
     }
 }

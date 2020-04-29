@@ -20,4 +20,9 @@ public class AreaServiceImpl implements AreaService {
     public Area getAreaByName(String areaName) {
         return areaDao.getAreaByName(areaName);
     }
+
+    @Override
+    public boolean addBubbleNum(Area area) {
+        return false;
+    }
 }

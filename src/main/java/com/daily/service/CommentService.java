@@ -52,4 +52,12 @@ public interface CommentService {
      * @return boolean
      */
     boolean deleteComment(int commentId);
+
+    /*
+     * 通过帖子ID得到评论数
+     *
+     * @param postId
+     * @return List<Comment>
+     */
+    int getCommentNumByPostId(int postId);
 }

@@ -87,4 +87,9 @@ public class CommentServiceImpl implements CommentService {
             throw new RuntimeException("删除评论失败：" + e.getMessage());
         }
     }
+
+    @Override
+    public int getCommentNumByPostId(int postId) {
+        return commentDao.getCommentByPostId(postId).size();
+    }
 }

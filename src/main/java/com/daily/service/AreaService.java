@@ -18,4 +18,12 @@ public interface AreaService {
      * @return Area
      */
     Area getAreaByName(String areaName);
+
+    /*
+     * 增加地区气泡数
+     *
+     * @param Area
+     * @return boolean
+     */
+    boolean addBubbleNum(Area area);
 }
