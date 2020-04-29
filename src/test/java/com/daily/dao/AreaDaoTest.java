@@ -40,6 +40,7 @@ public class AreaDaoTest {
     }
 
     @Test
+    @Ignore
     public void updateBubbleNum() {
         Area area = areaDao.getAreaById(1);
         area.setBubbleNum(0);
