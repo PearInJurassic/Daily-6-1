@@ -2,23 +2,30 @@
   <div id="app">
   <NavBar>
   </NavBar>
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+
+ <div id="Cmap">
+  <echarts>
+  </echarts>
+ </div>
+    
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import NavBar from'@/components/Navigation/NavBar.vue'
+import NavBar from'@/components/Navigation/NavBar.vue';
+import echarts from '@/components/echarts.vue';
 export default {
   name: 'Home',
   components: {
-    NavBar
+    NavBar,
+    echarts
   }
 }
+
+
+
+
 </script>
 <style>
 #app {
@@ -40,5 +47,9 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+#Cmap {
+  width：1000px;
 }
 </style>
