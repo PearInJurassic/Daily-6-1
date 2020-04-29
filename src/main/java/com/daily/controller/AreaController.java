@@ -21,19 +21,79 @@ public class AreaController {
     @Autowired
     private AreaService areaService;
 
-    /**
-     * 获取地区信息
+    /*
+     * 通过地区ID获取地区信息
      *
      * @param areaId
      * @return
      */
     @RequestMapping(value = "/getareabyid", method = RequestMethod.GET)
-    private Map<String, Object> listArea(int areaId) {
+    private Map<String, Object> getAreaById(int areaId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         Area area = new Area();
-        // 获取区域列表
+        // 获取地区信息
         area = areaService.getAreaById(areaId);
         modelMap.put("area", area);
+        return modelMap;
+    }
+
+    /*
+     * 通过地区名称获取地区信息
+     *
+     * @param areaName
+     * @return
+     */
+    @RequestMapping(value = "/getareabyname", method = RequestMethod.GET)
+    private Map<String, Object> getAreaByName(String areaName) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Area area = new Area();
+        // 获取地区信息
+        area = areaService.getAreaByName(areaName);
+        modelMap.put("area", area);
+        return modelMap;
+    }
+
+    /*
+     * 通过所属地区ID获取地区信息列表
+     *
+     * @param belongAreaId
+     * @return
+     */
+    @RequestMapping(value = "/getarealistbybelongareaid", method = RequestMethod.GET)
+    private Map<String, Object> getAreaListByBelongAreaId(int belongAreaId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Area> areaList = new ArrayList<Area>();
+        // 获取区域列表
+        areaList = areaService.getAreaListByBelongAreaId(belongAreaId);
+        modelMap.put("areaList", areaList);
+        return modelMap;
+    }
+
+    /*
+     * 增加地区气泡数（新增帖子后）
+     *
+     * @param area
+     * @return
+     */
+    @RequestMapping(value = "/addbubblenum", method = RequestMethod.POST)
+    private Map<String, Object> addBubbleNum(@RequestBody Area area) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        // 增加地区气泡数（新增帖子后）
+        modelMap.put("success", areaService.addBubbleNum(area));
+        return modelMap;
+    }
+
+    /*
+     * 减少地区气泡数（删除帖子后）
+     *
+     * @param area
+     * @return
+     */
+    @RequestMapping(value = "/reducebubblenum", method = RequestMethod.POST)
+    private Map<String, Object> reduceBubbleNum(@RequestBody Area area) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        // 减少地区气泡数（删除帖子后）
+        modelMap.put("success", areaService.reduceBubbleNum(area));
         return modelMap;
     }
 }

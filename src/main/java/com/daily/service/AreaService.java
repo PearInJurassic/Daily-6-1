@@ -43,5 +43,5 @@ public interface AreaService {
      * @param Area
      * @return boolean
      */
-    boolean deleteBubbleNum(Area area);
+    boolean reduceBubbleNum(Area area);
 }
