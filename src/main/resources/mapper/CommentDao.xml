@@ -28,7 +28,7 @@
             keyColumn="comment_id" parameterType="com.daily.entity.Comment">
         INSERT INTO
         tb_comment(comment_content, comment_create_time,
-        commnet_update_time, post_id, user_id, anonym)
+        comment_update_time, post_id, user_id, anonym)
         VALUES
         (#{commentContent},#{commentCreateTime},
         #{commentUpdateTime},#{postId},
