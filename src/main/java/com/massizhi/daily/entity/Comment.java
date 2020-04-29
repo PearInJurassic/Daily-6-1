@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Comment {
     //评论ID
-    private int commentId;
+    private Integer commentId;
     //评论内容
     private String commentContent;
     //评论创建时间
@@ -12,17 +12,17 @@ public class Comment {
     //评论修改时间
     private Date commentUpdateTime;
     //被评论帖子ID
-    private int postId;
+    private Integer postId;
     //用户ID
-    private int userId;
+    private Integer userId;
     //是否匿名评论（是1，否0）
-    private int anonym;
+    private Integer anonym;
 
-    public int getCommentId() {
+    public Integer getCommentId() {
         return commentId;
     }
 
-    public void setCommentId(int commentId) {
+    public void setCommentId(Integer commentId) {
         this.commentId = commentId;
     }
 
@@ -50,27 +50,27 @@ public class Comment {
         this.commentUpdateTime = commentUpdateTime;
     }
 
-    public int getPostId() {
+    public Integer getPostId() {
         return postId;
     }
 
-    public void setPostId(int postId) {
+    public void setPostId(Integer postId) {
         this.postId = postId;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getAnonym() {
+    public Integer getAnonym() {
         return anonym;
     }
 
-    public void setAnonym(int anonym) {
+    public void setAnonym(Integer anonym) {
         this.anonym = anonym;
     }
 }

@@ -2,15 +2,15 @@ package com.massizhi.daily.entity;
 
 public class Area {
     //地区ID
-    private int areaId;
+    private Integer areaId;
     //地区名称
     private String areaName;
 
-    public int getAreaId() {
+    public Integer getAreaId() {
         return areaId;
     }
 
-    public void setAreaId(int areaId) {
+    public void setAreaId(Integer areaId) {
         this.areaId = areaId;
     }
 
