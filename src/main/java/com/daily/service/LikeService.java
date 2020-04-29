@@ -20,6 +20,8 @@ import com.daily.entity.Like;
 public interface LikeService {
     int getLikeNumByPostId(int postId);
 
+    int getLikeByPostIdAndUserId(int postId, int userId);
+
     boolean addLike(Like like);
 
     boolean deleteLike(int postId, int userId);
