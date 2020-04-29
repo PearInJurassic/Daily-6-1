@@ -1,6 +1,6 @@
 <template>
     <div class="OptionChild" @click="changeIconState">
-        <button class="OptionButton">
+        <button class="OptionButton" @click="change">
         <slot>
         </slot>
         </button>
@@ -17,7 +17,10 @@
     },
     methods:{
       changeIconState(){
-        console.log(this)
+
+      },
+      change(){
+        this.$router.push("/personpage");
       }
     }
   }

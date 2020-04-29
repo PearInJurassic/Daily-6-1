@@ -1,7 +1,7 @@
 <template>
     <div class="NavIcon">
         <slot>
-            <div class="LogoDiv">
+            <div class="LogoDiv" @click="goHome">
                 <img src="../../assets/NavBar/logo.png" alt="daily6+1">
             </div>
         </slot>
@@ -10,7 +10,13 @@
 
 <script>
   export default {
-    name: "NavLogo"
+    name: "NavLogo",
+    methods:{
+      goHome(){
+        this.$router.push('/')
+      }
+    },
+
   }
 </script>
 

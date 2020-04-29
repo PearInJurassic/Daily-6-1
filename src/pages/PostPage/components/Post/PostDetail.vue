@@ -4,7 +4,7 @@
         <div class="PostDetail">
             <div class="PictureDetail">
                 <el-carousel height="300px">
-                    <el-carousel-item v-for="item in 4" :key="item">
+                    <el-carousel-item :key="item" v-for="item in 4">
                         <h3 class="small">{{ item }}</h3>
                     </el-carousel-item>
                 </el-carousel>
@@ -18,8 +18,9 @@
 </template>
 
 <script>
-    import PanelTag from "@/pages/PostPage/components/Panel/PanelTag";
-    import PanelComment from "@/pages/PostPage/components/Panel/PanelComment";
+  import PanelTag from "@/pages/PostPage/components/Panel/PanelTag";
+  import PanelComment from "@/pages/PostPage/components/Panel/PanelComment";
+
   export default {
     name: "PanelPostDetail",
     data() {
@@ -27,18 +28,18 @@
         isShow: true,
       }
     },
-    components:{
+    components: {
       PanelComment,
       PanelTag
     },
     methods: {
+      /**
+       * @description 点击蒙版关闭详情
+       */
       closeDetail() {
         this.isShow = false;
-        this.$emit("detailState",this.isShow);
+        this.$emit("detailState", this.isShow);
       },
-      bodyScroll(event) {
-        event.preventDefault();
-      }
     },
     create() {
       console.log('success');
@@ -69,14 +70,15 @@
     .PictureDetail {
         display: flex;
         .setBorder();
-        .setSize(600px,600px);
+        .setSize(600px, 600px);
         justify-content: center;
         flex-direction: column;
     }
+
     .CommentDetail {
         display: flex;
         .setBorder();
-        .setSize(300px,600px);
+        .setSize(300px, 600px);
         justify-content: center;
     }
 

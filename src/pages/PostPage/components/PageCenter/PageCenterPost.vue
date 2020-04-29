@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import ContentMain from "@/pages/PostPage/components/Content/ContentMain";
+  import ContentMain from "@/pages/PostPage/components/Content/ContentPostMain";
   import SideBar from "@/pages/PostPage/components/SideBar/SideBar";
 
   export default {

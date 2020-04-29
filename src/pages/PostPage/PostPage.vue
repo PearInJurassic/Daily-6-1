@@ -1,16 +1,19 @@
 <template>
     <div id="PostPage">
+
         <PostPanel v-show="isEditPanelShow"></PostPanel>
         <Nav-bar></Nav-bar>
         <div class="blank" style="padding-top: 55px"></div>
+        <router-view>
         <PageCenterPost></PageCenterPost>
+        </router-view>
     </div>
 </template>
 
 <script>
   import Bus from '@/JS/bus.js'
   import NavBar from '@/components/Navigation/NavBar'
-  import PageCenterPost from "@/pages/PostPage/components/PageCenterPost/PageCenterPost";
+  import PageCenterPost from "@/pages/PostPage/components/PageCenter/PageCenterPost";
   import PostPanel from "@/pages/PostPage/components/Panel/PanelPostEdit";
 
   export default {

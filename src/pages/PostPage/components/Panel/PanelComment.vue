@@ -2,7 +2,7 @@
     <div class="ContentAll">
         <div class="PosterInfo">
             <div class="Avatar">
-                <el-avatar size="medium" :src="headUrl"></el-avatar>
+                <el-avatar :src="headUrl" size="medium"></el-avatar>
             </div>
             <div class="Icon">
                 <button class="IconButton" id="reportButton">
@@ -26,29 +26,30 @@
             </div>
             <div class="Icon">
                 <button class="IconButton" id="ResendButton">
-                    <img src="@/assets/Post/resend.png" alt="转发按钮">
+                    <img alt="转发按钮" src="@/assets/Post/resend.png">
                 </button>
             </div>
         </div>
         <div class="CommentAdder">
             <div class="CommentEditor"></div>
-            <button class="CommonButton" @click="addComment">发布</button>
+            <button @click="addComment" class="CommonButton">发布</button>
         </div>
     </div>
 </template>
 
 <script>
   import PostCommentAll from "@/pages/PostPage/components/Post/PostCommentAll";
+
   export default {
     name: "PanelComment",
     data() {
       return {
         headUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-        reportUrl:require("@/assets/Post/report.png"),
+        reportUrl: require("@/assets/Post/report.png"),
         like: 0,
         likeImgArr: ['like.png', 'like-fill.png'],
-        commentNum:[],
-        PostCommentAll:"PostCommentAll"
+        commentNum: [],
+        PostCommentAll: "PostCommentAll"
       }
     },
     computed: {
@@ -56,10 +57,10 @@
         return require(`@/assets/Post/${this.likeImgArr[this.like]}`);
       }
     },
-    components:{
+    components: {
       PostCommentAll
     },
-    methods:{
+    methods: {
       /**
        * @Descripsion 传递点赞按钮事件的函数
        */
@@ -69,7 +70,7 @@
       /**
        * @description 发布评论
        */
-      addComment () {
+      addComment() {
         //TODO 将评论的Id压入，而非1，防止错误。
         this.commentNum.push(1);
       }
@@ -77,35 +78,40 @@
   }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
     @import "~@/CSS/Common.less";
+
     .PosterInfo {
         display: flex;
         justify-content: space-between;
     }
+
     .Comment {
         margin: 2px auto;
         display: flex;
-        .setSize(280px,400px);
+        .setSize(280px, 400px);
         .setBorder();
         flex-direction: column;
-        justify-content: start;
+        justify-content: flex-start;
         overflow: auto;
     }
+
     .ContentAll {
         display: flex;
         justify-content: space-between;
         flex-direction: column;
     }
+
     .CommentAdder {
         display: flex;
         justify-content: center;
         flex-direction: column;
-        .setSize(280px,100px);
+        .setSize(280px, 100px);
         margin: 2px auto 10px auto;
     }
+
     .CommentEditor {
-        .setSize(100%,100%);
+        .setSize(100%, 100%);
         .setBorder();
         background-color: white;
         margin: 2px 0 -30px 0;

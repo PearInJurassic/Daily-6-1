@@ -16,7 +16,7 @@
   import Bus from "@/JS/bus.js";
 
   export default {
-    name: "ContentMain",
+    name: "ContentPostMain",
     data() {
       return {
         PostAll:"PostAll",

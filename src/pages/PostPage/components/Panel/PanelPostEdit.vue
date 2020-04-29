@@ -5,17 +5,24 @@
         <div class="EditPanel">
             <div class="PicturePanel"></div>
             <div class="TextPanel">
-                <label>
-                    <input type="text">
-                </label>
-                <label>
-                    <input type="text">
-                </label>
-                <label>
-                    <input type="text">
-                </label>
-                <input @click="finishEdit(`finish`)" class="CommonButton" id="TextEditButton" type="submit"
-                value="完成">
+                <el-form>
+                    <el-form-item label="文本内容：">
+                        <el-input
+                                :row="2"
+                                placehoder="请输入内容"
+                                type="textarea"
+                                v-model="postText">
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <input type="text">
+                    </el-form-item>
+                    <el-form-item>
+                        <input type="text">
+                    </el-form-item>
+                    <input @click="finishEdit(`finish`)" class="CommonButton" id="TextEditButton" type="button"
+                           value="完成">
+                </el-form>
             </div>
         </div>
     </div>
@@ -29,6 +36,7 @@
     data() {
       return {
         isShow: true,
+        postText: '',
       }
     },
     methods: {

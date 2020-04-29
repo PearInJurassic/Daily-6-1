@@ -1,15 +1,24 @@
 <template>
-    <div>
-
+    <div class="main">
+        <LoginPanel></LoginPanel>
     </div>
 </template>
 
 <script>
+  import LoginPanel from "@/pages/LoginPage/Panel/PanelLogin";
+
   export default {
-    name: "LoginPage"
+    name: "LoginPage",
+    data() {
+      return {}
+    },
+    components: {
+      LoginPanel
+    }
   }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+    @import "~@/CSS/Common.less";
 
 </style>
