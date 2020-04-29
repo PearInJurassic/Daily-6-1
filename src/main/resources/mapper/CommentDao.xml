@@ -35,12 +35,12 @@
         #{userId},#{anonym})
     </insert>
     <update id="updateComment" parameterType="com.daily.entity.Comment">
-        update tb_comment
+        UPDATE tb_comment
         <set>
             <if test="commentContent != null">comment_content=#{commentContent},</if>
             <if test="commentUpdateTime != null">commnet_update_time=#{commentUpdateTime},</if>
         </set>
-        where comment_id=#{commentId}
+        WHERE comment_id=#{commentId}
     </update>
     <delete id="deleteComment">
         DELETE FROM tb_comment

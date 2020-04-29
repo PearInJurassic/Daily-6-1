@@ -30,7 +30,7 @@ public interface AreaDao {
     List<Area> getAreaListByBelongAreaId(int belongAreaId);
 
     /*
-     * 增加地区气泡数
+     * 更新地区气泡数
      *
      * @param Area
      * @return boolean

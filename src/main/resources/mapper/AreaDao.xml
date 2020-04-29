@@ -15,11 +15,17 @@
         WHERE
         area_name=#{areaName}
     </select>
-    <update id="addBubbleNum" parameterType="com.daily.entity.Area">
-        update tb_area
+    <select id="getAreaListByBelongAreaId" resultType="com.daily.entity.Area">
+        SELECT area_id, area_name, belong_area_id, bubble_num
+        FROM tb_area
+        WHERE
+        belong_area_id=#{belongAreaId}
+    </select>
+    <update id="updateBubbleNum" parameterType="com.daily.entity.Area">
+        UPDATE tb_area
         <set>
             <if test="bubbleNum != null">bubble_num=#{bubbleNum},</if>
         </set>
-        where area_id=#{areaId}
+        WHERE area_id=#{areaId}
     </update>
 </mapper>
