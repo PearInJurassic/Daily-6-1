@@ -10,13 +10,15 @@ package com.daily.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.daily.entity.Post;
 
 /**
  * @ClassName: PostDao
  * @Description: TODO
  * @author Doris
- * @date 2020年4月5日 上午11:40:13
+ * @date 2020年4月27日 上午11:40:13
  * 
  */
 public interface PostDao {
@@ -40,6 +42,29 @@ public interface PostDao {
      * @return userId
      */
     int queryUserByPostId(int postId);
+
+    List<Post> queryRequireAuditPost();
+
+    /**
+     * 搜索帖子
+     * 
+     * @return userId
+     */
+    List<Post> queryPostByContent(@Param("str") String str);
+
+    /**
+     * 搜索某一用户的帖子
+     * 
+     * @return userId
+     */
+    List<Post> queryPostByContentAndUserId(@Param("str") String str, @Param("userId") int userId);
+
+    /**
+     * 根据postId找出帖子
+     * 
+     * @return userId
+     */
+    Post queryPostByPostId(int postId);
 
     /**
      * 增加帖子
@@ -67,12 +92,20 @@ public interface PostDao {
     int deletePost(int postId);
 
     /**
-     * 更新评论数
+     * 增加评论数
      * 
      * @param postId
      * @return
      */
-    int updateCommentNum(int postId);
+    int incCommentNum(int postId);
+
+    /**
+     * 减少评论数
+     * 
+     * @param postId
+     * @return
+     */
+    int decCommentNum(int postId);
 
     /**
      * 查询评论数
@@ -83,12 +116,20 @@ public interface PostDao {
     int queryCommentNum(int postId);
 
     /**
-     * 更新点赞数
+     * 增加点赞数
      * 
      * @param postId
      * @return
      */
-    int updateLikeNum(int postId);
+    int incLikeNum(int postId);
+
+    /**
+     * 减少点赞数
+     * 
+     * @param postId
+     * @return
+     */
+    int decLikeNum(int postId);
 
     /**
      * 查询点赞数
@@ -97,5 +138,53 @@ public interface PostDao {
      * @return
      */
     int queryLikeNum(int postId);
+
+    /**
+     * 增加举报数
+     * 
+     * @param postId
+     * @return
+     */
+    int incTipoffNum(int postId);
+
+    /**
+     * 减少举报数
+     * 
+     * @param postId
+     * @return
+     */
+    int decTipoffNum(int postId);
+
+    /**
+     * 查询点赞数
+     * 
+     * @param postId
+     * @return
+     */
+    int queryTipoffNum(int postId);
+
+    /**
+     * 增加举报数
+     * 
+     * @param postId
+     * @return
+     */
+    int incForwardNum(int postId);
+
+    /**
+     * 减少举报数
+     * 
+     * @param postId
+     * @return
+     */
+    int decForwardNum(int postId);
+
+    /**
+     * 查询点赞数
+     * 
+     * @param postId
+     * @return
+     */
+    int queryForwardNum(int postId);
 
 }

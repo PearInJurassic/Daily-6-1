@@ -16,7 +16,7 @@ import com.daily.entity.Post;
  * @ClassName: PostService
  * @Description: TODO
  * @author Doris
- * @date 2020年4月5日 下午2:44:19
+ * @date 2020年4月27日 下午2:44:19
  * 
  */
 public interface PostService {
@@ -35,7 +35,18 @@ public interface PostService {
      */
     List<Post> getPostByUserId(int userId);
 
+    /**
+     * 获取特定的帖子
+     * 
+     * @return
+     */
     Post getPostByPostId(int postId);
+
+    List<Post> getRequireAuditPost();
+
+    List<Post> getPostByContent(String str);
+
+    List<Post> getPostByContentAndUserId(String str, int userId);
 
     /**
      * 增加帖子信息
@@ -60,5 +71,19 @@ public interface PostService {
      * @return
      */
     boolean deletePost(int postId);
+
+    boolean likePost(int postId);
+
+    boolean unlikePost(int postId);
+
+    boolean forwardPost(int postId);
+
+    boolean commentPost(int postId);
+
+    boolean uncommentPost(int postId);
+
+    boolean tipoffPost(int postId);
+
+    boolean untipoffPost(int postId);
 
 }
