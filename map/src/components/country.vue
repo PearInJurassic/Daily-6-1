@@ -1,6 +1,6 @@
 <template>
   <div class="echarts">
-    <div :style="{height:'400px',width:'100%'}" ref="myEchart"></div>
+    <div :style="{height:'800px',width:'100%'}" ref="myEchart"></div>
   </div>
 </template>
 <script>
@@ -75,7 +75,7 @@
               name: '启动次数', // 浮动框的标题
               type: 'map',
               geoIndex: 0,
-              data: [{
+              /*data: [{
                 "name": "北京",
                 "value": 599
               }, {
@@ -93,7 +93,7 @@
               }, {
                 "name": "四川",
                 "value": 453
-              }]
+              }]*/
             }
           ]
         })

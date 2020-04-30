@@ -4,8 +4,8 @@
   </NavBar>
 
  <div id="Cmap">
-  <echarts>
-  </echarts>
+  <country>
+  </country>
  </div>
     
   </div>
@@ -14,12 +14,12 @@
 <script>
 // @ is an alias to /src
 import NavBar from'@/components/Navigation/NavBar.vue';
-import echarts from '@/components/echarts.vue';
+import country from '@/components/country.vue';
 export default {
   name: 'Home',
   components: {
     NavBar,
-    echarts
+    country
   }
 }
 
@@ -49,7 +49,9 @@ export default {
   color: #42b983;
 }
 
-#Cmap {
-  width：1000px;
+#Cap {
+  height:100%;
 }
+
+
 </style>
