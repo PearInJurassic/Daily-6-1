@@ -25,7 +25,7 @@ public interface RecordDao {
      * @param Record
      * @return int
      */
-    int createRecord(Record record);
+    int insertRecord(Record record);
     /*
      * 修改动态
      *

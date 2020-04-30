@@ -4,29 +4,49 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.massizhi.daily.dao.RecordDao">
     <select id="getRecordListByAreaId" resultType="com.massizhi.daily.entity.Record">
-        SELECT 
+        SELECT record_id,record_img,record_content,record_create_time,
+        record_update_time,time_axis_id,area_id,post_id,user_id
         FROM tb_record
         WHERE
         user_id=#{userId}
+        ORDER BY record_create_time
+        DESC
     </select>
-    <select id="getUserByUserId" resultType="com.massizhi.daily.entity.User">
-        SELECT user_id,user_type,user_name,user_pwd,user_img,
-        area_id,user_date,gender,profile,state,fans_name,follow_num
-        FROM tb_user
+    <select id="getRecordListByTwoId" resultType="com.massizhi.daily.entity.Record">
+        SELECT record_id,record_img,record_content,record_create_time,
+        record_update_time,time_axis_id,area_id,post_id,user_id
+        FROM tb_record
         WHERE
         user_id=#{userId}
+        AND
+        time_axis_id=#{timeAxisId}
+        ORDER BY record_create_time
+        DESC
     </select>
-    <update id="updateUser" parameterType="com.massizhi.daily.entity.User">
-        UPDATE tb_user
+    <insert id="insertRecord" useGeneratedKeys="true" keyProperty="recordId"
+            keyColumn="record_id" parameterType="com.massizhi.daily.entity.Record">
+        INSERT INTO
+        tb_record(record_id,record_img,record_content,record_create_time,
+        record_update_time,time_axis_id,area_id,post_id,user_id)
+        VALUES
+        (#{recordId},#{recordImg},#{recordContent},#{recordCreateTime},
+        #{recordUpdateTime},#{timeAxisId},#{areaId},#{postId},#{userId})
+    </insert>
+    <update id="updateRecord" parameterType="com.massizhi.daily.entity.Record">
+        update tb_record
         <set>
-            <if test="userName != null">user_name=#{userName},</if>
-            <if test="userPwd != null">user_pwd=#{userPwd},</if>
-            <if test="userImg != null">user_img=#{userImg},</if>
-            <if test="areaId != null">area_id=#{areaId},</if>
-            <if test="userDate != null">user_date=#{userDate},</if>
-            <if test="gender != null">gender=#{gender},</if>
-            <if test="profile != null">profile=#{profile},</if>
+            <if test="recordImg != null">record_img=#{recordImg},</if>
+            <if test="recordContent != null">record_content=#{recordContent},</if>
+            <if test="recordUpdateTime != null">record_update_time=#{recordUpdateTime},</if>
+            <if test="areaId != null">areaId=#{areaId},</if>
+            <if test="postId != null">postId=#{postId},</if>
         </set>
-        WHERE user_id=#{userId}
+        where record_id=#{recordId}
     </update>
+    <delete id="deleteRecord">
+        DELETE FROM
+        tb_record
+        WHERE
+        record_id=#{recordId}
+    </delete>
 </mapper>

@@ -25,7 +25,7 @@ public interface UserFollowDao {
      * @param userFollow
      * @return int
      */
-    int createUserFollow(UserFollow userFollow);
+    int insertUserFollow(UserFollow userFollow);
     /*
      * 删除关注通过用户ID,关注ID
      *
