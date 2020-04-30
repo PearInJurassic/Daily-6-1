@@ -30,11 +30,11 @@ public class Post {
     //该帖是否为转发帖子（是1，否0）
     private Integer forward;
 
-    public int getPostId() {
+    public Integer getPostId() {
         return postId;
     }
 
-    public void setPostId(int postId) {
+    public void setPostId(Integer postId) {
         this.postId = postId;
     }
 
@@ -54,35 +54,35 @@ public class Post {
         this.postUpdateTime = postUpdateTime;
     }
 
-    public int getLikeNum() {
+    public Integer getLikeNum() {
         return likeNum;
     }
 
-    public void setLikeNum(int likeNum) {
+    public void setLikeNum(Integer likeNum) {
         this.likeNum = likeNum;
     }
 
-    public int getForwardNum() {
+    public Integer getForwardNum() {
         return forwardNum;
     }
 
-    public void setForwardNum(int forwardNum) {
+    public void setForwardNum(Integer forwardNum) {
         this.forwardNum = forwardNum;
     }
 
-    public int getCommentNum() {
+    public Integer getCommentNum() {
         return commentNum;
     }
 
-    public void setCommentNum(int commentNum) {
+    public void setCommentNum(Integer commentNum) {
         this.commentNum = commentNum;
     }
 
-    public int getTipoffNum() {
+    public Integer getTipoffNum() {
         return tipoffNum;
     }
 
-    public void setTipoffNum(int tipoffNum) {
+    public void setTipoffNum(Integer tipoffNum) {
         this.tipoffNum = tipoffNum;
     }
 
@@ -102,35 +102,35 @@ public class Post {
         this.postContent = postContent;
     }
 
-    public int getAnonym() {
+    public Integer getAnonym() {
         return anonym;
     }
 
-    public void setAnonym(int anonym) {
+    public void setAnonym(Integer anonym) {
         this.anonym = anonym;
     }
 
-    public int getAreaId() {
+    public Integer getAreaId() {
         return areaId;
     }
 
-    public void setAreaId(int areaId) {
+    public void setAreaId(Integer areaId) {
         this.areaId = areaId;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getForward() {
+    public Integer getForward() {
         return forward;
     }
 
-    public void setForward(int forward) {
+    public void setForward(Integer forward) {
         this.forward = forward;
     }
 }

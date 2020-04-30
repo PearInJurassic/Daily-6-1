@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Record {
     //动态ID
-    private int recordId;
+    private Integer recordId;
     //动态图片URL
     private String recordImg;
     //动态内容
@@ -14,25 +14,17 @@ public class Record {
     //动态修改时间
     private Date recordUpdateTime;
     //动态所属时间轴ID
-    private int timeAxisId;
+    private Integer timeAxisId;
     //动态所属地区ID
-    private int areaId;
+    private Integer areaId;
     //联系的帖子ID
-    private int postId;
+    private Integer postId;
 
-    public int getPostId() {
-        return postId;
-    }
-
-    public void setPostId(int postId) {
-        this.postId = postId;
-    }
-
-    public int getRecordId() {
+    public Integer getRecordId() {
         return recordId;
     }
 
-    public void setRecordId(int recordId) {
+    public void setRecordId(Integer recordId) {
         this.recordId = recordId;
     }
 
@@ -68,19 +60,27 @@ public class Record {
         this.recordUpdateTime = recordUpdateTime;
     }
 
-    public int getTimeAxisId() {
+    public Integer getTimeAxisId() {
         return timeAxisId;
     }
 
-    public void setTimeAxisId(int timeAxisId) {
+    public void setTimeAxisId(Integer timeAxisId) {
         this.timeAxisId = timeAxisId;
     }
 
-    public int getAreaId() {
+    public Integer getAreaId() {
         return areaId;
     }
 
-    public void setAreaId(int areaId) {
+    public void setAreaId(Integer areaId) {
         this.areaId = areaId;
+    }
+
+    public Integer getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Integer postId) {
+        this.postId = postId;
     }
 }

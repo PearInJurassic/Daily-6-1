@@ -13,11 +13,4 @@ public interface UserFollowDao {
      */
     List<UserFollow> getRecordListByAreaId(int userId);
 
-    /*
-     * 新增关注
-     *
-     * @param Comment
-     * @return boolean
-     */
-    boolean createComment(Comment comment);
 }

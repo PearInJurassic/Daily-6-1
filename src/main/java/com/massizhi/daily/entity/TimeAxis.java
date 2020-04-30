@@ -4,17 +4,17 @@ import java.util.List;
 
 public class TimeAxis {
     //时间轴ID
-    private int timeAxisId;
+    private Integer timeAxisId;
     //时间轴类型
     private String timeAxisType;
     //用户ID
-    private int userId;
+    private Integer userId;
 
-    public int getTimeAxisId() {
+    public Integer getTimeAxisId() {
         return timeAxisId;
     }
 
-    public void setTimeAxisId(int timeAxisId) {
+    public void setTimeAxisId(Integer timeAxisId) {
         this.timeAxisId = timeAxisId;
     }
 
@@ -26,11 +26,11 @@ public class TimeAxis {
         this.timeAxisType = timeAxisType;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 }

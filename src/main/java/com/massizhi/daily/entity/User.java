@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class User {
     //用户ID
-    private int userId;
+    private Integer userId;
     //用户类型（普通用户为0，管理员为1）
-    private int userType;
+    private Integer userType;
     //用户名
     private String userName;
     //用户密码
@@ -22,25 +22,25 @@ public class User {
     //用户简介
     private String profile;
     //是否可用（是1，否0）
-    private int state;
+    private Integer state;
     //粉丝数
-    private int fansNum;
+    private Integer fansNum;
     //关注数
-    private int followNum;
+    private Integer followNum;
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getUserType() {
+    public Integer getUserType() {
         return userType;
     }
 
-    public void setUserType(int userType) {
+    public void setUserType(Integer userType) {
         this.userType = userType;
     }
 
@@ -100,27 +100,27 @@ public class User {
         this.profile = profile;
     }
 
-    public int getState() {
+    public Integer getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 
-    public int getFansNum() {
+    public Integer getFansNum() {
         return fansNum;
     }
 
-    public void setFansNum(int fansNum) {
+    public void setFansNum(Integer fansNum) {
         this.fansNum = fansNum;
     }
 
-    public int getFollowNum() {
+    public Integer getFollowNum() {
         return followNum;
     }
 
-    public void setFollowNum(int followNum) {
+    public void setFollowNum(Integer followNum) {
         this.followNum = followNum;
     }
 }
