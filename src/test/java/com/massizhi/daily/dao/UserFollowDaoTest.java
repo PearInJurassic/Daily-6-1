@@ -1,7 +1,6 @@
 package com.massizhi.daily.dao;
 
 import com.massizhi.daily.entity.UserFollow;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ class UserFollowDaoTest {
 
     @Test
     void insertUserFollow() {
-        //创建一个区域对象
+        //创建一个对象
         UserFollow userFollow = new UserFollow();
         userFollow.setUserId(45);
         userFollow.setFollowId(448);

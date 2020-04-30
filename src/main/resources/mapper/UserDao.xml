@@ -5,7 +5,7 @@
 <mapper namespace="com.massizhi.daily.dao.UserDao">
     <select id="getUserByUserId" resultType="com.massizhi.daily.entity.User">
         SELECT user_id,user_type,user_name,user_pwd,user_img,
-        area_id,user_date,gender,profile,state,fans_name,follow_num
+        area_id,user_date,gender,profile,state,fans_num,follow_num
         FROM tb_user
         WHERE
         user_id=#{userId}

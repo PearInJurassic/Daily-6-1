@@ -11,7 +11,7 @@ public interface RecordDao {
      * @param userId
      * @return List<Record>
      */
-    List<Record> getRecordListByAreaId(int userId);
+    List<Record> getRecordListByUserId(int userId);
     /*
      * 根据用户ID和时间轴ID得到动态列表
      *
