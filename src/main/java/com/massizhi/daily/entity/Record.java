@@ -19,6 +19,8 @@ public class Record {
     private Integer areaId;
     //联系的帖子ID
     private Integer postId;
+    //用户ID
+    private Integer userId;
 
     public Integer getRecordId() {
         return recordId;
@@ -82,5 +84,13 @@ public class Record {
 
     public void setPostId(Integer postId) {
         this.postId = postId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

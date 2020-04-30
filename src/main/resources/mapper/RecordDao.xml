@@ -2,7 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.massizhi.daily.dao.UserDao">
+<mapper namespace="com.massizhi.daily.dao.RecordDao">
+    <select id="getRecordListByAreaId" resultType="com.massizhi.daily.entity.Record">
+        SELECT 
+        FROM tb_record
+        WHERE
+        user_id=#{userId}
+    </select>
     <select id="getUserByUserId" resultType="com.massizhi.daily.entity.User">
         SELECT user_id,user_type,user_name,user_pwd,user_img,
         area_id,user_date,gender,profile,state,fans_name,follow_num
