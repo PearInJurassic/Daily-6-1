@@ -26,10 +26,10 @@
     <insert id="insertRecord" useGeneratedKeys="true" keyProperty="recordId"
             keyColumn="record_id" parameterType="com.massizhi.daily.entity.Record">
         INSERT INTO
-        tb_record(record_id,record_img,record_content,record_create_time,
+        tb_record(record_img,record_content,record_create_time,
         record_update_time,time_axis_id,area_id,post_id,user_id)
         VALUES
-        (#{recordId},#{recordImg},#{recordContent},#{recordCreateTime},
+        (#{recordImg},#{recordContent},#{recordCreateTime},
         #{recordUpdateTime},#{timeAxisId},#{areaId},#{postId},#{userId})
     </insert>
     <update id="updateRecord" parameterType="com.massizhi.daily.entity.Record">

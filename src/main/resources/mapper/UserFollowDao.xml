@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.massizhi.daily.dao.UserFollowDao">
     <select id="getUserFollowListByUserId" resultType="com.massizhi.daily.entity.UserFollow">
-        SELECT tb_user_follow_id,user_id,follow_id,follow_time
+        SELECT user_follow_id,user_id,follow_id,follow_time
         FROM tb_user_follow
         WHERE
         user_id=#{userId}
@@ -12,7 +12,7 @@
         DESC
     </select>
     <select id="getUserFollowByTwoId" resultType="com.massizhi.daily.entity.UserFollow">
-        SELECT tb_user_follow_id,user_id,follow_id,follow_time
+        SELECT user_follow_id,user_id,follow_id,follow_time
         FROM tb_user_follow
         WHERE
         user_id=#{userId}
@@ -20,11 +20,11 @@
         follow_id=#{followId}
     </select>
     <insert id="insertUserFollow" useGeneratedKeys="true" keyProperty="userFollowId"
-            keyColumn="tb_user_follow_id" parameterType="com.massizhi.daily.entity.UserFollow">
+            keyColumn="user_follow_id" parameterType="com.massizhi.daily.entity.UserFollow">
         INSERT INTO
-        tb_user_follow(tb_user_follow_id,user_id,follow_id,follow_time)
+        tb_user_follow(user_id,follow_id,follow_time)
         VALUES
-        (#{userFollowId},#{userId},#{followId},#{followTime})
+        (#{userId},#{followId},#{followTime})
     </insert>
     <delete id="deleteUserFollowByTwoId">
         DELETE FROM
