@@ -28,4 +28,12 @@
         </set>
         WHERE area_id=#{areaId}
     </update>
+    <insert id="addArea" useGeneratedKeys="false" keyProperty="areaId"
+            keyColumn="area_id" parameterType="com.daily.entity.Area">
+        INSERT INTO
+        tb_area(area_id, area_name, belong_area_id, bubble_num)
+        VALUES
+        (#{areaId},#{areaName},
+        #{belongAreaId},#{bubbleNum})
+    </insert>
 </mapper>

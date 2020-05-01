@@ -46,4 +46,25 @@ public class AreaDaoTest {
         area.setBubbleNum(0);
         assertEquals(true,areaDao.updateBubbleNum(area));
     }
+
+    @Test
+    @Ignore
+    public void addArea() {
+        int n = 1, areaId, a = 3100000;
+        Area area;
+        String name;
+        for(int j = 1; j <= n; j++) {
+            areaId = a + j * 0;
+            area = areaDao.getAreaById(areaId);
+            name = area.getAreaName();
+            int i, id = area.getAreaId();
+            for (i = 1; i < 11; i++) {
+                area.setAreaId(id + i);
+                area.setAreaName(name + i);
+                area.setBelongAreaId(id);
+                area.setBubbleNum(0);
+                areaDao.addArea(area);
+            }
+        }
+    }
 }

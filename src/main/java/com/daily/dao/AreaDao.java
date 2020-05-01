@@ -36,4 +36,12 @@ public interface AreaDao {
      * @return boolean
      */
     boolean updateBubbleNum(Area area);
+
+    /*
+     * 添加地区信息
+     *
+     * @param Area
+     * @return boolean
+     */
+    boolean addArea(Area area);
 }
