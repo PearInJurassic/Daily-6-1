@@ -54,4 +54,9 @@ public class AreaServiceImplTest {
         Area area = areaService.getAreaById(35);
         assertEquals(true,areaService.reduceBubbleNum(area));
     }
+
+    @Test
+    public void refreshBubbleNum() {
+        assertEquals(true,areaService.refreshBubbleNum());
+    }
 }

@@ -44,4 +44,12 @@ public interface AreaService {
      * @return boolean
      */
     boolean reduceBubbleNum(Area area);
+
+    /*
+     * 刷新地区气泡数（一定时间）
+     *
+     * @param Area
+     * @return boolean
+     */
+    boolean refreshBubbleNum();
 }

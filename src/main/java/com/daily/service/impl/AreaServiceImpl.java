@@ -66,4 +66,21 @@ public class AreaServiceImpl implements AreaService {
         }
         return true;
     }
+
+    @Override
+    public boolean refreshBubbleNum() {
+        List<Area> areaList = areaDao.getAreaList();
+        for(Area area : areaList) {
+            area.setBubbleNum(0);
+            try {
+                boolean b = areaDao.updateBubbleNum(area);
+                if(b == false) {
+                    throw new RuntimeException("刷新气泡数操作失败！");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("刷新气泡数操作失败：" + e.getMessage());
+            }
+        }
+        return true;
+    }
 }
