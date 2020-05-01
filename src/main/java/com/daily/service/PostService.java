@@ -86,4 +86,6 @@ public interface PostService {
 
     boolean untipoffPost(int postId);
 
+    int forwardPost(int postId, int userId, String str);
+
 }

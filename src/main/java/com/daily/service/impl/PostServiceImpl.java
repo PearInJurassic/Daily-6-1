@@ -181,4 +181,38 @@ public class PostServiceImpl implements PostService {
         return postDao.queryPostByContentAndUserId(str, userId);
     }
 
+    @Override
+    public int forwardPost(int postId, int userId, String str) {
+        if (postId > 0 && userId > 0) {
+            try {
+                Post post = postDao.queryPostByPostId(postId);
+                if (post != null) {
+                    Post newPost = new Post();
+                    newPost.setAnonym(0);
+                    newPost.setAreaId(post.getAreaId());
+                    newPost.setForwardPostId(postId);
+
+                    newPost.setPostContent(str);
+                    newPost.setPostCreateTime(new Date());
+                    newPost.setPostUpdateTime(new Date());
+                    newPost.setPostImg(post.getPostImg());
+                    newPost.setUserId(userId);
+                    int i = postDao.insertPost(newPost);
+                    if (i > 0) {
+                        postDao.incForwardNum(postId);
+                        return newPost.getPostId();
+                    } else {
+                        throw new RuntimeException("添加帖子信息失败!");
+                    }
+                } else {
+                    throw new RuntimeException("原帖子不存在!");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("转发帖子信息失败:" + e.toString());
+            }
+        } else {
+            throw new RuntimeException("无法找到对应的帖子！");
+        }
+    }
+
 }
