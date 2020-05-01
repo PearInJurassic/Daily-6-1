@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <Branch :btnData="{text: ''}"></Branch>
+  <div id="workline">
+    <Branch :btnData="{text: '工作'}"></Branch>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 // @ is an alias to /src
 import Branch from '@/components/Timeaxis/Branch.vue'
 export default {
-  name: 'Home',
+  name: 'WorkLine',
   components: {
     Branch
   }

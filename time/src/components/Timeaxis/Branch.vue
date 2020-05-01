@@ -1,44 +1,54 @@
 <template>
     <div class="Branch">
       <div class="header">
-		<h1 style="display:inline-block">时间轴</h1>
-		<Button :btnData="{text: '添加'}" class="btn" style="display:inline-block"></Button>
-		<Button :btnData="{text: '编辑'}" class="btn2" style="display:inline-block"></Button>
+		<h1 style="display:inline-block">{{text}}时间轴</h1>
+    <el-button id="btn" v-on:click="add">添加</el-button>
+    <el-button id="btn2" v-on:click="setVisible" :style="{ display: editbtn }">编辑</el-button>
+    <el-button id="btn3" v-on:click="setVisible" :style="{ display: editcancel }">取消编辑</el-button>
 	</div>
     <section id="cd-timeline" class="cd-container">
-	
+
+	<div id="block1">
+    <div class="cd-timeline-block">
+      <div class="cd-timeline-img cd-picture">
+        <img src="../../assets/NavBar/TimeLine.png" alt="Picture">
+              
+      </div>
+
+      <div class="cd-timeline-content">
+        <h2 style="display:inline">A</h2>
+        <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun()"></el-button>
+        <p>aaaaaaa</p>
+        <a href="http://www.helloweba.com/view-blog-285.html" class="cd-read-more" target="_blank">阅读全文</a>
+        <span class="cd-date">2020-01-06</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="block2">
+    <div class="cd-timeline-block">
+      <div class="cd-timeline-img cd-movie">
+        <img src="../../assets/NavBar/TimeLine.png" alt="Picture">
+      </div>
+
+      <div class="cd-timeline-content">
+        <h2 style="display:inline">B</h2>
+        <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun()"></el-button>
+        <p>bbbbbbbbbbb</p>
+        <a href="http://www.helloweba.com/view-blog-284.html" class="cd-read-more" target="_blank">阅读全文</a>
+        <span class="cd-date">2020-01-25</span>
+      </div>
+    </div>
+  </div>
+
 	<div class="cd-timeline-block">
 		<div class="cd-timeline-img cd-picture">
 			<img src="../../assets/NavBar/TimeLine.png" alt="Picture">
-            
 		</div>
 
 		<div class="cd-timeline-content">
-			<h2>A</h2>
-			<p>aaaaaaa</p>
-			<a href="http://www.helloweba.com/view-blog-285.html" class="cd-read-more" target="_blank">阅读全文</a>
-			<span class="cd-date">2020-01-06</span>
-		</div>
-	</div>
-	<div class="cd-timeline-block">
-		<div class="cd-timeline-img cd-movie">
-			<img src="../../assets/NavBar/TimeLine.png" alt="Picture">
-		</div>
-
-		<div class="cd-timeline-content">
-			<h2>B</h2>
-			<p>bbbbbbbbbbb</p>
-			<a href="http://www.helloweba.com/view-blog-284.html" class="cd-read-more" target="_blank">阅读全文</a>
-			<span class="cd-date">2020-01-25</span>
-		</div>
-	</div>
-	<div class="cd-timeline-block">
-		<div class="cd-timeline-img cd-picture">
-			<img src="../../assets/NavBar/TimeLine.png" alt="Picture">
-		</div>
-
-		<div class="cd-timeline-content">
-			<h2>C</h2>
+      <h2 style="display:inline">C</h2>
+      <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun()"></el-button>
 			<p>cccccccccc</p>
 			<a href="http://www.helloweba.com/view-blog-283.html" class="cd-read-more" target="_blank">阅读全文</a>
 			<span class="cd-date">2020-02-20</span>
@@ -50,7 +60,8 @@
 		</div>
 
 		<div class="cd-timeline-content">
-			<h2>D</h2>
+			<h2 style="display:inline">D</h2>
+      <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun()"></el-button>
 			<p>ddddddd</p>
 			<a href="http://www.helloweba.com/view-blog-282.html" class="cd-read-more" target="_blank">阅读全文</a>
 			<span class="cd-date">2020-02-14</span>
@@ -62,7 +73,8 @@
 		</div>
 
 		<div class="cd-timeline-content">
-			<h2>E</h2>
+			<h2 style="display:inline">E</h2>
+      <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun()"></el-button>
 			<p>eeeeeeeeeeeeeeeeeeeeeeeeeeee</p>
 			<a href="http://www.helloweba.com/view-blog-281.html" class="cd-read-more" target="_blank">阅读全文</a>
 			<span class="cd-date">2020--02-05</span>
@@ -74,13 +86,68 @@
 </template>
 
 <script>
-	import Button from "@/components/Button.vue";
+  import $ from 'jquery';
+  import AddDialog from "@/components/AddDialog.vue";
 	export default {
 	name: "Branch",
 	components: {
-	Button
-	},
-	}
+  },
+  data(){
+    return { //按钮中的文字
+      text: this.btnData.text,
+      state: false,
+      editstate: false,//是否处于编辑状态
+      editbtn: '',//编辑按钮显示
+      editcancel: 'none',//取消编辑按钮隐藏
+      visibleDelete: 'none',   //删除按钮隐藏
+    }
+  },
+  // 在 `methods` 对象中定义方法
+  methods: {
+    add: function (){
+    this.$layer.iframe({
+     type:2,
+     title:"编辑",
+     area:['600px','450px'],
+     shade:true,
+     offset:'auto',
+     content:{
+      content:AddDialog,
+     }
+    })
+    },
+    
+    setVisible: function() {
+
+      if (this.editstate ===false) {
+      this.visibleDelete = ''
+      this.editstate =true
+      this.editbtn= 'none'
+      this.editcancel= ''
+      }
+      else{
+      this.visibleDelete = 'none'
+      this.editstate =false
+      this.editbtn= ''
+      this.editcancel= 'none'
+      }
+    },
+    fun() {
+      $("#block1").remove();
+    }
+  },
+   props: {
+    btnData: {
+      types: Array,
+      default() {
+        return {
+          text: '确认',
+        }
+      }
+    }
+  },
+  }
+
 </script>
 
 
@@ -354,27 +421,35 @@ a.cd-read-more:hover{text-decoration:none; background-color: #424242;  }
     animation: cd-bounce-2 0.6s;
   }
   .header {
-	position: relative;
-	width: 600px;
-	margin-left: 60px;
-	background: #ECECEA;
-	border-radius: 0.25em;
-	padding: 1em;
-	box-shadow: 0 3px 0 #ECECEA;
-	top: 45px;
-	left: 150px;
-	overflow-y: auto;
-  }
-  .btn {
-	position: relative;
-	left: 100px;
-  }
-  .btn2 {
-	position: relative;
-	left: 125px;
+    position: relative;
+    width: 750px;
+    margin-left: 60px;
+    background: #ECECEA;
+    border-radius: 0.25em;
+    padding: 1em;
+    box-shadow: 0 3px 0 #ECECEA;
+    top: 45px;
+    left: 20px;
+    overflow-y: auto;
   }
 }
- 
+  #btn {
+    position: relative;
+    left: 100px;
+  }
+  #btn2 {
+    position: relative;
+    left: 100px;
+  }
+  #btn3 {
+    position: relative;
+    left: 100px;
+  }
+  .DeleteBtn{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
 
 @media only screen and (min-width: 1170px) {
   /* inverse bounce effect on even content blocks */
@@ -384,6 +459,4 @@ a.cd-read-more:hover{text-decoration:none; background-color: #424242;  }
     animation: cd-bounce-2-inverse 0.6s;
   }
 }
-
-
 </style>

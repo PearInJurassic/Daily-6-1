@@ -1,54 +1,54 @@
 <template>
-    <div class="DateInput">
-        <table class="date">
-            <tr>
-                <td></td>
-                <td>年</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>月</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>日</td>
-            </tr>
-        </table>
-    </div>
+  <div class="block">
+    <el-date-picker
+      v-model="value2"
+      type="daterange"
+      align="right"
+      unlink-panels
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      size="mini"
+      :picker-options="pickerOptions">
+    </el-date-picker>
+  </div>
+
 </template>
 
 <script>
-
   export default {
-    name: "DateInput",
-    components: {
-      
-    },
-
-  } 
-
-</script>
-
-
-<style lang="less" scoped>
-    .date {
-        border: 1px solid black;
-        font-family: Arial;   
-        border-collapse: collapse;   
-        width: 200px;
-        height: 150px;
-        }
-    .date th, .date td {   
-    border: 1px solid black;   
-    }   
-    .in {
-        border: 1px solid black;   
-        font-family: Arial;   
-        border-collapse: collapse;   
-        width: 100%;
-        height: 100%;
-        text-align: center;
+    data() {
+      return {
+        pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
+        value1: '',
+        value2: ''
+      };
     }
-
-
-</style>
+  };
+</script>

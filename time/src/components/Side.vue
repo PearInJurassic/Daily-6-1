@@ -3,34 +3,37 @@
         <div class="title">
             <p class="text">类别</p>
         </div>
+        <br/>       
+        <router-link to="/" tag="el-button">全部</router-link>
         <br/>   
-        <br/>   
-        <Button :btnData="{text: '日常'}"></Button>
-
+        <br/>  
+        <router-link to="/about" tag="el-button">日常</router-link>
         <br/>
-        <Button :btnData="{text: '工作'}"></Button>
+        <br/>  
+        <router-link to="/workline" tag="el-button">工作</router-link>
         <br/>
-        <Button :btnData="{text: '心情'}"></Button>
+        <br/>  
+        <router-link to="/moodline" tag="el-button" >心情</router-link>
         <br/>
-        <Button :btnData="{text: '吃喝玩乐'}"></Button>
-        <br/>
+        <br/>  
+        <router-link to="/other" tag="el-button">吃喝玩乐</router-link>
+        <br/>  
         <br/>
         <div class="title">
             <p>时间</p>
         </div>
+        <br/>
         <DateInput></DateInput>
+        
     </div>
 </template>
 
 
 <script>
-  
-  import Button from "@/components/Button.vue";
   import DateInput from "@/components/DateInput.vue";
   export default {
     name: "Side",
     components: {
-      Button,
       DateInput
     },
   }
@@ -40,10 +43,10 @@
 <style lang="less" scoped>
 
 .Side {
-    width: 200px;
+    width: 350px;
 }
 .title{
-    width: 200px;
+    width: 350px;
     border: 1px solid black;  
     border-left:none;
     border-right:none;

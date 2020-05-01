@@ -5,17 +5,15 @@
         <NavBar></NavBar>
       </div>
 
-
       <div id="sidebar">
         <Side></Side>
       </div>
-
       <div id="maincontent">
-        <Branch></Branch>
+        <!-- 路由匹配到的组件将渲染在这里 -->
+        <router-view></router-view>
       </div>
 
   </div>
-
 
 </template>
 
@@ -24,13 +22,11 @@
 // @ is an alias to /src
 import NavBar from'@/components/Navigation/NavBar.vue'
 import Side from '@/components/Side.vue'
-import Branch from '@/components/Timeaxis/Branch.vue'
 export default {
   name: 'Home',
   components: {
     NavBar,
-    Side,
-    Branch
+    Side
   }
 }
 
@@ -58,7 +54,7 @@ export default {
 
 #sidebar{
 	float: left;/*侧边栏居左，改为right可令侧边栏居右*/
-	width: 200px;
+	width: 350px;
   border: 1px solid black;
   height: 100%;
   position: fixed;
@@ -74,7 +70,7 @@ export default {
   top: 54px;
   right: 0;
   bottom: 0;
-  left: 201px;
+  left: 351px;
   overflow-y: auto;
 }
 </style>
