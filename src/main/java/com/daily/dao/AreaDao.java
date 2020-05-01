@@ -44,4 +44,11 @@ public interface AreaDao {
      * @return boolean
      */
     boolean addArea(Area area);
+
+    /*
+     * 得到所有地区信息
+     *
+     * @return List<Area>
+     */
+    List<Area> getAreaList();
 }

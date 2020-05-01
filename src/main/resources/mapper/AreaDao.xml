@@ -36,4 +36,10 @@
         (#{areaId},#{areaName},
         #{belongAreaId},#{bubbleNum})
     </insert>
+    <select id="getAreaList" resultType="com.daily.entity.Area">
+        SELECT area_id, area_name, belong_area_id, bubble_num
+        FROM tb_area
+        ORDER BY area_id
+        ASC
+    </select>
 </mapper>

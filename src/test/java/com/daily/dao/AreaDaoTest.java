@@ -67,4 +67,11 @@ public class AreaDaoTest {
             }
         }
     }
+
+    @Test
+    @Ignore
+    public void getAreaList() {
+        List<Area> areaList = areaDao.getAreaList();
+        assertEquals(4100,areaList.size());
+    }
 }
