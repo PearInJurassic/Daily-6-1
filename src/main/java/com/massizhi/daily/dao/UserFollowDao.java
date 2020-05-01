@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface UserFollowDao {
     /*
-     * 根据用户ID得到关注列表
+     * 根据用户ID得到关注列表(只需要对方id)
      *
      * @param userId
-     * @return List<UserFollow>
+     * @return List<Integer>
      */
-    List<UserFollow> getUserFollowListByUserId(int userId);
+    List<Integer> getUserFollowIDListByUserId(int userId);
     /*
      * 根据用户ID,关注ID得到关注
      *

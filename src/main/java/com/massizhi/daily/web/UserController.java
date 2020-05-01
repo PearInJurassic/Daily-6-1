@@ -28,7 +28,7 @@ public class UserController {
      * @return Map<userInfo,UserExpand>
      */
     @RequestMapping(value = "/getUserInfoByUserId", method = RequestMethod.GET)
-    private Map<String, Object> getUserInfoByUserId(Integer userId) {
+    private Map<String, Object> getUserInfoByUserId(int userId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         UserExpand userExpand = userService.getUserInfoByUserId(userId);
         modelMap.put("userInfo", userExpand);

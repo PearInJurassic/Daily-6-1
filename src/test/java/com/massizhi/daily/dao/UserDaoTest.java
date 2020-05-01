@@ -1,6 +1,7 @@
 package com.massizhi.daily.dao;
 
 import com.massizhi.daily.entity.User;
+import com.massizhi.daily.entity.UserFollowInfo;
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +22,13 @@ class UserDaoTest {
         User user= userDao.getUserByUserId(1);
         // 验证预期值和实际值是否相符
         assertEquals("123456", user.getUserPwd());
+    }
+
+    @Test
+    void getUserFollowInfoByUserId() {
+        UserFollowInfo userFollowInfo = userDao.getUserFollowInfoByUserId(1);
+        // 验证预期值和实际值是否相符
+        assertEquals("哈哈", userFollowInfo.getUserName());
     }
 
     @Test
