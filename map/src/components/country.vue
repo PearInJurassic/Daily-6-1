@@ -1,103 +1,172 @@
 <template>
-  <div class="echarts">
-    <div :style="{height:'800px',width:'100%'}" ref="myEchart"></div>
+  <div id="country">
+    <div id="chinaMap" style="height:800px;width:100%;" ref="myEchart"></div>
+
   </div>
 </template>
+
 <script>
-  import echarts from "echarts";
-  //   import '../../node_modules/echarts/map/js/world.js'
-  import '../../node_modules/echarts/map/js/china.js' // 引入中国地图数据
-  export default {
-    name: "echarts",
-    props: ["userJson"],
-    data() {
-      return {
-        chart: null
-      };
-    },
-    mounted() {
-      this.chinaConfigure();
-    },
-    beforeDestroy() {
-      if (!this.chart) {
-        return;
-      }
-      this.chart.dispose();
-      this.chart = null;
-    },
-    methods: {
-      chinaConfigure() {
-        console.log(this.userJson)
-        let myChart = echarts.init(this.$refs.myEchart); //这里是为了获得容器所在位置    
-        window.onresize = myChart.resize;
-        myChart.setOption({ // 进行相关配置
-          backgroundColor: "#02AFDB",
-          tooltip: {}, // 鼠标移到图里面的浮动提示框
-          dataRange: {
+var echarts = require('echarts/lib/echarts');
+require('echarts/map/js/china') // 引入中国地图数据
+require('echarts/map/js/world') // 引入世界地图数据
+export default {
+  name: 'country',
+   mounted() {
+
+	this.chinamap();
+   },
+   methods: {
+
+   chinamap(){
+    var myChart = echarts.init(document.getElementById("chinaMap"));
+      window.addEventListener('resize', function () {
+        myChart.resize()
+      })
+		var option= {
+         backgroundColor: "#02AFDB",
+         dataRange: {
             show: false,
             min: 0,
-            max: 1000,
+            max: 1000000,
             text: ['High', 'Low'],
             realtime: true,
             calculable: true,
             color: ['orangered', 'yellow', 'lightskyblue']
           },
-          geo: { // 这个是重点配置区
-            map: 'china', // 表示中国地图
-            roam: true,
+        title: {
+            show:true,
+            text: '标题--中国地图',
+            subtext: 'made by xzc',
+            left:'center'
+        },
+        tooltip : {
+            trigger: 'item'
+        },
+        //左侧小导航图标
+        visualMap: {
+            show : true,
+            x: 'left',
+            y: 'bottom',
+            splitList: [
+                {start: 10, end:20},
+                {start: 6, end: 10},
+                {start: 0, end: 6},
+            ],
+            color: ['#1E90FF', '#7FFFAA', '#F0E68C']
+        },
+        //配置属性
+        series: [{
+            name: '数量',
+            type: 'map',
+			
+			map: 'china', 
+            roam: false,
+            zoom:1.2,
             label: {
-              normal: {
-                show: true, // 是否显示对应地名
-                textStyle: {
-                  color: 'rgba(0,0,0,0.4)'
+                normal: {
+                    show: true ,
+                },
+                emphasis: {
+                    show: false
                 }
-              }
             },
-            itemStyle: {
-              normal: {
-                borderColor: 'rgba(0, 0, 0, 0.2)'
-              },
-              emphasis: {
-                areaColor: null,
-                shadowOffsetX: 0,
-                shadowOffsetY: 0,
-                shadowBlur: 20,
-                borderWidth: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
-            }
-          },
-          series: [{
-              type: 'scatter',
-              coordinateSystem: 'geo' // 对应上方配置
-            },
-            {
-              name: '启动次数', // 浮动框的标题
-              type: 'map',
-              geoIndex: 0,
-              /*data: [{
-                "name": "北京",
-                "value": 599
-              }, {
-                "name": "上海",
-                "value": 142
-              }, {
-                "name": "黑龙江",
-                "value": 44
-              }, {
-                "name": "深圳",
-                "value": 92
-              }, {
-                "name": "湖北",
-                "value": 810
-              }, {
-                "name": "四川",
-                "value": 453
-              }]*/
-            }
-          ]
-        })
-      }
+            data:[
+{name: '北京',value:randomData() },{name: '天津',value: randomData() },
+                {name: '上海',value: randomData() },{name: '重庆',value: randomData() },
+                {name: '河北',value: randomData() },{name: '河南',value: randomData() },
+                {name: '云南',value: randomData() },{name: '辽宁',value: randomData() },
+                {name: '黑龙江',value: randomData() },{name: '湖南',value: randomData() },
+                {name: '安徽',value: randomData() },{name: '山东',value: randomData() },
+                {name: '新疆',value: randomData() },{name: '江苏',value: randomData() },
+                {name: '浙江',value: randomData() },{name: '江西',value: randomData() },
+                {name: '湖北',value: randomData() },{name: '广西',value: randomData() },
+                {name: '甘肃',value: randomData() },{name: '山西',value: randomData() },
+                {name: '内蒙古',value: randomData() },{name: '陕西',value: randomData() },
+                {name: '吉林',value: randomData() },{name: '福建',value: randomData() },
+                {name: '贵州',value: randomData() },{name: '广东',value: randomData() },
+                {name: '青海',value: randomData() },{name: '西藏',value: randomData() },
+                {name: '四川',value: randomData() },{name: '宁夏',value: randomData() },
+                {name: '海南',value: randomData() },{name: '台湾',value: randomData() },
+                {name: '香港',value: randomData() },{name: '澳门',value: randomData() }
+
+
+				]
+        }]
+    };
+
+                    var count = -1;
+                    setInterval(function() {
+                    
+                    var curr = count % 34; //数字为cityArr.length
+      
+                
+                    myChart.dispatchAction({
+                        type: 'downplay',
+                        seriesIndex: 0,
+                
+                    });
+                    myChart.dispatchAction({
+                        type: 'highlight',
+                        seriesIndex: 0,
+                        dataIndex: curr
+                    });
+
+
+
+                    myChart.dispatchAction({
+                        type: 'showTip',
+                        seriesIndex: 0, // 因为只有一组数据，所以此处应为0
+                        dataIndex: curr
+                    });
+                    count++;
+					
+					/*
+					if (index > cityArr.length - 1) {
+					  count = -1
+					}			
+					*/
+                }, 500);
+
+
+
+    /**
+     *  使用刚指定的配置项和数据显示图表。
+     *  */
+    myChart.setOption(option);
+    //获取随机数
+    function randomData() {
+        return Math.round(Math.random()*(12-1)+1)
     }
-  }
+	
+myChart.on('mouseover', function (params) {
+var dataIndex = params.dataIndex;
+                console.log(dataIndex);
+            });
+
+
+
+
+	myChart.on('click', function (chinaParam) {
+
+		
+                    var option = myChart.getOption();
+                    option.series[0].map = chinaParam.name;
+					option.series[0].mapType  = chinaParam.name;
+					myChart.clear();
+					console.log(chinaParam.name);
+                    myChart.setOption(option,true);                         
+            });
+			
+
+		
+			
+   }
+   },
+    created () {
+	
+	},
+	watch: {
+	
+	}
+}
 </script>

@@ -15,11 +15,13 @@
 // @ is an alias to /src
 import NavBar from'@/components/Navigation/NavBar.vue';
 import country from '@/components/country.vue';
+//import fujian from'@/views/fujian.vue';
 export default {
   name: 'Home',
   components: {
     NavBar,
-    country
+    country,
+    //fujian
   }
 }
 
@@ -50,7 +52,8 @@ export default {
 }
 
 #Cap {
-  height:100%;
+  height:800px;
+  width:100%;
 }
 
 
