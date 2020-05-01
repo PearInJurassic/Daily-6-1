@@ -1,0 +1,51 @@
+package com.massizhi.daily.web;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.massizhi.daily.entity.User;
+import com.massizhi.daily.entity.UserExpand;
+import com.massizhi.daily.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/user")
+public class UserController {
+    @Autowired
+    private UserService userService;
+
+    /*
+     * 通过用户ID得到用户信息
+     * 提示：在这里将用户地区ID转化为地区名
+     * @param userId
+     * @return Map<userInfo,UserExpand>
+     */
+    @RequestMapping(value = "/getUserInfoByUserId", method = RequestMethod.GET)
+    private Map<String, Object> getUserInfoByUserId(Integer userId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        UserExpand userExpand = userService.getUserInfoByUserId(userId);
+        modelMap.put("userInfo", userExpand);
+        return modelMap;
+    }
+
+    /*
+     * 修改用户信息
+     *
+     * @param user
+     * @return Map<success,boolean>
+     */
+    @RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST)
+    private Map<String, Object> updateUserInfo(@RequestBody User user)
+            throws JsonParseException, JsonMappingException, IOException {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        modelMap.put("success", userService.updateUserInfo(user));
+        return modelMap;
+    }
+}

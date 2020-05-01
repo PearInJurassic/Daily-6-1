@@ -14,7 +14,7 @@ public class User {
     //用户头像URL
     private String userImg;
     //用户所属地区ID
-    private String areaId;
+    private Integer areaId;
     //用户出生日期
     private Date userDate;
     //用户性别
@@ -27,6 +27,14 @@ public class User {
     private Integer fansNum;
     //关注数
     private Integer followNum;
+
+    public Integer getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(Integer areaId) {
+        this.areaId = areaId;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -68,13 +76,6 @@ public class User {
         this.userImg = userImg;
     }
 
-    public String getAreaId() {
-        return areaId;
-    }
-
-    public void setAreaId(String areaId) {
-        this.areaId = areaId;
-    }
 
     public Date getUserDate() {
         return userDate;
