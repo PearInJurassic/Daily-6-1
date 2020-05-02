@@ -2,8 +2,9 @@ package com.massizhi.daily.web;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.massizhi.daily.entity.User;
-import com.massizhi.daily.entity.UserExpand;
+import com.massizhi.daily.entity.*;
+import com.massizhi.daily.service.PostService;
+import com.massizhi.daily.service.RecordService;
 import com.massizhi.daily.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,6 +22,8 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
+    private PostService postService;
+    private RecordService recordService;
 
     /*
      * 通过用户ID得到用户信息
@@ -46,6 +50,40 @@ public class UserController {
             throws JsonParseException, JsonMappingException, IOException {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         modelMap.put("success", userService.updateUserInfo(user));
+        return modelMap;
+    }
+
+    /*
+     * 根据用户ID得到用户帖子列表和动态列表
+     *
+     * @param userId
+     * @return Map<userPostList, List<Post>>
+     *         Map<userRecordList, List<Record>>
+     */
+    @RequestMapping(value = "/userPostListAndUserRecordList", method = RequestMethod.GET)
+    private Map<String, Object> userPostListAndUserRecordList(int userId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Post> userPostList=postService.getPostByUserId(userId);
+        List<Record> userRecordList=recordService.getRecordListByUserId(userId);
+        modelMap.put("userPostList", userPostList);
+        modelMap.put("userRecordList", userRecordList);
+        return modelMap;
+    }
+
+    /*
+     * 根据用户ID和关键字搜索得到用户帖子列表和动态列表
+     *
+     * @param userId，keyWord
+     * @return Map<userSelectedPostList, List<Post>>
+     *         Map<userSelectedRecordList, List<Record>>
+     */
+    @RequestMapping(value = "/userSelectedPostAndRecordList", method = RequestMethod.GET)
+    private Map<String, Object> userSelectedPostAndRecordList(int userId,String keyWord) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Post> userSelectedPostList=postService.getPostByContentAndUserId(keyWord,userId);
+        List<Record> userSelectedRecordList=recordService.getRecordListByUserIdAndKeyWord(userId,keyWord);
+        modelMap.put("userSelectedPostList", userSelectedPostList);
+        modelMap.put("userSelectedRecordList", userSelectedRecordList);
         return modelMap;
     }
 }

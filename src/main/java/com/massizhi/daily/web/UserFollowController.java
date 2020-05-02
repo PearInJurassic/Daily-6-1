@@ -19,7 +19,7 @@ public class UserFollowController {
     @Autowired
     private UserFollowService userFollowService;
     /*
-     * 根据用户ID得到用户关注的人的信息
+     * 根据用户ID得到用户关注的人的信息(展示关注列表功能及点击关注跳转功能)
      *
      * @param userId
      * @return Map<userFollowInfo, List<UserFollowInfo>>

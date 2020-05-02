@@ -20,6 +20,13 @@ public interface RecordDao {
      */
     List<Record> getRecordListByTwoId(int userId,int timeAxisId);
     /*
+     * 根据用户ID和内容关键字得到动态列表
+     *
+     * @param string
+     * @return List<Record>
+     */
+    List<Record> getRecordListByUserIdAndKeyWord(int userId,String keyWord);
+    /*
      * 新增动态
      *
      * @param Record

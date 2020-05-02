@@ -1,8 +1,6 @@
 package com.massizhi.daily.dao;
 
 import com.massizhi.daily.entity.Record;
-import com.massizhi.daily.entity.User;
-import com.massizhi.daily.entity.UserFollow;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,13 @@ class RecordDaoTest {
         List<Record> recordList = recordDao.getRecordListByTwoId(1,1);
         // 验证预期值和实际值是否相符
         assertEquals(2, recordList.size());
+    }
+
+    @Test
+    void getRecordListByUserIdAndKeyWord() {
+        List<Record> recordList = recordDao.getRecordListByUserIdAndKeyWord(1,"嗯");
+        // 验证预期值和实际值是否相符
+        assertEquals(1, recordList.size());
     }
 
     @Test

@@ -23,6 +23,17 @@
         ORDER BY record_create_time
         DESC
     </select>
+    <select id="getRecordListByUserIdAndKeyWord" resultType="com.massizhi.daily.entity.Record">
+        SELECT record_id,record_img,record_content,record_create_time,
+        record_update_time,time_axis_id,area_id,post_id,user_id
+        FROM tb_record
+        WHERE
+        user_id=#{userId}
+        AND
+        record_content like '%${keyWord}%'
+        ORDER BY record_create_time
+        DESC
+    </select>
     <insert id="insertRecord" useGeneratedKeys="true" keyProperty="recordId"
             keyColumn="record_id" parameterType="com.massizhi.daily.entity.Record">
         INSERT INTO
