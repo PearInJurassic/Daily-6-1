@@ -13,6 +13,6 @@ public class AddressUtilsTest {
 
     @Test
     public void getAddresses() throws UnsupportedEncodingException {
-        assertEquals("福州市",addressUtils.getAddresses("ip=118.28.67.126&json=true","GBK"));
+        assertEquals("天津市",addressUtils.getAddresses("ip=118.28.67.126&json=true","GBK"));
     }
 }

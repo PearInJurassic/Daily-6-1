@@ -41,7 +41,7 @@ public class AddressUtils {
                 return "0";// 无效IP，局域网测试
             }
             String[] string = temp[3].split(":");
-            string[1] = string[1].substring(1, 4);
+            string[1] = string[1].replaceAll("\"", "");
             //System.out.println(string[1]);
             return string[1];
         }
