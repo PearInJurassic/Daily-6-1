@@ -13,11 +13,6 @@ public class AddressUtilsTest {
 
     @Test
     public void getAddresses() throws UnsupportedEncodingException {
-        assertEquals("中国",addressUtils.getAddresses("ip=113.101.22.135","UTF-8"));
-    }
-
-    @Test
-    @Ignore
-    public void decodeUnicode() {
+        assertEquals("福州市",addressUtils.getAddresses("ip=118.28.67.126&json=true","GBK"));
     }
 }
