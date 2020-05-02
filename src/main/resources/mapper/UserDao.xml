@@ -16,6 +16,34 @@
         WHERE
         user_id=#{userId}
     </select>
+    <update id="decUserFansNum" parameterType="int">
+        UPDATE tb_user
+        <set>
+            fans_num=fans_num+1
+        </set>
+        WHERE user_id=#{userId}
+    </update>
+    <update id="incUserFansNum" parameterType="int">
+        UPDATE tb_user
+        <set>
+            fans_num=fans_num-1
+        </set>
+        WHERE user_id=#{userId}
+    </update>
+    <update id="decUserFollowNum" parameterType="int">
+        UPDATE tb_user
+        <set>
+            follow_num=follow_num+1
+        </set>
+        WHERE user_id=#{userId}
+    </update>
+    <update id="incUserFollowNum" parameterType="int">
+        UPDATE tb_user
+        <set>
+            follow_num=follow_num-1
+        </set>
+        WHERE user_id=#{userId}
+    </update>
     <update id="updateUser" parameterType="com.massizhi.daily.entity.User">
         UPDATE tb_user
         <set>

@@ -86,4 +86,30 @@ public class UserController {
         modelMap.put("userSelectedRecordList", userSelectedRecordList);
         return modelMap;
     }
+
+    /*
+     * 取消关注，涉及到两个表tb_user和tb_user_follow
+     *
+     * @param userId,followId
+     * @return boolean
+     */
+    @RequestMapping(value = "/cancelFollow", method = RequestMethod.GET)
+    private Map<String, Object> cancelFollow(int userId,int followId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        modelMap.put("success", userService.cancelFollow(userId,followId));
+        return modelMap;
+    }
+
+    /*
+     * 增加关注
+     *
+     * @param userId,followId
+     * @return boolean
+     */
+    @RequestMapping(value = "/addFollow", method = RequestMethod.GET)
+    private Map<String, Object> addFollow(int userId,int followId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        modelMap.put("success", userService.addFollow(userId,followId));
+        return modelMap;
+    }
 }

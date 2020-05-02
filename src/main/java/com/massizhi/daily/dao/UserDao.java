@@ -19,6 +19,34 @@ public interface UserDao {
      */
     UserFollowInfo getUserFollowInfoByUserId(int userId);
     /*
+     * 用户粉丝数++
+     *
+     * @param userId
+     * @return int
+     */
+    int decUserFansNum(int userId);
+    /*
+     * 用户粉丝数--
+     *
+     * @param userId
+     * @return int
+     */
+    int incUserFansNum(int userId);
+    /*
+     * 用户关注数++
+     *
+     * @param userId
+     * @return int
+     */
+    int decUserFollowNum(int userId);
+    /*
+     * 用户关注数--
+     *
+     * @param userId
+     * @return int
+     */
+    int incUserFollowNum(int userId);
+    /*
      * 修改用户信息
      *
      * @param user

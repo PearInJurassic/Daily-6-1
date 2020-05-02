@@ -18,6 +18,20 @@ class UserDaoTest {
     private UserDao userDao;
 
     @Test
+    void decUserFansNum() {
+        int i= userDao.decUserFansNum(1);
+        // 验证预期值和实际值是否相符
+        assertEquals(1, i);
+    }
+
+    @Test
+    void decUserFollowNum() {
+        int i= userDao.decUserFollowNum(1);
+        // 验证预期值和实际值是否相符
+        assertEquals(1, i);
+    }
+
+    @Test
     void getUserByUserId() {
         User user= userDao.getUserByUserId(1);
         // 验证预期值和实际值是否相符
@@ -41,4 +55,5 @@ class UserDaoTest {
         // 验证预期值和实际值是否相符
         assertEquals("哈哈", user.getUserName());
     }
+
 }

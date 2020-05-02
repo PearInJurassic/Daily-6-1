@@ -1,7 +1,6 @@
 package com.massizhi.daily.dao;
 
 import com.massizhi.daily.entity.Post;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,5 +17,5 @@ public interface PostDao {
      *
      * @return userId
      */
-    List<Post> queryPostByContentAndUserId(@Param("str") String str, @Param("userId") int userId);
+    List<Post> queryPostByContentAndUserId(String str,int userId);
 }

@@ -2,18 +2,23 @@ package com.massizhi.daily.service.impl;
 
 import com.massizhi.daily.dao.AreaDao;
 import com.massizhi.daily.dao.UserDao;
+import com.massizhi.daily.dao.UserFollowDao;
 import com.massizhi.daily.entity.User;
 import com.massizhi.daily.entity.UserExpand;
+import com.massizhi.daily.entity.UserFollow;
 import com.massizhi.daily.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
     private AreaDao areaDao;
+    private UserFollowDao userFollowDao;
 
     @Override
     public UserExpand getUserInfoByUserId(int userId) {
@@ -29,7 +34,7 @@ public class UserServiceImpl implements UserService {
     public boolean updateUserInfo(User user) {
         if (user.getUserId() != null) {
             try {
-                int effectedNum = userDao.updateUser(user);;
+                int effectedNum = userDao.updateUser(user);
                 if (effectedNum > 0) {
                     return true;
                 } else {
@@ -40,6 +45,51 @@ public class UserServiceImpl implements UserService {
             }
         } else {
             throw new RuntimeException("用户信息更新失败");
+        }
+    }
+
+    @Transactional
+    @Override
+    public boolean cancelFollow(int userId, int followId) {
+        if (userId != 0 && followId != 0) {
+            try {
+                int effectedNum1 = userDao.incUserFollowNum(userId);
+                int effectedNum2 = userDao.incUserFansNum(followId);
+                int effectedNum3 = userFollowDao.deleteUserFollowByTwoId(userId,followId);
+                if (effectedNum1 > 0 && effectedNum2 > 0 && effectedNum3 > 0) {
+                    return true;
+                } else {
+                    throw new RuntimeException("用户取消关注失败");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("用户取消关注失败:" + e.toString());
+            }
+        } else {
+            throw new RuntimeException("用户取消关注失败");
+        }
+    }
+
+    @Override
+    public boolean addFollow(int userId, int followId) {
+        if (userId != 0 && followId != 0) {
+            try {
+                int effectedNum1 = userDao.decUserFollowNum(userId);
+                int effectedNum2 = userDao.decUserFansNum(followId);
+                UserFollow userFollow=new UserFollow();
+                userFollow.setFollowTime(new Date());
+                userFollow.setUserId(userId);
+                userFollow.setFollowId(followId);
+                int effectedNum3 = userFollowDao.insertUserFollow(userFollow);
+                if (effectedNum1 > 0 && effectedNum2 > 0 && effectedNum3 > 0) {
+                    return true;
+                } else {
+                    throw new RuntimeException("用户增加关注失败");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("用户增加关注失败:" + e.toString());
+            }
+        } else {
+            throw new RuntimeException("用户增加关注失败");
         }
     }
 }

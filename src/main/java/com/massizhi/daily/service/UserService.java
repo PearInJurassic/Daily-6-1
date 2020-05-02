@@ -18,4 +18,18 @@ public interface UserService {
      * @return boolean
      */
     boolean updateUserInfo(User user);
+    /*
+     * 取消关注，涉及到两个表tb_user和tb_user_follow
+     *
+     * @param userId,followId
+     * @return boolean
+     */
+    boolean cancelFollow(int userId,int followId);
+    /*
+     * 增加关注，涉及到两个表tb_user和tb_user_follow
+     *
+     * @param userId,followId
+     * @return boolean
+     */
+    boolean addFollow(int userId,int followId);
 }
