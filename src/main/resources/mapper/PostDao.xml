@@ -21,6 +21,14 @@
 		post_id=#{postId}
 	</select>
 	
+	<select id="queryPostByPostId" resultType="com.daily.entity.Post">
+		SELECT *
+		FROM tb_post
+		WHERE
+		post_id=#{postId}
+	</select>
+	
+	
 	<select id="queryRequireAuditPost" resultType="com.daily.entity.Post">
 		SELECT *
 		FROM tb_post
@@ -44,14 +52,22 @@
 		
 	</select>
 	
+	<select id="queryAreaByContent" resultType="java.lang.Integer">
+		SELECT area_id
+		FROM tb_post
+		WHERE
+		post_content like '%${str}%'
+		
+	</select>
+	
 	<insert id="insertPost" useGeneratedKeys="true" keyProperty="postId"
 		keyColumn="post_id" parameterType="com.daily.entity.Post">
 		INSERT INTO
 		tb_post(post_create_time,post_update_time,post_content,anonym,area_id,
-		user_id,forward)
+		user_id,forward_post_id)
 		VALUES
 		(#{postCreateTime},#{postUpdateTime},#{postContent},#{anonym},#{areaId},
-		#{userId},#{forward})
+		#{userId},#{forwardPostId})
 	</insert>
 	<update id="updatePost" parameterType="com.daily.entity.Post">
 		update tb_post
