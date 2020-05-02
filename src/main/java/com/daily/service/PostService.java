@@ -48,6 +48,8 @@ public interface PostService {
 
     List<Post> getPostByContentAndUserId(String str, int userId);
 
+    List<Integer> getAreaByContent(String str);
+
     /**
      * 增加帖子信息
      * 

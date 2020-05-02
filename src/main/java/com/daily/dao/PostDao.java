@@ -57,7 +57,14 @@ public interface PostDao {
      * 
      * @return userId
      */
-    List<Post> queryPostByContentAndUserId(@Param("str") String str, @Param("userId") int userId);
+    List<Post> queryPostByContentAndUserId(String str, int userId);
+
+    /**
+     * 搜索某一用户的帖子
+     * 
+     * @return userId
+     */
+    List<Integer> queryAreaByContent(@Param("str") String str);
 
     /**
      * 根据postId找出帖子

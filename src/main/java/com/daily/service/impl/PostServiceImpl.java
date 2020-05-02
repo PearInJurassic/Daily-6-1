@@ -215,4 +215,10 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    @Override
+    public List<Integer> getAreaByContent(String str) {
+
+        return postDao.queryAreaByContent(str);
+    }
+
 }
