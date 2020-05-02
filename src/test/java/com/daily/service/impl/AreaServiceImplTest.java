@@ -44,13 +44,13 @@ public class AreaServiceImplTest {
     @Test
     @Ignore
     public void addBubbleNum() {
-        assertEquals(true,areaService.addBubbleNum(35));
+        assertEquals(true,areaService.addBubbleNum(101001));
     }
 
     @Test
     @Ignore
     public void reduceBubbleNum() {
-        assertEquals(true,areaService.reduceBubbleNum(35));
+        assertEquals(true,areaService.reduceBubbleNum(101001));
     }
 
     @Test
