@@ -42,4 +42,10 @@
         ORDER BY area_id
         ASC
     </select>
+    <select id="getAreaNameById" resultType="String">
+        SELECT area_name
+        FROM tb_area
+        WHERE
+        area_id=#{areaId}
+    </select>
 </mapper>

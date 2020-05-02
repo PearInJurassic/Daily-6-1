@@ -51,4 +51,12 @@ public interface AreaDao {
      * @return List<Area>
      */
     List<Area> getAreaList();
+
+    /*
+     * 通过地区ID得到地区名
+     *
+     * @param areaId
+     * @return String
+     */
+    String getAreaNameById(int areaId);
 }

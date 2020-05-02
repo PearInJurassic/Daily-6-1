@@ -83,4 +83,9 @@ public class AreaServiceImpl implements AreaService {
         }
         return true;
     }
+
+    @Override
+    public String getAreaNameById(int areaId) {
+        return areaDao.getAreaNameById(areaId);
+    }
 }

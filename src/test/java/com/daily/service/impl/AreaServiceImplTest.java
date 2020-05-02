@@ -56,7 +56,14 @@ public class AreaServiceImplTest {
     }
 
     @Test
+    @Ignore
     public void refreshBubbleNum() {
         assertEquals(true,areaService.refreshBubbleNum());
+    }
+
+    @Test
+    @Ignore
+    public void getAreaNameById() {
+        assertEquals("中国",areaService.getAreaNameById(0));
     }
 }

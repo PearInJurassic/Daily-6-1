@@ -74,4 +74,10 @@ public class AreaDaoTest {
         List<Area> areaList = areaDao.getAreaList();
         assertEquals(4100,areaList.size());
     }
+
+    @Test
+    public void getAreaNameById() {
+        String areaName = areaDao.getAreaNameById(0);
+        assertEquals("中国",areaName);
+    }
 }

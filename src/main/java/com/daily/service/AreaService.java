@@ -52,4 +52,12 @@ public interface AreaService {
      * @return boolean
      */
     boolean refreshBubbleNum();
+
+    /*
+     * 通过地区ID得到地区名
+     *
+     * @param areaId
+     * @return String
+     */
+    String getAreaNameById(int areaId);
 }
