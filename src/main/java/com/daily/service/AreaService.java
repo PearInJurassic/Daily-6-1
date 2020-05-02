@@ -35,7 +35,7 @@ public interface AreaService {
      * @param Area
      * @return boolean
      */
-    boolean addBubbleNum(Area area);
+    boolean addBubbleNum(int areaId);
 
     /*
      * 减少地区气泡数（删除帖子后）
@@ -43,7 +43,7 @@ public interface AreaService {
      * @param Area
      * @return boolean
      */
-    boolean reduceBubbleNum(Area area);
+    boolean reduceBubbleNum(int areaId);
 
     /*
      * 刷新地区气泡数（一定时间）

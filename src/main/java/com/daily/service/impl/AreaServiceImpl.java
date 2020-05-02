@@ -30,7 +30,8 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
-    public boolean addBubbleNum(Area area) {
+    public boolean addBubbleNum(int areaId) {
+        Area area = areaDao.getAreaById(areaId);
         //如果所属地区ID小于0（即还有上层地区,目前最上层为中国（-1））
         while(area.getBelongAreaId() >= 0) {
             //气泡数加1
@@ -49,7 +50,8 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
-    public boolean reduceBubbleNum(Area area) {
+    public boolean reduceBubbleNum(int areaId) {
+        Area area = areaDao.getAreaById(areaId);
         //如果所属地区ID小于0（即还有上层地区,目前最上层为中国（-1））
         while(area.getBelongAreaId() >= 0) {
             //气泡数加1

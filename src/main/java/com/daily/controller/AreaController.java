@@ -75,11 +75,11 @@ public class AreaController {
      * @param area
      * @return
      */
-    @RequestMapping(value = "/addbubblenum", method = RequestMethod.POST)
-    private Map<String, Object> addBubbleNum(@RequestBody Area area) {
+    @RequestMapping(value = "/addbubblenum", method = RequestMethod.GET)
+    private Map<String, Object> addBubbleNum(int areaId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         // 增加地区气泡数（新增帖子后）
-        modelMap.put("success", areaService.addBubbleNum(area));
+        modelMap.put("success", areaService.addBubbleNum(areaId));
         return modelMap;
     }
 
@@ -89,11 +89,11 @@ public class AreaController {
      * @param area
      * @return
      */
-    @RequestMapping(value = "/reducebubblenum", method = RequestMethod.POST)
-    private Map<String, Object> reduceBubbleNum(@RequestBody Area area) {
+    @RequestMapping(value = "/reducebubblenum", method = RequestMethod.GET)
+    private Map<String, Object> reduceBubbleNum(int areaId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         // 减少地区气泡数（删除帖子后）
-        modelMap.put("success", areaService.reduceBubbleNum(area));
+        modelMap.put("success", areaService.reduceBubbleNum(areaId));
         return modelMap;
     }
 }
