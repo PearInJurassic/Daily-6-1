@@ -2,6 +2,9 @@
   <div class="block">
     <el-date-picker
       v-model="value2"
+      format="yyyy-MM-dd"
+      value-format="yyyy-MM-dd"
+      @change="selectTime"
       type="daterange"
       align="right"
       unlink-panels
@@ -47,8 +50,13 @@
           }]
         },
         value1: '',
-        value2: ''
+        value2: null
       };
+    },
+    methods: {
+      selectTime(){
+        this.store.commit("setDate", this.value2[0] , this.value2[1]);
+      }
     }
   };
 </script>

@@ -2,95 +2,83 @@
     <div class="Branch">
       <div class="header">
 		<h1 style="display:inline-block">{{text}}时间轴</h1>
-    <el-button id="btn" v-on:click="add">添加</el-button>
+    <el-button id="btn" @click="dialogFormVisible = true">添加</el-button>
     <el-button id="btn2" v-on:click="setVisible" :style="{ display: editbtn }">编辑</el-button>
     <el-button id="btn3" v-on:click="setVisible" :style="{ display: editcancel }">取消编辑</el-button>
 	</div>
-    <section id="cd-timeline" class="cd-container">
+  <section id="cd-timeline" class="cd-container">
 
-	<div id="block1">
-    <div class="cd-timeline-block">
+	<div v-for="(data,i) in datalist" :key="i" id="block1">
+    <div v-if=" i%2===0 " class="cd-timeline-block">
       <div class="cd-timeline-img cd-picture">
-        <img src="../../assets/NavBar/TimeLine.png" alt="Picture">
-              
+        <img src="../../assets/NavBar/TimeLine.png" alt="Picture">             
       </div>
 
-      <div class="cd-timeline-content">
-        <h2 style="display:inline">A</h2>
-        <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun()"></el-button>
-        <p>aaaaaaa</p>
-        <a href="http://www.helloweba.com/view-blog-285.html" class="cd-read-more" target="_blank">阅读全文</a>
-        <span class="cd-date">2020-01-06</span>
+      <div class="cd-timeline-content" style="float:left">
+        <p style="position:absolute;left:5px;top:5px">{{data.date}}</p>
+        <h2 style="display:inline">{{data.title}}</h2>
+        <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun(i)"></el-button>
+        <p>{{data.msg}}</p>
+        <a href="http://www.helloweba.com/view-blog-285.html" class="cd-read-more" target="_blank" style="position:relative;left:110px">查看全文</a>
       </div>
+    </div>
+
+    <div v-else class="cd-timeline-block">
+      <div class="cd-timeline-img cd-picture">
+        <img src="../../assets/NavBar/TimeLine.png" alt="Picture">             
+      </div>
+
+      <div class="cd-timeline-content"  style="float:right">
+        <p style="position:absolute;left:5px;top:5px">{{data.date}}</p>
+        <h2 style="display:inline">{{data.title}}</h2>
+        <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun(i)"></el-button>
+        <p>{{data.msg}}</p>
+        <a href="http://www.helloweba.com/view-blog-285.html" class="cd-read-more" target="_blank" style="position:relative;left:110px">查看全文</a>
+        
+      </div>
+     
     </div>
   </div>
 
-  <div id="block2">
-    <div class="cd-timeline-block">
-      <div class="cd-timeline-img cd-movie">
-        <img src="../../assets/NavBar/TimeLine.png" alt="Picture">
-      </div>
-
-      <div class="cd-timeline-content">
-        <h2 style="display:inline">B</h2>
-        <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun()"></el-button>
-        <p>bbbbbbbbbbb</p>
-        <a href="http://www.helloweba.com/view-blog-284.html" class="cd-read-more" target="_blank">阅读全文</a>
-        <span class="cd-date">2020-01-25</span>
-      </div>
-    </div>
-  </div>
-
-	<div class="cd-timeline-block">
-		<div class="cd-timeline-img cd-picture">
-			<img src="../../assets/NavBar/TimeLine.png" alt="Picture">
-		</div>
-
-		<div class="cd-timeline-content">
-      <h2 style="display:inline">C</h2>
-      <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun()"></el-button>
-			<p>cccccccccc</p>
-			<a href="http://www.helloweba.com/view-blog-283.html" class="cd-read-more" target="_blank">阅读全文</a>
-			<span class="cd-date">2020-02-20</span>
-		</div>
-	</div>
-	<div class="cd-timeline-block">
-		<div class="cd-timeline-img cd-movie">
-			<img src="../../assets/NavBar/TimeLine.png" alt="Picture">
-		</div>
-
-		<div class="cd-timeline-content">
-			<h2 style="display:inline">D</h2>
-      <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun()"></el-button>
-			<p>ddddddd</p>
-			<a href="http://www.helloweba.com/view-blog-282.html" class="cd-read-more" target="_blank">阅读全文</a>
-			<span class="cd-date">2020-02-14</span>
-		</div>
-	</div>
-	<div class="cd-timeline-block">
-		<div class="cd-timeline-img cd-movie">
-			<img src="../../assets/NavBar/TimeLine.png" alt="Picture">
-		</div>
-
-		<div class="cd-timeline-content">
-			<h2 style="display:inline">E</h2>
-      <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun()"></el-button>
-			<p>eeeeeeeeeeeeeeeeeeeeeeeeeeee</p>
-			<a href="http://www.helloweba.com/view-blog-281.html" class="cd-read-more" target="_blank">阅读全文</a>
-			<span class="cd-date">2020--02-05</span>
-		</div>
-	</div>
 </section>
 
+<el-dialog title="动态添加" :visible.sync="dialogFormVisible">
+  <el-form :model="form">
+    
+    <el-form-item label="动态" :label-width="formLabelWidth">
+      <el-select value-key="id" @change="selectGet" v-model="form.region" placeholder="请选择你要添加的动态">
+        <el-option v-for="item in dataoptions" :key="item.id" :label="item.title" :value="item" ></el-option>
+        
+      </el-select>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="add(form.region)">确 定</el-button>
+    <el-button @click="dialogFormVisible = false">取 消</el-button>
+    
+  </div>
+</el-dialog>
     </div>
 </template>
 
 <script>
-  import $ from 'jquery';
-  import AddDialog from "@/components/AddDialog.vue";
 	export default {
 	name: "Branch",
 	components: {
+  },
+  computed: {
+      
+  },
+ created () {
+    //在页面加载时读取sessionStorage里的状态信息
+    if (sessionStorage.getItem("store") ) {
+        this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(sessionStorage.getItem("store"))))
+    } 
+
+    //在页面刷新时将vuex里的信息保存到sessionStorage里
+    window.addEventListener("beforeunload",()=>{
+        sessionStorage.setItem("store",JSON.stringify(this.$store.state))
+    })
   },
   data(){
     return { //按钮中的文字
@@ -100,23 +88,55 @@
       editbtn: '',//编辑按钮显示
       editcancel: 'none',//取消编辑按钮隐藏
       visibleDelete: 'none',   //删除按钮隐藏
+      count: this.$store.state.addItem,
+      dialogFormVisible: false,
+      form: {
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        },
+      formLabelWidth: '120px',
+      datalist:[
+      {id: 1,title:'S',msg:'sssss',date:'2020-01-02'},
+      {id: 2,title:'N',msg:'nnnnn',date:'2020-02-02'},
+      {id: 3,title:'D',msg:'ddddd',date:'2020-03-01'},
+      {id: 4,title:'F',msg:'fffff',date:'2020-03-19'}
+      ],
+      dataoptions:[
+        {id:0,title:'W',msg:'wwwww',date: '2020-08-01'},
+        {id:1,title:'K',msg:'kkkkk',date: '2020-04-02'},
+        {id:2,title:'M',msg:'mmmmm',date: '2020-05-02'}
+      ],
     }
   },
   // 在 `methods` 对象中定义方法
   methods: {
-    add: function (){
-    this.$layer.iframe({
-     type:2,
-     title:"编辑",
-     area:['600px','450px'],
-     shade:true,
-     offset:'auto',
-     content:{
-      content:AddDialog,
-     }
-    })
+    //点击添加按钮后添加动态
+    add: function (item){
+      let obj1={id:item.id,title:item.title,msg:item.msg,date:item.date};
+      this.dialogFormVisible = false;
+      //添加到时间轴列表
+      this.datalist.splice(0, 0, obj1);
+      this.sort();
+      //从选择列表中删去
+      this.dataoptions.splice(item.id, 1);
     },
-    
+    sort(){                     // 排序
+      this.datalist.sort(this.compare("date"));
+      // 调用下面 compare 方法 并传值
+        },
+    compare(attr){                  // 排序方法
+      return function(a,b){
+        let val1 = a[attr];
+        let val2 = b[attr];
+        return new Date(val1.replace(/-/,'/')) - new Date(val2.replace(/-/,'/'));
+      }        
+},
     setVisible: function() {
 
       if (this.editstate ===false) {
@@ -130,11 +150,15 @@
       this.editstate =false
       this.editbtn= ''
       this.editcancel= 'none'
-      }
+      }    
     },
-    fun() {
-      $("#block1").remove();
-    }
+    //删除动态
+    fun(index) {
+
+      this.datalist.splice(index, 1);
+      
+    },
+  
   },
    props: {
     btnData: {
@@ -274,20 +298,15 @@ Main components
   margin-top: -12px;
 }
 .cd-timeline-img.cd-picture {
-  background: #ECECEA;
+  background: white;
 }
-.cd-timeline-img.cd-movie {
-  background: #ECECEA;
-}
-.cd-timeline-img.cd-location {
-  background: #f0ca45;
-}
+
 @media only screen and (min-width: 1170px) {
   .cd-timeline-img {
-    width: 60px;
-    height: 60px;
+    width: 23px;
+    height: 23px;
     left: 50%;
-    margin-left: -30px;
+    margin-left: -10px;
     /* Force Hardware Acceleration in WebKit */
     -webkit-transform: translateZ(0);
     -webkit-backface-visibility: hidden;
@@ -305,11 +324,11 @@ Main components
 
 .cd-timeline-content {
   position: relative;
-  margin-left: 60px;
-  background: #ECECEA;
+ border: 1px solid black;
+  background: white;
   border-radius: 0.25em;
   padding: 1em;
-  box-shadow: 0 3px 0 #ECECEA;
+  box-shadow: 0 3px 0 rgb(97, 97, 94);
 }
 .cd-timeline-content:after {
   content: "";
@@ -388,7 +407,7 @@ a.cd-read-more:hover{text-decoration:none; background-color: #424242;  }
   .cd-timeline-content .cd-date {
     position: absolute;
     width: 100%;
-    left: 122%;
+    left: 120%;
     top: 6px;
     font-size: 16px;
     font-size: 1rem;
@@ -422,15 +441,11 @@ a.cd-read-more:hover{text-decoration:none; background-color: #424242;  }
   }
   .header {
     position: relative;
-    width: 750px;
-    margin-left: 60px;
-    background: #ECECEA;
+    width: 700px;
+    border: 1px solid black;
     border-radius: 0.25em;
-    padding: 1em;
-    box-shadow: 0 3px 0 #ECECEA;
-    top: 45px;
-    left: 20px;
-    overflow-y: auto;
+    left: 80px;
+    top: 48px;
   }
 }
   #btn {

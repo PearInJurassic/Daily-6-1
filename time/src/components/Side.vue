@@ -24,7 +24,9 @@
         </div>
         <br/>
         <DateInput></DateInput>
-        
+        <br/>
+        <br/>
+        <el-button>确定</el-button>
     </div>
 </template>
 
