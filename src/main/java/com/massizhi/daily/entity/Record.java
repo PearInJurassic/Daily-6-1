@@ -14,7 +14,7 @@ public class Record {
     //动态修改时间
     private Date recordUpdateTime;
     //动态所属时间轴ID
-    private Integer timeAxisId;
+    private String timeAxisType;
     //动态所属地区ID
     private Integer areaId;
     //联系的帖子ID
@@ -62,12 +62,12 @@ public class Record {
         this.recordUpdateTime = recordUpdateTime;
     }
 
-    public Integer getTimeAxisId() {
-        return timeAxisId;
+    public String getTimeAxisType() {
+        return timeAxisType;
     }
 
-    public void setTimeAxisId(Integer timeAxisId) {
-        this.timeAxisId = timeAxisId;
+    public void setTimeAxisType(String timeAxisType) {
+        this.timeAxisType = timeAxisType;
     }
 
     public Integer getAreaId() {

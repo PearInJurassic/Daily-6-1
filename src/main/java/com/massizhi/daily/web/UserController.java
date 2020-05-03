@@ -27,7 +27,7 @@ public class UserController {
 
     /*
      * 通过用户ID得到用户信息
-     * 提示：在这里将用户地区ID转化为地区名
+     * 提示：在这里地区名作为附加属性出现
      * @param userId
      * @return Map<userInfo,UserExpand>
      */

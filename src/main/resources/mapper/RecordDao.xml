@@ -4,28 +4,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.massizhi.daily.dao.RecordDao">
     <select id="getRecordListByUserId" resultType="com.massizhi.daily.entity.Record">
-        SELECT record_id,record_img,record_content,record_create_time,
-        record_update_time,time_axis_id,area_id,post_id,user_id
+        SELECT *
         FROM tb_record
         WHERE
         user_id=#{userId}
         ORDER BY record_create_time
         DESC
     </select>
-    <select id="getRecordListByTwoId" resultType="com.massizhi.daily.entity.Record">
-        SELECT record_id,record_img,record_content,record_create_time,
-        record_update_time,time_axis_id,area_id,post_id,user_id
+    <select id="getRecordListByUserIdAndType" resultType="com.massizhi.daily.entity.Record">
+        SELECT *
         FROM tb_record
         WHERE
         user_id=#{userId}
         AND
-        time_axis_id=#{timeAxisId}
+        time_axis_type=#{timeAxisType}
         ORDER BY record_create_time
         DESC
     </select>
     <select id="getRecordListByUserIdAndKeyWord" resultType="com.massizhi.daily.entity.Record">
-        SELECT record_id,record_img,record_content,record_create_time,
-        record_update_time,time_axis_id,area_id,post_id,user_id
+        SELECT *
         FROM tb_record
         WHERE
         user_id=#{userId}
@@ -38,10 +35,10 @@
             keyColumn="record_id" parameterType="com.massizhi.daily.entity.Record">
         INSERT INTO
         tb_record(record_img,record_content,record_create_time,
-        record_update_time,time_axis_id,area_id,post_id,user_id)
+        record_update_time,time_axis_type,area_id,post_id,user_id)
         VALUES
         (#{recordImg},#{recordContent},#{recordCreateTime},
-        #{recordUpdateTime},#{timeAxisId},#{areaId},#{postId},#{userId})
+        #{recordUpdateTime},#{timeAxisType},#{areaId},#{postId},#{userId})
     </insert>
     <update id="updateRecord" parameterType="com.massizhi.daily.entity.Record">
         update tb_record

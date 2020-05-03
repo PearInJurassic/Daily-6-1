@@ -26,8 +26,8 @@ class RecordDaoTest {
     }
 
     @Test
-    void getRecordListByTwoId() {
-        List<Record> recordList = recordDao.getRecordListByTwoId(1,1);
+    void getRecordListByUserIdAndType() {
+        List<Record> recordList = recordDao.getRecordListByUserIdAndType(1,"学习");
         // 验证预期值和实际值是否相符
         assertEquals(2, recordList.size());
     }
@@ -47,7 +47,7 @@ class RecordDaoTest {
         record.setRecordContent("12");
         record.setAreaId(12);
         record.setRecordCreateTime(new Date());
-        record.setTimeAxisId(12);
+        record.setTimeAxisType("心情");
         record.setRecordUpdateTime(new Date());
         record.setUserId(12);
         //将该对象实例添加入库

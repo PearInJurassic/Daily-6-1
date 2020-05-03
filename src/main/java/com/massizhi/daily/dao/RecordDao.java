@@ -13,12 +13,12 @@ public interface RecordDao {
      */
     List<Record> getRecordListByUserId(int userId);
     /*
-     * 根据用户ID和时间轴ID得到动态列表
+     * 根据用户ID和时间轴类别得到动态列表
      *
-     * @param userId,timeAxisId
+     * @param userId,timeAxisType
      * @return List<Record>
      */
-    List<Record> getRecordListByTwoId(int userId,int timeAxisId);
+    List<Record> getRecordListByUserIdAndType(int userId,String timeAxisType);
     /*
      * 根据用户ID和内容关键字得到动态列表
      *
