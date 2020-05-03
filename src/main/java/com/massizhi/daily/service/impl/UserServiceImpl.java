@@ -1,6 +1,7 @@
 package com.massizhi.daily.service.impl;
 
 import com.massizhi.daily.dao.AreaDao;
+import com.massizhi.daily.dao.PostDao;
 import com.massizhi.daily.dao.UserDao;
 import com.massizhi.daily.dao.UserFollowDao;
 import com.massizhi.daily.entity.User;
@@ -19,6 +20,7 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     private AreaDao areaDao;
     private UserFollowDao userFollowDao;
+    private PostDao postDao;
 
     @Override
     public UserExpand getUserInfoByUserId(int userId) {
@@ -73,6 +75,31 @@ public class UserServiceImpl implements UserService {
     public boolean addFollow(int userId, int followId) {
         if (userId != 0 && followId != 0) {
             try {
+                int effectedNum1 = userDao.decUserFollowNum(userId);
+                int effectedNum2 = userDao.decUserFansNum(followId);
+                UserFollow userFollow=new UserFollow();
+                userFollow.setFollowTime(new Date());
+                userFollow.setUserId(userId);
+                userFollow.setFollowId(followId);
+                int effectedNum3 = userFollowDao.insertUserFollow(userFollow);
+                if (effectedNum1 > 0 && effectedNum2 > 0 && effectedNum3 > 0) {
+                    return true;
+                } else {
+                    throw new RuntimeException("用户增加关注失败");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("用户增加关注失败:" + e.toString());
+            }
+        } else {
+            throw new RuntimeException("用户增加关注失败");
+        }
+    }
+
+    @Override
+    public boolean addFollowByUserIdAndPostId(int userId, int postId) {
+        if (userId != 0 && postId != 0) {
+            try {
+                int followId=postDao.queryUserByPostId(postId);
                 int effectedNum1 = userDao.decUserFollowNum(userId);
                 int effectedNum2 = userDao.decUserFansNum(followId);
                 UserFollow userFollow=new UserFollow();

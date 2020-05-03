@@ -27,9 +27,16 @@ public interface UserService {
     boolean cancelFollow(int userId,int followId);
     /*
      * 增加关注，涉及到两个表tb_user和tb_user_follow
-     *
+     * ：通过用户ID和所要关注的人的ID
      * @param userId,followId
      * @return boolean
      */
     boolean addFollow(int userId,int followId);
+    /*
+     * 增加关注，涉及到三个表tb_user和tb_user_follow和tb_post
+     * ：通过用户ID和用户观看帖子的ID
+     * @param userId,postId
+     * @return boolean
+     */
+    boolean addFollowByUserIdAndPostId(int userId,int postId);
 }

@@ -112,4 +112,17 @@ public class UserController {
         modelMap.put("success", userService.addFollow(userId,followId));
         return modelMap;
     }
+
+    /*
+     * 增加关注，涉及到三个表tb_user和tb_user_follow和tb_post
+     * ：通过用户ID和用户观看帖子的ID
+     * @param userId,postId
+     * @return boolean
+     */
+    @RequestMapping(value = "/addFollowByUserIdAndPostId", method = RequestMethod.GET)
+    private Map<String, Object> addFollowByUserIdAndPostId(int userId,int postId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        modelMap.put("success", userService.addFollowByUserIdAndPostId(userId,postId));
+        return modelMap;
+    }
 }

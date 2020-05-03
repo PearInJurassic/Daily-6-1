@@ -29,4 +29,9 @@ class PostDaoTest {
         assertEquals(2, postList.size());
     }
 
+    @Test
+    void queryUserByPostId() {
+        int i=postDao.queryUserByPostId(3);
+        assertEquals(2, i);
+    }
 }

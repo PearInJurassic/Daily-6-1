@@ -21,7 +21,7 @@ public class User {
     private String gender;
     //用户简介
     private String profile;
-    //是否可用（是1，否0）
+    //是否可用（是0，否1）
     private Integer state;
     //粉丝数
     private Integer fansNum;

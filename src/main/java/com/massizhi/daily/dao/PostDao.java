@@ -18,4 +18,10 @@ public interface PostDao {
      * @return userId
      */
     List<Post> queryPostByContentAndUserId(String str,int userId);
+    /**
+     * 根据postId找出userId
+     *
+     * @return userId
+     */
+    int queryUserByPostId(int postId);
 }
