@@ -49,11 +49,11 @@ class UserDaoTest {
     void updateUser() {
         User temp=new User();
         temp.setUserId(1);
-        temp.setUserName("哈哈");
+        temp.setEmail("2750201946@fox.com");
         userDao.updateUser(temp);
         User user= userDao.getUserByUserId(1);
         // 验证预期值和实际值是否相符
-        assertEquals("哈哈", user.getUserName());
+        assertEquals("2750201946@fox.com", user.getEmail());
     }
 
 }

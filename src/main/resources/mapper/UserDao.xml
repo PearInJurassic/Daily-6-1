@@ -4,8 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.massizhi.daily.dao.UserDao">
     <select id="getUserByUserId" resultType="com.massizhi.daily.entity.User">
-        SELECT user_id,user_type,user_name,user_pwd,user_img,
-        area_id,user_date,gender,profile,state,fans_num,follow_num
+        SELECT *
         FROM tb_user
         WHERE
         user_id=#{userId}
@@ -54,6 +53,7 @@
             <if test="userDate != null">user_date=#{userDate},</if>
             <if test="gender != null">gender=#{gender},</if>
             <if test="profile != null">profile=#{profile},</if>
+            <if test="email != null">email=#{email},</if>
         </set>
         WHERE user_id=#{userId}
     </update>
