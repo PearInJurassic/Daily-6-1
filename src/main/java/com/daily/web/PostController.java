@@ -52,6 +52,11 @@ public class PostController {
         return modelMap;
     }
 
+    /**
+     * 获取待审核帖子
+     *
+     * @return
+     */
     @RequestMapping(value = "/getrequireauditpost", method = RequestMethod.GET)
     private Map<String, Object> getRequireAuditPost() {
         Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -66,6 +71,15 @@ public class PostController {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<Post> list = new ArrayList<Post>();
         list = postService.getPostByContent(str);
+        modelMap.put("postList", list);
+        return modelMap;
+    }
+
+    @RequestMapping(value = "/searchareabycontent", method = RequestMethod.GET)
+    private Map<String, Object> searchAreaByContent(String str) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Integer> list = new ArrayList<Integer>();
+        list = postService.getAreaByContent(str);
         modelMap.put("postList", list);
         return modelMap;
     }
@@ -90,7 +104,7 @@ public class PostController {
      * @throws JsonParseException
      */
     @RequestMapping(value = "/addpost", method = RequestMethod.POST)
-    private Map<String, Object> addArea(@RequestBody Post post)
+    private Map<String, Object> addPost(@RequestBody Post post)
             throws JsonParseException, JsonMappingException, IOException {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         // 添加区域信息
@@ -126,10 +140,18 @@ public class PostController {
     }
 
     @RequestMapping(value = "/forwardpost", method = RequestMethod.GET)
-    private Map<String, Object> forwardPost(int postId, int userId) {
+    private Map<String, Object> forwardPost(int postId, int userId, String str) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        int newPostId = postService.forwardPost(postId, userId, str);
+        modelMap.put("postId", newPostId);
+        return modelMap;
+    }
+
+    @RequestMapping(value = "/tipoffpost", method = RequestMethod.GET)
+    private Map<String, Object> tipoffPost(int postId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
 
-        // modelMap.put("areaList", list);
+        modelMap.put("success", postService.tipoffPost(postId));
         return modelMap;
     }
 
