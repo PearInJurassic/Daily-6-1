@@ -19,7 +19,7 @@ public interface CommentService {
      * @param postId
      * @return List<Comment>
      */
-    List<Comment> getCommentByPostId(int postId);
+    List<List<Comment>> getCommentByPostId(int postId);
 
     /*
      * 通过用户ID得到评论列表
@@ -60,4 +60,6 @@ public interface CommentService {
      * @return List<Comment>
      */
     int getCommentNumByPostId(int postId);
+
+
 }

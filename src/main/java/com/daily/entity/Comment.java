@@ -17,6 +17,10 @@ public class Comment {
     private int userId;
     //是否匿名评论（是1，否0）
     private int anonym;
+    //顶层评论ID（0代表顶层）
+    private int belongCommentId;
+    //回复评论ID
+    private int replyCommentId;
 
     public int getCommentId() {
         return commentId;
@@ -72,5 +76,21 @@ public class Comment {
 
     public void setAnonym(int anonym) {
         this.anonym = anonym;
+    }
+
+    public int getBelongCommentId() {
+        return belongCommentId;
+    }
+
+    public void setBelongCommentId(int belongCommentId) {
+        this.belongCommentId = belongCommentId;
+    }
+
+    public int getReplyCommentId() {
+        return replyCommentId;
+    }
+
+    public void setReplyCommentId(int replyCommentId) {
+        this.replyCommentId = replyCommentId;
     }
 }

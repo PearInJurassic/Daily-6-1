@@ -45,12 +45,17 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/getcommentbypostid", method = RequestMethod.GET)
-    private Map<String, Object> getCommentByPostId(int postId) {
-        Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<Comment> commentList = new ArrayList<Comment>();
+    private Map<String, Map<String, Object>> getCommentByPostId(int postId) {
+        Map<String, Map<String, Object>> modelMap = new HashMap<String, Map<String, Object>>();
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<List<Comment>> commentList = new ArrayList<List<Comment>>();
+        int i = 0;
         // 获取评论列表
         commentList = commentService.getCommentByPostId(postId);
-        modelMap.put("commentList", commentList);
+        for(List<Comment> list : commentList) {
+            map.put("commentList" + i++, list);
+            modelMap.put("commentList", map);
+        }
         return modelMap;
     }
 

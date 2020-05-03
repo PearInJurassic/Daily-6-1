@@ -26,7 +26,7 @@ public class CommentDaoTest {
     @Ignore
     public void getCommentByCommentId() {
         Comment comment = commentDao.getCommentByCommentId(1);
-        assertEquals(1,comment.getPostId());
+        assertEquals(1,comment.getBelongCommentId());
     }
 
     @Test
@@ -47,12 +47,14 @@ public class CommentDaoTest {
     @Ignore
     public void createComment() {
         Comment comment = new Comment();
-        comment.setCommentContent("测试4");
+        comment.setCommentContent("测试回复");
         comment.setCommentCreateTime(new Date());
         comment.setCommentUpdateTime(new Date());
-        comment.setPostId(3);
+        comment.setPostId(1);
         comment.setUserId(2);
         comment.setAnonym(0);
+        comment.setBelongCommentId(1);
+        comment.setReplyCommentId(11);
         assertEquals(true,commentDao.createComment(comment));
     }
 
@@ -69,5 +71,12 @@ public class CommentDaoTest {
     @Ignore
     public void deleteComment() {
         assertEquals(true, commentDao.deleteComment(4));
+    }
+
+    @Test
+    @Ignore
+    public void getCommentByBelongCommentId() {
+        List<Comment> commentList = commentDao.getCommentByBelongCommentId(0);
+        assertEquals(5,commentList.size());
     }
 }

@@ -4,22 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.daily.dao.CommentDao">
     <select id="getCommentByCommentId" resultType="com.daily.entity.Comment">
-        SELECT comment_id, comment_content, comment_create_time,
-        comment_update_time, post_id, user_id, anonym
+        SELECT comment_id, comment_content, comment_create_time, comment_update_time,
+        post_id, user_id, anonym, belong_comment_id, reply_comment_id
         FROM tb_comment
         WHERE
         comment_id=#{commentId}
     </select>
     <select id="getCommentByPostId" resultType="com.daily.entity.Comment">
-        SELECT comment_id, comment_content, comment_create_time,
-        comment_update_time, post_id, user_id, anonym
+        SELECT comment_id, comment_content, comment_create_time, comment_update_time,
+        post_id, user_id, anonym, belong_comment_id, reply_comment_id
         FROM tb_comment
         WHERE
         post_id=#{postId}
+        AND
+        belong_comment_id=0
     </select>
     <select id="getCommentByUserId" resultType="com.daily.entity.Comment">
-        SELECT comment_id, comment_content, comment_create_time,
-        comment_update_time, post_id, user_id, anonym
+        SELECT comment_id, comment_content, comment_create_time, comment_update_time,
+        post_id, user_id, anonym, belong_comment_id, reply_comment_id
         FROM tb_comment
         WHERE
         user_id=#{userId}
@@ -27,12 +29,12 @@
     <insert id="createComment" useGeneratedKeys="true" keyProperty="commentId"
             keyColumn="comment_id" parameterType="com.daily.entity.Comment">
         INSERT INTO
-        tb_comment(comment_content, comment_create_time,
-        comment_update_time, post_id, user_id, anonym)
+        tb_comment(comment_content, comment_create_time, comment_update_time,
+        post_id, user_id, anonym, belong_comment_id, reply_comment_id)
         VALUES
         (#{commentContent},#{commentCreateTime},
-        #{commentUpdateTime},#{postId},
-        #{userId},#{anonym})
+        #{commentUpdateTime},#{postId},#{userId},
+        #{anonym},#{belongCommentId},#{replyCommentId})
     </insert>
     <update id="updateComment" parameterType="com.daily.entity.Comment">
         UPDATE tb_comment
@@ -47,4 +49,11 @@
         WHERE
         comment_id = #{commentId}
     </delete>
+    <select id="getCommentByBelongCommentId" resultType="com.daily.entity.Comment">
+        SELECT comment_id, comment_content, comment_create_time, comment_update_time,
+        post_id, user_id, anonym, belong_comment_id, reply_comment_id
+        FROM tb_comment
+        WHERE
+        belong_comment_id=#{belongCommentId}
+    </select>
 </mapper>

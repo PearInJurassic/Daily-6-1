@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,8 +22,24 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getCommentByPostId(int postId) {
-        return commentDao.getCommentByPostId(postId);
+    public List<List<Comment>> getCommentByPostId(int postId) {
+        //获得最顶层的评论列表
+        List<Comment> list = commentDao.getCommentByPostId(postId);
+        //存储以最顶层评论包含以下的评论结构
+        List<Comment> commentList1 = new ArrayList<>();
+        //存储所有评论列表
+        List<List<Comment>> commentList = new ArrayList<>();
+        int i = 0;
+        for(Comment comment : list) {
+            //顶层评论加入list头部
+            commentList1.add(list.get(i++));
+            //添加下层评论
+            commentList1.addAll(commentDao.getCommentByBelongCommentId(comment.getCommentId()));
+            //该评论包含以下评论加入所有评论别表
+            commentList.add(commentList1);
+            commentList1 = new ArrayList<>();
+        }
+        return commentList;
     }
 
     @Override
@@ -92,4 +109,5 @@ public class CommentServiceImpl implements CommentService {
     public int getCommentNumByPostId(int postId) {
         return commentDao.getCommentByPostId(postId).size();
     }
+
 }
