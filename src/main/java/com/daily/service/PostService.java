@@ -50,6 +50,8 @@ public interface PostService {
 
     List<Integer> getAreaByContent(String str);
 
+    Post getLastPost();
+
     /**
      * 增加帖子信息
      * 

@@ -74,9 +74,16 @@ public interface PostDao {
     Post queryPostByPostId(int postId);
 
     /**
+     * 获取数据库最后一个帖子
+     * 
+     * @return userId
+     */
+    Post queryLastPost();
+
+    /**
      * 增加帖子
      * 
-     * @param area
+     * 
      * @param anonym
      * @return
      */
