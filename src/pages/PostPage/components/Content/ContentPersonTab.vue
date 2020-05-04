@@ -51,3 +51,21 @@
     }
 
 </style>
+
+<style lang="less">
+    .TabContent {
+        .el-tabs__item{
+            font-size: 20px;
+            color: black;
+            padding-right: 150px;
+        }
+        .el-tabs__active-bar{
+            width: 32px;
+            background-color: #7f7f7f;
+        }
+        .el-tabs__nav-scroll{
+            display: flex;
+            justify-content: center;
+        }
+    }
+</style>

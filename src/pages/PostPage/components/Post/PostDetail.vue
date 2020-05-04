@@ -3,12 +3,23 @@
         <div @click="closeDetail" class="Mask"></div>
         <div class="PostDetail">
             <div class="PictureDetail">
+                <div>
+                    <el-image :src="url"
+                              :preview-src-list="srcList"></el-image>
+                </div>
                 <el-carousel height="300px">
                     <el-carousel-item :key="item" v-for="item in 4">
-                        <h3 class="small">{{ item }}</h3>
+                        <el-image src="https://interactive-examples.mdn.mozilla.net/media/examples/plumeria.jpg"
+                                  alt="图片"
+                                  :fit="scale-down"
+                        style="height:300px;">
+                        </el-image>
                     </el-carousel-item>
                 </el-carousel>
                 <PanelTag></PanelTag>
+                <div class="Paragraph">
+                    <p>555555555555555555</p>
+                </div>
             </div>
             <div class="CommentDetail">
                 <PanelComment></PanelComment>
@@ -26,7 +37,15 @@
     data() {
       return {
         isShow: true,
+        srcList:[
+          'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
+          'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
+        ],
+        url:require("@/assets/Post/放大镜.png"),
       }
+    },
+    props: {
+      img: String,
     },
     components: {
       PanelComment,
@@ -41,13 +60,6 @@
         this.$emit("detailState", this.isShow);
       },
     },
-    create() {
-      console.log('success');
-      document.body.addEventListener('touchmove', this.bodyScroll, {passive: false});
-    },
-    destroyed() {
-      document.body.removeEventListener('touchmove', this.bodyScroll, {passive: false});
-    }
   }
 </script>
 
@@ -82,15 +94,15 @@
         justify-content: center;
     }
 
-
-    .el-carousel__item h3 {
-        color: #475669;
-        font-size: 14px;
-        opacity: 0.75;
-        line-height: 150px;
-        margin: 0;
+    .Paragraph {
+        .setBorder();
+        .setSize(100%, 120px);
+        margin: 12px 0;
     }
-
+    .el-carousel__item {
+        display: flex;
+        justify-content: center;
+    }
     .el-carousel__item:nth-child(2n) {
         background-color: #99a9bf;
     }

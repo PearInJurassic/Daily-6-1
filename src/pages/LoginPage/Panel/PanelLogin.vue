@@ -13,7 +13,6 @@
                                 v-model="form.username">
                         </el-input>
                     </el-form-item>
-                    <br>
                     <el-form-item label="密码">
                         <el-input
                                 placeholder="请输入密码"
@@ -21,17 +20,19 @@
                                 v-model="form.password">
                         </el-input>
                     </el-form-item>
-                    <br>
+                    <el-form-item style="display: flex;justify-content: right;padding-right: 20px">
+                        <el-switch
+                                active-text="我是用户"
+                                inactive-text="我是管理员"
+                                v-model="value1">
+                        </el-switch>
+                    </el-form-item>
                     <div style="padding: 0 20px">
                         <input @click="login" class="CommonButton" id="TextEditButton"
                                type="button" value="登录">
                     </div>
                 </el-form>
-                <div class="LineWordsLine">
-                    <span class="line"></span>
-                    <span class="text">有问题?</span>
-                    <span class="line"></span>
-                </div>
+                <LineWordLine>有问题？</LineWordLine>
                 <div class="ResetPassword">
                     <el-link>忘记密码</el-link>
                 </div>
@@ -39,7 +40,7 @@
             <div class="SignInPanel">
                 <span>没有账号？</span>
                 <span>
-                    <el-link type="primary" @click="signIn">注册</el-link>
+                    <el-link @click="signIn" type="primary">注册</el-link>
                 </span>
             </div>
         </div>
@@ -48,7 +49,9 @@
 </template>
 
 <script>
-    import PanelSignIn from "@/pages/LoginPage/Panel/PanelSignIn";
+  import PanelSignIn from "@/pages/LoginPage/Panel/PanelSignIn";
+  import LineWordLine from "@/components/LineWordLine";
+
   export default {
     name: "LoginPanel",
     data() {
@@ -56,25 +59,30 @@
         form: {
           username: '',
           password: '',
-        }
+        },
+        value1: true,
       }
     },
-    components:{
+    components: {
       PanelSignIn,
+      LineWordLine
     },
     methods: {
       login() {
-        window.location.href="./PostPage"
+        if (this.value1 == true)
+          window.location.href = "./PostPage";
+        else
+          window.location.href = "./AdminPage";
       },
-      signIn(){
+      signIn() {
         this.$layer.iframe({
-          content:{
-            content:PanelSignIn,
-            parent:this,
+          content: {
+            content: PanelSignIn,
+            parent: this,
           },
-          title:"注册信息",
-          area:['400px','600px'],
-          btn:'确认',
+          title: "注册信息",
+          area: ['400px', '600px'],
+          btn: '确认',
         });
       }
     }
@@ -97,7 +105,7 @@
     }
 
     .LoginPanel {
-        .setSize(380px, 290px);
+        .setSize(380px, 310px);
         background: rgba(255, 255, 255, 0.6);
         margin: 0 auto;
         display: flex;
@@ -125,7 +133,7 @@
 
     .LoginBack {
         .setBorder();
-        .setSize(400px, 580px);
+        .setSize(400px, 600px);
         background: rgba(255, 255, 255, 0.6);
         margin: 5% 10% auto 0;
     }

@@ -1,11 +1,10 @@
 <template>
     <div class="ContentAll">
         <div class="ContentCenter">
-            <PostAll></PostAll>
+            <PostAll :imgUrl="img"></PostAll>
             <component :is="PostAll"
                        :key="index"
                        v-for="(index) in postNum">
-
             </component>
         </div>
     </div>
@@ -19,12 +18,34 @@
     name: "ContentPostMain",
     data() {
       return {
-        PostAll:"PostAll",
+        PostAll: "PostAll",
         postNum: [],
+        img:"",
       }
     },
     components: {
       PostAll,
+    },
+    methods: {
+      /**
+       * @description 初始化渲染帖子列表。
+       */
+      init() {
+        this.axios({
+          method: "get",
+          url: "data/index"
+        })
+          .then((response) => {
+            console.log(response)
+            this.img="@/assets/plumeria.jpg"
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    created() {
+        this.init();
     },
     mounted() {
       Bus.$on("finishEdit", () => {
@@ -46,7 +67,7 @@
     .ContentCenter {
         max-width: 1025px;
         min-width: 650px;
-        border: 2px solid @outlineColor;
+
         padding-top: 30px;
     }
 </style>

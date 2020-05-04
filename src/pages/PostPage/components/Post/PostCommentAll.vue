@@ -1,6 +1,14 @@
 <template>
     <div>
-        <div class="CommentContent"></div>
+        <div class="CommentContent">
+            <div class="Avatar">
+                <el-avatar></el-avatar>
+            </div>
+            <div class="Comment">
+                <p>11111111111111111</p>
+            </div>
+            <div class="reply"></div>
+        </div>
     </div>
 </template>
 
@@ -16,6 +24,7 @@
         margin: 0 auto;
         padding: 2px 0;
         .setSize(280px,50px);
-        background-color: #5daf34;
+        display: flex;
+        justify-content: left;
     }
 </style>

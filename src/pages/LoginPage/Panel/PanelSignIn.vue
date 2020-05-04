@@ -3,11 +3,7 @@
         <div class="logo">
             <img alt="logo" src="@/assets/NavBar/logo.png">
         </div>
-        <div class="LineWordsLine">
-            <span class="line"></span>
-            <span class="text">开始注册</span>
-            <span class="line"></span>
-        </div>
+        <LineWordLine>开始注册</LineWordLine>
         <div class="SignInPanel">
             <el-form>
                 <el-form-item label="用户名">
@@ -29,8 +25,13 @@
 </template>
 
 <script>
+  import LineWordLine from "@/components/LineWordLine";
+
   export default {
     name: "PanelSignIn",
+    components: {
+      LineWordLine
+    },
     methods: {
       success() {
         this.$notify({

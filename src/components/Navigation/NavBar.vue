@@ -3,6 +3,7 @@
         <div class="MidDiv">
             <NavLogo></NavLogo>
             <NavSearch></NavSearch>
+
             <NavOption></NavOption>
         </div>
     </div>

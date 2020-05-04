@@ -1,25 +1,29 @@
 <template>
     <div class="PostContent">
-        <div class="Content"
-             @click="openDetail">
-        <div class="PictureContent"></div>
-        <div class="PostInfo" style="display: flex">
-            <div class="Avatar">
-                <el-avatar :size="68" :src="headUrl"></el-avatar>
+        <div class="Content">
+            <div @click="openDetail" class="PictureContent">
+                <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt="帖子图片"
+                           :fit="cover" style="width:650px; ">
+                </el-image>
             </div>
-            <div class="Icon">
-                <button @click="pressLikeButton" class="IconButton" id="likeButton">
-                    <img :src="likeUrl" alt="喜欢按钮">
-                </button>
-            </div>
-            <div class="Icon">
-                <button class="IconButton" id="ResendButton">
-                    <img src="@/assets/Post/resend.png" alt="转发按钮">
-                </button>
+            <div class="PostInfo" style="display: flex">
+                <div class="Avatar">
+                    <el-avatar :size="68" :src="headUrl"></el-avatar>
+                </div>
+                <div class="Icon">
+                    <button @click="pressLikeButton" class="IconButton" id="likeButton">
+                        <img :src="likeUrl" alt="喜欢按钮">
+                    </button>
+                </div>
+                <div class="Icon">
+                    <button class="IconButton" id="ResendButton">
+                        <img alt="转发按钮" src="@/assets/Post/resend.png">
+                    </button>
+                </div>
             </div>
         </div>
-        </div>
-        <PostDetail @detailState="changeDetailState"
+        <PostDetail :img="imgUrl"
+                    @detailState="changeDetailState"
                     v-if="detailShowState"></PostDetail>
     </div>
 </template>
@@ -35,7 +39,11 @@
         like: 0,
         likeImgArr: ['like.png', 'like-fill.png'],
         detailShowState: false,
+
       }
+    },
+    props: {
+      imgUrl: String,
     },
     computed: {
       likeUrl() {
@@ -60,7 +68,7 @@
        */
       openDetail() {
         this.detailShowState = true;
-      }
+      },
     },
     components: {
       PostDetail
@@ -72,17 +80,20 @@
     @import "~@/CSS/Common.less";
 
     .PostContent {
-        .setSize(650px, 900px);
+        width: 650px;
         margin-bottom: 60px;
-        min-height: 900px;
         .setBorder();
+        background-color: whitesmoke;
     }
+
     .Content :hover {
-        cursor:pointer;
+        cursor: pointer;
     }
 
     .PictureContent {
-        .setSize(650px, 750px);
-        .setBorder();
+        width: 650px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
     }
 </style>

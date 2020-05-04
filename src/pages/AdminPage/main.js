@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from '@/pages/PostPage/PostPage'
+import App from '@/pages/AdminPage/AdminPage';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueAxios from 'vue-axios';
@@ -8,8 +8,8 @@ import layer from 'vue-layer';
 import 'vue-layer/lib/vue-layer.css';
 import router from '@/JS/router'
 import '@/JS/mock'
-import '@/CSS/theme/index.css'
 
+Vue.prototype.$axios = axios;
 Vue.prototype.$layer = layer(Vue);
 Vue.config.productionTip = false
 Vue.use(ElementUI);

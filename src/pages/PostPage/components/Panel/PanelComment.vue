@@ -6,7 +6,7 @@
             </div>
             <div class="Icon">
                 <button class="IconButton" id="reportButton">
-                    <img :src="reportUrl" alt="举报按钮">
+                    <img :src="reportUrl" alt="举报按钮" @click="reportPost">
                 </button>
             </div>
         </div>
@@ -31,7 +31,12 @@
             </div>
         </div>
         <div class="CommentAdder">
-            <div class="CommentEditor"></div>
+            <el-input
+                    :row="2"
+                    placehoder="请输入评论"
+                    type="textarea"
+                    v-model="commentText">
+            </el-input>
             <button @click="addComment" class="CommonButton">发布</button>
         </div>
     </div>
@@ -49,6 +54,7 @@
         like: 0,
         likeImgArr: ['like.png', 'like-fill.png'],
         commentNum: [],
+        commentTextL:'',
         PostCommentAll: "PostCommentAll"
       }
     },
@@ -73,8 +79,30 @@
       addComment() {
         //TODO 将评论的Id压入，而非1，防止错误。
         this.commentNum.push(1);
+      },
+      /**
+       * @description 举报帖子
+       */
+      reportPost() {
+        this.$confirm('你确定要举报此贴吗?','举报',{
+          confirmButtonText:'确定',
+          cancelButtonText:'取消',
+          type:'warning'
+        })
+        .then(()=>{
+          this.$message({
+            type:'success',
+            message:'举报成功！'
+          });
+        })
+        .catch(()=>{
+          this.$message({
+            type:'info',
+            message:'已取消举报操作'
+          })
+        })
+        }
       }
-    }
   }
 </script>
 

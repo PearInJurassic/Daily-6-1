@@ -1,11 +1,10 @@
 <template>
     <div id="PostPage">
-
         <PostPanel v-show="isEditPanelShow"></PostPanel>
         <Nav-bar></Nav-bar>
         <div class="blank" style="padding-top: 55px"></div>
         <router-view>
-        <PageCenterPost></PageCenterPost>
+            <PageCenterPost></PageCenterPost>
         </router-view>
     </div>
 </template>

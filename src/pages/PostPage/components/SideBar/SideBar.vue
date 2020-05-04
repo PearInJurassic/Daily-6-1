@@ -32,7 +32,6 @@
         z-index: 5;
         width: 315px;
         height: 600px;
-        border:1px solid @outlineColor;
         padding-top: 30px;
     }
 </style>

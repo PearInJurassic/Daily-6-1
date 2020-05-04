@@ -11,6 +11,17 @@ module.exports = {
       template:'public/index.html',
       file:"postpage.html",
       title:"Daily6+1"
+    },
+    'AdminPage' :{
+      entry:'src/pages/AdminPage/main.js',
+      template:'public/index.html',
+      file:"adminpage.html",
+      title:"Daily6+1 admin"
+    }
+  },
+  configureWebpack: {
+    externals: {
+      "BMap": "BMap"
     }
   }
 }

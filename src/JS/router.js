@@ -11,7 +11,7 @@ const routes = [
     component: PageCenterPost,
   },
   {
-    path:'/postpage',
+    path:'/homepage',
     component:PageCenterPost
   },
   {
