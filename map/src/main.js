@@ -39,9 +39,9 @@ import '../node_modules/echarts/map/js/province/xinjiang.js'
 import '../node_modules/echarts/map/js/province/xizang.js'
 import '../node_modules/echarts/map/js/province/yunnan.js'  
 import '../node_modules/echarts/map/js/province/zhejiang.js' 
+//import '../src/map.js'
 /* eslint-disable no-new */
-
-
+import 'echarts/extension/bmap/bmap'
 new Vue({
   router,
   render: h => h(App)

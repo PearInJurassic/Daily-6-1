@@ -1,7 +1,7 @@
 <template>
   <div id="country">
     <div id="chinaMap" style="height:800px;width:100%;" ref="myEchart"></div>
-
+<div> click="goOff()">返回</div>
   </div>
 </template>
 
@@ -33,12 +33,12 @@ export default {
             calculable: true,
             color: ['orangered', 'yellow', 'lightskyblue']
           },
-        title: {
+        /*title: {
             show:true,
             text: '标题--中国地图',
             subtext: 'made by xzc',
             left:'center'
-        },
+        },*/
         tooltip : {
             trigger: 'item'
         },
@@ -137,7 +137,10 @@ export default {
     function randomData() {
         return Math.round(Math.random()*(12-1)+1)
     }
-	
+    
+             function   goOff(){
+                this.$router.go(-1);
+            }
 myChart.on('mouseover', function (params) {
 var dataIndex = params.dataIndex;
                 console.log(dataIndex);
@@ -148,17 +151,23 @@ var dataIndex = params.dataIndex;
 
 	myChart.on('click', function (chinaParam) {
 
-		
-                    var option = myChart.getOption();
+                    if ( chinaParam.name=='北京'){
+                        this.$router.push({path: '/fujian'});
+                    }
+            else{      var option = myChart.getOption();
                     option.series[0].map = chinaParam.name;
 					option.series[0].mapType  = chinaParam.name;
 					myChart.clear();
 					console.log(chinaParam.name);
-                    myChart.setOption(option,true);                         
+                    myChart.setOption(option,true);  
+                    goOff();
+            }
+            
+
             });
 			
-
-		
+          
+           
 			
    }
    },
