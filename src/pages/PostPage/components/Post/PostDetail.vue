@@ -4,21 +4,22 @@
         <div class="PostDetail">
             <div class="PictureDetail">
                 <div>
-                    <el-image :src="url"
-                              :preview-src-list="srcList"></el-image>
+                    <el-image :preview-src-list="srcList"
+                              :src="url">
+                    </el-image>
                 </div>
                 <el-carousel height="300px">
                     <el-carousel-item :key="item" v-for="item in 4">
-                        <el-image src="https://interactive-examples.mdn.mozilla.net/media/examples/plumeria.jpg"
-                                  alt="图片"
-                                  :fit="scale-down"
-                        style="height:300px;">
+                        <el-image alt="图片"
+                                  fit="scale-down"
+                                  src="https://interactive-examples.mdn.mozilla.net/media/examples/plumeria.jpg"
+                                  style="height:300px;">
                         </el-image>
                     </el-carousel-item>
                 </el-carousel>
                 <PanelTag></PanelTag>
                 <div class="Paragraph">
-                    <p>555555555555555555</p>
+                    <p>{{message}}</p>
                 </div>
             </div>
             <div class="CommentDetail">
@@ -37,15 +38,18 @@
     data() {
       return {
         isShow: true,
-        srcList:[
+        srcList: [
           'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
           'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
         ],
-        url:require("@/assets/Post/放大镜.png"),
+        url: require("@/assets/Post/放大镜.png"),
       }
     },
     props: {
       img: String,
+      message: {
+        required: true
+      }
     },
     components: {
       PanelComment,
@@ -65,6 +69,10 @@
 
 <style lang="less" scoped>
     @import "~@/CSS/Common.less";
+
+    p {
+        font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    }
 
     .PostDetail {
         height: 600px;
@@ -95,14 +103,15 @@
     }
 
     .Paragraph {
-        .setBorder();
-        .setSize(100%, 120px);
-        margin: 12px 0;
+        .setMaxSize(100%, 120px);
+        margin: 12px 5px;
     }
+
     .el-carousel__item {
         display: flex;
         justify-content: center;
     }
+
     .el-carousel__item:nth-child(2n) {
         background-color: #99a9bf;
     }

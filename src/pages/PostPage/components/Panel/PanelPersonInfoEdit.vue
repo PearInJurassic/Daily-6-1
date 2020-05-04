@@ -16,9 +16,6 @@
                     <el-form-item label="新的昵称">
                         <el-input></el-input>
                     </el-form-item>
-                    <div>
-                        <button class="CommonButton">提交</button>
-                    </div>
                 </el-form>
             </div>
         </div>
@@ -39,6 +36,9 @@
                                 v-model="personText">
                         </el-input>
                     </el-form-item>
+                    <div>
+                        <button class="CommonButton">提交</button>
+                    </div>
                 </el-form>
             </div>
         </div>
@@ -68,7 +68,7 @@
     .InformationPanel {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
         width: 100%;
         margin: 0 auto;
         .setSize(350px, 425px);

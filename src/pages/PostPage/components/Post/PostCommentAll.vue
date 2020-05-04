@@ -5,7 +5,7 @@
                 <el-avatar></el-avatar>
             </div>
             <div class="Comment">
-                <p>11111111111111111</p>
+                <p>{{text}}</p>
             </div>
             <div class="reply"></div>
         </div>
@@ -14,7 +14,13 @@
 
 <script>
   export default {
-    name: "PostCommentAll"
+    name: "PostCommentAll",
+    props:{
+      text:{
+        type:String,
+        required:true
+      }
+    }
   }
 </script>
 

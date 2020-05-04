@@ -44,7 +44,13 @@
                 </span>
             </div>
         </div>
-        <PanelSignIn v-if="false"></PanelSignIn>
+        <el-dialog
+                title="注册账号"
+                :visible.sync="dialogVisible"
+                width="400px">
+            <PanelSignIn @finishSignIn="finishSignIn"></PanelSignIn>
+        </el-dialog>
+
     </div>
 </template>
 
@@ -61,6 +67,7 @@
           password: '',
         },
         value1: true,
+        dialogVisible:false
       }
     },
     components: {
@@ -74,18 +81,13 @@
         else
           window.location.href = "./AdminPage";
       },
+      finishSignIn() {
+        this.dialogVisible=false;
+      },
       signIn() {
-        this.$layer.iframe({
-          content: {
-            content: PanelSignIn,
-            parent: this,
-          },
-          title: "注册信息",
-          area: ['400px', '600px'],
-          btn: '确认',
-        });
+        this.dialogVisible=true;
       }
-    }
+    },
   }
 </script>
 
@@ -102,6 +104,8 @@
         .setSize(380px, 100px);
         background: rgba(255, 255, 255, 0.6);
         margin: 15px auto 0 auto;
+        display: flex;
+        justify-content: center;
     }
 
     .LoginPanel {

@@ -1,5 +1,5 @@
 <template>
-    <div class="Information">
+    <div class="Information" :style="anonyStyle">
         <div class="InformationMain">
             <div class="Avatar">
                 <el-avatar :size="52" :src="headUrl"></el-avatar>
@@ -14,7 +14,7 @@
                     新增帖子
                 </button>
                 <div class="Anonymous">
-                    <button :style="anonyButtonStyle"
+                    <button :style="anonyStyle"
                             @click="change" class="AnonymousButton">
                         <img :src="anonymousUrl" alt="匿名">
                     </button>
@@ -34,10 +34,10 @@
         username: 'aassd123lowe',
         headUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
         isAnonymous: 0,
-        anonymousImgAdd: ['Anonymous-fill.png', 'Anonymous.png'],
-        anonyButtonStyle: {
-          backgroundColor: '#2c2d2c'
-        }
+        anonymousImgAdd: ['Anonymous.png', 'Anonymous-fill.png'],
+        anonyStyle: {
+          backgroundColor: 'white',
+        },
       }
     },
     computed: {
@@ -58,8 +58,15 @@
        */
       change() {
         this.isAnonymous ? this.isAnonymous = 0 : this.isAnonymous = 1;
-        if (this.isAnonymous) this.anonyButtonStyle.backgroundColor = "white";
-        else this.anonyButtonStyle.backgroundColor = "#2c2d2c"
+        if (this.isAnonymous) this.anonyStyle.backgroundColor = "#2c2d2c";
+        else this.anonyStyle.backgroundColor = "white";
+        if(this.isAnonymous) {
+          this.$notify({
+            title: '提示',
+            message: '您已经进入匿名状态',
+            duration: 5000
+          });
+        }
       }
     }
   }
@@ -70,15 +77,15 @@
 
     .Information {
         .setSize(270px, 80px);
-        .setBorder();
         display: flex;
         justify-content: space-between;
         margin: 0 auto;
+        padding-right: 5px;
+
     }
 
     .InformationMain {
         .setSize(170px, 70px);
-        .setBorder();
         margin: auto 3px;
         display: flex;
         justify-content: left;
@@ -93,17 +100,14 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        margin-top: 4px;
+        margin-top: 6px;
     }
 
     .AnonymousButton {
+        width: 100%;
+        height: 32px;
         border: 0 solid #7f7f7f;
         border-radius: 6px;
     }
 
-    .AnonymousButton:visited {
-        background-color: whitesmoke;
-        border: 0 solid #7f7f7f;
-        border-radius: 6px;
-    }
 </style>

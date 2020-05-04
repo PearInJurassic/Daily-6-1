@@ -2,19 +2,22 @@
     <div class="ContentAll">
         <div class="PosterInfo">
             <div class="Avatar">
-                <el-avatar :src="headUrl" size="medium"></el-avatar>
+                <el-avatar :src="headUrl" size="42"></el-avatar>
+                <button class="IconButton" id="followButton">
+                    <img :src="followUrl" alt="关注按钮">
+                </button>
             </div>
             <div class="Icon">
                 <button class="IconButton" id="reportButton">
-                    <img :src="reportUrl" alt="举报按钮" @click="reportPost">
+                    <img :src="reportUrl" @click="reportPost" alt="举报按钮">
                 </button>
             </div>
         </div>
         <div class="Comment">
-            <PostCommentAll></PostCommentAll>
             <component :is="PostCommentAll"
                        :key="index"
-                       v-for="(index) in commentNum">
+                       :text="item"
+                       v-for="(item,index) in commentNum">
             </component>
             <div style="width:280px;height:30px;background-color: #3a8ee6"></div>
         </div>
@@ -54,8 +57,9 @@
         like: 0,
         likeImgArr: ['like.png', 'like-fill.png'],
         commentNum: [],
-        commentTextL:'',
-        PostCommentAll: "PostCommentAll"
+        commentText: '',
+        PostCommentAll: "PostCommentAll",
+        followUrl:require("@/assets/Post/关注.png")
       }
     },
     computed: {
@@ -68,7 +72,7 @@
     },
     methods: {
       /**
-       * @Descripsion 传递点赞按钮事件的函数
+       * @description 传递点赞按钮事件的函数
        */
       pressLikeButton() {
         this.like ? this.like = 0 : this.like = 1;
@@ -77,32 +81,32 @@
        * @description 发布评论
        */
       addComment() {
-        //TODO 将评论的Id压入，而非1，防止错误。
-        this.commentNum.push(1);
+        this.commentNum.push(this.commentText);
+        this.commentText = ''
       },
       /**
        * @description 举报帖子
        */
       reportPost() {
-        this.$confirm('你确定要举报此贴吗?','举报',{
-          confirmButtonText:'确定',
-          cancelButtonText:'取消',
-          type:'warning'
+        this.$confirm('你确定要举报此贴吗?', '举报', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         })
-        .then(()=>{
-          this.$message({
-            type:'success',
-            message:'举报成功！'
-          });
-        })
-        .catch(()=>{
-          this.$message({
-            type:'info',
-            message:'已取消举报操作'
+          .then(() => {
+            this.$message({
+              type: 'success',
+              message: '举报成功！'
+            });
           })
-        })
-        }
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消举报操作'
+            })
+          })
       }
+    }
   }
 </script>
 
@@ -113,7 +117,12 @@
         display: flex;
         justify-content: space-between;
     }
-
+    .Icon {
+        background-color: white;
+    }
+    .IconButton {
+        background-color: white;
+    }
     .Comment {
         margin: 2px auto;
         display: flex;
@@ -144,4 +153,5 @@
         background-color: white;
         margin: 2px 0 -30px 0;
     }
+
 </style>

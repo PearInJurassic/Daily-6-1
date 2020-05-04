@@ -39,11 +39,11 @@
     data() {
       return {
         avatarUrl: '',
-        userNiceName:'test1234',
-        postNum:NaN,
-        fansNum:NaN,
-        followNum:NaN,
-        words:'',
+        userNiceName: 'test1234',
+        postNum: NaN,
+        fansNum: NaN,
+        followNum: NaN,
+        words: '',
       };
     },
     components: {
@@ -60,16 +60,16 @@
         })
       },
       quit() {
-        window.location.href="/index.html";
+        window.location.href = "/index.html";
       },
       //mock方法
-      init(){
+      init() {
         // 请求后端数据,查询数据源
         this.axios({
           method: "get",
-          url:"data/index",
+          url: "data/index",
         })
-          .then((response)=> {
+          .then((response) => {
             console.log(response.data.user)
             this.userNiceName = response.data.user.name;
             this.postNum = response.data.user.postNum;
@@ -77,13 +77,13 @@
             this.followNum = response.data.user.followNum;
             this.words = response.data.user.words;
           })
-          .catch((error)=> {
+          .catch((error) => {
             console.log(error);
           });
       },
 
     },
-    created(){
+    created() {
       this.init();
     }
   }
@@ -97,6 +97,7 @@
         flex-direction: column;
         justify-content: center;
     }
+
     .UserName {
         display: flex;
     }
@@ -131,5 +132,9 @@
         display: flex;
         flex-direction: row;
         justify-content: left;
+    }
+
+    .IconButton {
+        background-color: white;
     }
 </style>

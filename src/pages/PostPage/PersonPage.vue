@@ -9,6 +9,7 @@
 
   export default {
     name: "PersonPage",
+
     components: {
       PageCenterPerson,
     }

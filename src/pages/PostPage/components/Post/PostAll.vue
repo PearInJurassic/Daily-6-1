@@ -23,9 +23,13 @@
             </div>
             <div>
                 <p>{{itemInfo.content}}</p>
+                <slot>
+
+                </slot>
             </div>
         </div>
         <PostDetail :img="imgUrl"
+                    :message="itemInfo.content"
                     @detailState="changeDetailState"
                     v-if="detailShowState"></PostDetail>
     </div>
