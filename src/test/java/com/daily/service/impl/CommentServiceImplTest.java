@@ -52,12 +52,11 @@ public class CommentServiceImplTest {
     @Ignore
     public void createComment() {
         Comment comment = new Comment();
-        comment.setCommentContent("测试service2");
+        comment.setCommentContent("测试新增方法");
         comment.setPostId(1);
-        comment.setUserId(2);
+        comment.setUserId(10);
         comment.setAnonym(0);
-        comment.setBelongCommentId(10);
-        comment.setReplyCommentId(12);
+        comment.setReplyCommentId(10);
         assertEquals(true,commentService.createComment(comment));
     }
 
@@ -72,7 +71,7 @@ public class CommentServiceImplTest {
     @Test
     @Ignore
     public void deleteComment() {
-        assertEquals(true, commentService.deleteComment(9));
+        assertEquals(true, commentService.deleteComment(11));
     }
 
     @Test

@@ -47,7 +47,7 @@
     <delete id="deleteComment">
         DELETE FROM tb_comment
         WHERE
-        comment_id = #{commentId}
+        comment_id=#{commentId}
     </delete>
     <select id="getCommentByBelongCommentId" resultType="com.daily.entity.Comment">
         SELECT comment_id, comment_content, comment_create_time, comment_update_time,
@@ -55,5 +55,12 @@
         FROM tb_comment
         WHERE
         belong_comment_id=#{belongCommentId}
+    </select>
+    <select id="getCommentByReplyCommentId" resultType="com.daily.entity.Comment">
+        SELECT comment_id, comment_content, comment_create_time, comment_update_time,
+        post_id, user_id, anonym, belong_comment_id, reply_comment_id
+        FROM tb_comment
+        WHERE
+        reply_comment_id=#{replyCommentId}
     </select>
 </mapper>

@@ -60,4 +60,12 @@ public interface CommentDao {
      * @return boolean
      */
     List<Comment> getCommentByBelongCommentId(int belongCommentId);
+
+    /*
+     * 通过回复评论ID得到评论列表
+     *
+     * @param commentId
+     * @return boolean
+     */
+    List<Comment> getCommentByReplyCommentId(int replyCommentId);
 }

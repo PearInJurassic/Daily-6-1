@@ -55,6 +55,16 @@ public class CommentServiceImpl implements CommentService {
             //设置新增、修改日期为当前日期
             comment.setCommentCreateTime(new Date());
             comment.setCommentUpdateTime(new Date());
+            //得到回复的评论ID
+            int id = comment.getReplyCommentId();
+            //得到回复评论的belongCommentId
+            int bid = commentDao.getCommentByCommentId(id).getBelongCommentId();
+            //如果不是最顶层ID
+            if(bid != 0 )
+                comment.setBelongCommentId(bid);
+            //如果是最顶层的
+            else
+                comment.setBelongCommentId(id);
             try {
                 boolean b = commentDao.createComment(comment);
                 if(b == true) {
@@ -94,8 +104,17 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public boolean deleteComment(int commentId) {
         try {
+            //得到ID，用于删除回复此评论以及以下的评论
+            int rid = commentId;
             boolean b = commentDao.deleteComment(commentId);
             if(b == true) {
+                //删除以该commentId为replyCommentId的评论
+                List<Comment> commentList = commentDao.getCommentByReplyCommentId(rid);
+                for(Comment comment : commentList) {
+                    b = deleteComment(comment.getCommentId());
+                    if(b == false)
+                        System.out.println("删除评论失败！");
+                }
                 return true;
             } else {
                 throw new RuntimeException("删除评论失败！");

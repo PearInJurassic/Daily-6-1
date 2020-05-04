@@ -70,7 +70,7 @@ public class CommentDaoTest {
     @Test
     @Ignore
     public void deleteComment() {
-        assertEquals(true, commentDao.deleteComment(4));
+        assertEquals(true, commentDao.deleteComment(11));
     }
 
     @Test
@@ -78,5 +78,12 @@ public class CommentDaoTest {
     public void getCommentByBelongCommentId() {
         List<Comment> commentList = commentDao.getCommentByBelongCommentId(0);
         assertEquals(5,commentList.size());
+    }
+
+    @Test
+    @Ignore
+    public void getCommentByReplyCommentId() {
+        List<Comment> commentList = commentDao.getCommentByReplyCommentId(0);
+        assertEquals(6,commentList.size());
     }
 }
