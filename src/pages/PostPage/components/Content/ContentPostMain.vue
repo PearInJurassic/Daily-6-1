@@ -1,10 +1,11 @@
 <template>
     <div class="ContentAll">
         <div class="ContentCenter">
-            <PostAll :imgUrl="img"></PostAll>
+<!--            <PostAll :imgUrl="img" :itemInfo="postNum[0]"></PostAll>-->
             <component :is="PostAll"
-                       :key="index"
-                       v-for="(index) in postNum">
+                       :key="item.id"
+                       :itemInfo="postNum[index]"
+                       v-for="(item,index) in postNum">
             </component>
         </div>
     </div>
@@ -37,7 +38,13 @@
         })
           .then((response) => {
             console.log(response)
-            this.img="@/assets/plumeria.jpg"
+            let postData = response.data.postItem;
+            for(let item in postData) {
+              console.log(postData[item]);
+              this.postNum.push(postData[item])
+            }
+
+            console.log(this.postNum)
           })
           .catch((error) => {
             console.log(error);

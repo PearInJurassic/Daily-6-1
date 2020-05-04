@@ -3,7 +3,7 @@
         <div class="Content">
             <div @click="openDetail" class="PictureContent">
                 <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt="帖子图片"
-                           :fit="cover" style="width:650px; ">
+                           fit="cover" style="width:650px; ">
                 </el-image>
             </div>
             <div class="PostInfo" style="display: flex">
@@ -20,6 +20,9 @@
                         <img alt="转发按钮" src="@/assets/Post/resend.png">
                     </button>
                 </div>
+            </div>
+            <div>
+                <p>{{itemInfo.content}}</p>
             </div>
         </div>
         <PostDetail :img="imgUrl"
@@ -44,6 +47,9 @@
     },
     props: {
       imgUrl: String,
+      itemInfo: {
+        required:true,
+      }
     },
     computed: {
       likeUrl() {
