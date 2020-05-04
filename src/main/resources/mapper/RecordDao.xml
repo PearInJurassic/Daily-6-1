@@ -21,6 +21,28 @@
         ORDER BY record_create_time
         DESC
     </select>
+    <select id="getRecordListByUserIdAndTime" resultType="com.massizhi.daily.entity.Record">
+        SELECT *
+        FROM tb_record
+        WHERE
+        user_id=#{userId}
+        AND
+        (record_create_time BETWEEN #{beginTime} AND #{endTime})
+        ORDER BY record_create_time
+        DESC
+    </select>
+    <select id="getRecordListByUserIdAndTypeAndTime" resultType="com.massizhi.daily.entity.Record">
+        SELECT *
+        FROM tb_record
+        WHERE
+        user_id=#{userId}
+        AND
+        time_axis_type=#{timeAxisType}
+        AND
+        (record_create_time BETWEEN #{beginTime} AND #{endTime})
+        ORDER BY record_create_time
+        DESC
+    </select>
     <select id="getRecordListByUserIdAndKeyWord" resultType="com.massizhi.daily.entity.Record">
         SELECT *
         FROM tb_record

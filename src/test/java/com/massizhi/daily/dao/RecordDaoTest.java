@@ -19,6 +19,20 @@ class RecordDaoTest {
     private RecordDao recordDao;
 
     @Test
+    void getRecordListByUserIdAndTime() {
+        List<Record> recordList = recordDao.getRecordListByUserIdAndTime(1,new Date(120,3,30),new Date(120,3,31));
+        // 验证预期值和实际值是否相符
+        assertEquals(2, recordList.size());
+    }
+
+    @Test
+    void getRecordListByUserIdAndTypeAndTime() {
+        List<Record> recordList = recordDao.getRecordListByUserIdAndTypeAndTime(1,"学习",new Date(120,3,30),new Date(120,3,31));
+        // 验证预期值和实际值是否相符
+        assertEquals(2, recordList.size());
+    }
+
+    @Test
     void getRecordListByUserId() {
         List<Record> recordList = recordDao.getRecordListByUserId(1);
         // 验证预期值和实际值是否相符
@@ -37,42 +51,6 @@ class RecordDaoTest {
         List<Record> recordList = recordDao.getRecordListByUserIdAndKeyWord(1,"嗯");
         // 验证预期值和实际值是否相符
         assertEquals(1, recordList.size());
-    }
-
-    @Test
-    void insertRecord() {
-        //创建一个对象
-        Record record = new Record();
-        record.setRecordImg("12");
-        record.setRecordContent("12");
-        record.setAreaId(12);
-        record.setRecordCreateTime(new Date());
-        record.setTimeAxisType("心情");
-        record.setRecordUpdateTime(new Date());
-        record.setUserId(12);
-        //将该对象实例添加入库
-        int effectedNum = recordDao.insertRecord(record);
-        //检测影响行数
-        assertEquals(1, effectedNum);
-    }
-
-    @Test
-    void updateRecord() {
-        //创建一个对象
-        Record record = new Record();
-        record.setRecordContent("test");
-        record.setRecordId(1);
-        //将该对象实例更新入库
-        int effectedNum = recordDao.updateRecord(record);
-        //检测影响行数
-        assertEquals(1, effectedNum);
-    }
-
-    @Test
-    void deleteRecord() {
-        int effectedNum = recordDao.deleteRecord(3);
-        //检测影响行数
-        assertEquals(1, effectedNum);
     }
 
 }
