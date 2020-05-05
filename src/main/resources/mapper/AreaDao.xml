@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daily.dao.AreaDao">
+    <select id="getAreaById" resultType="com.daily.entity.Area">
+        SELECT area_id, area_name, belong_area_id, bubble_num
+        FROM tb_area
+        WHERE
+        area_id=#{areaId}
+    </select>
+    <select id="getAreaByName" resultType="com.daily.entity.Area">
+        SELECT area_id, area_name, belong_area_id, bubble_num
+        FROM tb_area
+        WHERE
+        area_name=#{areaName}
+    </select>
+    <select id="getAreaListByBelongAreaId" resultType="com.daily.entity.Area">
+        SELECT area_id, area_name, belong_area_id, bubble_num
+        FROM tb_area
+        WHERE
+        belong_area_id=#{belongAreaId}
+    </select>
+    <update id="updateBubbleNum" parameterType="com.daily.entity.Area">
+        UPDATE tb_area
+        <set>
+            <if test="bubbleNum != null">bubble_num=#{bubbleNum},</if>
+        </set>
+        WHERE area_id=#{areaId}
+    </update>
+    <insert id="addArea" useGeneratedKeys="false" keyProperty="areaId"
+            keyColumn="area_id" parameterType="com.daily.entity.Area">
+        INSERT INTO
+        tb_area(area_id, area_name, belong_area_id, bubble_num)
+        VALUES
+        (#{areaId},#{areaName},
+        #{belongAreaId},#{bubbleNum})
+    </insert>
+    <select id="getAreaList" resultType="com.daily.entity.Area">
+        SELECT area_id, area_name, belong_area_id, bubble_num
+        FROM tb_area
+        ORDER BY area_id
+        ASC
+    </select>
+    <select id="getAreaNameById" resultType="String">
+        SELECT area_name
+        FROM tb_area
+        WHERE
+        area_id=#{areaId}
+    </select>
+</mapper>

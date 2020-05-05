@@ -1,10 +1,11 @@
 package com.daily.service.impl;
 
+import com.daily.dao.AreaDao;
 import com.daily.dao.PostDao;
 import com.daily.dao.UserDao;
 import com.daily.dao.UserFollowDao;
-import com.daily.dto.RegisterDTO;
 import com.daily.dto.LoginDTO;
+import com.daily.dto.RegisterDTO;
 import com.daily.entity.User;
 import com.daily.entity.UserExpand;
 import com.daily.entity.UserFollow;
@@ -20,6 +21,9 @@ import java.util.Date;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
+    private AreaDao areaDao;
+    private UserFollowDao userFollowDao;
+    private PostDao postDao;
 
     @Override
     public int login(LoginDTO loginDTO) {
@@ -60,12 +64,6 @@ public class UserServiceImpl implements UserService {
         userDao.freezeUserById(userId);
         return 0;
     }
-
-    @Autowired
-    private UserDao userDao;
-    private AreaDao areaDao;
-    private UserFollowDao userFollowDao;
-    private PostDao postDao;
 
     @Override
     public UserExpand getUserInfoByUserId(int userId) {
