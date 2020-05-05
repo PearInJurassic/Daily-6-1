@@ -49,10 +49,12 @@ public class PostController {
         List<List<Tag>> tagList = new ArrayList<List<Tag>>();
         postList = postService.getPostList();
         List<Integer> likeList = new ArrayList<>();
+        List<Integer> isLikeList = new ArrayList<>();
         for (Post post : postList) {
             List<Tag> tags = tagService.getTagByPostId(post.getPostId());
             likeList.add(likeService.getLikeNumByPostId(post.getPostId()));
             tagList.add(tags);
+            isLikeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
         }
         modelMap.put("postList", postList);
         modelMap.put("tagList", tagList);
@@ -83,6 +85,9 @@ public class PostController {
             map.put("commentList" + i++, list);
             modelMap.put("commentList", map);
         }
+
+        int num = likeService.getLikeNumByPostId(postId);
+        modelMap.put("likeNum", num);
         modelMap.put("post", post);
         return modelMap;
     }
