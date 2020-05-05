@@ -1,81 +1,83 @@
 package com.daily.dao;
 
 import com.daily.entity.Area;
-import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) // 按方法名大小升序执行
 public class AreaDaoTest {
-    // 通过spring容器注入Dao的实现类
     @Autowired
     private AreaDao areaDao;
 
     @Test
-    public void testAQueryArea() {
-        List<Area> areaList = areaDao.queryArea();
-        // 验证预期值和实际值是否相符
-        assertEquals(2, areaList.size());
+    @Ignore
+    public void getAreaById() {
+        Area area = areaDao.getAreaById(1);
+        assertEquals("福州",area.getAreaName());
     }
 
     @Test
-    public void testBInsertArea() {
-        // 创建一个区域对象
-        Area area = new Area();
-        area.setAreaName("new  kdfn");
-        area.setCreateTime(new Date());
-        area.setPriority(1);
-        // 将该对象实例添加入库
-        int effectedNum = areaDao.insertArea(area);
-        // 检测影响行数
-        assertEquals(1, effectedNum);
-        // 校验总数是否+1
-        List<Area> areaList = areaDao.queryArea();
-        assertEquals(3, areaList.size());
+    @Ignore
+    public void getAreaByName() {
+        Area area = areaDao.getAreaByName("福州");
+        assertEquals(1,area.getAreaId());
     }
 
     @Test
-    public void testCQueryAreaById() {
-        Area area = areaDao.queryAreaById(2);
-        assertEquals("东苑", area.getAreaName());
+    @Ignore
+    public void getAreaListByBelongAreaId() {
+        List<Area> areaList = areaDao.getAreaListByBelongAreaId(0);
+        assertEquals(33,areaList.size());
     }
 
     @Test
-    public void testDUpateArea() {
-        List<Area> areaList = areaDao.queryArea();
-        for (Area area : areaList) {
-            if ("测试区域".equals(area.getAreaName())) {
-                // 对比之前的priority值
-                assertEquals(1, area.getPriority().intValue());
-                area.setPriority(2);
-                int effectedNum = areaDao.updateArea(area);
-                assertEquals(1, effectedNum);
+    @Ignore
+    public void updateBubbleNum() {
+        Area area = areaDao.getAreaById(1);
+        area.setBubbleNum(0);
+        assertEquals(true,areaDao.updateBubbleNum(area));
+    }
+
+    @Test
+    @Ignore
+    public void addArea() {
+        int n = 1, areaId, a = 3100000;
+        Area area;
+        String name;
+        for(int j = 1; j <= n; j++) {
+            areaId = a + j * 0;
+            area = areaDao.getAreaById(areaId);
+            name = area.getAreaName();
+            int i, id = area.getAreaId();
+            for (i = 1; i < 11; i++) {
+                area.setAreaId(id + i);
+                area.setAreaName(name + i);
+                area.setBelongAreaId(id);
+                area.setBubbleNum(0);
+                areaDao.addArea(area);
             }
         }
     }
 
     @Test
-    public void testEDeleteArea() {
-        List<Area> areaList = areaDao.queryArea();
-        for (Area area : areaList) {
-            if ("测试区域".equals(area.getAreaName())) {
-                int effectedNum = areaDao.deleteArea(area.getAreaId());
-                assertEquals(1, effectedNum);
-            }
-        }
-        // 重新获取一次列表，看看总数是否少1
-        areaList = areaDao.queryArea();
-        assertEquals(2, areaList.size());
+    @Ignore
+    public void getAreaList() {
+        List<Area> areaList = areaDao.getAreaList();
+        assertEquals(4100,areaList.size());
+    }
+
+    @Test
+    public void getAreaNameById() {
+        String areaName = areaDao.getAreaNameById(0);
+        assertEquals("中国",areaName);
     }
 }
