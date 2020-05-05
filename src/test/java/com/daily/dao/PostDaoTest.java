@@ -55,7 +55,7 @@ public class PostDaoTest {
         post.setPostContent("xixi天气有点热");
         post.setPostCreateTime(new Date());
         post.setPostUpdateTime(new Date());
-        post.setForward(0);
+        //post.setForward(0);
         post.setUserId(2);
         int i = postDao.insertPost(post);
         assertEquals(1, i);
