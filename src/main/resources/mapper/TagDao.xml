@@ -8,7 +8,7 @@
 		SELECT *
 		FROM tb_tag
 		WHERE
-		tag_id=#{tagId}
+		post_id=#{postId}
 	</select>
 	
 	<insert id="insertTag" useGeneratedKeys="true" keyProperty="tagId"

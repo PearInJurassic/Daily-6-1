@@ -36,6 +36,8 @@ public interface PostDao {
      */
     List<Post> queryPostByUserId(int UserId);
 
+    List<Post> queryPostByAreaId(int areaId);
+
     /**
      * 根据postId找出userId
      * 

@@ -50,6 +50,8 @@ public interface PostService {
 
     List<Integer> getAreaByContent(String str);
 
+    List<Post> getPostByAreaId(int areaId);
+
     Post getLastPost();
 
     /**

@@ -25,11 +25,7 @@ public class Post {
 
     private Date postUpdateTime;
 
-    private Integer likeNum;
-
     private Integer forwardNum;
-
-    private Integer commentNum;
 
     private Integer tipoffNum;
 
@@ -43,7 +39,7 @@ public class Post {
 
     private Integer userId;
 
-    private Integer forward;
+    private Integer forwardPostId;
 
     /**
      * @return the postId
@@ -88,20 +84,6 @@ public class Post {
     }
 
     /**
-     * @return the likeNum
-     */
-    public Integer getLikeNum() {
-        return likeNum;
-    }
-
-    /**
-     * @param likeNum the likeNum to set
-     */
-    public void setLikeNum(Integer likeNum) {
-        this.likeNum = likeNum;
-    }
-
-    /**
      * @return the forwardNum
      */
     public Integer getForwardNum() {
@@ -113,20 +95,6 @@ public class Post {
      */
     public void setForwardNum(Integer forwardNum) {
         this.forwardNum = forwardNum;
-    }
-
-    /**
-     * @return the commentNum
-     */
-    public Integer getCommentNum() {
-        return commentNum;
-    }
-
-    /**
-     * @param commentNum the commentNum to set
-     */
-    public void setCommentNum(Integer commentNum) {
-        this.commentNum = commentNum;
     }
 
     /**
@@ -214,17 +182,17 @@ public class Post {
     }
 
     /**
-     * @return the forward
+     * @return the forwardPostId
      */
-    public Integer getForward() {
-        return forward;
+    public Integer getForwardPostId() {
+        return forwardPostId;
     }
 
     /**
-     * @param forward the forward to set
+     * @param forwardPostId the forwardPostId to set
      */
-    public void setForward(Integer forward) {
-        this.forward = forward;
+    public void setForwardPostId(Integer forwardPostId) {
+        this.forwardPostId = forwardPostId;
     }
 
 }

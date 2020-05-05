@@ -12,7 +12,9 @@
 		SELECT *
 		FROM tb_post
 		WHERE
-		user_id=#{userId}
+		user_id=#{userId} and anonym=0
+		ORDER BY post_update_time DESC
+		LIMIT 5
 	</select>
 	<select id="queryUserByPostId" resultType="java.lang.Integer">
 		SELECT user_id
@@ -26,6 +28,13 @@
 		FROM tb_post
 		WHERE
 		post_id=#{postId}
+	</select>
+	
+	<select id="queryPostByAreaId" resultType="com.daily.entity.Post">
+		SELECT *
+		FROM tb_post
+		WHERE
+		area_id=#{areaId}
 	</select>
 	
 	
@@ -57,6 +66,14 @@
 		FROM tb_post
 		WHERE
 		post_content like '%${str}%'
+		
+	</select>
+	
+	<select id="queryLastPost" resultType="com.daily.entity.Post">
+		SELECT *
+		FROM tb_post
+		order by post_id
+		DESC Limit 1
 		
 	</select>
 	

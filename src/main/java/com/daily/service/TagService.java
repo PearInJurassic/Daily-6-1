@@ -24,5 +24,5 @@ public interface TagService {
 
     boolean deleteTag(int tagId);
 
-    List<String> getTagByPostId(int postId);
+    List<Tag> getTagByPostId(int postId);
 }

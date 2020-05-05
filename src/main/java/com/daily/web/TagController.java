@@ -30,7 +30,7 @@ public class TagController {
     @RequestMapping(value = "/listtag", method = RequestMethod.GET)
     private Map<String, Object> listTag(Integer postId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<String> list = new ArrayList<String>();
+        List<Tag> list = new ArrayList<Tag>();
 
         list = tagService.getTagByPostId(postId);
         modelMap.put("tagList", list);

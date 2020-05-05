@@ -227,4 +227,10 @@ public class PostServiceImpl implements PostService {
         return postDao.queryLastPost();
     }
 
+    @Override
+    public List<Post> getPostByAreaId(int areaId) {
+        // TODO Auto-generated method stub
+        return postDao.queryPostByAreaId(areaId);
+    }
+
 }

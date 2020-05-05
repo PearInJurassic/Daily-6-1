@@ -64,7 +64,7 @@ public class LikeController {
     }
 
     @RequestMapping(value = "/addlike", method = RequestMethod.POST)
-    private Map<String, Object> addArea(@RequestBody Like like)
+    private Map<String, Object> addLike(@RequestBody Like like)
             throws JsonParseException, JsonMappingException, IOException {
         Map<String, Object> modelMap = new HashMap<String, Object>();
 
@@ -73,7 +73,7 @@ public class LikeController {
     }
 
     @RequestMapping(value = "/removelike", method = RequestMethod.GET)
-    private Map<String, Object> removeArea(Integer postId, Integer userId) {
+    private Map<String, Object> removeLike(Integer postId, Integer userId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
 
         modelMap.put("success", likeService.deleteLike(postId, userId));
