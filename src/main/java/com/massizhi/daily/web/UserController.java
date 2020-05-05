@@ -31,8 +31,8 @@ public class UserController {
      * @param userId
      * @return Map<userInfo,UserExpand>
      */
-    @RequestMapping(value = "/getUserInfoByUserId", method = RequestMethod.GET)
-    private Map<String, Object> getUserInfoByUserId(int userId) {
+    @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
+    private Map<String, Object> getUserInfo(int userId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         UserExpand userExpand = userService.getUserInfoByUserId(userId);
         modelMap.put("userInfo", userExpand);
@@ -60,8 +60,8 @@ public class UserController {
      * @return Map<userPostList, List<Post>>
      *         Map<userRecordList, List<Record>>
      */
-    @RequestMapping(value = "/userPostListAndUserRecordList", method = RequestMethod.GET)
-    private Map<String, Object> userPostListAndUserRecordList(int userId) {
+    @RequestMapping(value = "/userPostAndRecordList", method = RequestMethod.GET)
+    private Map<String, Object> userPostAndRecordList(int userId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<Post> userPostList=postService.getPostByUserId(userId);
         List<RecordExpand> userRecordList=recordService.getRecordListByUserId(userId);
