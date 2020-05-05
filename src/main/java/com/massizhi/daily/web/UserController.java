@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;

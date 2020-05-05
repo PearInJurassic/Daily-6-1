@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/userRecord")
 public class RecordController {
     @Autowired
     private RecordService recordService;
