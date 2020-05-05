@@ -15,7 +15,7 @@
     data() {
       return {
         iconAlt: ["可视化地图", "时间轴", "个人空间"],
-        pageUrl:['/','','','/personpage'],
+        pageUrl:['/','','/timeaxispage','/personpage'],
 
 
         list:[
@@ -32,7 +32,7 @@
           {
             img:require(`@/assets/NavBar/TimeLine.png`),
             active:require(`@/assets/NavBar/TimeLine-fill.png`),
-            path:""
+            path:"/timeaxispage"
           },
           {
             img:require(`@/assets/NavBar/PersonSpace.png`),

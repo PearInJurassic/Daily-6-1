@@ -1,7 +1,15 @@
 import PersonPage from "@/pages/PostPage/PersonPage";
 import PageCenterPost from "@/pages/PostPage/components/PageCenter/PageCenterPost";
+import TimeaxisPage from "@/pages/Timeaxis/TimeaxisPage";
+import Home from "@/pages/Timeaxis/components/VIewComponents/Home";
 import Vue from "vue";
 import VueRouter from "vue-router";
+import About from "@/pages/Timeaxis/components/VIewComponents/About";
+import WorkLine from "@/pages/Timeaxis/components/VIewComponents/WorkLine";
+import MoodLine from "@/pages/Timeaxis/components/VIewComponents/MoodLine";
+import Other from "@/pages/Timeaxis/components/VIewComponents/Other";
+
+
 
 Vue.use(VueRouter);
 
@@ -18,6 +26,35 @@ const routes = [
     path: '/personpage',
     component: PersonPage
   },
+  {
+    path: '/timeaxispage',
+    component: TimeaxisPage,
+    children:[
+      {
+        path:'',
+        component:Home
+      },
+      {
+        path:'about',
+        component: About
+      },
+      {
+        path: 'workline',
+        name: 'WorkLine',
+        component: WorkLine
+      },
+      {
+        path: 'moodline',
+        name: 'MoodLine',
+        component: MoodLine
+      },
+      {
+        path: 'other',
+        name: 'Other',
+        component: Other
+      },
+    ]
+  }
 ]
 
 const router =new VueRouter({

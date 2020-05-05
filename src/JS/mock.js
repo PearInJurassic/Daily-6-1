@@ -24,6 +24,16 @@ let data =
         'id':'@id',
         'content':'@cparagraph'
       }
+    ],
+    'axisItem|5':[
+      {
+        "id": '@id',
+        "title":"@ctitle",
+        "msg":"@csentence",
+        "date":"@date",
+        "type":"日常",
+        "url":"https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+      }
     ]
   }
 Mock.mock('data/index', 'get', data)

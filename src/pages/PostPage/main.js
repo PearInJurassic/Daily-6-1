@@ -7,6 +7,7 @@ import axios from 'axios';
 import layer from 'vue-layer';
 import 'vue-layer/lib/vue-layer.css';
 import router from '@/JS/router'
+import store from '@/vuex/store.js' // 引入store
 import '@/JS/mock'
 import '@/CSS/theme/index.css'
 
@@ -17,5 +18,6 @@ Vue.use(VueAxios,axios)
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')
