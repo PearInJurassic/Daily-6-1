@@ -1,10 +1,12 @@
 <template>
   <div class="block">
     <el-date-picker
+      style="width:200px"
+      class="a"
       v-model="value2"
       format="yyyy-MM-dd"
       value-format="yyyy-MM-dd"
-      @change="selectTime"
+      @change="getSTime"
       type="daterange"
       align="right"
       unlink-panels
@@ -14,6 +16,9 @@
       size="mini"
       :picker-options="pickerOptions">
     </el-date-picker>
+    <br/>
+    <br/>
+    <el-button  v-on:click="postdate">确定</el-button>
   </div>
 
 </template>
@@ -50,12 +55,17 @@
           }]
         },
         value1: '',
-        value2: null
+        value2: '',
       };
     },
     methods: {
-      selectTime(){
-        this.store.commit("setDate", this.value2[0] , this.value2[1]);
+      getSTime(val){
+        this.value2=val;
+      },
+      //点击确定按钮后更新vuex的state(起始和中止日期)的值
+      postdate(){
+        this.$store.commit('setDate',this.value2);
+        alert("更新成功！");
       }
     }
   };

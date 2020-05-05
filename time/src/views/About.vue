@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-
+//日常时间轴页面
 // @ is an alias to /src
 import Branch from '@/components/Timeaxis/Branch.vue'
 export default {

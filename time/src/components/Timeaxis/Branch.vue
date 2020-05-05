@@ -2,39 +2,47 @@
     <div class="Branch">
       <div class="header">
 		<h1 style="display:inline-block">{{text}}时间轴</h1>
-    <el-button id="btn" @click="dialogFormVisible = true">添加</el-button>
+    <el-button id="btn" @click="addpage">添加</el-button>
     <el-button id="btn2" v-on:click="setVisible" :style="{ display: editbtn }">编辑</el-button>
     <el-button id="btn3" v-on:click="setVisible" :style="{ display: editcancel }">取消编辑</el-button>
 	</div>
   <section id="cd-timeline" class="cd-container">
 
 	<div v-for="(data,i) in datalist" :key="i" id="block1">
-    <div v-if=" i%2===0 " class="cd-timeline-block">
+    <div v-if=" (i%2===0 && (data.type===text || text===''))" class="cd-timeline-block">
       <div class="cd-timeline-img cd-picture">
         <img src="../../assets/NavBar/TimeLine.png" alt="Picture">             
       </div>
 
       <div class="cd-timeline-content" style="float:left">
-        <p style="position:absolute;left:5px;top:5px">{{data.date}}</p>
-        <h2 style="display:inline">{{data.title}}</h2>
-        <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun(i)"></el-button>
-        <p>{{data.msg}}</p>
-        <a href="http://www.helloweba.com/view-blog-285.html" class="cd-read-more" target="_blank" style="position:relative;left:110px">查看全文</a>
+       
+        <div class="insertmap">
+          <p style="position:absolute;left:5px;top:5px">{{data.date}}</p>
+          <img :src=data.url alt="Picture" style="position: relative;top:20px">             
+        </div>
+        <div class="contentpage">
+          <h2 style="display:inline;position:absolute;left:280px;top:40px" >{{data.title}}</h2>
+          <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun(i)"></el-button>
+          <a href="http://www.helloweba.com/view-blog-285.html" class="cd-read-more" target="_blank" style="position:absolute;left:240px;bottom:50px">查看全文</a>
+        </div>
       </div>
     </div>
 
-    <div v-else class="cd-timeline-block">
+    <div v-if="(i%2!==0 && (data.type===text || text===''))" class="cd-timeline-block">
       <div class="cd-timeline-img cd-picture">
         <img src="../../assets/NavBar/TimeLine.png" alt="Picture">             
       </div>
 
       <div class="cd-timeline-content"  style="float:right">
+        <div class="insertmap">
         <p style="position:absolute;left:5px;top:5px">{{data.date}}</p>
-        <h2 style="display:inline">{{data.title}}</h2>
-        <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun(i)"></el-button>
-        <p>{{data.msg}}</p>
-        <a href="http://www.helloweba.com/view-blog-285.html" class="cd-read-more" target="_blank" style="position:relative;left:110px">查看全文</a>
-        
+        <img :src=data.url alt="Picture" style="position: relative;top:20px">             
+        </div>
+        <div class="contentpage">
+        <h2 style="display:inline;position:absolute;left:280px;top:40px">{{data.title}}</h2>
+        <el-button :style="{ display: visibleDelete }" type="danger" icon="el-icon-delete" circle class="DeleteBtn" @click="fun(i)"></el-button>       
+        <a href="http://www.helloweba.com/view-blog-285.html" class="cd-read-more" target="_blank" style="position:absolute;left:240px;bottom:50px">查看全文</a>
+        </div>
       </div>
      
     </div>
@@ -47,7 +55,7 @@
     
     <el-form-item label="动态" :label-width="formLabelWidth">
       <el-select value-key="id" @change="selectGet" v-model="form.region" placeholder="请选择你要添加的动态">
-        <el-option v-for="item in dataoptions" :key="item.id" :label="item.title" :value="item" ></el-option>
+        <el-option v-for="item in dataadd" :key="item.id"  :label="item.title" :value="item" ></el-option>
         
       </el-select>
     </el-form-item>
@@ -62,14 +70,24 @@
 </template>
 
 <script>
+import axios from 'axios'
 	export default {
 	name: "Branch",
 	components: {
   },
   computed: {
-      
+    //获取起始时间信息
+    getstart(){
+    return this.$store.state.time.starttime
+   },
+   //获取终止时间信息
+    getend(){
+    return this.$store.state.time.endtime
+   }
   },
  created () {
+    //读入本地的json文件
+    this. geApitData();
     //在页面加载时读取sessionStorage里的状态信息
     if (sessionStorage.getItem("store") ) {
         this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(sessionStorage.getItem("store"))))
@@ -81,8 +99,9 @@
     })
   },
   data(){
-    return { //按钮中的文字
-      text: this.btnData.text,
+    return { 
+     
+      text: this.btnData.text, //按钮中的文字
       state: false,
       editstate: false,//是否处于编辑状态
       editbtn: '',//编辑按钮显示
@@ -90,6 +109,8 @@
       visibleDelete: 'none',   //删除按钮隐藏
       count: this.$store.state.addItem,
       dialogFormVisible: false,
+      start:'',
+      end:'',
       form: {
           name: '',
           region: '',
@@ -101,30 +122,52 @@
           desc: ''
         },
       formLabelWidth: '120px',
+      //json文档传入的总列表，展示在时间轴上
       datalist:[
-      {id: 1,title:'S',msg:'sssss',date:'2020-01-02'},
-      {id: 2,title:'N',msg:'nnnnn',date:'2020-02-02'},
-      {id: 3,title:'D',msg:'ddddd',date:'2020-03-01'},
-      {id: 4,title:'F',msg:'fffff',date:'2020-03-19'}
+        
       ],
+      //添加列表总列表(datalist用时间筛选后剩下的)
       dataoptions:[
-        {id:0,title:'W',msg:'wwwww',date: '2020-08-01'},
-        {id:1,title:'K',msg:'kkkkk',date: '2020-04-02'},
-        {id:2,title:'M',msg:'mmmmm',date: '2020-05-02'}
       ],
+      //根据类别划分的添加列表
+      dataadd:[
+
+      ]
     }
   },
-  // 在 `methods` 对象中定义方法
   methods: {
+    geApitData() {
+      //json地址
+      var url="/test.json"; 
+      var _this=this;   
+      axios.get(url)
+          .then(function(result){
+            _this.datalist=result.data.datalist;
+          })
+          this.sort();
+    },
     //点击添加按钮后添加动态
     add: function (item){
-      let obj1={id:item.id,title:item.title,msg:item.msg,date:item.date};
+      let obj1={id:item.id,title:item.title,msg:item.msg,date:item.date,type:item.type,url:item.url};
       this.dialogFormVisible = false;
       //添加到时间轴列表
       this.datalist.splice(0, 0, obj1);
       this.sort();
       //从选择列表中删去
       this.dataoptions.splice(item.id, 1);
+    },
+    //点击添加按钮
+    addpage() {
+      this.dialogFormVisible = true;
+      var i;
+      for(i=0;i<this.dataoptions.length;i++)
+      {
+        if((this.dataoptions[i].type===this.text) || this.text==='')
+        {
+          this.dataadd.length = 0;
+          this.dataadd.splice(0, 0, this.dataoptions[i]);
+        }
+      }
     },
     sort(){                     // 排序
       this.datalist.sort(this.compare("date"));
@@ -135,8 +178,12 @@
         let val1 = a[attr];
         let val2 = b[attr];
         return new Date(val1.replace(/-/,'/')) - new Date(val2.replace(/-/,'/'));
-      }        
+      }
 },
+    //比较ab两个日期的大小,a比b大则返回值大于0
+    datecompare(a,b){
+      return new Date(a.replace(/-/,'/')) - new Date(b.replace(/-/,'/'));
+    },
     setVisible: function() {
 
       if (this.editstate ===false) {
@@ -152,11 +199,13 @@
       this.editcancel= 'none'
       }    
     },
-    //删除动态
+    //点击删除动态按钮响应
     fun(index) {
+      //从动态列表中删去
+      var item=this.datalist.splice(index, 1);
+      //添加到添加列表中
+      this.dataoptions.splice(0, 0, item[0]);
 
-      this.datalist.splice(index, 1);
-      
     },
   
   },
@@ -170,6 +219,40 @@
       }
     }
   },
+  watch: {
+    //监听时间轴开始日期变化
+    getstart(newVal) {
+    //删掉时间轴展示列表里的时间范围外的动态
+    var i;
+    for(i=0;i<this.datalist.length;i++)
+    {
+        if(this.datecompare(this.datalist[i].date,newVal)<0)
+        {
+          var item=this.datalist.splice(i, 1);
+          i--;
+          //添加到添加列表中
+          this.dataoptions.splice(0, 0, item[0]);
+        }
+    }
+      },
+    //监听时间轴中止日期变化
+        getend(newVal){
+       //删掉时间轴展示列表里的时间范围外的动态
+      var i;
+      for(i=0;i<this.datalist.length;i++)
+      {
+        //从展示列表删去
+        if(this.datecompare(this.datalist[i].date,newVal)>0)
+        {
+          var item=this.datalist.splice(i, 1);
+          i--;
+          //添加到添加列表中
+          this.dataoptions.splice(0, 0, item[0]);
+        }
+      }
+      }
+    }
+
   }
 
 </script>
@@ -211,12 +294,7 @@ Modules - reusable parts of our design
   max-width: 1170px;
   margin: 0 auto;
 }
-.cd-container::after {
-  /* clearfix */
-  content: '';
-  display: table;
-  clear: both;
-}
+
 
 /* -------------------------------- 
 
@@ -311,15 +389,7 @@ Main components
     -webkit-transform: translateZ(0);
     -webkit-backface-visibility: hidden;
   }
-  .cssanimations .cd-timeline-img.is-hidden {
-    visibility: hidden;
-  }
-  .cssanimations .cd-timeline-img.bounce-in {
-    visibility: visible;
-    -webkit-animation: cd-bounce-1 0.6s;
-    -moz-animation: cd-bounce-1 0.6s;
-    animation: cd-bounce-1 0.6s;
-  }
+  
 }
 
 .cd-timeline-content {
@@ -330,11 +400,7 @@ Main components
   padding: 1em;
   box-shadow: 0 3px 0 rgb(97, 97, 94);
 }
-.cd-timeline-content:after {
-  content: "";
-  display: table;
-  clear: both;
-}
+
 .cd-timeline-content h2 {
   color: #303e49;
 }
@@ -430,21 +496,13 @@ a.cd-read-more:hover{text-decoration:none; background-color: #424242;  }
     right: 122%;
     text-align: right;
   }
-  .cssanimations .cd-timeline-content.is-hidden {
-    visibility: hidden;
-  }
-  .cssanimations .cd-timeline-content.bounce-in {
-    visibility: visible;
-    -webkit-animation: cd-bounce-2 0.6s;
-    -moz-animation: cd-bounce-2 0.6s;
-    animation: cd-bounce-2 0.6s;
-  }
+ 
   .header {
     position: relative;
     width: 700px;
     border: 1px solid black;
     border-radius: 0.25em;
-    left: 80px;
+    left: 180px;
     top: 48px;
   }
 }
@@ -465,7 +523,16 @@ a.cd-read-more:hover{text-decoration:none; background-color: #424242;  }
     right: 10px;
     top: 10px;
   }
-
+  .insertmap{
+    width: 150px;
+    height: 150px;
+    float: left;
+  }
+  .contentpage{
+    width: 200px;
+    height: 150px;
+    float: right;
+  }
 @media only screen and (min-width: 1170px) {
   /* inverse bounce effect on even content blocks */
   .cssanimations .cd-timeline-block:nth-child(even) .cd-timeline-content.bounce-in {

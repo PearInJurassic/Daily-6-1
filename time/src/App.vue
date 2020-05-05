@@ -9,7 +9,6 @@
         <Side></Side>
       </div>
       <div id="maincontent">
-        <!-- 路由匹配到的组件将渲染在这里 -->
         <router-view></router-view>
       </div>
 
@@ -65,7 +64,7 @@ export default {
 
 #sidebar{
 	float: left;/*侧边栏居左，改为right可令侧边栏居右*/
-	width: 350px;
+	width: 200px;
   border: 1px solid black;
   height: 100%;
   position: fixed;
@@ -81,7 +80,7 @@ export default {
   top: 54px;
   right: 0;
   bottom: 0;
-  left: 351px;
+  left: 201px;
   overflow-y: auto;
 }
 </style>

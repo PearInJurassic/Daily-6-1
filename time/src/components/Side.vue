@@ -26,7 +26,6 @@
         <DateInput></DateInput>
         <br/>
         <br/>
-        <el-button>确定</el-button>
     </div>
 </template>
 
@@ -45,10 +44,10 @@
 <style lang="less" scoped>
 
 .Side {
-    width: 350px;
+    width: 200px;
 }
 .title{
-    width: 350px;
+    width: 200px;
     border: 1px solid black;  
     border-left:none;
     border-right:none;

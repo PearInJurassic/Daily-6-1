@@ -7,9 +7,14 @@ import layer from 'vue-layer'
 import 'vue-layer/lib/vue-layer.css';
 import store from './vuex/store' // 引入store
 import Vuex from "vuex"
+import axios from 'axios'
+import VueResource from 'vue-resource'
+
 Vue.prototype.$layer = layer(Vue);
+Vue.prototype.$axios=axios;
 Vue.use(ElementUI);
 Vue.use(Vuex);
+Vue.use(VueResource);
 
 Vue.config.productionTip = false
 
