@@ -64,7 +64,7 @@ public class UserController {
     private Map<String, Object> userPostListAndUserRecordList(int userId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<Post> userPostList=postService.getPostByUserId(userId);
-        List<Record> userRecordList=recordService.getRecordListByUserId(userId);
+        List<RecordExpand> userRecordList=recordService.getRecordListByUserId(userId);
         modelMap.put("userPostList", userPostList);
         modelMap.put("userRecordList", userRecordList);
         return modelMap;
@@ -81,7 +81,7 @@ public class UserController {
     private Map<String, Object> userSelectedPostAndRecordList(int userId,String keyWord) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<Post> userSelectedPostList=postService.getPostByContentAndUserId(keyWord,userId);
-        List<Record> userSelectedRecordList=recordService.getRecordListByUserIdAndKeyWord(userId,keyWord);
+        List<RecordExpand> userSelectedRecordList=recordService.getRecordListByUserIdAndKeyWord(userId,keyWord);
         modelMap.put("userSelectedPostList", userSelectedPostList);
         modelMap.put("userSelectedRecordList", userSelectedRecordList);
         return modelMap;

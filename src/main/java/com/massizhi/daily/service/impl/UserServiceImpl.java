@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
         UserExpand userExpand =new UserExpand();
         User user=userDao.getUserByUserId(userId);
         userExpand.setUser(user);
+        if(user.getAreaId() != null && user.getAreaId() != 0)
         userExpand.setAreaName(areaDao.getAreaNameById(user.getAreaId()));
         return userExpand;
     }

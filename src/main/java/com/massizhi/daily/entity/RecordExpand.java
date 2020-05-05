@@ -1,17 +1,16 @@
 package com.massizhi.daily.entity;
-
-//增加了用户地区名
-public class UserExpand {
-    private User user;
-    //用户所属地区名
+//增加了地区名
+public class RecordExpand {
+    private Record record;
+    //动态所属地区名
     private String areaName;
 
-    public User getUser() {
-        return user;
+    public Record getRecord() {
+        return record;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setRecord(Record record) {
+        this.record = record;
     }
 
     public String getAreaName() {

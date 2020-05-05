@@ -3,6 +3,7 @@ package com.massizhi.daily.web;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.massizhi.daily.entity.Record;
+import com.massizhi.daily.entity.RecordExpand;
 import com.massizhi.daily.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,12 +27,12 @@ public class RecordController {
      * 根据用户ID和时间轴类别得到动态列表
      *
      * @param userId,timeAxisType
-     * @return Map<recordList, List<Record>>
+     * @return Map<recordList, List<RecordExpand>>
      */
     @RequestMapping(value = "/getRecordListByUserIdAndType", method = RequestMethod.POST)
     private Map<String, Object> getRecordListByUserIdAndType(int userId, String timeAxisType) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<Record> recordList=recordService.getRecordListByUserIdAndType(userId,timeAxisType);
+        List<RecordExpand> recordList=recordService.getRecordListByUserIdAndType(userId,timeAxisType);
         modelMap.put("recordList", recordList);
         return modelMap;
     }
@@ -40,12 +41,12 @@ public class RecordController {
      * 根据用户ID和时间范围得到动态列表
      *
      * @param userId,Date1,Date2
-     * @return Map<recordList, List<Record>>
+     * @return Map<recordList, List<RecordExpand>>
      */
     @RequestMapping(value = "/getRecordListByUserIdAndTime", method = RequestMethod.POST)
     private Map<String, Object> getRecordListByUserIdAndTime(int userId, Date beginTime, Date endTime) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<Record> recordList=recordService.getRecordListByUserIdAndTime(userId,beginTime,endTime);
+        List<RecordExpand> recordList=recordService.getRecordListByUserIdAndTime(userId,beginTime,endTime);
         modelMap.put("recordList", recordList);
         return modelMap;
     }
@@ -54,13 +55,13 @@ public class RecordController {
      * 根据用户ID和时间轴类别和时间范围得到动态列表
      *
      * @param userId,timeAxisType,Date1,Date2
-     * @return Map<recordList, List<Record>>
+     * @return Map<recordList, List<RecordExpand>>
      */
     @RequestMapping(value = "/getRecordListByUserIdAndTypeAndTime", method = RequestMethod.POST)
     private Map<String, Object> getRecordListByUserIdAndTypeAndTime
             (int userId,String timeAxisType,Date beginTime,Date endTime) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<Record> recordList=recordService.
+        List<RecordExpand> recordList=recordService.
                 getRecordListByUserIdAndTypeAndTime(userId,timeAxisType,beginTime,endTime);
         modelMap.put("recordList", recordList);
         return modelMap;

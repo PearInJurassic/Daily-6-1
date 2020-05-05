@@ -1,43 +1,97 @@
 package com.massizhi.daily.service.impl;
 
+import com.massizhi.daily.dao.AreaDao;
 import com.massizhi.daily.dao.RecordDao;
 import com.massizhi.daily.entity.Record;
-import com.massizhi.daily.entity.UserFollow;
+import com.massizhi.daily.entity.RecordExpand;
 import com.massizhi.daily.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Service
 public class RecordServiceImpl implements RecordService {
     @Autowired
     private RecordDao recordDao;
+    private AreaDao areaDao;
 
     @Override
-    public List<Record> getRecordListByUserId(int userId) {
-        return recordDao.getRecordListByUserId(userId);
+    public List<RecordExpand> getRecordListByUserId(int userId) {
+        List<Record> recordList=recordDao.getRecordListByUserId(userId);
+        List<RecordExpand> recordExpandList=new ArrayList<RecordExpand>();
+        IntStream.range(0, recordList.size()).forEach(i -> {
+            RecordExpand recordExpand = new RecordExpand();
+            Record record = recordList.get(i);
+            recordExpand.setRecord(record);
+            if(record.getAreaId() != null && record.getAreaId() != 0)
+                recordExpand.setAreaName(areaDao.getAreaNameById(record.getAreaId()));
+            recordExpandList.add(recordExpand);
+        });
+        return recordExpandList;
     }
 
     @Override
-    public List<Record> getRecordListByUserIdAndKeyWord(int userId, String keyWord) {
-        return recordDao.getRecordListByUserIdAndKeyWord(userId,keyWord);
+    public List<RecordExpand> getRecordListByUserIdAndKeyWord(int userId, String keyWord) {
+        List<Record> recordList=recordDao.getRecordListByUserIdAndKeyWord(userId,keyWord);
+        List<RecordExpand> recordExpandList=new ArrayList<RecordExpand>();
+        IntStream.range(0, recordList.size()).forEach(i -> {
+            RecordExpand recordExpand = new RecordExpand();
+            Record record = recordList.get(i);
+            recordExpand.setRecord(record);
+            if(record.getAreaId() != null && record.getAreaId() != 0)
+                recordExpand.setAreaName(areaDao.getAreaNameById(record.getAreaId()));
+            recordExpandList.add(recordExpand);
+        });
+        return recordExpandList;
     }
 
     @Override
-    public List<Record> getRecordListByUserIdAndType(int userId, String timeAxisType) {
-        return recordDao.getRecordListByUserIdAndType(userId,timeAxisType);
+    public List<RecordExpand> getRecordListByUserIdAndType(int userId, String timeAxisType) {
+        List<Record> recordList=recordDao.getRecordListByUserIdAndType(userId,timeAxisType);
+        List<RecordExpand> recordExpandList=new ArrayList<RecordExpand>();
+        IntStream.range(0, recordList.size()).forEach(i -> {
+            RecordExpand recordExpand = new RecordExpand();
+            Record record = recordList.get(i);
+            recordExpand.setRecord(record);
+            if(record.getAreaId() != null && record.getAreaId() != 0)
+                recordExpand.setAreaName(areaDao.getAreaNameById(record.getAreaId()));
+            recordExpandList.add(recordExpand);
+        });
+        return recordExpandList;
     }
 
     @Override
-    public List<Record> getRecordListByUserIdAndTime(int userId, Date beginTime, Date endTime) {
-        return recordDao.getRecordListByUserIdAndTime(userId,beginTime,endTime);
+    public List<RecordExpand> getRecordListByUserIdAndTime(int userId, Date beginTime, Date endTime) {
+        List<Record> recordList=recordDao.getRecordListByUserIdAndTime(userId,beginTime,endTime);
+        List<RecordExpand> recordExpandList=new ArrayList<RecordExpand>();
+        IntStream.range(0, recordList.size()).forEach(i -> {
+            RecordExpand recordExpand = new RecordExpand();
+            Record record = recordList.get(i);
+            recordExpand.setRecord(record);
+            if(record.getAreaId() != null && record.getAreaId() != 0)
+                recordExpand.setAreaName(areaDao.getAreaNameById(record.getAreaId()));
+            recordExpandList.add(recordExpand);
+        });
+        return recordExpandList;
     }
 
     @Override
-    public List<Record> getRecordListByUserIdAndTypeAndTime(int userId, String timeAxisType, Date beginTime, Date endTime) {
-        return recordDao.getRecordListByUserIdAndTypeAndTime(userId,timeAxisType,beginTime,endTime);
+    public List<RecordExpand> getRecordListByUserIdAndTypeAndTime(int userId, String timeAxisType, Date beginTime, Date endTime) {
+        List<Record> recordList=recordDao.getRecordListByUserIdAndTypeAndTime(userId,timeAxisType,beginTime,endTime);
+        List<RecordExpand> recordExpandList=new ArrayList<RecordExpand>();
+        IntStream.range(0, recordList.size()).forEach(i -> {
+            RecordExpand recordExpand = new RecordExpand();
+            Record record = recordList.get(i);
+            recordExpand.setRecord(record);
+            if(record.getAreaId() != null && record.getAreaId() != 0)
+                recordExpand.setAreaName(areaDao.getAreaNameById(record.getAreaId()));
+            recordExpandList.add(recordExpand);
+        });
+        return recordExpandList;
     }
 
     @Override

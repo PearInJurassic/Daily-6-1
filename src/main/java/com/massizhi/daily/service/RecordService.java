@@ -1,6 +1,7 @@
 package com.massizhi.daily.service;
 
 import com.massizhi.daily.entity.Record;
+import com.massizhi.daily.entity.RecordExpand;
 
 import java.util.Date;
 import java.util.List;
@@ -10,37 +11,37 @@ public interface RecordService {
      * 根据用户ID得到动态列表
      *
      * @param userId
-     * @return List<Record>
+     * @return List<RecordExpand>
      */
-    List<Record> getRecordListByUserId(int userId);
+    List<RecordExpand> getRecordListByUserId(int userId);
     /*
      * 根据用户ID和内容关键字得到动态列表
      *
      * @param string
-     * @return List<Record>
+     * @return List<RecordExpand>
      */
-    List<Record> getRecordListByUserIdAndKeyWord(int userId,String keyWord);
+    List<RecordExpand> getRecordListByUserIdAndKeyWord(int userId,String keyWord);
     /*
      * 根据用户ID和时间轴类别得到动态列表
      *
      * @param userId,timeAxisType
-     * @return List<Record>
+     * @return List<RecordExpand>
      */
-    List<Record> getRecordListByUserIdAndType(int userId,String timeAxisType);
+    List<RecordExpand> getRecordListByUserIdAndType(int userId,String timeAxisType);
     /*
      * 根据用户ID和时间范围得到动态列表
      *
      * @param userId,Date1,Date2
-     * @return List<Record>
+     * @return List<RecordExpand>
      */
-    List<Record> getRecordListByUserIdAndTime(int userId, Date beginTime, Date endTime);
+    List<RecordExpand> getRecordListByUserIdAndTime(int userId, Date beginTime, Date endTime);
     /*
      * 根据用户ID和时间轴类别和时间范围得到动态列表
      *
      * @param userId,timeAxisType,Date1,Date2
-     * @return List<Record>
+     * @return List<RecordExpand>
      */
-    List<Record> getRecordListByUserIdAndTypeAndTime(int userId,String timeAxisType,Date beginTime,Date endTime);
+    List<RecordExpand> getRecordListByUserIdAndTypeAndTime(int userId,String timeAxisType,Date beginTime,Date endTime);
     /*
      * 新增动态
      *
