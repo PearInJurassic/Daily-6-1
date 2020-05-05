@@ -4,8 +4,10 @@ import com.daily.dto.LoginDTO;
 import com.daily.entity.User;
 import com.daily.entity.UserExpand;
 
+import javax.servlet.http.HttpSession;
+
 public interface UserService {
-    int login(LoginDTO loginDTO);
+    int login(LoginDTO loginDTO, HttpSession session);
 
     int insertUser(RegisterDTO registerDTO);
 

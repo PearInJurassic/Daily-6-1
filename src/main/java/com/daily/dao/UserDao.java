@@ -6,6 +6,8 @@ import com.daily.entity.UserFollowInfo;
 public interface UserDao {
     String getPasswordByEmail(String email);
 
+    Integer getUserIdByEmail(String email);
+
     int insertUser(User user);
 
     int delUserById(int userId);
@@ -21,6 +23,7 @@ public interface UserDao {
      * @return User
      */
     User getUserByUserId(int userId);
+
     /* 针对关注用户的信息使用！！！
      * 通过关注用户ID得到用户信息
      *
@@ -28,6 +31,7 @@ public interface UserDao {
      * @return UserFollowInfo
      */
     UserFollowInfo getUserFollowInfoByUserId(int userId);
+
     /*
      * 用户粉丝数++
      *
@@ -35,6 +39,7 @@ public interface UserDao {
      * @return int
      */
     int decUserFansNum(int userId);
+
     /*
      * 用户粉丝数--
      *
@@ -42,6 +47,7 @@ public interface UserDao {
      * @return int
      */
     int incUserFansNum(int userId);
+
     /*
      * 用户关注数++
      *
@@ -49,6 +55,7 @@ public interface UserDao {
      * @return int
      */
     int decUserFollowNum(int userId);
+
     /*
      * 用户关注数--
      *
@@ -56,6 +63,7 @@ public interface UserDao {
      * @return int
      */
     int incUserFollowNum(int userId);
+
     /*
      * 修改用户信息
      *

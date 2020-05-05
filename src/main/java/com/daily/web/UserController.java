@@ -36,11 +36,8 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     int checkLogin(@RequestBody LoginDTO loginDTO, HttpServletRequest request)
             throws JsonMappingException, IOException {
-        int result = userService.login(loginDTO);
-        if (result == 1) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", loginDTO.getPassword());
-        }
+        HttpSession session = request.getSession();
+        int result = userService.login(loginDTO,session);
         return result;
     }
 

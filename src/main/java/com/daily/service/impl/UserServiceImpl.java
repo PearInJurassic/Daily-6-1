@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 @Service
@@ -26,13 +27,15 @@ public class UserServiceImpl implements UserService {
     private PostDao postDao;
 
     @Override
-    public int login(LoginDTO loginDTO) {
+    public int login(LoginDTO loginDTO, HttpSession session) {
         String truePassword = userDao.getPasswordByEmail(loginDTO.getEmail());
         if(truePassword==null) {
             return 2;//邮箱不存在
         }
-        else if (loginDTO.getPassword().equals(truePassword))
+        else if (loginDTO.getPassword().equals(truePassword)) {
+            session.setAttribute("userId",userDao.getUserIdByEmail(loginDTO.getEmail()));
             return 1;//密码正确
+        }
         return 3;//用户名或密码错误
     }
 
