@@ -13,7 +13,7 @@ public class Record {
     private Date recordCreateTime;
     //动态修改时间
     private Date recordUpdateTime;
-    //动态所属时间轴ID
+    //动态所属时间轴类型
     private String timeAxisType;
     //动态所属地区ID
     private Integer areaId;
