@@ -3,7 +3,6 @@
         <div id="navigation">
             <NavBar></NavBar>
         </div>
-
         <div id="sidebar">
             <Side></Side>
         </div>
@@ -72,8 +71,6 @@
         top: 54px;
         bottom: 0;
         left: 0;
-
-
     }
 
     #maincontent {

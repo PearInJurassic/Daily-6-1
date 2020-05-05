@@ -5,15 +5,15 @@
                 <img src="@/assets/NavBar/logo.png">
             </div>
             <div class="LoginPanel">
-                <el-form :model="form" label-width="65px">
-                    <el-form-item label="用户名">
+                <el-form :model="form" :rules="rules" label-width="65px">
+                    <el-form-item label="用户名" prop="username">
                         <el-input
                                 clearable
                                 placeholder="请输入用户名"
                                 v-model="form.username">
                         </el-input>
                     </el-form-item>
-                    <el-form-item label="密码">
+                    <el-form-item label="密码" prop="password">
                         <el-input
                                 placeholder="请输入密码"
                                 show-password
@@ -45,8 +45,8 @@
             </div>
         </div>
         <el-dialog
-                title="注册账号"
                 :visible.sync="dialogVisible"
+                title="注册账号"
                 width="400px">
             <PanelSignIn @finishSignIn="finishSignIn"></PanelSignIn>
         </el-dialog>
@@ -66,8 +66,29 @@
           username: '',
           password: '',
         },
+        rules: {
+          username: [
+            {
+              required: true, message: "请输入用户名邮箱", trigger: 'blur'
+            },
+            {
+              type: 'email', message: "请输入正确的邮箱地址", trigger: 'blur'
+            }
+          ],
+          password: [
+            {
+              required: true, message: "请输入密码", trigger: 'blur'
+            },
+            {
+              min: 6, max: 28, message: "密码长度在6-18位之间", trigger: 'blur'
+            },
+            {
+              pattern: /^[a-zA-Z](\w){5,17}$/, message: '以字母开头，长度在6-18之间， 只能包含字符、数字和下划线'
+            }
+          ]
+        },
         value1: true,
-        dialogVisible:false
+        dialogVisible: false
       }
     },
     components: {
@@ -76,16 +97,40 @@
     },
     methods: {
       login() {
-        if (this.value1 == true)
-          window.location.href = "./PostPage";
-        else
-          window.location.href = "./AdminPage";
+        this.axios.post('http://47.107.77.163:8080/demo/login', {
+          "email": this.form.username,
+          "password": this.form.password
+        })
+          .then((response) => {
+            let state = response.data;
+            console.log(state)
+            if (state === 1) {
+              if (this.value1 == true)
+                window.location.href = "./PostPage";
+              else
+                window.location.href = "./AdminPage";
+            } else if (state === 2) {
+              this.$notify.error({
+                title: '登陆失败',
+                message: `您的账号${this.form.username}不存在，请点击注册按钮进行注册`,
+                duration: 3500,
+              })
+            } else if (state === 3) {
+              this.$notify.error({
+                title: '登陆失败',
+                message: `您的密码输入错误`,
+                duration: 3500,
+              })
+            }
+          })
+
+
       },
       finishSignIn() {
-        this.dialogVisible=false;
+        this.dialogVisible = false;
       },
       signIn() {
-        this.dialogVisible=true;
+        this.dialogVisible = true;
       }
     },
   }
