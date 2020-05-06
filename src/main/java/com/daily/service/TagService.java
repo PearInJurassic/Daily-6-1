@@ -20,7 +20,7 @@ import java.util.List;
  * 
  */
 public interface TagService {
-    boolean addTag(Tag tag);
+    Integer addTag(Tag tag);
 
     boolean deleteTag(int tagId);
 

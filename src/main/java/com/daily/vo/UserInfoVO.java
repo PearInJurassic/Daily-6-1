@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserInfoVO {
+    Integer userId;
     String userName;
     String userImg;
     String gender;

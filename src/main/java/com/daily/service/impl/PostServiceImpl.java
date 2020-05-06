@@ -232,4 +232,10 @@ public class PostServiceImpl implements PostService {
         return postDao.queryPostByAreaId(areaId);
     }
 
+    @Override
+    public int getPostNumByUserId(int userId) {
+        // TODO Auto-generated method stub
+        return postDao.countPostNumByUserId(userId);
+    }
+
 }

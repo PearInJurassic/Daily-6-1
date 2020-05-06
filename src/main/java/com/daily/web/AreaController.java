@@ -1,4 +1,4 @@
-package com.daily.service.impl;
+package com.daily.web;
 
 import com.daily.entity.Area;
 import com.daily.service.AreaService;

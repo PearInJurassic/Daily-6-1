@@ -35,6 +35,8 @@ public interface PostService {
      */
     List<Post> getPostByUserId(int userId);
 
+    int getPostNumByUserId(int userId);
+
     /**
      * 获取特定的帖子
      * 

@@ -29,15 +29,16 @@ public class TagServiceImpl implements TagService {
     private TagDao tagDao;
 
     @Override
-    public boolean addTag(Tag tag) {
+    public Integer addTag(Tag tag) {
         // 空值判断，主要是判断areaName不为空
         if (tag.getTagContent() != null && !"".equals(tag.getTagContent())) {
             // 设置默认值
 
             try {
-                int effectedNum = tagDao.insertTag(tag);
-                if (effectedNum > 0) {
-                    return true;
+                tagDao.insertTag(tag);
+                Integer effectedNum = tag.getTagId();
+                if (effectedNum != null) {
+                    return effectedNum.intValue();
                 } else {
                     throw new RuntimeException("添加标签信息失败!");
                 }

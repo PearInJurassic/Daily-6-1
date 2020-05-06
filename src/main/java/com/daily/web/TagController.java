@@ -39,8 +39,8 @@ public class TagController {
     /**
      * 
      * 
-     * @param areaStr
-     * @param request
+     * @param
+     * @param
      * @return
      * @throws IOException
      * @throws JsonMappingException
@@ -50,8 +50,10 @@ public class TagController {
     private Map<String, Object> addTag(@RequestBody Tag tag)
             throws JsonParseException, JsonMappingException, IOException {
         Map<String, Object> modelMap = new HashMap<String, Object>();
+        System.out.println(tag.toString());
         // 添加区域信息
-        modelMap.put("success", tagService.addTag(tag));
+        modelMap.put("success", 1);
+        modelMap.put("tagId", tagService.addTag(tag));
         return modelMap;
     }
 

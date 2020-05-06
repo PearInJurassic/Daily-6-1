@@ -7,6 +7,7 @@ import com.daily.entity.RecordExpand;
 import com.daily.entity.User;
 import com.daily.entity.UserExpand;
 import com.daily.service.PostService;
+import com.daily.service.QiNiuService;
 import com.daily.service.RecordService;
 import com.daily.service.UserService;
 import com.daily.vo.UserInfoVO;
@@ -27,6 +28,8 @@ public class UserController {
     private UserService userService;
     private PostService postService;
     private RecordService recordService;
+    @Autowired
+    private QiNiuService qiNiuService;
 
     /*
      * 登录
@@ -58,12 +61,17 @@ public class UserController {
     }
 
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
-    private Map<String, Object> getUserInfo( HttpServletRequest request)
+    private Map<String, Object> getUserInfo(HttpServletRequest request)
             throws JsonMappingException, IOException {
         Map<String, Object> modelMap = new HashMap<String, Object>();
+        System.out.println("1234");
         HttpSession session = request.getSession();
+        System.out.println("kkkk");
+        System.out.println(session.getAttribute("userId").toString());
         int userId=Integer.parseInt(session.getAttribute("userId").toString());
         //UserInfoVO userInfoVO=userService.getUserInfoById(userId);
+        System.out.println("ID:");
+        System.out.println(userId);
         UserExpand userExpand=userService.getUserInfoByUserId(userId);
         modelMap.put("code",1);
         modelMap.put("message","获取成功");
