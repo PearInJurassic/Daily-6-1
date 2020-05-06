@@ -81,10 +81,10 @@
 		keyColumn="post_id" parameterType="com.daily.entity.Post">
 		INSERT INTO
 		tb_post(post_create_time,post_update_time,post_content,anonym,area_id,
-		user_id,forward_post_id)
+		user_id,forward_post_id,post_img)
 		VALUES
 		(#{postCreateTime},#{postUpdateTime},#{postContent},#{anonym},#{areaId},
-		#{userId},#{forwardPostId})
+		#{userId},#{forwardPostId},#{postImg})
 	</insert>
 	<update id="updatePost" parameterType="com.daily.entity.Post">
 		update tb_post
