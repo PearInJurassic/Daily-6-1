@@ -106,7 +106,7 @@
             console.log(state)
             if (state === 1) {
               if (this.value1 == true)
-                window.location.href = "./PostPage";
+                window.location.href = "./PostPage?id=4";
               else
                 window.location.href = "./AdminPage";
             } else if (state === 2) {

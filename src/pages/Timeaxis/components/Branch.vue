@@ -54,9 +54,8 @@
 
         </section>
 
-        <el-dialog :visible.sync="dialogFormVisible" title="动态添加">
+        <el-dialog :visible.sync="dialogFormVisible" title="动态添加" :modal-append-to-body="modal">
             <el-form :model="form">
-
                 <el-form-item :label-width="formLabelWidth" label="动态">
                     <el-select placeholder="请选择你要添加的动态" v-model="form.region" value-key="id">
                         <el-option :key="item.id" :label="item.title" :value="item" v-for="item in dataadd"></el-option>
@@ -106,6 +105,7 @@
     },
     data() {
       return {
+        modal:false,
         imgUrl:require("@/assets/plumeria.jpg"),
         text: this.btnData.text, //按钮中的文字
         state: false,
