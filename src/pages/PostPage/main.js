@@ -10,8 +10,11 @@ import router from '@/JS/router'
 import store from '@/vuex/store.js' // 引入store
 import '@/JS/mock'
 import '@/CSS/theme/index.css'
+import global_variable from "@/JS/global_variable";
+
 
 Vue.prototype.$layer = layer(Vue);
+Vue.prototype.GLOBAL = global_variable
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(VueAxios,axios)

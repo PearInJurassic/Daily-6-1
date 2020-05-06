@@ -3,7 +3,7 @@
         <PostPanel v-show="isEditPanelShow"></PostPanel>
         <Nav-bar></Nav-bar>
         <div class="blank" style="padding-top: 55px"></div>
-        <router-view>
+        <router-view v-if="isRouterAlive">
             <PageCenterPost></PageCenterPost>
         </router-view>
     </div>
@@ -17,14 +17,28 @@
 
   export default {
     name: 'PostPage',
+    provide() {
+      return {
+        reload: this.reload
+      }
+    },
     data() {
       return {
+        isRouterAlive: true,
         isEditPanelShow: false,
       }
     },
     components: {
       PostPanel,
       NavBar, PageCenterPost
+    },
+    methods: {
+      reload() {
+        this.isRouterAlive = false
+        this.$nextTick(function () {
+          this.isRouterAlive = true;
+        })
+      }
     },
     mounted() {
       Bus.$on("showEditPanel", () => {

@@ -8,14 +8,14 @@
                 </el-avatar>
             </div>
             <div class="Information">
-                <div class="UserName">
-                    <p>{{userNiceName}}</p>
-                    <p style="font-size: 13px;padding-top: 40px;padding-left: 50px">{{words}}</p>
+                <div class="UserName" v-cloak>
+                    <p>{{userInfo.userNiceName}}</p>
+                    <p style="font-size: 13px;padding-top: 40px;padding-left: 50px">{{userInfo.words}}</p>
                 </div>
                 <div class="DetailInfo">
-                    <span>{{postNum}} 帖子</span>
-                    <span>{{fansNum}} 粉丝</span>
-                    <span>关注 {{followNum}} 人</span>
+                    <span>{{userInfo.postNum}} 帖子</span>
+                    <span>{{userInfo.fansNum}} 粉丝</span>
+                    <span>关注 {{userInfo.followNum}} 人</span>
                 </div>
                 <div class="Icon">
                     <button @click="editPersonInfo" class="IconButton">
@@ -26,7 +26,11 @@
                     </button>
                 </div>
             </div>
-            <PanelPersonInfoEdit v-if="false"></PanelPersonInfoEdit>
+            <el-dialog :visible.sync="editDialogVisible"
+                       title="修改个人信息"
+                       width="800px">
+                <PanelPersonInfoEdit @finishEditInfo="closeEdit" :userInfo="userInfo"></PanelPersonInfoEdit>
+            </el-dialog>
         </div>
     </div>
 </template>
@@ -35,15 +39,19 @@
   import PanelPersonInfoEdit from "@/pages/PostPage/components/Panel/PanelPersonInfoEdit";
 
   export default {
+    inject:['reload'],
     name: "ContentPersonInfo",
     data() {
       return {
+        editDialogVisible: false,
         avatarUrl: '',
-        userNiceName: 'test1234',
-        postNum: NaN,
-        fansNum: NaN,
-        followNum: NaN,
-        words: '',
+        userInfo: {
+          userNiceName: 'test',
+          postNum: NaN,
+          fansNum: NaN,
+          followNum: NaN,
+          words: '输入你的个性签名吧！',
+        }
       };
     },
     components: {
@@ -51,31 +59,34 @@
     },
     methods: {
       editPersonInfo() {
-        this.$layer.iframe({
-          content: {
-            content: PanelPersonInfoEdit,
-          },
-          title: "修改信息",
-          area: ['800px', '500px'],
-        })
+        this.editDialogVisible = true;
+      },
+      closeEdit() {
+        this.editDialogVisible = false;
+        this.reload();
       },
       quit() {
         window.location.href = "/index.html";
       },
-      //mock方法
+
       init() {
+        let userID = sessionStorage.getItem('ID');
         // 请求后端数据,查询数据源
-        this.axios({
-          method: "get",
-          url: "data/index",
-        })
+        this.axios.get('http://47.107.77.163:8080/demo/getUserInfo',
+          {
+            params: {
+              userId: userID
+            }
+          }
+        )
           .then((response) => {
-            console.log(response.data.user)
-            this.userNiceName = response.data.user.name;
-            this.postNum = response.data.user.postNum;
-            this.fansNum = response.data.user.fansNum;
-            this.followNum = response.data.user.followNum;
-            this.words = response.data.user.words;
+            let userInfo = response.data.userInfo;
+            console.log(response)
+            this.userInfo.userNiceName = userInfo.user.userName;
+            this.userInfo.postNum = 11;
+            this.userInfo.fansNum = userInfo.user.fansNum;
+            this.userInfo.followNum = userInfo.user.followNum;
+            this.userInfo.words = userInfo.user.profile;
           })
           .catch((error) => {
             console.log(error);
@@ -91,6 +102,10 @@
 
 <style lang="less" scoped>
     @import "~@/CSS/Common.less";
+
+    [v-cloak] {
+        display: none;
+    }
 
     .Avatar {
         display: flex;

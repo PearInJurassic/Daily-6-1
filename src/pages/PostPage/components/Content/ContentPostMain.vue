@@ -32,8 +32,9 @@
        * @description 初始化渲染帖子列表。
        */
       init() {
-        // let url=location.search;//获取url
-        // let userID = url.split('=')[1];
+        let url=location.search;//获取url
+        let userID = url.split('=')[1];
+        sessionStorage.setItem('ID',userID);
         this.axios({
           method: "get",
           url: "data/index"
@@ -45,7 +46,6 @@
               console.log(postData[item]);
               this.postNum.push(postData[item])
             }
-
             console.log(this.postNum)
           })
           .catch((error) => {

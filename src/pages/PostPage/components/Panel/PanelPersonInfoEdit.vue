@@ -3,7 +3,7 @@
         <div class="InformationPanel">
             <LineWordLine>上传头像</LineWordLine>
             <div class="AvatarUploader">
-                <el-upload class="avatar-uploader">
+                <el-upload class="avatar-uploader" :action="domain">
                     <img :src="imageUrl"
                          class="avatar"
                          v-if="imageUrl">
@@ -14,7 +14,7 @@
             <div>
                 <el-form>
                     <el-form-item label="新的昵称">
-                        <el-input></el-input>
+                        <el-input v-model="nickName"></el-input>
                     </el-form-item>
                 </el-form>
             </div>
@@ -26,7 +26,8 @@
             <div>
                 <el-form>
                     <el-form-item label="性别">
-                        <el-input></el-input>
+                        <el-radio v-model="genderRadio" label="男">男</el-radio>
+                        <el-radio v-model="genderRadio" label="女">女</el-radio>
                     </el-form-item>
                     <el-form-item label="个性签名">
                         <el-input
@@ -37,7 +38,7 @@
                         </el-input>
                     </el-form-item>
                     <div>
-                        <button class="CommonButton">提交</button>
+                        <button class="CommonButton" @click="editInfo">提交</button>
                     </div>
                 </el-form>
             </div>
@@ -52,12 +53,58 @@
     name: "PanelPersonInfoEdit",
     data() {
       return {
+        userId: 1,
+        domain:'http://upload.qiniu.com',
+        qiniuaddr:'',
         imageUrl: '',
+        nickName:'',
         personText:'',
+        genderRadio:'男'
       };
+    },
+    props:{
+      userInfo:{
+        required:true
+      }
     },
     components: {
       LineWordLine,
+    },
+    methods:{
+      init() {
+        this.userId = sessionStorage.getItem('ID');
+        this.nickName = this.userInfo.userNiceName;
+        this.personText = this.userInfo.words;
+      },
+      /**
+       * @description 提交个人信息修改
+       */
+      editInfo() {
+        this.axios.post(`${this.GLOBAL.apiUrl}/updateUserInfo`,{
+          userId: this.userId,
+          userName: this.nickName,
+          gender: this.genderRadio,
+          profile:this.personText,
+        })
+        .then((response)=> {
+          if(response.data.success) {
+            this.$message({
+              message:"修改个人信息成功",
+              type:'success'
+            })
+          } else {
+            this.$message({
+              message:"发生了不可预知的错误，请稍后再试试",
+              type:"warning"
+            })
+          }
+          this.$emit('finishEditInfo')
+        })
+      }
+    },
+    created() {
+      this.userId = sessionStorage.getItem('ID');
+        this.init();
     }
   }
 </script>

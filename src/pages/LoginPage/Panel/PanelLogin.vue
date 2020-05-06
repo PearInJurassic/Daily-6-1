@@ -24,7 +24,7 @@
                         <el-switch
                                 active-text="我是用户"
                                 inactive-text="我是管理员"
-                                v-model="value1">
+                                v-model="isUser">
                         </el-switch>
                     </el-form-item>
                     <div style="padding: 0 20px">
@@ -87,7 +87,7 @@
             }
           ]
         },
-        value1: true,
+        isUser: true,
         dialogVisible: false
       }
     },
@@ -102,11 +102,12 @@
           "password": this.form.password
         })
           .then((response) => {
-            let state = response.data;
-            console.log(state)
+            let state = response.data.code;
+            let userID = response.data.userInfo.userId;
+            console.log(state,userID)
             if (state === 1) {
-              if (this.value1 == true)
-                window.location.href = "./PostPage?id=4";
+              if (this.isUser === true)
+                window.location.href = `./PostPage?id=${userID}`;
               else
                 window.location.href = "./AdminPage";
             } else if (state === 2) {
