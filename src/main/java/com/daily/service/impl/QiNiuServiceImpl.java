@@ -1,7 +1,7 @@
 package com.daily.service.impl;
 
-import com.daily.service.QiNiuService;
 import com.daily.entity.QiNiuProperties;
+import com.daily.service.QiNiuService;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
@@ -13,8 +13,9 @@ import com.qiniu.util.StringMap;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.io.File;
-import java.io.InputStream;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 /**
  * @author 言曌
  * @date 2018/4/5 下午9:39
@@ -31,11 +32,11 @@ public class QiNiuServiceImpl implements QiNiuService, InitializingBean {
     private QiNiuProperties qiNiuProperties;
     private StringMap putPolicy;
     @Override
-    public String uploadFile(File file) throws QiniuException {
-        Response response = this.uploadManager.put(file, null, getUploadToken());
+    public String uploadFile(MultipartFile file) throws IOException {
+        Response response = this.uploadManager.put(file.getBytes(), null, getUploadToken());
         int retry = 0;
         while (response.needRetry() && retry < 3) {
-            response = this.uploadManager.put(file, null, getUploadToken());
+            response = this.uploadManager.put(file.getBytes(), null, getUploadToken());
             retry++;
         }
         if(response.isOK()){

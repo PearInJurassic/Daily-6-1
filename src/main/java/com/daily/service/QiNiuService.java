@@ -1,9 +1,10 @@
 package com.daily.service;
 
 import com.qiniu.common.QiniuException;
-import com.qiniu.http.Response;
-import java.io.File;
-import java.io.InputStream;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
 /**
  * @author 言曌
  * @date 2018/4/5 下午9:38
@@ -18,7 +19,7 @@ public interface QiNiuService {
      * @return
      * @throws QiniuException
      */
-    String uploadFile(File file) throws QiniuException;
+    String uploadFile(MultipartFile file) throws IOException;
     /**
      * 上传文件
      * <p>
