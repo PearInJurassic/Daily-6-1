@@ -202,5 +202,5 @@ public interface PostDao {
      */
     int queryForwardNum(int postId);
 
-    Integer countPostNumByUserId(int userId);
+    int countPostNumByUserId(int userId);
 }

@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 @RestController
 public class UserController {
     @Autowired
@@ -41,7 +40,6 @@ public class UserController {
         HttpSession session = request.getSession();
         int result = userService.login(loginDTO,session);
         if(result==1){
-
             int userId = Integer.parseInt(session.getAttribute("userId").toString());
             UserInfoVO userInfoVO=userService.getUserInfoById(userId);
             modelMap.put("code",1);

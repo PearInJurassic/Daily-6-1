@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     private AreaDao areaDao;
     private UserFollowDao userFollowDao;
+    @Autowired
     private PostDao postDao;
 
     @Override
@@ -73,11 +74,9 @@ public class UserServiceImpl implements UserService {
     public UserInfoVO getUserInfoById(int userId){
         UserInfoVO userInfoVO = new UserInfoVO();
         User user=userDao.getUserByUserId(userId);
-        System.out.println(user.toString());
         BeanUtils.copyProperties(user,userInfoVO);
-        Integer postNum=postDao.countPostNumByUserId(userId);
+        Integer postNum= postDao.countPostNumByUserId(userId);
         userInfoVO.setPostNum(postNum);
-        System.out.println(userInfoVO.toString());
         return userInfoVO;
     }
     
