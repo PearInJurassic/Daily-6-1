@@ -57,6 +57,22 @@ public class UserController {
         return modelMap;
     }
 
+    @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
+    private Map<String, Object> getUserInfo( HttpServletRequest request)
+            throws JsonMappingException, IOException {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        HttpSession session = request.getSession();
+        int userId=Integer.parseInt(session.getAttribute("userId").toString());
+        //UserInfoVO userInfoVO=userService.getUserInfoById(userId);
+        UserExpand userExpand=userService.getUserInfoByUserId(userId);
+        modelMap.put("code",1);
+        modelMap.put("message","获取成功");
+        //modelMap.put("userInfo",userInfoVO);
+        modelMap.put("userInfo",userExpand);
+
+        return modelMap;
+    }
+
     /*
      * 登出
      *
