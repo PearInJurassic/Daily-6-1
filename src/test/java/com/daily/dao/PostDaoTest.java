@@ -185,5 +185,10 @@ public class PostDaoTest {
             System.out.println(post.getPostContent());
         }
     }
-
+/*
+    @Test
+    public void testCountPostNumByUserId(){
+        Integer num=postDao.countPostNumByUserId(3);
+        System.out.println(num);
+    }*/
 }

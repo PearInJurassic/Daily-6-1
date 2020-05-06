@@ -9,6 +9,7 @@ import com.daily.entity.UserExpand;
 import com.daily.service.PostService;
 import com.daily.service.RecordService;
 import com.daily.service.UserService;
+import com.daily.vo.UserInfoVO;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +35,28 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    int checkLogin(@RequestBody LoginDTO loginDTO, HttpServletRequest request)
+    private Map<String, Object> checkLogin(@RequestBody LoginDTO loginDTO, HttpServletRequest request)
             throws JsonMappingException, IOException {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
         HttpSession session = request.getSession();
         int result = userService.login(loginDTO,session);
-        return result;
+        if(result==1){
+
+            int userId = Integer.parseInt(session.getAttribute("userId").toString());
+            UserInfoVO userInfoVO=userService.getUserInfoById(userId);
+            modelMap.put("code",1);
+            modelMap.put("message","登录成功");
+            modelMap.put("userInfo",userInfoVO);
+        }
+        else if(result==2){
+            modelMap.put("code",2);
+            modelMap.put("message","邮箱不存在");
+        }
+        else if(result==3){
+            modelMap.put("code",3);
+            modelMap.put("message","邮箱或密码输入错误");
+        }
+        return modelMap;
     }
 
     /*
@@ -47,11 +65,14 @@ public class UserController {
      * @return Map<userInfo,UserExpand>
      */
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    int checkLogin(HttpServletRequest request)
+    private Map<String, Object> checkLogin(HttpServletRequest request)
             throws JsonMappingException, IOException {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
         HttpSession session = request.getSession();
         session.invalidate();
-        return 0;
+        modelMap.put("code",1);
+        modelMap.put("message","登出成功");
+        return modelMap;
     }
 
     /*

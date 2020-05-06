@@ -85,7 +85,7 @@ public interface PostDao {
      * 增加帖子
      * 
      * 
-     * @param anonym
+     * @param
      * @return
      */
     int insertPost(Post post);
@@ -202,4 +202,5 @@ public interface PostDao {
      */
     int queryForwardNum(int postId);
 
+    Integer countPostNumByUserId(int userId);
 }

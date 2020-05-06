@@ -3,6 +3,7 @@ import com.daily.dto.RegisterDTO;
 import com.daily.dto.LoginDTO;
 import com.daily.entity.User;
 import com.daily.entity.UserExpand;
+import com.daily.vo.UserInfoVO;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +15,8 @@ public interface UserService {
     int delUserById(int userId);
 
     int freezeUserById(int userId);
+
+    UserInfoVO getUserInfoById(int userId);
 
     /*
      * 通过用户ID得到用户信息

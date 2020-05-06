@@ -10,6 +10,7 @@ import com.daily.entity.User;
 import com.daily.entity.UserExpand;
 import com.daily.entity.UserFollow;
 import com.daily.service.UserService;
+import com.daily.vo.UserInfoVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,7 +68,19 @@ public class UserServiceImpl implements UserService {
         userDao.freezeUserById(userId);
         return 0;
     }
-
+    
+    @Override
+    public UserInfoVO getUserInfoById(int userId){
+        UserInfoVO userInfoVO = new UserInfoVO();
+        User user=userDao.getUserByUserId(userId);
+        System.out.println(user.toString());
+        BeanUtils.copyProperties(user,userInfoVO);
+        Integer postNum=postDao.countPostNumByUserId(userId);
+        userInfoVO.setPostNum(postNum);
+        System.out.println(userInfoVO.toString());
+        return userInfoVO;
+    }
+    
     @Override
     public UserExpand getUserInfoByUserId(int userId) {
         UserExpand userExpand =new UserExpand();
