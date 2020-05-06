@@ -1,11 +1,8 @@
 package com.daily.config;
 
-import com.daily.inteceptor.SessionInterceptor;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * @Author:Lvxingqing
@@ -22,6 +19,6 @@ public class WebAppConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 设置拦截的路径、不拦截的路径、优先级等等
-        registry.addInterceptor(new SessionInterceptor()).addPathPatterns("/*").excludePathPatterns("/login","/register");
+        //registry.addInterceptor(new SessionInterceptor()).addPathPatterns("/*").excludePathPatterns("/login","/register");
     }
 }

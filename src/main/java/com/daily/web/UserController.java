@@ -22,11 +22,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @RestController
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
     private PostService postService;
+    @Autowired
     private RecordService recordService;
     @Autowired
     private QiNiuService qiNiuService;
@@ -41,43 +44,33 @@ public class UserController {
             throws JsonMappingException, IOException {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         HttpSession session = request.getSession();
-        int result = userService.login(loginDTO,session);
-        if(result==1){
-            int userId = Integer.parseInt(session.getAttribute("userId").toString());
-            UserInfoVO userInfoVO=userService.getUserInfoById(userId);
-            modelMap.put("code",1);
-            modelMap.put("message","登录成功");
-            modelMap.put("userInfo",userInfoVO);
-        }
-        else if(result==2){
-            modelMap.put("code",2);
-            modelMap.put("message","邮箱不存在");
-        }
-        else if(result==3){
-            modelMap.put("code",3);
-            modelMap.put("message","邮箱或密码输入错误");
+        int result = userService.login(loginDTO, session);
+        if (result == 1) {
+            modelMap.put("code", 1);
+            modelMap.put("message", "登录成功");
+        } else if (result == 2) {
+            modelMap.put("code", 2);
+            modelMap.put("message", "用户不存在");
+        } else if (result == 3) {
+            modelMap.put("code", 3);
+            modelMap.put("message", "邮箱或密码输入错误");
+        } else if (result == 4) {
+            modelMap.put("code", 4);
+            modelMap.put("message", "用户被冻结");
         }
         return modelMap;
     }
 
-    @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     private Map<String, Object> getUserInfo(HttpServletRequest request)
             throws JsonMappingException, IOException {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        System.out.println("1234");
         HttpSession session = request.getSession();
-        System.out.println("kkkk");
-        System.out.println(session.getAttribute("userId").toString());
-        int userId=Integer.parseInt(session.getAttribute("userId").toString());
-        //UserInfoVO userInfoVO=userService.getUserInfoById(userId);
-        System.out.println("ID:");
-        System.out.println(userId);
-        UserExpand userExpand=userService.getUserInfoByUserId(userId);
-        modelMap.put("code",1);
-        modelMap.put("message","获取成功");
-        //modelMap.put("userInfo",userInfoVO);
-        modelMap.put("userInfo",userExpand);
-
+        int userId = Integer.parseInt(session.getAttribute("userId").toString());
+        UserInfoVO userInfoVO = userService.getUserInfoById(userId);
+        modelMap.put("code", 1);
+        modelMap.put("message", "获取成功");
+        modelMap.put("userInfo", userInfoVO);
         return modelMap;
     }
 
@@ -92,8 +85,8 @@ public class UserController {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         HttpSession session = request.getSession();
         session.invalidate();
-        modelMap.put("code",1);
-        modelMap.put("message","登出成功");
+        modelMap.put("code", 1);
+        modelMap.put("message", "登出成功");
         return modelMap;
     }
 
@@ -171,8 +164,8 @@ public class UserController {
     @RequestMapping(value = "/userPostAndRecordList", method = RequestMethod.GET)
     private Map<String, Object> userPostAndRecordList(int userId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<Post> userPostList=postService.getPostByUserId(userId);
-        List<RecordExpand> userRecordList=recordService.getRecordListByUserId(userId);
+        List<Post> userPostList = postService.getPostByUserId(userId);
+        List<RecordExpand> userRecordList = recordService.getRecordListByUserId(userId);
         modelMap.put("userPostList", userPostList);
         modelMap.put("userRecordList", userRecordList);
         return modelMap;
@@ -186,10 +179,10 @@ public class UserController {
      *         Map<userSelectedRecordList, List<Record>>
      */
     @RequestMapping(value = "/userSelectedPostAndRecordList", method = RequestMethod.GET)
-    private Map<String, Object> userSelectedPostAndRecordList(int userId,String keyWord) {
+    private Map<String, Object> userSelectedPostAndRecordList(int userId, String keyWord) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<Post> userSelectedPostList=postService.getPostByContentAndUserId(keyWord,userId);
-        List<RecordExpand> userSelectedRecordList=recordService.getRecordListByUserIdAndKeyWord(userId,keyWord);
+        List<Post> userSelectedPostList = postService.getPostByContentAndUserId(keyWord, userId);
+        List<RecordExpand> userSelectedRecordList = recordService.getRecordListByUserIdAndKeyWord(userId, keyWord);
         modelMap.put("userSelectedPostList", userSelectedPostList);
         modelMap.put("userSelectedRecordList", userSelectedRecordList);
         return modelMap;
@@ -202,9 +195,9 @@ public class UserController {
      * @return boolean
      */
     @RequestMapping(value = "/cancelFollow", method = RequestMethod.GET)
-    private Map<String, Object> cancelFollow(int userId,int followId) {
+    private Map<String, Object> cancelFollow(int userId, int followId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        modelMap.put("success", userService.cancelFollow(userId,followId));
+        modelMap.put("success", userService.cancelFollow(userId, followId));
         return modelMap;
     }
 
@@ -215,9 +208,9 @@ public class UserController {
      * @return boolean
      */
     @RequestMapping(value = "/addFollow", method = RequestMethod.GET)
-    private Map<String, Object> addFollow(int userId,int followId) {
+    private Map<String, Object> addFollow(int userId, int followId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        modelMap.put("success", userService.addFollow(userId,followId));
+        modelMap.put("success", userService.addFollow(userId, followId));
         return modelMap;
     }
 
@@ -228,9 +221,9 @@ public class UserController {
      * @return boolean
      */
     @RequestMapping(value = "/addFollowByUserIdAndPostId", method = RequestMethod.GET)
-    private Map<String, Object> addFollowByUserIdAndPostId(int userId,int postId) {
+    private Map<String, Object> addFollowByUserIdAndPostId(int userId, int postId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        modelMap.put("success", userService.addFollowByUserIdAndPostId(userId,postId));
+        modelMap.put("success", userService.addFollowByUserIdAndPostId(userId, postId));
         return modelMap;
     }
 }

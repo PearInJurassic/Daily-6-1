@@ -23,33 +23,46 @@ import java.util.Date;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
+    @Autowired
     private AreaDao areaDao;
+    @Autowired
     private UserFollowDao userFollowDao;
     @Autowired
     private PostDao postDao;
 
     @Override
     public int login(LoginDTO loginDTO, HttpSession session) {
-        String truePassword = userDao.getPasswordByEmail(loginDTO.getEmail());
-        if(truePassword==null) {
-            return 2;//邮箱不存在
+        User user = userDao.getUserByEmail(loginDTO.getEmail());
+        //邮箱不存在
+        if (user == null) {
+            return 2;
         }
-        else if (loginDTO.getPassword().equals(truePassword)) {
-            session.setAttribute("userId",userDao.getUserIdByEmail(loginDTO.getEmail()));
-            return 1;//密码正确
+        //邮箱与用户类型不对应
+        if (!user.getUserType().equals(loginDTO.getUserType())) {
+            return 2;
         }
-        return 3;//用户名或密码错误
+        //用户名或密码错误
+        if (!user.getUserPwd().equals(loginDTO.getPassword())) {
+            return 3;
+        }
+        //用户被冻结
+        if (user.getState().intValue() == 0) {
+            return 4;
+        }
+        //成功登录
+        session.setAttribute("userId", user.getUserId());
+        return 1;
     }
 
     @Override
     public int insertUser(RegisterDTO registerDTO) {
 
         //判断邮箱是否存在
-        if(userDao.existEmail(registerDTO.getEmail())!=null)
+        if (userDao.existEmail(registerDTO.getEmail()) != null)
             return 2;
 
         User user = new User();
-        BeanUtils.copyProperties(registerDTO,user);
+        BeanUtils.copyProperties(registerDTO, user);
         //user.setUserDate(new Date());
         user.setState(1);
         user.setFansNum(0);
@@ -69,23 +82,23 @@ public class UserServiceImpl implements UserService {
         userDao.freezeUserById(userId);
         return 0;
     }
-    
+
     @Override
-    public UserInfoVO getUserInfoById(int userId){
+    public UserInfoVO getUserInfoById(int userId) {
         UserInfoVO userInfoVO = new UserInfoVO();
-        User user=userDao.getUserByUserId(userId);
-        BeanUtils.copyProperties(user,userInfoVO);
-        Integer postNum= postDao.countPostNumByUserId(userId);
+        User user = userDao.getUserByUserId(userId);
+        BeanUtils.copyProperties(user, userInfoVO);
+        Integer postNum = postDao.countPostNumByUserId(userId);
         userInfoVO.setPostNum(postNum);
         return userInfoVO;
     }
-    
+
     @Override
     public UserExpand getUserInfoByUserId(int userId) {
-        UserExpand userExpand =new UserExpand();
-        User user=userDao.getUserByUserId(userId);
+        UserExpand userExpand = new UserExpand();
+        User user = userDao.getUserByUserId(userId);
         userExpand.setUser(user);
-        if(user.getAreaId() != null && user.getAreaId() != 0)
+        if (user.getAreaId() != null && user.getAreaId() != 0)
             userExpand.setAreaName(areaDao.getAreaNameById(user.getAreaId()));
         return userExpand;
     }
@@ -116,7 +129,7 @@ public class UserServiceImpl implements UserService {
             try {
                 int effectedNum1 = userDao.incUserFollowNum(userId);
                 int effectedNum2 = userDao.incUserFansNum(followId);
-                int effectedNum3 = userFollowDao.deleteUserFollowByTwoId(userId,followId);
+                int effectedNum3 = userFollowDao.deleteUserFollowByTwoId(userId, followId);
                 if (effectedNum1 > 0 && effectedNum2 > 0 && effectedNum3 > 0) {
                     return true;
                 } else {
@@ -136,7 +149,7 @@ public class UserServiceImpl implements UserService {
             try {
                 int effectedNum1 = userDao.decUserFollowNum(userId);
                 int effectedNum2 = userDao.decUserFansNum(followId);
-                UserFollow userFollow=new UserFollow();
+                UserFollow userFollow = new UserFollow();
                 userFollow.setFollowTime(new Date());
                 userFollow.setUserId(userId);
                 userFollow.setFollowId(followId);
@@ -158,10 +171,10 @@ public class UserServiceImpl implements UserService {
     public boolean addFollowByUserIdAndPostId(int userId, int postId) {
         if (userId != 0 && postId != 0) {
             try {
-                int followId=postDao.queryUserByPostId(postId);
+                int followId = postDao.queryUserByPostId(postId);
                 int effectedNum1 = userDao.decUserFollowNum(userId);
                 int effectedNum2 = userDao.decUserFansNum(followId);
-                UserFollow userFollow=new UserFollow();
+                UserFollow userFollow = new UserFollow();
                 userFollow.setFollowTime(new Date());
                 userFollow.setUserId(userId);
                 userFollow.setFollowId(followId);
