@@ -52,6 +52,7 @@ public class CommentController {
         int i = 0;
         // 获取评论列表
         commentList = commentService.getCommentByPostId(postId);
+        modelMap.put("commentList", null);
         for(List<Comment> list : commentList) {
             map.put("commentList" + i++, list);
             modelMap.put("commentList", map);
