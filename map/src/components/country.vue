@@ -12,7 +12,7 @@
 var echarts = require('echarts/lib/echarts');
 require('echarts/map/js/china') // 引入中国地图数据
 require('echarts/map/js/world') // 引入世界地图数据
-import BMap from 'BMap'
+//import BMap from 'BMap'
 export default {
   name: 'country',
    mounted() {
@@ -154,8 +154,8 @@ export default {
 
  
 var n =['福州市','莆田市','泉州市','厦门市','漳州市','龙岩市','三明市','南平市','宁德市']
-var j=[119.30,119.00,118.67,118.08,117.65,117.03,117.62,118.17,119.52]
-var w=[26.08,25.43,24.88,24.48,24.52,25.10,26.27,26.65,26.67]
+var j=[119.30,119.00,118.67,118.08,117.65,117.03,117.62,117.8,119.52]
+var w=[26.08,25.43,24.88,24.48,24.52,25.10,26.27,27.4,26.67]
 let that=this;
 
 	myChart.on('click', function (chinaParam) {
