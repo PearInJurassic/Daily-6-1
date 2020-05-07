@@ -18,13 +18,13 @@
     name: "SideBarRecent",
     data() {
       return {
-        avatarUrl:this.user.userImg,
+        avatarUrl:this.userAvatar,
         RecentContent: "PostRecent",
         recentNum: []
       }
     },
     props:{
-      user:{
+      userAvatar:{
         required:true,
       }
     },

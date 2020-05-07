@@ -17,20 +17,24 @@
                     <span>{{userInfo.fansNum}} 粉丝</span>
                     <span>关注 {{userInfo.followNum}} 人</span>
                 </div>
-                <div class="Icon">
-                    <button @click="editPersonInfo" class="IconButton">
-                        <img alt="设置" src="@/assets/Person/setting.png">
-                    </button>
-                    <button @click="quit" class="IconButton">
-                        <img alt="退出登录" src="@/assets/Person/quit.png">
-                    </button>
-                </div>
+                <slot name="setting">
+                    <div class="Icon">
+                        <button @click="editPersonInfo" class="IconButton">
+                            <img alt="设置" src="@/assets/Person/setting.png">
+                        </button>
+                        <button @click="quit" class="IconButton">
+                            <img alt="退出登录" src="@/assets/Person/quit.png">
+                        </button>
+                    </div>
+                </slot>
             </div>
+
             <el-dialog :visible.sync="editDialogVisible"
                        title="修改个人信息"
                        width="800px">
-                <PanelPersonInfoEdit @finishEditInfo="closeEdit" :userInfo="userInfo"></PanelPersonInfoEdit>
+                <PanelPersonInfoEdit :userInfo="userInfo" @finishEditInfo="closeEdit"></PanelPersonInfoEdit>
             </el-dialog>
+
         </div>
     </div>
 </template>
@@ -39,7 +43,7 @@
   import PanelPersonInfoEdit from "@/pages/PostPage/components/Panel/PanelPersonInfoEdit";
 
   export default {
-    inject:['reload'],
+    inject: ['reload'],
     name: "ContentPersonInfo",
     data() {
       return {
@@ -53,6 +57,9 @@
           words: '输入你的个性签名吧！',
         }
       };
+    },
+    props: {
+      isOthers: {}
     },
     components: {
       PanelPersonInfoEdit
@@ -69,8 +76,7 @@
         window.location.href = "/index.html";
       },
 
-      init() {
-        let userID = sessionStorage.getItem('ID');
+      init(userID) {
         // 请求后端数据,查询数据源
         this.axios.get('http://47.107.77.163:8080/demo/getUserInfo',
           {
@@ -81,10 +87,9 @@
         )
           .then((response) => {
             let userInfo = response.data.userInfo;
-            console.log(response)
+            // console.log(response)
             this.userInfo.userNiceName = userInfo.user.userName;
             this.avatarUrl = userInfo.user.userImg;
-            // this.sessionStorage.setItem('avatar',userInfo.user.userImg);
             this.userInfo.postNum = 11;
             this.userInfo.fansNum = userInfo.user.fansNum;
             this.userInfo.followNum = userInfo.user.followNum;
@@ -93,11 +98,25 @@
           .catch((error) => {
             console.log(error);
           });
+        this.axios.get(`${this.GLOBAL.apiUrl}/getPostNumByUserId`, {
+          params: {
+            userId: userID
+          }
+        })
+          .then((response) => {
+            this.userInfo.postNum = response.data.postNum
+            // console.log(this.postNum)
+          })
       },
 
     },
     created() {
-      this.init();
+      let userID = this.isOthers
+        ?
+        sessionStorage.getItem('viewId')
+        :
+        sessionStorage.getItem('ID')
+      this.init(userID);
     }
   }
 </script>

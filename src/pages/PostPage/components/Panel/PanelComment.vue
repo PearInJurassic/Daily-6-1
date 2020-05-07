@@ -2,9 +2,9 @@
     <div class="ContentAll">
         <div class="PosterInfo">
             <div class="Avatar">
-                <el-avatar :src="headUrl" :size="42"></el-avatar>
+                <el-avatar :size="42" :src="postInfo.userImg"></el-avatar>
                 <button class="IconButton" id="followButton">
-                    <img :src="followUrl" alt="关注按钮">
+                    <img :src="followUrl" @click="follow" alt="关注按钮">
                 </button>
             </div>
             <div class="Icon">
@@ -26,6 +26,9 @@
                 <button @click="pressLikeButton" class="IconButton" id="likeButton">
                     <img :src="likeUrl" alt="喜欢按钮">
                 </button>
+            </div>
+            <div class="LikeNum Icon">
+                {{likeNums}}
             </div>
             <div class="Icon">
                 <button class="IconButton" id="ResendButton">
@@ -55,19 +58,23 @@
         headUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
         reportUrl: require("@/assets/Post/report.png"),
         like: this.isLike,
+        likeNums: 0,
         likeImgArr: ['like.png', 'like-fill.png'],
         commentNum: [],
         commentText: '1234',
         PostCommentAll: "PostCommentAll",
-        followUrl:require("@/assets/Post/关注.png")
+        followUrl: require("@/assets/Post/follow.png")
       }
     },
-    props:{
-      isLike:{
-        required:true
+    props: {
+      isLike: {
+        required: true
       },
-      item:{
-        required:true
+      item: {
+        required: true
+      },
+      postInfo: {
+        required: true
       }
     },
     computed: {
@@ -109,16 +116,16 @@
        * @description 发布评论
        */
       addComment() {
-        this.axios.post(`${this.GLOBAL.apiUrl}/comment/createcomment`,{
-            "commentContent": this.commentText,
-            "postId": this.item.postId,
-            "userId": sessionStorage.getItem("ID"),
-            "anonym": 0,
-            "replyCommentId": 0
+        this.axios.post(`${this.GLOBAL.apiUrl}/comment/createcomment`, {
+          "commentContent": this.commentText,
+          "postId": this.item.postId,
+          "userId": sessionStorage.getItem("ID"),
+          "anonym": 0,
+          "replyCommentId": 0
         })
-        .then((response)=>{
-          console.log(response)
-        })
+          .then((response) => {
+            console.log(response)
+          })
         this.commentNum.push(this.commentText);
         this.commentText = ''
       },
@@ -132,14 +139,14 @@
           type: 'warning'
         })
           .then(() => {
-            this.axios.get(`${this.GLOBAL.apiUrl}/tipoffpost`,{
-              params:{
-                postId:this.item.postId,
+            this.axios.get(`${this.GLOBAL.apiUrl}/tipoffpost`, {
+              params: {
+                postId: this.item.postId,
               }
             })
-            .then((response) =>{
-              console.log(response)
-            })
+              .then((response) => {
+                console.log(response)
+              })
             this.$message({
               type: 'success',
               message: '举报成功！'
@@ -151,21 +158,53 @@
               message: '已取消举报操作'
             })
           })
+      },
+      /**
+       * @description 关注用户
+       */
+      follow() {
+        this.axios.get(`${this.GLOBAL.apiUrl}/addFollow`, {
+          params: {
+            userId: sessionStorage.getItem('ID'),
+            followId: this.postInfo.userId,
+          }
+        }).then((response) => {
+          console.log(response)
+        })
+      },
+      /**
+       * @description 获取评论列表
+       */
+      getComments() {
+        this.axios.get(`${this.GLOBAL.apiUrl}/comment/getcommentbypostid`, {
+          params: {
+            postId: this.item.postId
+          }
+        }).then((response) => {
+          let commentList = response.data.commentList;
+          for (let index in commentList) {
+            this.commentNum.push(commentList[index])
+            // console.log(commentList[index], index)
+          }
+        })
+      },
+      /**
+       * @description 获取点赞数
+       */
+      getLikeNums() {
+        this.axios.get(`${this.GLOBAL.apiUrl}/getlikenum`, {
+          params: {
+            postId: this.item.postId
+          }
+        }).then((response) => {
+          this.likeNums = response.data.likeNum;
+        })
       }
     },
     created() {
-      this.axios.get(`${this.GLOBAL.apiUrl}/comment/getcommentbypostid`,{
-        params:{
-          postId:this.item.postId
-        }
-      }).then((response) => {
-        let commentList = response.data.commentList;
-        for (let index in commentList) {
-          this.commentNum.push(commentList[index])
-          console.log(commentList[index],index)
-        }
-         console.log(response)
-      })
+      //获取评论列表。
+      this.getComments();
+      this.getLikeNums();
     }
   }
 </script>
@@ -177,12 +216,17 @@
         display: flex;
         justify-content: space-between;
     }
+    .LikeNum {
+        color: #7f7f7f;
+    }
     .Icon {
         background-color: white;
     }
+
     .IconButton {
         background-color: white;
     }
+
     .Comment {
         margin: 2px auto;
         display: flex;

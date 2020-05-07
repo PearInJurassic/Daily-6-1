@@ -1,20 +1,13 @@
 <template>
     <div class="SideBar" id="SideBar">
         <SideBarInformation :userAvatar="userInfo.userImg" :userNickName="userInfo.userName"></SideBarInformation>
-        <SideBarRecent :user="userInfo"></SideBarRecent>
+        <SideBarRecent :userAvatar="userInfo.userImg"></SideBarRecent>
     </div>
 </template>
 
 <script>
   import SideBarInformation from "@/pages/PostPage/components/SideBar/SideBarInformation";
   import SideBarRecent from "@/pages/PostPage/components/SideBar/SideBarRecent";
-  // import $ from 'jquery';
-
-  // $(window).resize(function () {
-  //   let sideBarLeft = $('.ContentCenter').css("right");
-  //   console.log(sideBarLeft)
-  //   $('#SideBar').css("left", "")
-  // })
 
   export default {
     name: "SideBar",
@@ -39,11 +32,12 @@
       )
         .then((response) => {
           this.userInfo = response.data.userInfo.user;
-          console.log(this.userInfo)
+          // console.log(this.userInfo)
         })
         .catch((error) => {
           console.log(error);
         });
+
     }
   }
 </script>
@@ -56,5 +50,6 @@
         width: 315px;
         height: 600px;
         padding-top: 30px;
+
     }
 </style>

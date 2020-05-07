@@ -2,10 +2,10 @@
     <div class="Information" :style="anonyStyle">
         <div class="InformationMain">
             <div class="Avatar">
-                <el-avatar :size="52" :src="headUrl"></el-avatar>
+                <el-avatar :size="52" :src="userAvatar"></el-avatar>
             </div>
             <div>
-                <p>{{userNiceName}}</p>
+                <p>{{NiceName}}</p>
             </div>
         </div>
         <div class="InformationButton">
@@ -31,8 +31,8 @@
     name: "SideBarInformation",
     data() {
       return {
-        userNiceName: 111,
-        headUrl: this.user,
+        NiceName: this.userNickName,
+        headUrl: this.userAvatar,
         isAnonymous: 0,
         anonymousImgAdd: ['Anonymous.png', 'Anonymous-fill.png'],
         anonyStyle: {
@@ -77,9 +77,6 @@
         }
       }
     },
-    created() {
-      console.log(this.user)
-    }
   }
 </script>
 

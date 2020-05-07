@@ -98,19 +98,22 @@
     methods: {
       login() {
         window.location.href = `./PostPage?id=6`;
-        sessionStorage.setItem("ID",6);
+        sessionStorage.setItem("ID", 6);
+        console.log("login")
         this.axios.post('http://47.107.77.163:8080/demo/login', {
           "email": this.form.username,
-          "password": this.form.password
+          "password": this.form.password,
+          "userType": 0,
         })
           .then((response) => {
+            console.log(response)
             let state = response.data.code;
-            let userID = response.data.userInfo.userId;
-
             if (state === 1) {
-              if (this.isUser === true)
+              let userID = response.data.userId;
+              if (this.isUser === true) {
                 window.location.href = `./PostPage?id=${userID}`;
-              else
+                sessionStorage.setItem("ID", userID);
+              } else
                 window.location.href = "./AdminPage";
             } else if (state === 2) {
               this.$notify.error({

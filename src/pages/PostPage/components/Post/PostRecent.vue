@@ -2,7 +2,7 @@
     <div>
         <div class="RecentPost">
             <div class="Avatar">
-                <el-avatar :src="avatarUrl"></el-avatar>
+                <el-avatar :src="posterInfo.userImg" @error="errHandler"></el-avatar>
             </div>
             <div class="RecentContent">
                 {{shortContent}}
@@ -16,18 +16,37 @@
     name: "PostRecent",
     data() {
       return {
+        posterInfo:'',
         shortContent: this.recentInfo.postContent.substr(0, 35) + "......",
-        avatarUrl: this.avatar
       }
     },
     props: {
       recentInfo: {
         required: true
       },
-      avatar: {
-        required: true,
+    },
+    methods:{
+      errHandler() {
+        console.log(this.avatarUrl)
       }
     },
+    created(){
+      this.axios.get('http://47.107.77.163:8080/demo/getUserInfo',
+        {
+          params: {
+            userId: sessionStorage.getItem('ID'),
+          }
+        }
+      )
+        .then((response) => {
+          this.posterInfo = response.data.userInfo.user;
+          // console.log(response)
+          // console.log(this.posterInfo)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 </script>
 

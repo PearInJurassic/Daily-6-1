@@ -9,6 +9,7 @@
                         :data="postData"
                         :show-file-list="false"
                         :on-success="handleAvatarSuccess"
+                        :on-error="errorHandler"
                         :before-upload="beforeAvatarUpload">
                     <img v-if="imageUrl" :src="imageUrl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -60,7 +61,7 @@
         userId: 1,
         domain: 'https://upload.qiniup.com',
         postData:{
-          key:'',
+          key:null,
           token:''
         },
         qiniuaddr: 'http://q9stlq87q.bkt.clouddn.com',
@@ -81,6 +82,7 @@
     methods: {
       init() {
         this.userId = sessionStorage.getItem('ID');
+        this.imageUrl = this.userInfo.userImg
         this.nickName = this.userInfo.userNiceName;
         this.personText = this.userInfo.words;
         this.axios.get('http://zzzia.net:8080/qiniu/',{
@@ -91,8 +93,8 @@
           }
         }).then((response) =>{
           this.postData.token=response.data.token
-          this.postData.key = response.data.key
-          console.log(this.postData.token)
+          // this.postData.key = response.data.key
+          console.log(this.postData)
         })
       },
       /**
@@ -107,6 +109,7 @@
           userImg:this.imageUrl,
         })
           .then((response) => {
+            console.log(response)
             if (response.data.success) {
               this.$message({
                 message: "修改个人信息成功",
@@ -124,6 +127,7 @@
       handleAvatarSuccess(res) {
         // this.imageUrl = URL.createObjectURL(file.raw);
         this.imageUrl = `${this.qiniuaddr}/${res.key}`
+        // console.log(res)
         console.log(this.imageUrl)
       },
       beforeAvatarUpload(file) {
@@ -136,7 +140,12 @@
         if (!isLt2M) {
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
+        this.postData.key = `upload_pic_${file.name}`
         return isJPG && isLt2M;
+      },
+      errorHandler(err,file){
+        console.log(file)
+        console.log(err);
       }
     },
     created() {

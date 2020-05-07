@@ -4,14 +4,30 @@
             <el-tabs v-model="activeName">
                 <el-tab-pane label="帖子" name="first">
                     <div class="ItemContent">
-                        <PersonItems :key="index" v-for="index in itemNums"></PersonItems>
+                        <PersonItems :key="index"
+                                     :postItem="userPostList[index]"
+                                     v-for="(item,index) in userPostList">
+                            <template>
+                                <el-image :src="userPostList[index].postImg" fit="cover"
+                                          style="width: 275px;height: 275px">
+                                </el-image>
+                            </template>
+                        </PersonItems>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="动态" name="second">
-                    <div class="ItemContent">
-                        <PersonItems :key="index" v-for="index in itemNums"></PersonItems>
-                    </div>
-                </el-tab-pane>
+                <slot name="record">
+                    <el-tab-pane label="动态" name="second">
+                        <div class="ItemContent">
+                            <PersonItems :key="index"
+                                         :recordItem="userRecordList[index]"
+                                         v-for="(item,index) in userRecordList">
+                                <el-image :src="userRecordList[index].postImg" fit="cover"
+                                          style="width: 275px;height: 275px">
+                                </el-image>
+                            </PersonItems>
+                        </div>
+                    </el-tab-pane>
+                </slot>
             </el-tabs>
         </div>
     </div>
@@ -25,21 +41,39 @@
     data() {
       return {
         activeName: 'first',
-        itemNums: 8,
+        userPostList: [],
+        userRecordList: []
       }
+    },
+    props: {
+      isOthers: {}
     },
     components: {
       PersonItems
     },
     methods: {},
     created() {
-      this.axios.get(`${this.GLOBAL.apiUrl}/userPostAndRecordList`,{
-        params:{
-          userId:sessionStorage.getItem("ID")
+      let userId = this.isOthers
+        ?
+        sessionStorage.getItem('viewId')
+        :
+        sessionStorage.getItem('ID')
+      this.axios.get(`${this.GLOBAL.apiUrl}/userPostAndRecordList`, {
+        params: {
+          userId
         }
       })
         .then((response) => {
+          let postList = response.data.userPostList
+          let recordList = response.data.userRecordList
           console.log(response)
+          for (let index in postList) {
+            this.userPostList.push(postList[index])
+          }
+          for (let index in recordList) {
+            this.userRecordList.push(recordList[index])
+          }
+          // console.log(this.userPostList)
         })
     }
   }
@@ -64,16 +98,18 @@
 
 <style lang="less">
     .TabContent {
-        .el-tabs__item{
+        .el-tabs__item {
             font-size: 20px;
             color: black;
             padding-right: 150px;
         }
-        .el-tabs__active-bar{
+
+        .el-tabs__active-bar {
             width: 32px;
             background-color: #7f7f7f;
         }
-        .el-tabs__nav-scroll{
+
+        .el-tabs__nav-scroll {
             display: flex;
             justify-content: center;
         }

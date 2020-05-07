@@ -1,9 +1,17 @@
 <template>
     <div>
         <div class="Item">
-            <el-image :src="imgUrl" fit="cover" style="width: 275px;height: 275px">
+<!--            <slot name="post">-->
+<!--            <el-image :src="postItem.postImg" fit="cover" style="width: 275px;height: 275px">-->
+<!--            </el-image>-->
+<!--            </slot>-->
+<!--            <slot name="record">-->
+<!--                <el-image :src="imgUrl" fit="cover" style="width: 275px;height: 275px">-->
+<!--                </el-image>-->
+<!--            </slot>-->
+            <slot>
 
-            </el-image>
+            </slot>
         </div>
     </div>
 </template>
@@ -18,6 +26,10 @@
         imgUrl:require("@/assets/plumeria.jpg"),
       }
     },
+    props:{
+      postItem:{},
+      recordItem:{},
+    }
   }
 </script>
 

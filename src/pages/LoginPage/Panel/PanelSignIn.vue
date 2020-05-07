@@ -75,19 +75,20 @@
           "userName": this.signInForm.nickName,
           "userPwd": this.signInForm.password
         }).then((response) =>{
-          let state = response.data;
+          // console.log(response)
+          let state = response.data.code;
           if (state===1) {
             this.$emit("finishSignIn")
             this.$notify({
               title: '注册成功',
-              message: `您的账号${this.email}已经完成注册`,
+              message: `您的账号${this.signInForm.email}已经完成注册`,
               type: 'success',
               duration: 3500,
             });
           } else {
             this.$notify.error({
               title: '注册失败',
-              message: `您的账号${this.email}已经被注册`,
+              message: `您的账号${this.signInForm.email}已经被注册`,
               duration: 3500,
             })
           }

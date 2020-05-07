@@ -1,10 +1,13 @@
 <template>
     <div>
         <div class="FollowList">
-            <div :key="index" class="Avatar" v-for="index in followNum">
-                <el-avatar
-                        :size="72"
-                ></el-avatar>
+            <div :key="index"
+                 @click="gotoOthers(followList[index].userId)"
+                 class="Avatar"
+                 v-for="(item,index) in followList">
+                <el-avatar :size="72"
+                           :src="followList[index].userImg">
+                </el-avatar>
             </div>
             <div class="Icon">
                 <button @click="showAllFollow" class="IconButton">
@@ -16,29 +19,31 @@
                 :visible.sync="drawer"
                 direction="ltr"
                 title="关注列表">
-
-            <el-table :data="followList">
-                <el-table-column prop="head" label="头像"></el-table-column>
-                <el-table-column prop="nickName" label="昵称"></el-table-column>
-                <el-table-column label="访问">
-                    <template slot-scope="scope">
-                        <el-button @click="handleClick(scope.row)" type="text" size="small">查看详情</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
+            <PersonFollowItems :followInfo="followList[index]"
+                               :key="index"
+                               v-for="(item,index) in followList">
+            </PersonFollowItems>
         </el-drawer>
     </div>
 </template>
 
 <script>
+  import PersonFollowItems from "@/pages/PostPage/components/Person/PersonFollowItems";
+
   export default {
     name: "ContentPersonFollow",
     data() {
       return {
         followNum: 5,
-        followList:[],
+        followList: [],
         drawer: false,
       }
+    },
+    props: {
+      isOthers: {}
+    },
+    components: {
+      PersonFollowItems
     },
     methods: {
       /**
@@ -47,19 +52,28 @@
       showAllFollow() {
         this.drawer = true
       },
-      handleClick() {
-
+      /**
+       * @description 跳转到他人的个人页面
+       * @param otherId 其他用户的ID
+       */
+      gotoOthers(otherId) {
+        this.$router.push(`/others/${otherId}`)
       }
     },
     created() {
-      this.axios.get(`${this.GLOBAL.apiUrl}/getUserFollowInfo`,{
-        params:{
-          userId:sessionStorage.getItem('ID')
+      let userId = this.isOthers?sessionStorage.getItem('viewId'):sessionStorage.getItem('ID')
+      this.axios.get(`${this.GLOBAL.apiUrl}/getUserFollowInfo`, {
+        params: {
+          userId
         }
       })
-      .then(() =>{
-        // console.log(response)
-      })
+        .then((response) => {
+          let list = response.data.userFollowInfo
+          for (let index in list) {
+            this.followList.push(list[index])
+          }
+          // console.log(list)
+        })
     }
   }
 </script>
@@ -86,6 +100,10 @@
 
         .IconButton {
             background-color: white;
+        }
+
+        .Avatar:hover {
+            cursor: pointer;
         }
     }
 </style>

@@ -5,15 +5,15 @@
         <div class="EditPanel">
             <div class="PicturePanel">
                 <el-upload
-                        :on-success="handlePictureSuccess"
-                        :on-preview="handlePictureCardPreview"
-                        :on-remove="handleRemove"
                         :action="domain"
                         :data="postData"
+                        :on-preview="handlePictureCardPreview"
+                        :on-remove="handleRemove"
+                        :on-success="handlePictureSuccess"
                         list-type="picture-card">
                     <i class="el-icon-plus"></i>
                 </el-upload>
-                <el-dialog :visible.sync="dialogVisible" :modal="showModal">
+                <el-dialog :modal="showModal" :visible.sync="dialogVisible">
                     <el-image :src="dialogImageUrl" alt="" width="100%"></el-image>
                 </el-dialog>
             </div>
@@ -32,7 +32,7 @@
                         </el-input>
                     </el-form-item>
                     <el-form-item label="Tags（请以空格分隔）">
-                        <el-input v-model="tags"></el-input>
+                        <el-input v-model="tags" :disabled="true"></el-input>
                     </el-form-item>
                     <input @click="finishEdit(`finish`)" class="CommonButton" id="TextEditButton" type="button"
                            value="完成">
@@ -51,35 +51,35 @@
     data() {
       return {
         isShow: true,
-        tags:'',
+        tags: '',
         postText: '',
         dialogImageUrl: '',
         dialogVisible: false,
-        showModal:false,
+        showModal: false,
         domain: 'https://upload.qiniup.com',
-        qiniuaddr:'http://q9stlq87q.bkt.clouddn.com',
-        postData:{
-          key:'',
-          token:''
+        qiniuaddr: 'http://q9stlq87q.bkt.clouddn.com',
+        postData: {
+          key: '',
+          token: ''
         },
       }
     },
     methods: {
       /**
-        * @description 初始化，获取七牛token
-        */
+       * @description 初始化，获取七牛token
+       */
       init() {
         this.userId = sessionStorage.getItem('ID');
-        this.axios.get('http://zzzia.net:8080/qiniu/',{
+        this.axios.get('http://zzzia.net:8080/qiniu/', {
           params: {
             accessKey: "RwC4uI5jbCfE3IUuokEP7paXOQQA14mcD87MQ6ml",
             secretKey: "o6cPmo7R-QUW4113k1MNNiNjWHOyznj-FERyP_xa",
             bucket: "dailydata"
           }
-        }).then((response) =>{
-          this.postData.token=response.data.token
+        }).then((response) => {
+          this.postData.token = response.data.token
           this.postData.key = response.data.key
-          console.log(response)
+          // console.log(response)
         })
       },
       /**
@@ -87,18 +87,19 @@
        * @param {string} flag 完成信号,可能有"finish"正常结束，和“close"直接关闭。
        */
       finishEdit(flag) {
-        this.axios.post(`${this.GLOBAL.apiUrl}/addpost`,{
-          postImg:this.dialogImageUrl,
-          postContent:this.postText,
-          anonym:0,
-          areaId:0,
-          userId:sessionStorage.getItem('ID'),
-          forwardPostId:-1,
+        let that = this;
+        this.axios.post(`${this.GLOBAL.apiUrl}/addpost`, {
+          postImg: that.dialogImageUrl,
+          postContent: that.postText,
+          anonym: 0,
+          areaId: 0,
+          userId: sessionStorage.getItem('ID'),
+          forwardPostId: -1,
         })
-        .then((response) => {
-          Bus.$emit("finishEdit", flag);
-          console.log(response)
-        })
+          .then(() => {
+            Bus.$emit("finishEdit", flag);
+            // console.log(response)
+          })
 
       },
 
@@ -110,12 +111,12 @@
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       },
-      handlePictureSuccess(res){
+      handlePictureSuccess(res) {
         this.dialogImageUrl = `${this.qiniuaddr}/${res.hash}`
         console.log(this.dialogImageUrl)
       }
     },
-    components:{
+    components: {
       LineWordLine
     },
     created() {
@@ -148,16 +149,19 @@
         padding-left: 10px;
         padding-top: 15px;
     }
+
     .logo {
         display: flex;
         justify-content: center;
     }
+
     .TextPanel {
         width: 350px;
         display: flex;
         flex-direction: column;
         padding: 0 9px;
         justify-content: center;
+
         label {
             margin: 5px auto;
         }

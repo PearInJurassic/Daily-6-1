@@ -8,7 +8,7 @@ import About from "@/pages/Timeaxis/components/VIewComponents/About";
 import WorkLine from "@/pages/Timeaxis/components/VIewComponents/WorkLine";
 import MoodLine from "@/pages/Timeaxis/components/VIewComponents/MoodLine";
 import Other from "@/pages/Timeaxis/components/VIewComponents/Other";
-
+import OthersPage from "@/pages/PostPage/OthersPage";
 
 
 Vue.use(VueRouter);
@@ -54,6 +54,10 @@ const routes = [
         component: Other
       },
     ]
+  },
+  {
+    path: '/others/:id',
+    component: OthersPage
   }
 ]
 

@@ -9,7 +9,7 @@
             </div>
             <div class="PostInfo" style="display: flex">
                 <div class="Avatar">
-                    <el-avatar :size="68" :src="headUrl"></el-avatar>
+                    <el-avatar :size="68" :src="posterInfo.userImg"></el-avatar>
                 </div>
                 <div class="Icon">
                     <button @click="pressLikeButton" class="IconButton" id="likeButton">
@@ -30,6 +30,7 @@
         </div>
         <PostDetail :itemInfo="itemInfo"
                     :isLike="like"
+                    :pInfo="posterInfo"
                     @detailState="changeDetailState"
                     @childAddLike="like = 1"
                     @childRemoveLike="like = 0"
@@ -45,10 +46,10 @@
     name: "PostAll",
     data() {
       return {
-        headUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
         like: this.likeInfo,
         likeImgArr: ['like.png', 'like-fill.png'],
         detailShowState: false,
+        posterInfo:{}
       }
     },
     props: {
@@ -103,16 +104,34 @@
       PostDetail
     },
     created() {
-      console.log(this.itemInfo)
-      // console.log("success")
+      // console.log(this.itemInfo)
       // console.log(this.likeInfo)
+      let posterID = this.itemInfo.userId
+      // 请求后端数据,查询数据源
+      this.axios.get('http://47.107.77.163:8080/demo/getUserInfo',
+        {
+          params: {
+            userId: posterID
+          }
+        }
+      )
+        .then((response) => {
+          this.posterInfo = response.data.userInfo.user;
+          // console.log(response)
+          // console.log(this.posterInfo)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 </script>
 
 <style lang="less" scoped>
     @import "~@/CSS/Common.less";
-
+    p {
+        padding: 5px 10px;
+    }
     .PostContent {
         width: 650px;
         margin-bottom: 60px;

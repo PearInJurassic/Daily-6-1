@@ -9,12 +9,13 @@
 </template>
 
 <script>
-    import ContentPersonInfo from "@/pages/PostPage/components/Content/ContentPersonInfo";
-    import ContentPersonFollow from "@/pages/PostPage/components/Content/ContentPersonFollow";
-    import ContentPersonTab from "@/pages/PostPage/components/Content/ContentPersonTab";
+  import ContentPersonInfo from "@/pages/PostPage/components/Content/ContentPersonInfo";
+  import ContentPersonFollow from "@/pages/PostPage/components/Content/ContentPersonFollow";
+  import ContentPersonTab from "@/pages/PostPage/components/Content/ContentPersonTab";
+
   export default {
     name: "ContentPersonMain",
-    components:{
+    components: {
       ContentPersonInfo,
       ContentPersonFollow,
       ContentPersonTab
@@ -22,10 +23,11 @@
   }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
     @import "~@/CSS/Common.less";
+
     .ContentCenter {
-        .setSize(950px,600px);
+        .setSize(950px, 600px);
 
         margin: 0 auto;
     }
