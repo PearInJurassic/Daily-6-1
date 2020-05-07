@@ -73,14 +73,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int delUserById(int userId) {
-        userDao.delUserById(userId);
-        return 0;
+        return userDao.delUserById(userId);
     }
 
     @Override
     public int freezeUserById(int userId) {
-        userDao.freezeUserById(userId);
-        return 0;
+        return userDao.freezeUserById(userId);
     }
 
     @Override

@@ -96,10 +96,19 @@ public class UserController {
      * @return Map<userInfo,UserExpand>
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    int register(@RequestBody RegisterDTO registerDTO)
+    private Map<String, Object> register(@RequestBody RegisterDTO registerDTO)
             throws JsonMappingException, IOException {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
         System.out.println(registerDTO.toString());
-        return userService.insertUser(registerDTO);
+        int result = userService.insertUser(registerDTO);
+        if (result == 1) {
+            modelMap.put("code", 1);
+            modelMap.put("message", "注册成功");
+        } else if (result == 2) {
+            modelMap.put("code", 2);
+            modelMap.put("message", "邮箱已经存在");
+        }
+        return modelMap;
     }
 
     /*
@@ -108,10 +117,16 @@ public class UserController {
      * @return Map<userInfo,UserExpand>
      */
     @RequestMapping(value = "/freeze", method = RequestMethod.POST)
-    int freeze(@RequestParam Map<String, Object> params)
+    private Map<String, Object> freeze(@RequestParam Map<String, Object> params)
             throws JsonMappingException, IOException {
-        userService.freezeUserById(Integer.parseInt(params.get("userId").toString()));
-        return 0;
+        int result = userService.freezeUserById(Integer.parseInt(params.get("userId").toString()));
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        if (result == 1) {
+            modelMap.put("code", 1);
+        } else {
+            modelMap.put("code", 2);
+        }
+        return modelMap;
     }
 
     /*
@@ -120,10 +135,16 @@ public class UserController {
      * @return Map<userInfo,UserExpand>
      */
     @RequestMapping(value = "/del", method = RequestMethod.POST)
-    int del(@RequestParam Map<String, Object> params)
+    private Map<String, Object> del(@RequestParam Map<String, Object> params)
             throws JsonMappingException, IOException {
-        userService.delUserById(Integer.parseInt(params.get("userId").toString()));
-        return 0;
+        int result = userService.delUserById(Integer.parseInt(params.get("userId").toString()));
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        if (result == 1) {
+            modelMap.put("code", 1);
+        } else {
+            modelMap.put("code", 2);
+        }
+        return modelMap;
     }
 
     /*
