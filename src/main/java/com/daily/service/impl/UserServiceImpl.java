@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
         }
         //成功登录
         session.setAttribute("userId", user.getUserId());
+        System.out.println("This session has been set "+session.getAttribute("userId").toString());
         return 1;
     }
 

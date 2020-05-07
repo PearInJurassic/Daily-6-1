@@ -13,9 +13,10 @@ public class SessionInterceptor implements HandlerInterceptor {
 
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("userId") != null) {
-            //System.out.println(session.getAttribute("userId").toString());
+            System.out.println("拦截器获取ID:" + session.getAttribute("userId").toString());
             return true;
         } else {
+            System.out.println("跳转登录");
             response.sendRedirect(request.getContextPath() + "/login");
             return false;
         }

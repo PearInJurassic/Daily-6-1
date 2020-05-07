@@ -10,7 +10,6 @@ import com.daily.service.PostService;
 import com.daily.service.QiNiuService;
 import com.daily.service.RecordService;
 import com.daily.service.UserService;
-import com.daily.vo.UserInfoVO;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,19 +57,24 @@ public class UserController {
             modelMap.put("code", 4);
             modelMap.put("message", "用户被冻结");
         }
+
+        System.out.println("This session has been set "+request.getSession().getAttribute("userId").toString());
         return modelMap;
     }
 
-    @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/userInfo", method = RequestMethod.POST)
     private Map<String, Object> getUserInfo(HttpServletRequest request)
             throws JsonMappingException, IOException {
         Map<String, Object> modelMap = new HashMap<String, Object>();
+        System.out.println("获取session");
         HttpSession session = request.getSession();
+        System.out.println("获取userId");
+        System.out.println(session.getAttribute("userId").toString());
         int userId = Integer.parseInt(session.getAttribute("userId").toString());
-        UserInfoVO userInfoVO = userService.getUserInfoById(userId);
+        //UserInfoVO userInfoVO = userService.getUserInfoById(userId);
         modelMap.put("code", 1);
-        modelMap.put("message", "获取成功");
-        modelMap.put("userInfo", userInfoVO);
+        //modelMap.put("message", "获取成功");
+        //modelMap.put("userInfo", userInfoVO);
         return modelMap;
     }
 

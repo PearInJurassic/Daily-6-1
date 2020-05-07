@@ -14,6 +14,7 @@ import java.util.List;
 public class UserFollowServiceImpl implements UserFollowService {
     @Autowired
     private UserDao userDao;
+    @Autowired
     private UserFollowDao userFollowDao;
 
     @Override
