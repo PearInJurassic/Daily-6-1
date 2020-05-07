@@ -8,7 +8,9 @@ import layer from 'vue-layer';
 import 'vue-layer/lib/vue-layer.css';
 import router from '@/JS/router'
 import '@/JS/mock'
+import global_variable from "@/JS/global_variable";
 
+Vue.prototype.GLOBAL = global_variable
 Vue.prototype.$axios = axios;
 Vue.prototype.$layer = layer(Vue);
 Vue.config.productionTip = false

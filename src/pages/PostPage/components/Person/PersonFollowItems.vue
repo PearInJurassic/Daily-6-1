@@ -9,8 +9,8 @@
                 <span>{{followInfo.userName}}</span>
             </div>
             <div class="Operation">
-                <button class="CommonButton">查看详情</button>
-                <button class="CommonButton" @click="cancelFollow">取消关注</button>
+                <button @click="gotoOthers" class="CommonButton">查看详情</button>
+                <button @click="cancelFollow" class="CommonButton">取消关注</button>
             </div>
         </div>
     </div>
@@ -19,16 +19,25 @@
 <script>
   export default {
     name: "PersonFollowItems",
-    props:{
-      followInfo:{}
+    props: {
+      followInfo: {}
     },
-    methods:{
+    methods: {
+      /**
+       * @description 跳转页面
+       */
+      gotoOthers() {
+        if (this.followInfo.userId === sessionStorage.getItem('ID'))
+          this.$router.push('/personpage')
+        else
+          this.$router.push(`/others/${this.followInfo.userId}`)
+      },
       /**
        * @description 取消关注
        */
       cancelFollow() {
         // let user = row.userId
-        this.axios.get(`${this.GLOBAL}/cancelFollow`,{
+        this.axios.get(`${this.GLOBAL}/cancelFollow`, {
           params: {
             userId: sessionStorage.getItem("ID"),
             followId: this.followInfo.userId,
@@ -37,7 +46,7 @@
           .then((response) => {
             console.log(response)
           })
-          .catch((error) =>{
+          .catch((error) => {
             console.log(error)
           })
       },
@@ -47,9 +56,11 @@
 
 <style lang="less" scoped>
     @import "~@/CSS/Common.less";
+
     .NickName {
         line-height: 75px;
     }
+
     .followPerson {
         .setSize(100%, 75px);
         padding: 5px;
@@ -57,10 +68,12 @@
         display: flex;
         justify-content: space-between;
     }
-    .Operation{
+
+    .Operation {
         width: 38%;
         display: flex;
         justify-content: space-between;
+
         .CommonButton {
             margin: auto 5px;
         }

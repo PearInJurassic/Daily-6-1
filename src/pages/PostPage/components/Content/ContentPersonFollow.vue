@@ -11,7 +11,7 @@
             </div>
             <div class="Icon">
                 <button @click="showAllFollow" class="IconButton">
-                    <img alt="设置" src="@/assets/Person/others.png">
+                    <img alt="查看关注列表" src="@/assets/Person/others.png">
                 </button>
             </div>
         </div>
@@ -57,7 +57,12 @@
        * @param otherId 其他用户的ID
        */
       gotoOthers(otherId) {
-        this.$router.push(`/others/${otherId}`)
+
+        if (otherId == sessionStorage.getItem('ID')) {
+          this.$router.push('/personpage')
+        }
+        else
+          this.$router.push(`/others/${otherId}`)
       }
     },
     created() {
@@ -101,10 +106,10 @@
         .IconButton {
             background-color: white;
         }
+    }
 
-        .Avatar:hover {
-            cursor: pointer;
-        }
+    .Avatar:hover {
+        cursor: pointer;
     }
 </style>
 

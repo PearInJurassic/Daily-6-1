@@ -61,7 +61,7 @@
         likeNums: 0,
         likeImgArr: ['like.png', 'like-fill.png'],
         commentNum: [],
-        commentText: '1234',
+        commentText: '',
         PostCommentAll: "PostCommentAll",
         followUrl: require("@/assets/Post/follow.png")
       }
@@ -99,6 +99,7 @@
           })
             .then(() => {
               this.$emit("childAddLike")
+              this.likeNums++;
             })
         } else {
           this.axios.get(`${this.GLOBAL.apiUrl}/removelike`, {

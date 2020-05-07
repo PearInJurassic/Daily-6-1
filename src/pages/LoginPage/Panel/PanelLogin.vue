@@ -22,9 +22,9 @@
                     </el-form-item>
                     <el-form-item style="display: flex;justify-content: right;padding-right: 20px">
                         <el-switch
-                                active-text="我是用户"
-                                inactive-text="我是管理员"
-                                v-model="isUser">
+                                active-text="我是管理员"
+                                inactive-text="我是用户"
+                                v-model="loginRole">
                         </el-switch>
                     </el-form-item>
                     <div style="padding: 0 20px">
@@ -87,7 +87,7 @@
             }
           ]
         },
-        isUser: true,
+        loginRole: 0,
         dialogVisible: false
       }
     },
@@ -97,24 +97,25 @@
     },
     methods: {
       login() {
-        window.location.href = `./PostPage?id=6`;
-        sessionStorage.setItem("ID", 6);
+        let userType = this.loginRole ? 1 : 0;
         console.log("login")
         this.axios.post('http://47.107.77.163:8080/demo/login', {
           "email": this.form.username,
           "password": this.form.password,
-          "userType": 0,
+          userType
         })
           .then((response) => {
             console.log(response)
             let state = response.data.code;
             if (state === 1) {
               let userID = response.data.userId;
-              if (this.isUser === true) {
+              if (userType === 0) {
                 window.location.href = `./PostPage?id=${userID}`;
                 sessionStorage.setItem("ID", userID);
-              } else
+              } else {
                 window.location.href = "./AdminPage";
+                sessionStorage.setItem("adminId", userID)
+              }
             } else if (state === 2) {
               this.$notify.error({
                 title: '登陆失败',

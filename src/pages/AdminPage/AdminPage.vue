@@ -1,14 +1,14 @@
 <template>
     <div>
         <el-container style="height: 100%; border: 1px solid #eee">
-            <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+            <el-aside style="background-color: rgb(238, 241, 246)" width="200px">
                 <el-menu :default-openeds="['1', '3']">
                     <el-submenu index="1">
                         <template slot="title"><i class="el-icon-message"></i>Daily6+1 管理员操作</template>
                         <el-menu-item-group>
                             <template slot="title">查看</template>
                             <el-menu-item index="1-1">查看待审核帖子</el-menu-item>
-<!--                            <el-menu-item index="1-2">冻结用户</el-menu-item>-->
+                            <!--                            <el-menu-item index="1-2">冻结用户</el-menu-item>-->
                         </el-menu-item-group>
                     </el-submenu>
                 </el-menu>
@@ -28,27 +28,43 @@
                 </el-header>
 
                 <el-main>
-                    <el-table :data="tableData" stripe height="100%">
-                        <el-table-column prop="id" label="帖子ID" width="140">
+                    <el-table :data="reportTableData" stripe v-loading="loading">
+                        <el-table-column label="帖子ID" prop="postId" sortable>
                         </el-table-column>
-                        <el-table-column prop="content" label="帖子内容" width="320">
+                        <el-table-column label="是否匿名" prop="anonym" width="140">
                         </el-table-column>
-                        <el-table-column prop="posterID" label="被举报贴主ID" width="240">
+                        <el-table-column label="地区信息" prop="areaId" width="140">
                         </el-table-column>
-                        <el-table-column prop="reportTimes" label="被举报次数" width="180" sortable>
+                        <el-table-column label="转发次数" prop="forwardNum">
                         </el-table-column>
-                        <el-table-column prop="postDate" label="发帖日期" sortable>
+                        <el-table-column label="帖子内容" prop="postContent" sortable width="320">
+                        </el-table-column>
+                        <el-table-column label="发帖时间" prop="postCreateTime" sortable>
+                        </el-table-column>
+                        <el-table-column label="上传时间" prop="postUpdateTime" sortable>
+                        </el-table-column>
+                        <el-table-column label="用户id" prop="userId" sortable>
                         </el-table-column>
                         <el-table-column label="操作">
                             <template slot-scope="scope">
-                                <el-button @click="handleClick(scope.row)" type="text" size="small">查看详情</el-button>
-                                <el-button type="text" size="small">冻结用户</el-button>
+                                <el-button size="small" type="text">查看详情</el-button>
+                                <el-button @click="handleClick(scope.row)" size="small" type="text">冻结用户</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
                 </el-main>
             </el-container>
         </el-container>
+        <el-dialog
+                :visible.sync="dialogVisible"
+                title="是否要冻结用户？"
+                width="30%">
+            <span>确定要冻结该用户吗？</span>
+            <span class="dialog-footer" slot="footer">
+                <el-button @click="cancelFreeze">取 消</el-button>
+                <el-button @click="confirmFrezze" type="primary">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -56,35 +72,42 @@
   export default {
     name: "AdminPage",
     data() {
-      const item = {
-        id:"1",
-        content:"这是一段测试内容",
-        postDate: '2016-05-02',
-        posterID: '王小虎',
-        reportTimes: '5次'
-      };
       return {
-        tableData: Array(15).fill(item)
+        dialogVisible: false,
+        loading: true,
+        reportTableData: [],
+        selectUser:0,
       }
     },
-    methods:{
+    methods: {
       init() {
         // 请求后端数据,查询数据源
-        this.axios({
-          method: "get",
-          url:"data/index",
-        })
-          .then((response)=> {
-            //TODO 渲染被举报帖子列表
-            console.log(response.data.reportedPosts);
-            this.tableData=response.data.reportedPosts
+        this.$axios.get(`${this.GLOBAL.apiUrl}/getrequireauditpost`)
+          .then((response) => {
+            let data = response.data.postList;
+            for (let index in data) {
+              this.reportTableData.push(data[index])
+            }
+            this.loading = false;
           })
-          .catch((error)=> {
-            console.log(error);
-          });
+      },
+      handleClick(row) {
+        this.selectUser = row.userId,
+        this.dialogVisible=true
+      },
+      confirmFrezze() {
+        this.$axios.post(`${this.GLOBAL.apiUrl}/freeze`,{
+          userId:this.selectUser
+        }).then((response) => {
+          console.log(response)
+        })
+        this.dialogVisible = false
+      },
+      cancelFreeze() {
+        this.dialogVisible = false
       }
     },
-    created(){
+    created() {
       this.init();
     }
 
