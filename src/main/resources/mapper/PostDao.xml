@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.daily.dao.PostDao">
 	<select id="queryPost" resultType="com.daily.entity.Post">
 		SELECT *
@@ -22,29 +22,29 @@
 		WHERE
 		post_id=#{postId}
 	</select>
-	
+
 	<select id="queryPostByPostId" resultType="com.daily.entity.Post">
 		SELECT *
 		FROM tb_post
 		WHERE
 		post_id=#{postId}
 	</select>
-	
+
 	<select id="queryPostByAreaId" resultType="com.daily.entity.Post">
 		SELECT *
 		FROM tb_post
 		WHERE
 		area_id=#{areaId}
 	</select>
-	
-	
+
+
 	<select id="queryRequireAuditPost" resultType="com.daily.entity.Post">
 		SELECT *
 		FROM tb_post
 		WHERE
 		tipoff_num > 5
 	</select>
-	
+
 	<select id="queryPostByContent" resultType="com.daily.entity.Post">
 		SELECT *
 		FROM tb_post
@@ -52,7 +52,7 @@
 		post_content like '%${str}%'
 		
 	</select>
-	
+
 	<select id="queryPostByContentAndUserId" resultType="com.daily.entity.Post">
 		SELECT *
 		FROM tb_post
@@ -60,7 +60,7 @@
 		post_content like '%${str}%' AND user_id=#{userId}
 		
 	</select>
-	
+
 	<select id="queryAreaByContent" resultType="java.lang.Integer">
 		SELECT area_id
 		FROM tb_post
@@ -68,7 +68,7 @@
 		post_content like '%${str}%'
 		
 	</select>
-	
+
 	<select id="queryLastPost" resultType="com.daily.entity.Post">
 		SELECT *
 		FROM tb_post
@@ -76,15 +76,15 @@
 		DESC Limit 1
 		
 	</select>
-	
+
 	<insert id="insertPost" useGeneratedKeys="true" keyProperty="postId"
-		keyColumn="post_id" parameterType="com.daily.entity.Post">
+			keyColumn="post_id" parameterType="com.daily.entity.Post">
 		INSERT INTO
 		tb_post(post_create_time,post_update_time,post_content,anonym,area_id,
-		user_id,forward_post_id)
+		user_id,forward_post_id,post_img)
 		VALUES
 		(#{postCreateTime},#{postUpdateTime},#{postContent},#{anonym},#{areaId},
-		#{userId},#{forwardPostId})
+		#{userId},#{forwardPostId},#{postImg})
 	</insert>
 	<update id="updatePost" parameterType="com.daily.entity.Post">
 		update tb_post
@@ -106,7 +106,7 @@
 	<update id="incCommentNum" parameterType="com.daily.entity.Post">
 		update tb_post
 		<set>
-			 
+
 			comment_num=comment_num + 1
 		</set>
 		where post_id=#{postId}
@@ -114,7 +114,7 @@
 	<update id="decCommentNum" parameterType="com.daily.entity.Post">
 		update tb_post
 		<set>
-			 
+
 			comment_num=comment_num - 1
 		</set>
 		where post_id=#{postId}
@@ -128,7 +128,7 @@
 	<update id="incLikeNum" parameterType="com.daily.entity.Post">
 		update tb_post
 		<set>
-			 
+
 			like_num=like_num + 1
 		</set>
 		where post_id=#{postId}
@@ -136,7 +136,7 @@
 	<update id="decLikeNum" parameterType="com.daily.entity.Post">
 		update tb_post
 		<set>
-			 
+
 			like_num=like_num - 1
 		</set>
 		where post_id=#{postId}
@@ -147,11 +147,11 @@
 		WHERE
 		post_id=#{postId}
 	</select>
-	
+
 	<update id="incTipoffNum" parameterType="com.daily.entity.Post">
 		update tb_post
 		<set>
-			 
+
 			tipoff_num=tipoff_num + 1
 		</set>
 		where post_id=#{postId}
@@ -159,7 +159,7 @@
 	<update id="decTipoffNum" parameterType="com.daily.entity.Post">
 		update tb_post
 		<set>
-			 
+
 			tipoff_num=tipoff_num - 1
 		</set>
 		where post_id=#{postId}
@@ -170,11 +170,11 @@
 		WHERE
 		post_id=#{postId}
 	</select>
-	
+
 	<update id="incForwardNum" parameterType="com.daily.entity.Post">
 		update tb_post
 		<set>
-			 
+
 			forward_num=forward_num + 1
 		</set>
 		where post_id=#{postId}
@@ -182,7 +182,7 @@
 	<update id="decForwardNum" parameterType="com.daily.entity.Post">
 		update tb_post
 		<set>
-			 
+
 			forward_num=forward_num - 1
 		</set>
 		where post_id=#{postId}
@@ -192,12 +192,6 @@
 		FROM tb_post
 		WHERE
 		post_id=#{postId}
-	</select>
-	<select id="countPostNumByUserId" resultType="java.lang.Integer">
-		SELECT COUNT(*)
-		FROM tb_post
-		WHERE
-		user_id=#{userId}
 	</select>
 </mapper>
     
