@@ -10,7 +10,7 @@ import java.net.URL;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.context.annotation.Configuration;
 
 
 /**
@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * @date: 2019年11月22日 下午2:14:13
  *
  */
+@Configuration
 public class AddressUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(AddressUtils.class);

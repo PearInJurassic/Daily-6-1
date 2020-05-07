@@ -49,14 +49,13 @@ public class CommentServiceImplTest {
     }
 
     @Test
-    @Ignore
     public void createComment() {
         Comment comment = new Comment();
         comment.setCommentContent("测试新增方法");
         comment.setPostId(1);
         comment.setUserId(10);
         comment.setAnonym(0);
-        comment.setReplyCommentId(10);
+        comment.setReplyCommentId(0);
         assertEquals(true,commentService.createComment(comment));
     }
 
