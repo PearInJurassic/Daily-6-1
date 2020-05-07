@@ -2,7 +2,7 @@
     <div class="ContentAll">
         <div class="PosterInfo">
             <div class="Avatar">
-                <el-avatar :src="headUrl" size="42"></el-avatar>
+                <el-avatar :src="headUrl" :size="42"></el-avatar>
                 <button class="IconButton" id="followButton">
                     <img :src="followUrl" alt="关注按钮">
                 </button>
@@ -16,7 +16,7 @@
         <div class="Comment">
             <component :is="PostCommentAll"
                        :key="index"
-                       :text="item"
+                       :text="item[0].commentContent"
                        v-for="(item,index) in commentNum">
             </component>
             <div style="width:280px;height:30px;background-color: #3a8ee6"></div>
@@ -54,12 +54,20 @@
       return {
         headUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
         reportUrl: require("@/assets/Post/report.png"),
-        like: 0,
+        like: this.isLike,
         likeImgArr: ['like.png', 'like-fill.png'],
         commentNum: [],
-        commentText: '',
+        commentText: '1234',
         PostCommentAll: "PostCommentAll",
         followUrl:require("@/assets/Post/关注.png")
+      }
+    },
+    props:{
+      isLike:{
+        required:true
+      },
+      item:{
+        required:true
       }
     },
     computed: {
@@ -76,11 +84,41 @@
        */
       pressLikeButton() {
         this.like ? this.like = 0 : this.like = 1;
+        let that = this;
+        if (this.like === 1) {
+          this.axios.post(`${this.GLOBAL.apiUrl}/addlike`, {
+            userId: sessionStorage.getItem("ID"),
+            postId: that.item.postId,
+          })
+            .then(() => {
+              this.$emit("childAddLike")
+            })
+        } else {
+          this.axios.get(`${this.GLOBAL.apiUrl}/removelike`, {
+            params: {
+              userId: sessionStorage.getItem("ID"),
+              postId: that.item.postId,
+            }
+          })
+            .then(() => {
+              this.$emit("childRemoveLike")
+            })
+        }
       },
       /**
        * @description 发布评论
        */
       addComment() {
+        this.axios.post(`${this.GLOBAL.apiUrl}/comment/createcomment`,{
+            "commentContent": this.commentText,
+            "postId": this.item.postId,
+            "userId": sessionStorage.getItem("ID"),
+            "anonym": 0,
+            "replyCommentId": 0
+        })
+        .then((response)=>{
+          console.log(response)
+        })
         this.commentNum.push(this.commentText);
         this.commentText = ''
       },
@@ -94,6 +132,14 @@
           type: 'warning'
         })
           .then(() => {
+            this.axios.get(`${this.GLOBAL.apiUrl}/tipoffpost`,{
+              params:{
+                postId:this.item.postId,
+              }
+            })
+            .then((response) =>{
+              console.log(response)
+            })
             this.$message({
               type: 'success',
               message: '举报成功！'
@@ -106,6 +152,20 @@
             })
           })
       }
+    },
+    created() {
+      this.axios.get(`${this.GLOBAL.apiUrl}/comment/getcommentbypostid`,{
+        params:{
+          postId:this.item.postId
+        }
+      }).then((response) => {
+        let commentList = response.data.commentList;
+        for (let index in commentList) {
+          this.commentNum.push(commentList[index])
+          console.log(commentList[index],index)
+        }
+         console.log(response)
+      })
     }
   }
 </script>

@@ -9,7 +9,6 @@
         <div id="maincontent">
             <router-view></router-view>
         </div>
-
     </div>
 
 </template>

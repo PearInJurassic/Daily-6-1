@@ -12,18 +12,22 @@
                     <el-carousel-item :key="item" v-for="item in 4">
                         <el-image alt="图片"
                                   fit="scale-down"
-                                  src="https://interactive-examples.mdn.mozilla.net/media/examples/plumeria.jpg"
+                                  :src="itemInfo.postImg"
                                   style="height:300px;">
                         </el-image>
                     </el-carousel-item>
                 </el-carousel>
-                <PanelTag></PanelTag>
+                <PanelTag :item="itemInfo"></PanelTag>
                 <div class="Paragraph">
-                    <p>{{message}}</p>
+                    <p>{{itemInfo.postContent}}</p>
                 </div>
             </div>
             <div class="CommentDetail">
-                <PanelComment></PanelComment>
+                <PanelComment :isLike="isLike"
+                              :item="itemInfo"
+                              @childAddLike="childAddLike"
+                              @childRemoveLike="childRemoveLike">
+                </PanelComment>
             </div>
         </div>
     </div>
@@ -39,15 +43,17 @@
       return {
         isShow: true,
         srcList: [
-          'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-          'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
+          // 'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
+          // 'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
         ],
         url: require("@/assets/Post/放大镜.png"),
       }
     },
     props: {
-      img: String,
-      message: {
+      itemInfo: {
+        required: true
+      },
+      isLike:{
         required: true
       }
     },
@@ -63,7 +69,16 @@
         this.isShow = false;
         this.$emit("detailState", this.isShow);
       },
+      childAddLike () {
+        this.$emit("childAddLike");
+      },
+      childRemoveLike() {
+        this.$emit('childRemoveLike')
+      }
     },
+    created(){
+      this.srcList.push(this.itemInfo.postImg)
+    }
   }
 </script>
 

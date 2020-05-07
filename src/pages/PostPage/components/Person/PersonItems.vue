@@ -13,6 +13,8 @@
     name: "PersonItems",
     data() {
       return{
+        personPostList:[],
+        personTimeList:[],
         imgUrl:require("@/assets/plumeria.jpg"),
       }
     },
@@ -22,8 +24,14 @@
 <style scoped lang="less">
     @import "~@/CSS/Common.less";
     .Item {
+        cursor: pointer;
         .setBorder();
         .setSize(275px,275px);
         margin: 20px 20px;
+        box-shadow: 0 0 2px gray;
+    }
+
+    .Item:hover {
+
     }
 </style>

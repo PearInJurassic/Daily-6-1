@@ -31,7 +31,17 @@
     components: {
       PersonItems
     },
-    methods: {}
+    methods: {},
+    created() {
+      this.axios.get(`${this.GLOBAL.apiUrl}/userPostAndRecordList`,{
+        params:{
+          userId:sessionStorage.getItem("ID")
+        }
+      })
+        .then((response) => {
+          console.log(response)
+        })
+    }
   }
 </script>
 

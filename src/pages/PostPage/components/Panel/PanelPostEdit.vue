@@ -5,9 +5,11 @@
         <div class="EditPanel">
             <div class="PicturePanel">
                 <el-upload
+                        :on-success="handlePictureSuccess"
                         :on-preview="handlePictureCardPreview"
                         :on-remove="handleRemove"
-                        action="https://jsonplaceholder.typicode.com/posts/"
+                        :action="domain"
+                        :data="postData"
                         list-type="picture-card">
                     <i class="el-icon-plus"></i>
                 </el-upload>
@@ -30,7 +32,7 @@
                         </el-input>
                     </el-form-item>
                     <el-form-item label="Tags（请以空格分隔）">
-                        <el-input></el-input>
+                        <el-input v-model="tags"></el-input>
                     </el-form-item>
                     <input @click="finishEdit(`finish`)" class="CommonButton" id="TextEditButton" type="button"
                            value="完成">
@@ -49,20 +51,54 @@
     data() {
       return {
         isShow: true,
+        tags:'',
         postText: '',
         dialogImageUrl: '',
         dialogVisible: false,
-        showModal:false
+        showModal:false,
+        domain: 'https://upload.qiniup.com',
+        qiniuaddr:'http://q9stlq87q.bkt.clouddn.com',
+        postData:{
+          key:'',
+          token:''
+        },
       }
     },
     methods: {
+      /**
+        * @description 初始化，获取七牛token
+        */
+      init() {
+        this.userId = sessionStorage.getItem('ID');
+        this.axios.get('http://zzzia.net:8080/qiniu/',{
+          params: {
+            accessKey: "RwC4uI5jbCfE3IUuokEP7paXOQQA14mcD87MQ6ml",
+            secretKey: "o6cPmo7R-QUW4113k1MNNiNjWHOyznj-FERyP_xa",
+            bucket: "dailydata"
+          }
+        }).then((response) =>{
+          this.postData.token=response.data.token
+          this.postData.key = response.data.key
+          console.log(response)
+        })
+      },
       /**
        * @description 使用事件总线发送完成编辑信号
        * @param {string} flag 完成信号,可能有"finish"正常结束，和“close"直接关闭。
        */
       finishEdit(flag) {
-        Bus.$emit("finishEdit", flag);
-        //添加成功刷新一下
+        this.axios.post(`${this.GLOBAL.apiUrl}/addpost`,{
+          postImg:this.dialogImageUrl,
+          postContent:this.postText,
+          anonym:0,
+          areaId:0,
+          userId:sessionStorage.getItem('ID'),
+          forwardPostId:-1,
+        })
+        .then((response) => {
+          Bus.$emit("finishEdit", flag);
+          console.log(response)
+        })
 
       },
 
@@ -70,12 +106,20 @@
         console.log(file, fileList);
       },
       handlePictureCardPreview(file) {
+        // console.log(file)
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       },
+      handlePictureSuccess(res){
+        this.dialogImageUrl = `${this.qiniuaddr}/${res.hash}`
+        console.log(this.dialogImageUrl)
+      }
     },
     components:{
       LineWordLine
+    },
+    created() {
+      this.init()
     }
   }
 </script>

@@ -5,7 +5,7 @@
                 <el-avatar :size="52" :src="headUrl"></el-avatar>
             </div>
             <div>
-                <p>{{username}}</p>
+                <p>{{userNiceName}}</p>
             </div>
         </div>
         <div class="InformationButton">
@@ -31,13 +31,21 @@
     name: "SideBarInformation",
     data() {
       return {
-        username: 'aassd123lowe',
-        headUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+        userNiceName: 111,
+        headUrl: this.user,
         isAnonymous: 0,
         anonymousImgAdd: ['Anonymous.png', 'Anonymous-fill.png'],
         anonyStyle: {
           backgroundColor: 'white',
         },
+      }
+    },
+    props:{
+      userAvatar:{
+        required:true
+      },
+      userNickName:{
+        required:true
       }
     },
     computed: {
@@ -68,6 +76,9 @@
           });
         }
       }
+    },
+    created() {
+      console.log(this.user)
     }
   }
 </script>

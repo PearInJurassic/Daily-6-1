@@ -97,6 +97,8 @@
     },
     methods: {
       login() {
+        window.location.href = `./PostPage?id=6`;
+        sessionStorage.setItem("ID",6);
         this.axios.post('http://47.107.77.163:8080/demo/login', {
           "email": this.form.username,
           "password": this.form.password
@@ -104,7 +106,7 @@
           .then((response) => {
             let state = response.data.code;
             let userID = response.data.userInfo.userId;
-            console.log(state,userID)
+
             if (state === 1) {
               if (this.isUser === true)
                 window.location.href = `./PostPage?id=${userID}`;

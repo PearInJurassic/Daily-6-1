@@ -1,10 +1,10 @@
 <template>
     <div class="ContentAll">
-        <div class="ContentCenter">
-<!--            <PostAll :imgUrl="img" :itemInfo="postNum[0]"></PostAll>-->
+        <div class="ContentCenter" v-loading="loading">
             <component :is="PostAll"
-                       :key="item.id"
+                       :key="index"
                        :itemInfo="postNum[index]"
+                       :likeInfo ="likeList[index]"
                        v-for="(item,index) in postNum">
             </component>
         </div>
@@ -22,6 +22,8 @@
         PostAll: "PostAll",
         postNum: [],
         img:"",
+        likeList:[],
+        loading:true
       }
     },
     components: {
@@ -32,21 +34,25 @@
        * @description 初始化渲染帖子列表。
        */
       init() {
-        let url=location.search;//获取url
-        let userID = url.split('=')[1];
-        sessionStorage.setItem('ID',userID);
-        this.axios({
-          method: "get",
-          url: "data/index"
+
+        // let url=location.search;//获取url
+        // let userID = url.split('=')[1];
+        // sessionStorage.setItem('ID',userID);
+        let userID = sessionStorage.getItem("ID");
+        this.axios.get(`${this.GLOBAL.apiUrl}/listpost`,{
+          params:{
+            userId:userID,
+          }
         })
           .then((response) => {
-            console.log(response)
-            let postData = response.data.postItem;
-            for(let item in postData) {
-              console.log(postData[item]);
-              this.postNum.push(postData[item])
+            this.loading=false
+            this.likeList = [...response.data.likeList];
+            // console.log(this.likeList)
+            let postData = response.data.postList;
+            for(let index in postData) {
+              this.postNum.push(postData[index])
             }
-            console.log(this.postNum)
+            // console.log(this.postNum)
           })
           .catch((error) => {
             console.log(error);
@@ -59,8 +65,15 @@
     mounted() {
       Bus.$on("finishEdit", () => {
         //TODO 将帖子的id压入而非压入1防止错误。
-        this.postNum.push(1);
+        console.log('success')
       });
+      Bus.$on("finishSearch",(list) =>{
+        this.postNum=[];
+        for(let index in list) {
+          this.postNum.push(list[index])
+        }
+        this.loading=false;
+      })
     }
   }
 </script>

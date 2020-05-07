@@ -1,12 +1,12 @@
 <template>
     <div class="TagAll">
         <el-tag
-                :key="tag"
-                v-for="tag in dynamicTags"
+                :key="index"
+                v-for="(tag,index) in dynamicTags"
                 closable
                 :disable-transitions="false"
                 @close="handleClose(tag)">
-            {{tag}}
+            {{tag.tagContent}}
         </el-tag>
         <el-input
                 class="input-new-tag"
@@ -28,14 +28,33 @@
     name: "PanelTag",
     data() {
       return {
-        dynamicTags: ['标签一', '标签二', '标签三'],
+        dynamicTags: [],
         inputVisible: false,
         inputValue: ''
       };
     },
+    props:{
+      item:{
+        required:true,
+      }
+    },
     methods: {
       handleClose(tag) {
-        this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+
+        this.axios.get(`${this.GLOBAL.apiUrl}/removetag`,{
+          params:{
+            tagId:tag.tagId
+          }
+        }).then((response) =>{
+          if(response.data.success) {
+            this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+            this.$message({
+              message:`tag${tag.tagContent}删除成功`,
+              type:'success'
+            })
+
+          }
+        })
       },
 
       showInput() {
@@ -48,11 +67,34 @@
       handleInputConfirm() {
         let inputValue = this.inputValue;
         if (inputValue) {
-          this.dynamicTags.push(inputValue);
+          this.axios.post(`${this.GLOBAL.apiUrl}/addtag`,{
+              tagContent:inputValue,
+              postId:this.item.postId,
+          })
+            .then((response)=>{
+            this.dynamicTags.push(
+              {
+                tagId:response.data.tagId,
+                tagContent: inputValue
+              });
+          })
         }
         this.inputVisible = false;
         this.inputValue = '';
       }
+    },
+    created() {
+      let that = this;
+      this.axios.get(`${this.GLOBAL.apiUrl}//listtag`,{
+        params:{
+          postId: that.item.postId,
+        }
+      }).then((response)=>{
+        let tagList = response.data.tagList
+        for(let index in tagList) {
+          this.dynamicTags.push(tagList[index]);
+        }
+      })
     }
   }
 </script>

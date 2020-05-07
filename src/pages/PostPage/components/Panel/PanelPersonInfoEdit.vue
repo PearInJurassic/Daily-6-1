@@ -3,11 +3,15 @@
         <div class="InformationPanel">
             <LineWordLine>上传头像</LineWordLine>
             <div class="AvatarUploader">
-                <el-upload class="avatar-uploader" :action="domain">
-                    <img :src="imageUrl"
-                         class="avatar"
-                         v-if="imageUrl">
-                    <i class="el-icon-plus avatar-uploader-icon" v-else></i>
+                <el-upload
+                        class="avatar-uploader"
+                        :action="domain"
+                        :data="postData"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess"
+                        :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
             </div>
             <LineWordLine>修改信息</LineWordLine>
@@ -26,8 +30,8 @@
             <div>
                 <el-form>
                     <el-form-item label="性别">
-                        <el-radio v-model="genderRadio" label="男">男</el-radio>
-                        <el-radio v-model="genderRadio" label="女">女</el-radio>
+                        <el-radio label="男" v-model="genderRadio">男</el-radio>
+                        <el-radio label="女" v-model="genderRadio">女</el-radio>
                     </el-form-item>
                     <el-form-item label="个性签名">
                         <el-input
@@ -38,7 +42,7 @@
                         </el-input>
                     </el-form-item>
                     <div>
-                        <button class="CommonButton" @click="editInfo">提交</button>
+                        <button @click="editInfo" class="CommonButton">提交</button>
                     </div>
                 </el-form>
             </div>
@@ -54,57 +58,89 @@
     data() {
       return {
         userId: 1,
-        domain:'http://upload.qiniu.com',
-        qiniuaddr:'',
+        domain: 'https://upload.qiniup.com',
+        postData:{
+          key:'',
+          token:''
+        },
+        qiniuaddr: 'http://q9stlq87q.bkt.clouddn.com',
         imageUrl: '',
-        nickName:'',
-        personText:'',
-        genderRadio:'男'
+        nickName: '',
+        personText: '',
+        genderRadio: '男'
       };
     },
-    props:{
-      userInfo:{
-        required:true
+    props: {
+      userInfo: {
+        required: true
       }
     },
     components: {
       LineWordLine,
     },
-    methods:{
+    methods: {
       init() {
         this.userId = sessionStorage.getItem('ID');
         this.nickName = this.userInfo.userNiceName;
         this.personText = this.userInfo.words;
+        this.axios.get('http://zzzia.net:8080/qiniu/',{
+          params: {
+            accessKey: "RwC4uI5jbCfE3IUuokEP7paXOQQA14mcD87MQ6ml",
+            secretKey: "o6cPmo7R-QUW4113k1MNNiNjWHOyznj-FERyP_xa",
+            bucket: "dailydata"
+          }
+        }).then((response) =>{
+          this.postData.token=response.data.token
+          this.postData.key = response.data.key
+          console.log(this.postData.token)
+        })
       },
       /**
        * @description 提交个人信息修改
        */
       editInfo() {
-        this.axios.post(`${this.GLOBAL.apiUrl}/updateUserInfo`,{
+        this.axios.post(`${this.GLOBAL.apiUrl}/updateUserInfo`, {
           userId: this.userId,
           userName: this.nickName,
           gender: this.genderRadio,
-          profile:this.personText,
+          profile: this.personText,
+          userImg:this.imageUrl,
         })
-        .then((response)=> {
-          if(response.data.success) {
-            this.$message({
-              message:"修改个人信息成功",
-              type:'success'
-            })
-          } else {
-            this.$message({
-              message:"发生了不可预知的错误，请稍后再试试",
-              type:"warning"
-            })
-          }
-          this.$emit('finishEditInfo')
-        })
+          .then((response) => {
+            if (response.data.success) {
+              this.$message({
+                message: "修改个人信息成功",
+                type: 'success'
+              })
+            } else {
+              this.$message({
+                message: "发生了不可预知的错误，请稍后再试试",
+                type: "warning"
+              })
+            }
+            this.$emit('finishEditInfo')
+          })
+      },
+      handleAvatarSuccess(res) {
+        // this.imageUrl = URL.createObjectURL(file.raw);
+        this.imageUrl = `${this.qiniuaddr}/${res.key}`
+        console.log(this.imageUrl)
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
       }
     },
     created() {
-      this.userId = sessionStorage.getItem('ID');
-        this.init();
+      this.init();
     }
   }
 </script>

@@ -2,8 +2,9 @@
     <div class="PostContent">
         <div class="Content">
             <div @click="openDetail" class="PictureContent">
-                <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt="帖子图片"
-                           fit="cover" style="width:650px; ">
+                <el-image alt="帖子图片" fit="cover"
+                          :src="itemInfo.postImg"
+                          style="width:650px; ">
                 </el-image>
             </div>
             <div class="PostInfo" style="display: flex">
@@ -22,16 +23,18 @@
                 </div>
             </div>
             <div>
-                <p>{{itemInfo.content}}</p>
+                <p>{{itemInfo.postContent}}</p>
                 <slot>
-
                 </slot>
             </div>
         </div>
-        <PostDetail :img="imgUrl"
-                    :message="itemInfo.content"
+        <PostDetail :itemInfo="itemInfo"
+                    :isLike="like"
                     @detailState="changeDetailState"
-                    v-if="detailShowState"></PostDetail>
+                    @childAddLike="like = 1"
+                    @childRemoveLike="like = 0"
+                    v-if="detailShowState">
+        </PostDetail>
     </div>
 </template>
 
@@ -43,16 +46,18 @@
     data() {
       return {
         headUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-        like: 0,
+        like: this.likeInfo,
         likeImgArr: ['like.png', 'like-fill.png'],
         detailShowState: false,
-
       }
     },
     props: {
-      imgUrl: String,
       itemInfo: {
-        required:true,
+        required: true,
+      },
+      likeInfo: {
+        type:Number,
+        required: true,
       }
     },
     computed: {
@@ -66,6 +71,20 @@
        */
       pressLikeButton() {
         this.like ? this.like = 0 : this.like = 1;
+        let that = this;
+        if (this.like === 1) {
+          this.axios.post(`${this.GLOBAL.apiUrl}/addlike`, {
+            userId: sessionStorage.getItem("ID"),
+            postId: that.itemInfo.postId,
+          })
+        } else {
+          this.axios.get(`${this.GLOBAL.apiUrl}/removelike`, {
+            params: {
+              userId: sessionStorage.getItem("ID"),
+              postId: that.itemInfo.postId,
+            }
+          })
+        }
       },
       /**
        * @description 传递帖子详情界面的状态
@@ -82,6 +101,11 @@
     },
     components: {
       PostDetail
+    },
+    created() {
+      console.log(this.itemInfo)
+      // console.log("success")
+      // console.log(this.likeInfo)
     }
   }
 </script>

@@ -83,6 +83,8 @@
             let userInfo = response.data.userInfo;
             console.log(response)
             this.userInfo.userNiceName = userInfo.user.userName;
+            this.avatarUrl = userInfo.user.userImg;
+            // this.sessionStorage.setItem('avatar',userInfo.user.userImg);
             this.userInfo.postNum = 11;
             this.userInfo.fansNum = userInfo.user.fansNum;
             this.userInfo.followNum = userInfo.user.followNum;

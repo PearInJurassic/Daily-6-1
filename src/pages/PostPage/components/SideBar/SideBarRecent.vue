@@ -1,11 +1,11 @@
 <template>
     <div class="SideBarRecent">
         <LineWordLine>我的最近动态</LineWordLine>
-        <PostRecent></PostRecent>
         <component :is="RecentContent"
-                   v-for="(i,index) in RecentNum"
-                   :key="index">
-
+                   :key="index"
+                   :recentInfo="recentNum[index]"
+                   :avatar="avatarUrl"
+                   v-for="(i,index) in recentNum">
         </component>
     </div>
 </template>
@@ -18,13 +18,35 @@
     name: "SideBarRecent",
     data() {
       return {
+        avatarUrl:this.user.userImg,
         RecentContent: "PostRecent",
-        RecentNum: ["1", "1"]
+        recentNum: []
+      }
+    },
+    props:{
+      user:{
+        required:true,
       }
     },
     components: {
       PostRecent,
       LineWordLine
+    },
+    created() {
+      this.axios.get(`${this.GLOBAL.apiUrl}/listpost`, {
+        params: {
+          userId: sessionStorage.getItem('ID'),
+        }
+      })
+        .then((response) => {
+          let recent = response.data.lastpostList;
+          for (let r in recent) {
+            this.recentNum.push(recent[r]);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 </script>

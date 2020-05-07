@@ -1,12 +1,37 @@
 <template>
     <div class="NavSearch">
-        <input class="SearchBox" type="text" placeholder="搜索" value="" >
+        <input class="SearchBox" type="text" placeholder="搜索" value=""
+               @keyup.enter="search"
+               v-model="searchContent">
     </div>
 </template>
 
 <script>
+    import Bus from "@/JS/bus";
+
   export default {
-    name: "NavSearch"
+    name: "NavSearch",
+    data() {
+      return {
+        searchContent:''
+      }
+    },
+    methods:{
+      search() {
+        this.axios.get(`${this.GLOBAL.apiUrl}/searchpostbycontent`,{
+          params:{
+            str:this.searchContent
+          }
+        }).then((response)=>{
+          Bus.$emit("finishSearch",response.data.postList)
+          this.$message({
+            message:'搜索完成',
+            duration:500,
+            showClose:true,
+          })
+        })
+      }
+    }
   }
 </script>
 
