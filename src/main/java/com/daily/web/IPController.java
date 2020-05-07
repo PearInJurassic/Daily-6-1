@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -23,13 +21,17 @@ public class IPController {
     private AddressUtils addressUtils;
 
     @RequestMapping(value = "/getaddress", method = RequestMethod.GET)
-    private Map<String, Object> getAddress() throws UnsupportedEncodingException {
+    private Map<String, Object> getAddress(HttpServletRequest request) throws UnsupportedEncodingException {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        String address = new String();
-        address = ipUtil.getIpAddr(request);
-        address = addressUtils.getAddresses(address,"gbk");
-        modelMap.put("city",address);
+        String userIp = ipUtil.getIpAddr(request);
+        String syIp = "183.154.231.31";
+        //address = "ip=" + ip + "&json=true";
+        String city = addressUtils.getAddresses(userIp, "utf-8");
+        String syCity = addressUtils.getAddresses(syIp, "utf-8");
+        //address = addressUtils.getAddresses(address,"utf-8");
+        modelMap.put("ip", userIp);
+        modelMap.put("city", city);
+        modelMap.put("syCity",syCity);
         return modelMap;
     }
 }

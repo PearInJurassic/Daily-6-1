@@ -31,7 +31,9 @@ public class AddressUtils {
         // 这里调用太平洋IP地址库API接口
         String urlStr = "http://whois.pconline.com.cn/ipJson.jsp";
         String returnStr = getResult(urlStr, content, encodingString);
-        //System.out.println(returnStr);
+        System.out.println("输出str\n");
+        System.out.println(returnStr);
+        System.out.println("输出str完成\n");
         if (returnStr != null) {
             String[] temp = returnStr.split(",");
             if (temp.length < 3) {
