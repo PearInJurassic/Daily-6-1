@@ -12,6 +12,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/ip")
@@ -22,11 +24,13 @@ public class IPController {
     private AddressUtils addressUtils;
 
     @RequestMapping(value = "/getaddress", method = RequestMethod.GET)
-    private String getAddress() throws UnsupportedEncodingException {
+    private Map<String, Object> getAddress() throws UnsupportedEncodingException {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String address = new String();
         address = ipUtil.getIpAddr(request);
         address = addressUtils.getAddresses(address,"gbk");
-        return address;
+        modelMap.put("city",address);
+        return modelMap;
     }
 }
