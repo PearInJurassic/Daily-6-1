@@ -23,14 +23,19 @@ public class IPController {
     @Autowired
     private AddressUtils addressUtils;
 
+    /*
+     * 获取用户地址（城市）
+     *
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/getaddress", method = RequestMethod.GET)
-    private Map<String, Object> getAddress() throws UnsupportedEncodingException {
+    private Map<String, Object> getAddress(HttpServletRequest  request) throws UnsupportedEncodingException {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String address = new String();
         address = ipUtil.getIpAddr(request);
-        address = addressUtils.getAddresses(address,"gbk");
-        modelMap.put("city",address);
+        address = "http://whois.pconline.com.cn/ipJson.jsp?ip=" + address + "&json=true";
+        modelMap.put("URL",address);
         return modelMap;
     }
 }

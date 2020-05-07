@@ -12,8 +12,7 @@ public class AddressUtilsTest {
     private static AddressUtils addressUtils = new AddressUtils();;
 
     @Test
-    @Ignore
     public void getAddresses() throws UnsupportedEncodingException {
-        assertEquals("天津市",addressUtils.getAddresses("ip=118.28.67.126&json=true","GBK"));
+        assertEquals("天津市",addressUtils.getAddresses("ip=183.154.231.31&json=true","GBK"));
     }
 }
