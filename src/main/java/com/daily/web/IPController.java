@@ -20,18 +20,19 @@ public class IPController {
     @Autowired
     private AddressUtils addressUtils;
 
+    /*
+     * 获取用户地址（城市）
+     *
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/getaddress", method = RequestMethod.GET)
-    private Map<String, Object> getAddress(HttpServletRequest request) throws UnsupportedEncodingException {
+    private Map<String, Object> getAddress(HttpServletRequest  request) throws UnsupportedEncodingException {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        String userIp = ipUtil.getIpAddr(request);
-        String syIp = "183.154.231.31";
-        //address = "ip=" + ip + "&json=true";
-        String city = addressUtils.getAddresses(userIp, "utf-8");
-        String syCity = addressUtils.getAddresses(syIp, "utf-8");
-        //address = addressUtils.getAddresses(address,"utf-8");
-        modelMap.put("ip", userIp);
-        modelMap.put("city", city);
-        modelMap.put("syCity",syCity);
+        String address = new String();
+        address = ipUtil.getIpAddr(request);
+        address = "http://whois.pconline.com.cn/ipJson.jsp?ip=" + address + "&json=true";
+        modelMap.put("URL",address);
         return modelMap;
     }
 }
