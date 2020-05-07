@@ -131,18 +131,20 @@ public class UserController {
 
     /*
      * 删除
-     * @param name password
+     * @param
      * @return Map<userInfo,UserExpand>
      */
-    @RequestMapping(value = "/del", method = RequestMethod.POST)
+    @RequestMapping(value = "/deluser", method = RequestMethod.POST)
     private Map<String, Object> del(@RequestParam Map<String, Object> params)
             throws JsonMappingException, IOException {
         int result = userService.delUserById(Integer.parseInt(params.get("userId").toString()));
         Map<String, Object> modelMap = new HashMap<String, Object>();
         if (result == 1) {
             modelMap.put("code", 1);
+            modelMap.put("message", "删除成功");
         } else {
             modelMap.put("code", 2);
+            modelMap.put("message", "删除失败");
         }
         return modelMap;
     }
