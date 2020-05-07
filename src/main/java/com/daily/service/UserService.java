@@ -15,6 +15,8 @@ public interface UserService {
 
     int freezeUserById(int userId);
 
+    int getStateByUserId(int userId);
+
     Integer getUserIdByEmail(String email);
 
     UserInfoVO getUserInfoById(int userId);

@@ -3,10 +3,7 @@ package com.daily.web;
 import com.daily.entity.Comment;
 import com.daily.entity.Post;
 import com.daily.entity.Tag;
-import com.daily.service.CommentService;
-import com.daily.service.LikeService;
-import com.daily.service.PostService;
-import com.daily.service.TagService;
+import com.daily.service.*;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +33,8 @@ public class PostController {
     @Autowired
     private LikeService likeService;
 
+    @Autowired
+    private UserService userService;
     /**
      * 广场上获取所有的帖子信息
      * 
@@ -99,11 +98,17 @@ public class PostController {
     @RequestMapping(value = "/getrequireauditpost", method = RequestMethod.GET)
     private Map<String, Object> getRequireAuditPost() {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<Post> list = new ArrayList<Post>();
-        list = postService.getRequireAuditPost();
-        modelMap.put("postList", list);
+        List<Post> postList = new ArrayList<Post>();
+        List<Integer> frozenList = new ArrayList<>();
+        postList = postService.getRequireAuditPost();
+        for (Post post : postList) {
+            frozenList.add(userService.getStateByUserId(post.getUserId()));
+        }
+        modelMap.put("postList", postList);
+        modelMap.put("frozenList", frozenList);
         return modelMap;
     }
+
 
     @RequestMapping(value = "/searchpostbycontent", method = RequestMethod.GET)
     private Map<String, Object> searchPostByContent(String str) {
