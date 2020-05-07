@@ -2,6 +2,7 @@ package com.daily.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -15,6 +16,7 @@ import java.net.URL;
  * @date: 2019年11月22日 下午2:14:13
  *
  */
+@Configuration
 public class AddressUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(AddressUtils.class);
