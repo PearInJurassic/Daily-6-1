@@ -91,7 +91,10 @@ public class UserServiceImpl implements UserService {
         userInfoVO.setPostNum(postNum);
         return userInfoVO;
     }
-
+    @Override
+    public Integer getUserIdByEmail(String email){
+        return userDao.getUserIdByEmail(email);
+    }
     @Override
     public UserExpand getUserInfoByUserId(int userId) {
         UserExpand userExpand = new UserExpand();

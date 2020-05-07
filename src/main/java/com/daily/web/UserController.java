@@ -47,6 +47,8 @@ public class UserController {
         if (result == 1) {
             modelMap.put("code", 1);
             modelMap.put("message", "登录成功");
+            Integer userId=userService.getUserIdByEmail(loginDTO.getEmail());
+            modelMap.put("userId",userId);
         } else if (result == 2) {
             modelMap.put("code", 2);
             modelMap.put("message", "用户不存在");
