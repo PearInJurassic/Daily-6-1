@@ -18,8 +18,11 @@ import java.util.Date;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
+    @Autowired
     private AreaDao areaDao;
+    @Autowired
     private UserFollowDao userFollowDao;
+    @Autowired
     private PostDao postDao;
 
     @Override

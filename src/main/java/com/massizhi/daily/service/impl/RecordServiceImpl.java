@@ -17,6 +17,7 @@ import java.util.stream.IntStream;
 public class RecordServiceImpl implements RecordService {
     @Autowired
     private RecordDao recordDao;
+    @Autowired
     private AreaDao areaDao;
 
     @Override
