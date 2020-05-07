@@ -193,5 +193,11 @@
 		WHERE
 		post_id=#{postId}
 	</select>
+	<select id="countPostNumByUserId" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM tb_post
+		WHERE
+		user_id=#{userId}
+	</select>
 </mapper>
     

@@ -15,8 +15,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -39,11 +37,9 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    private Map<String, Object> checkLogin(@RequestBody LoginDTO loginDTO, HttpServletRequest request)
-            throws JsonMappingException, IOException {
-        Map<String, Object> modelMap = new HashMap<String, Object>();
-        HttpSession session = request.getSession();
-        int result = userService.login(loginDTO, session);
+    private Map<String, Object> checkLogin(@RequestBody LoginDTO loginDTO) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();;
+        int result = userService.login(loginDTO);
         if (result == 1) {
             modelMap.put("code", 1);
             modelMap.put("message", "登录成功");
@@ -59,40 +55,6 @@ public class UserController {
             modelMap.put("code", 4);
             modelMap.put("message", "用户被冻结");
         }
-
-        System.out.println("This session has been set "+request.getSession().getAttribute("userId").toString());
-        return modelMap;
-    }
-
-    @RequestMapping(value = "/userInfo", method = RequestMethod.POST)
-    private Map<String, Object> getUserInfo(HttpServletRequest request)
-            throws JsonMappingException, IOException {
-        Map<String, Object> modelMap = new HashMap<String, Object>();
-        System.out.println("获取session");
-        HttpSession session = request.getSession();
-        System.out.println("获取userId");
-        System.out.println(session.getAttribute("userId").toString());
-        int userId = Integer.parseInt(session.getAttribute("userId").toString());
-        //UserInfoVO userInfoVO = userService.getUserInfoById(userId);
-        modelMap.put("code", 1);
-        //modelMap.put("message", "获取成功");
-        //modelMap.put("userInfo", userInfoVO);
-        return modelMap;
-    }
-
-    /*
-     * 登出
-     *
-     * @return Map<userInfo,UserExpand>
-     */
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    private Map<String, Object> checkLogin(HttpServletRequest request)
-            throws JsonMappingException, IOException {
-        Map<String, Object> modelMap = new HashMap<String, Object>();
-        HttpSession session = request.getSession();
-        session.invalidate();
-        modelMap.put("code", 1);
-        modelMap.put("message", "登出成功");
         return modelMap;
     }
 
@@ -102,10 +64,8 @@ public class UserController {
      * @return Map<userInfo,UserExpand>
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    private Map<String, Object> register(@RequestBody RegisterDTO registerDTO)
-            throws JsonMappingException, IOException {
+    private Map<String, Object> register(@RequestBody RegisterDTO registerDTO) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        System.out.println(registerDTO.toString());
         int result = userService.insertUser(registerDTO);
         if (result == 1) {
             modelMap.put("code", 1);
@@ -119,13 +79,12 @@ public class UserController {
 
     /*
      * 冻结
-     * @param name password
+     * @param
      * @return Map<userInfo,UserExpand>
      */
     @RequestMapping(value = "/freeze", method = RequestMethod.POST)
-    private Map<String, Object> freeze(@RequestParam Map<String, Object> params)
-            throws JsonMappingException, IOException {
-        int result = userService.freezeUserById(Integer.parseInt(params.get("userId").toString()));
+    private Map<String, Object> freeze(int userId) {
+        int result = userService.freezeUserById(userId);
         Map<String, Object> modelMap = new HashMap<String, Object>();
         if (result == 1) {
             modelMap.put("code", 1);
@@ -141,9 +100,8 @@ public class UserController {
      * @return Map<userInfo,UserExpand>
      */
     @RequestMapping(value = "/deluser", method = RequestMethod.POST)
-    private Map<String, Object> del(@RequestParam Map<String, Object> params)
-            throws JsonMappingException, IOException {
-        int result = userService.delUserById(Integer.parseInt(params.get("userId").toString()));
+    private Map<String, Object> del(@RequestParam int userId) {
+        int result = userService.delUserById(userId);
         Map<String, Object> modelMap = new HashMap<String, Object>();
         if (result == 1) {
             modelMap.put("code", 1);

@@ -193,10 +193,11 @@ public class PostController {
     }
 
     @RequestMapping(value = "/getPostNumByUserId", method = RequestMethod.GET)
-    private Map<String, Object> getPostNumByUserId(int userId) {
+    private Map<String, Object> getPostNumByUserId(Integer userId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        int i = postService.getPostNumByUserId(userId);
+        int i = postService.getPostNumByUserId(userId.intValue());
         modelMap.put("postNum", i);
+        System.out.println(userId);
         return modelMap;
     }
 

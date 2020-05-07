@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 @Service
@@ -31,7 +30,7 @@ public class UserServiceImpl implements UserService {
     private PostDao postDao;
 
     @Override
-    public int login(LoginDTO loginDTO, HttpSession session) {
+    public int login(LoginDTO loginDTO) {
         User user = userDao.getUserByEmail(loginDTO.getEmail());
         //邮箱不存在
         if (user == null) {
@@ -50,25 +49,20 @@ public class UserServiceImpl implements UserService {
             return 4;
         }
         //成功登录
-        session.setAttribute("userId", user.getUserId());
-        System.out.println("This session has been set "+session.getAttribute("userId").toString());
         return 1;
     }
 
     @Override
     public int insertUser(RegisterDTO registerDTO) {
-
         //判断邮箱是否存在
         if (userDao.existEmail(registerDTO.getEmail()) != null)
             return 2;
 
         User user = new User();
         BeanUtils.copyProperties(registerDTO, user);
-        //user.setUserDate(new Date());
         user.setState(1);
         user.setFansNum(0);
         user.setFollowNum(0);
-
         return userDao.insertUser(user);
     }
 

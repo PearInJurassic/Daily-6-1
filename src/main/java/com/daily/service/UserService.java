@@ -1,15 +1,13 @@
 package com.daily.service;
 
-import com.daily.dto.RegisterDTO;
 import com.daily.dto.LoginDTO;
+import com.daily.dto.RegisterDTO;
 import com.daily.entity.User;
 import com.daily.entity.UserExpand;
 import com.daily.vo.UserInfoVO;
 
-import javax.servlet.http.HttpSession;
-
 public interface UserService {
-    int login(LoginDTO loginDTO, HttpSession session);
+    int login(LoginDTO loginDTO);
 
     int insertUser(RegisterDTO registerDTO);
 
