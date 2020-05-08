@@ -62,12 +62,16 @@ const routes = [
   },
   {
     path: '/mapspage',
-    component: MapPage
+    component: MapPage,
+    children: [
+
+    ]
   },
   {
     path: '/fujian',
     component: fujian
   }
+
 ]
 
 const router =new VueRouter({

@@ -16,19 +16,22 @@
 
             <el-container>
                 <el-header style="text-align: right; font-size: 12px">
-                    <el-dropdown>
+                    <el-dropdown @command="handleCommand">
                         <i class="el-icon-setting" style="margin-right: 15px"></i>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item>查看</el-dropdown-item>
                             <el-dropdown-item>新增</el-dropdown-item>
                             <el-dropdown-item>冻结</el-dropdown-item>
+                            <el-dropdown-item command="quit">退出</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
-                    <span>管理员</span>
+                    <span>{{adminInfo.userName}}</span>
                 </el-header>
 
                 <el-main>
-                    <el-table :data="reportTableData" stripe v-loading="loading">
+                    <el-table :data="reportTableData"
+                              v-loading="loading"
+                              :row-class-name="tableFrozeClass">
                         <el-table-column label="帖子ID" prop="postId" sortable>
                         </el-table-column>
                         <el-table-column label="是否匿名" prop="anonym" width="140">
@@ -49,7 +52,7 @@
                         </el-table-column>
                         <el-table-column label="操作">
                             <template slot-scope="scope">
-                                <el-button size="small" type="text">查看详情</el-button>
+                                <el-button @click="handleDetail(scope.row)" size="small" type="text">查看详情</el-button>
                                 <el-button @click="handleClick(scope.row)" size="small" type="text">冻结用户</el-button>
                             </template>
                         </el-table-column>
@@ -67,19 +70,33 @@
                 <el-button @click="confirmFrezze" type="primary">确 定</el-button>
             </span>
         </el-dialog>
+        <PostDetail v-if="detailDialogVisible"
+                    :itemInfo="selectPostItem"
+                    :isLike="0"
+                    :pInfo="adminInfo"
+                    @detailState="changeDetailState">
+        </PostDetail>
     </div>
 </template>
 
 <script>
+    import PostDetail from "@/pages/PostPage/components/Post/PostDetail";
   export default {
     name: "AdminPage",
     data() {
       return {
+        detailDialogVisible:false,
         dialogVisible: false,
         loading: true,
         reportTableData: [],
         selectUser:0,
+        selectPostItem:{},
+        adminInfo:{},
+        frozenList:[],
       }
+    },
+    components:{
+      PostDetail
     },
     methods: {
       init() {
@@ -91,12 +108,27 @@
             for (let index in data) {
               this.reportTableData.push(data[index])
             }
+            this.frozenList=response.data.frozenList;
+            console.log(this.frozenList)
             this.loading = false;
           })
       },
       handleClick(row) {
         this.selectUser = row.userId,
         this.dialogVisible=true
+      },
+      /**
+       * @description 得到管理员信息
+       */
+      getAdminInfo() {
+        this.axios.get(`${this.GLOBAL.apiUrl}/getUserInfo`,{
+          params:{
+            userId:sessionStorage.getItem("adminId")
+          }
+        }).then((response) => {
+          this.adminInfo=response.data.userInfo.user;
+          // console.log(response)
+        })
       },
       /**
        * @description 冻结用户
@@ -118,10 +150,41 @@
       },
       cancelFreeze() {
         this.dialogVisible = false
+      },
+      /**
+       * @description 查看详情
+       */
+      handleDetail(row) {
+        this.selectPostItem=row;
+        this.detailDialogVisible=true ;
+      },
+      changeDetailState () {
+        this.detailDialogVisible=false;
+      },
+      /**
+       * 冻结用户染色
+       */
+      tableFrozeClass({row,rowIndex}) {
+        console.log(row) //删除会认为row没有被使用过而报错.
+        // console.log(this.frozenList[rowIndex])
+        if(this.frozenList[rowIndex] == 0)
+          return "frozen-row"
+        return ''
+      },
+      /**
+       * @description 处理下拉菜单
+       */
+      handleCommand(command) {
+        switch (command) {
+            case 'quit':
+              window.location.href = "/index.html";
+              break;
+        }
       }
     },
     created() {
       this.init();
+      this.getAdminInfo();
     }
 
   }
@@ -140,5 +203,9 @@
 
     .el-aside {
         color: #333;
+    }
+
+    .el-table .frozen-row {
+        background-color: #f3b1af;
     }
 </style>

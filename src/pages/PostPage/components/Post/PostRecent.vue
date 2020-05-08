@@ -62,16 +62,20 @@
         .setMaxSize(250px, 80px);
         .setMinSize(250px,75px);
         .setBorder();
+        box-shadow: 0 0 3px #2c2d2c;
         display: flex;
         justify-content: left;
     }
 
     .RecentContent {
-        .setMaxSize(186px, 47px);
-        .setMinSize(186px,30px);
+        .setMaxSize(179px, 47px);
+        .setMinSize(179px,23px);
         margin-top: 20px;
-        .setBorder();
-        padding: 4px;
+        margin-bottom: 5px;
+        margin-right: 5px;
+        border-radius: 5px;
+        padding: 8px;
         font-size: 12px;
+        background-color: #f3f3f3;
     }
 </style>

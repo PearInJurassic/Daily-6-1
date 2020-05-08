@@ -5,6 +5,7 @@
                        :key="index"
                        :itemInfo="postNum[index]"
                        :likeInfo ="likeList[index]"
+                       @deleteSuccess="reloadAfterDelete"
                        v-for="(item,index) in postNum">
             </component>
         </div>
@@ -16,6 +17,7 @@
   import Bus from "@/JS/bus.js";
 
   export default {
+    inject: ['reload'],
     name: "ContentPostMain",
     data() {
       return {
@@ -56,15 +58,26 @@
           .catch((error) => {
             console.log(error);
           });
+      },
+      reloadAfterDelete() {
+        this.reload();
       }
     },
     created() {
         this.init();
     },
     mounted() {
-      Bus.$on("finishEdit", () => {
-        //TODO 将帖子的id压入而非压入1防止错误。
-        console.log('success')
+      Bus.$on("finishEdit", (flag) => {
+        switch (flag) {
+            case 'finish':
+              console.log("finish")
+              this.reload();
+              break;
+            default:
+              break;
+        }
+
+        // console.log('success')
       });
       Bus.$on("finishSearch",(list) =>{
         this.postNum=[];

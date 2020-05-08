@@ -98,10 +98,11 @@
           forwardPostId: -1,
         })
           .then(() => {
+            this.postText='';
+            this.dialogImageUrl='';
             Bus.$emit("finishEdit", flag);
             // console.log(response)
           })
-
       },
       beforeImgUpload(file) {
         this.postData.key=`upload_pic_${file.name}`;

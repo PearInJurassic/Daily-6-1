@@ -21,6 +21,11 @@
                         <img alt="转发按钮" src="@/assets/Post/resend.png">
                     </button>
                 </div>
+                <div class="Icon" v-if="itemInfo.userId == loginUserId">
+                    <button class="IconButton" id="DeleteButton" @click="pressDeleteButton">
+                        <img alt="删除按钮" src="@/assets/Post/delete.png">
+                    </button>
+                </div>
             </div>
             <div>
                 <p>{{itemInfo.postContent}}</p>
@@ -46,6 +51,7 @@
     name: "PostAll",
     data() {
       return {
+        loginUserId:0,
         like: this.likeInfo,
         likeImgArr: ['like.png', 'like-fill.png'],
         detailShowState: false,
@@ -70,7 +76,7 @@
        * @Descripsion 传递点赞按钮事件的函数
        */
       pressLikeButton() {
-        this.like ? this.like = 0 : this.like = 1;
+        this.like > 0 ? this.like = 0 : this.like = 1;
         let that = this;
         if (this.like === 1) {
           this.axios.post(`${this.GLOBAL.apiUrl}/addlike`, {
@@ -85,6 +91,24 @@
             }
           })
         }
+      },
+      /**
+       * @description 点击删除按钮
+       */
+      pressDeleteButton() {
+        this.axios.get(`${this.GLOBAL.apiUrl}/removepost`,{
+          params: {
+            postId: this.itemInfo.postId
+          }
+        }).then((response) => {
+          this.$emit("deleteSuccess")
+          if(response.data.success) {
+            this.$message({
+              message: "删除成功",
+              type: "success",
+            })
+          }
+        })
       },
       /**
        * @description 传递帖子详情界面的状态
@@ -105,6 +129,7 @@
     created() {
       // console.log(this.itemInfo)
       // console.log(this.likeInfo)
+      this.loginUserId = sessionStorage.getItem("ID")
       let posterID = this.itemInfo.userId
       // 请求后端数据,查询数据源
       this.axios.get('http://47.107.77.163:8080/demo/getUserInfo',
@@ -131,6 +156,10 @@
     p {
         padding: 5px 10px;
     }
+    #DeleteButton {
+        margin-left: 800%;
+    }
+
     .PostContent {
         width: 650px;
         margin-bottom: 60px;
