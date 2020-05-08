@@ -30,7 +30,7 @@
     },
     components: {
       PostPanel,
-      NavBar, PageCenterPost
+      NavBar, PageCenterPost,
     },
     methods: {
       reload() {

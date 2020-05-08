@@ -17,7 +17,6 @@ const mutations = {
     state.time.starttime = a[0];
     state.time.endtime = a[1];
   },
-
 }
 export default new Vuex.Store({
   state,

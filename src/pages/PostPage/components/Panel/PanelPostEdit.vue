@@ -10,6 +10,7 @@
                         :on-preview="handlePictureCardPreview"
                         :on-remove="handleRemove"
                         :on-success="handlePictureSuccess"
+                        :before-upload="beforeImgUpload"
                         list-type="picture-card">
                     <i class="el-icon-plus"></i>
                 </el-upload>
@@ -32,7 +33,7 @@
                         </el-input>
                     </el-form-item>
                     <el-form-item label="Tags（请以空格分隔）">
-                        <el-input v-model="tags" :disabled="true"></el-input>
+                        <el-input :disabled="true" v-model="tags"></el-input>
                     </el-form-item>
                     <input @click="finishEdit(`finish`)" class="CommonButton" id="TextEditButton" type="button"
                            value="完成">
@@ -78,7 +79,7 @@
           }
         }).then((response) => {
           this.postData.token = response.data.token
-          this.postData.key = response.data.key
+          // this.postData.key = response.data.key
           // console.log(response)
         })
       },
@@ -102,7 +103,9 @@
           })
 
       },
-
+      beforeImgUpload(file) {
+        this.postData.key=`upload_pic_${file.name}`;
+      },
       handleRemove(file, fileList) {
         console.log(file, fileList);
       },
@@ -112,7 +115,7 @@
         this.dialogVisible = true;
       },
       handlePictureSuccess(res) {
-        this.dialogImageUrl = `${this.qiniuaddr}/${res.hash}`
+        this.dialogImageUrl = `${this.qiniuaddr}/${res.key}`
         console.log(this.dialogImageUrl)
       }
     },

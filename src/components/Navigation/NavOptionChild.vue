@@ -15,29 +15,28 @@
     data() {
       return {
         iconAlt: ["可视化地图", "时间轴", "个人空间"],
-        pageUrl:['/','','/timeaxispage','/personpage'],
+        pageUrl: ['/', '/mapspage', '/timeaxispage', '/personpage'],
 
-
-        list:[
+        list: [
           {
-            img:require(`@/assets/NavBar/home.png`),
-            active:require(`@/assets/NavBar/home-fill.png`),
-            path:"/"
+            img: require(`@/assets/NavBar/home.png`),
+            active: require(`@/assets/NavBar/home-fill.png`),
+            path: "/"
           },
           {
-            img:require(`@/assets/NavBar/Location.png`),
-            active:require(`@/assets/NavBar/Location-fill.png`),
-            path:""
+            img: require(`@/assets/NavBar/Location.png`),
+            active: require(`@/assets/NavBar/Location-fill.png`),
+            path: "/mapspage"
           },
           {
-            img:require(`@/assets/NavBar/TimeLine.png`),
-            active:require(`@/assets/NavBar/TimeLine-fill.png`),
-            path:"/timeaxispage"
+            img: require(`@/assets/NavBar/TimeLine.png`),
+            active: require(`@/assets/NavBar/TimeLine-fill.png`),
+            path: "/timeaxispage"
           },
           {
-            img:require(`@/assets/NavBar/PersonSpace.png`),
-            active:require(`@/assets/NavBar/PersonSpace-fill.png`),
-            path:"/personpage"
+            img: require(`@/assets/NavBar/PersonSpace.png`),
+            active: require(`@/assets/NavBar/PersonSpace-fill.png`),
+            path: "/personpage"
           },
         ]
       }
@@ -53,6 +52,7 @@
 
 <style lang="less" scoped>
     @import "~@/CSS/Common.less";
+
     @itemBackColor: #989899;
     .OptionChild {
         padding: 0 2px;

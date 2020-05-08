@@ -1,7 +1,7 @@
 <template>
     <div class="Branch">
         <div class="header">
-            <h1 style="display:inline-block">{{text}}时间轴</h1>
+            <h1 style="display:inline-block">{{axisTypeName}}时间轴</h1>
             <el-button @click="addpage" id="btn">添加</el-button>
             <el-button :style="{ display: editbtn }" id="btn2" v-on:click="setVisible">编辑</el-button>
             <el-button :style="{ display: editcancel }" id="btn3" v-on:click="setVisible">取消编辑</el-button>
@@ -9,7 +9,7 @@
         <section class="cd-container" id="cd-timeline">
 
             <div :key="i" id="block1" v-for="(data,i) in datalist">
-                <div class="cd-timeline-block" v-if=" (i%2===0 && (data.type===text || text===''))">
+                <div class="cd-timeline-block" v-if=" (i%2===0 && (data.type===axisTypeName || axisTypeName===''))">
                     <div class="cd-timeline-img cd-picture">
                         <img alt="Picture" src="@/assets/NavBar/TimeLine.png">
                     </div>
@@ -24,13 +24,14 @@
                             <h2 style="display:inline;position:absolute;left:280px;top:40px">{{data.title}}</h2>
                             <el-button :style="{ display: visibleDelete }" @click="fun(i)" circle class="DeleteBtn"
                                        icon="el-icon-delete" type="danger"></el-button>
-                            <a class="cd-read-more" href="http://www.helloweba.com/view-blog-285.html" style="position:absolute;left:240px;bottom:50px"
+                            <a class="cd-read-more" href="http://www.helloweba.com/view-blog-285.html"
+                               style="position:absolute;left:240px;bottom:50px"
                                target="_blank">查看全文</a>
                         </div>
                     </div>
                 </div>
 
-                <div class="cd-timeline-block" v-if="(i%2!==0 && (data.type===text || text===''))">
+                <div class="cd-timeline-block" v-if="(i%2!==0 && (data.type===axisTypeName || axisTypeName===''))">
                     <div class="cd-timeline-img cd-picture">
                         <img alt="Picture" src="@/assets/NavBar/TimeLine.png">
                     </div>
@@ -44,7 +45,8 @@
                             <h2 style="display:inline;position:absolute;left:280px;top:40px">{{data.title}}</h2>
                             <el-button :style="{ display: visibleDelete }" @click="fun(i)" circle class="DeleteBtn"
                                        icon="el-icon-delete" type="danger"></el-button>
-                            <a class="cd-read-more" href="http://www.helloweba.com/view-blog-285.html" style="position:absolute;left:240px;bottom:50px"
+                            <a class="cd-read-more" href="http://www.helloweba.com/view-blog-285.html"
+                               style="position:absolute;left:240px;bottom:50px"
                                target="_blank">查看全文</a>
                         </div>
                     </div>
@@ -54,60 +56,77 @@
 
         </section>
 
-        <el-dialog :visible.sync="dialogFormVisible" title="动态添加" :modal-append-to-body="modal">
-            <el-form :model="form">
-                <el-form-item :label-width="formLabelWidth" label="动态">
-                    <el-select placeholder="请选择你要添加的动态" v-model="form.region" value-key="id">
-                        <el-option :key="item.id" :label="item.title" :value="item" v-for="item in dataadd"></el-option>
-
-                    </el-select>
-                </el-form-item>
-            </el-form>
-            <div class="dialog-footer" slot="footer">
-                <el-button @click="add(form.region)" type="primary">确 定</el-button>
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-
+        <el-dialog :modal-append-to-body="modal" :visible.sync="dialogFormVisible" title="动态添加" width="30%">
+            <div class="logo">
+                <img src="@/assets/NavBar/logo.png">
+            </div>
+            <div class="PicturePanel">
+                <el-upload
+                        :action="imgUpLoad.domain"
+                        :data="imgUpLoad.postData"
+                        :on-preview="handlePictureCardPreview"
+                        :on-remove="handleRemove"
+                        :on-success="handlePictureSuccess"
+                        :on-error="handleError"
+                        :before-upload="beforeImgUpload"
+                        list-type="picture-card">
+                    <i class="el-icon-plus"></i>
+                </el-upload>
+                <el-dialog :modal="imgUpLoad.showModal" :visible.sync="imgUpLoad.dialogVisible">
+                    <el-image :src="imgUpLoad.dialogImageUrl" alt="" width="100%"></el-image>
+                </el-dialog>
+            </div>
+            <div class="TextPanel">
+                <LineWordLine>编辑</LineWordLine>
+                <el-form>
+                    <el-form-item label="文本内容：">
+                        <el-input
+                                :row="5"
+                                placehoder="请输入内容"
+                                type="textarea"
+                                v-model="editForm.recordText">
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item label="关联帖子（按时间）">
+                        <el-select placeholder="请选择你要进行关联的帖子" v-model="form.region" value-key="id">
+                            <el-option :key="item.id" :label="item.title" :value="item"
+                                       v-for="item in postListLink"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-button @click="insertRecord">提交</el-button>
+                </el-form>
             </div>
         </el-dialog>
     </div>
 </template>
 
 <script>
-  // import axios from 'axios'
+  import LineWordLine from "@/components/LineWordLine";
 
   export default {
     name: "Branch",
-    components: {},
-    computed: {
-
-      //获取起始时间信息
-      getstart() {
-        return this.$store.state.time.starttime
-      },
-      //获取终止时间信息
-      getend() {
-        return this.$store.state.time.endtime
-      }
-    },
-    created() {
-      //读入本地的json文件
-      console.log(this);
-      this.geApitData();
-      //在页面加载时读取sessionStorage里的状态信息
-      if (sessionStorage.getItem("store")) {
-        this.$store.replaceState(Object.assign({}, this.$store.state, JSON.parse(sessionStorage.getItem("store"))))
-      }
-
-      //在页面刷新时将vuex里的信息保存到sessionStorage里
-      window.addEventListener("beforeunload", () => {
-        sessionStorage.setItem("store", JSON.stringify(this.$store.state))
-      })
+    components: {
+      LineWordLine
     },
     data() {
       return {
-        modal:false,
-        imgUrl:require("@/assets/plumeria.jpg"),
-        text: this.btnData.text, //按钮中的文字
+        imgUpLoad: {
+          domain: 'https://upload.qiniup.com',
+          postData: {
+            key: null,
+            token: '',
+          },
+          dialogImageUrl: '',
+          qiniuaddr: 'http://q9stlq87q.bkt.clouddn.com',
+          dialogVisible: false,
+          showModal: false,
+        },
+        editForm: {
+          recordText: '',
+        },
+
+        modal: false,
+        axisTypeName: this.btnData.text, //选择的时间轴类型
         state: false,
         editstate: false,//是否处于编辑状态
         editbtn: '',//编辑按钮显示
@@ -127,16 +146,97 @@
           resource: '',
           desc: ''
         },
-        formLabelWidth: '120px',
         //json文档传入的总列表，展示在时间轴上
         datalist: [],
         //添加列表总列表(datalist用时间筛选后剩下的)
         dataoptions: [],
         //根据类别划分的添加列表
-        dataadd: []
+        postListLink: []
       }
     },
+    props: {
+      btnData: {
+        types: Array,
+        default() {
+          return {
+            text: '确认',
+          }
+        }
+      }
+    },
+    computed: {
+      //获取起始时间信息
+      getstart() {
+        return this.$store.state.time.starttime
+      },
+      //获取终止时间信息
+      getend() {
+        return this.$store.state.time.endtime
+      }
+    },
+    created() {
+      this.init();
+      this.getToken();
+      this.getPostList();
+      // this.geApitData();
+      //在页面加载时读取sessionStorage里的状态信息
+      if (sessionStorage.getItem("store")) {
+        this.$store.replaceState(Object.assign({}, this.$store.state, JSON.parse(sessionStorage.getItem("store"))))
+      }
+
+      //在页面刷新时将vuex里的信息保存到sessionStorage里
+      window.addEventListener("beforeunload", () => {
+        sessionStorage.setItem("store", JSON.stringify(this.$store.state))
+      })
+    },
     methods: {
+      /**
+       * @description 初始化获得列表
+       */
+      init() {
+        let data = new FormData();
+        data.append('userId', sessionStorage.getItem("ID"));
+        data.append('timeAxisType', this.axisTypeName)
+        this.axios.post(`${this.GLOBAL.apiUrl}/getRecordListByUserIdAndType`, data)
+          .then((response) => {
+            console.log(response)
+            this.datalist = response.data.recordList;
+          })
+      },
+      /**
+       * @description 获取七牛云token
+       */
+      getToken() {
+        this.axios.get('http://zzzia.net:8080/qiniu/', {
+          params: {
+            accessKey: "RwC4uI5jbCfE3IUuokEP7paXOQQA14mcD87MQ6ml",
+            secretKey: "o6cPmo7R-QUW4113k1MNNiNjWHOyznj-FERyP_xa",
+            bucket: "dailydata"
+          }
+        }).then((response) => {
+          this.imgUpLoad.postData.token = response.data.token
+          // this.postData.key = response.data.key
+          // console.log(this.imgUpLoad.postData)
+        })
+      },
+      /**
+       * @description 获得当前用户的所有帖子
+       */
+      getPostList() {
+        this.axios.get(`${this.GLOBAL.apiUrl}/userPostAndRecordList`, {
+          params: {
+            userId:sessionStorage.getItem("ID")
+          }
+        }).then((response) => {
+          let postList = response.data.userPostList
+          for(let index in postList) {
+            this.postListLink.push(postList[index].postCreateTime.split('.')[0]);
+          }
+          // console.log(this.postListLink)
+        }).catch((error) =>{
+          console.log(error)
+        })
+      },
       geApitData() {
         // this.axios({
         //   method: "get",
@@ -173,7 +273,7 @@
         this.dialogFormVisible = true;
         var i;
         for (i = 0; i < this.dataoptions.length; i++) {
-          if ((this.dataoptions[i].type === this.text) || this.text === '') {
+          if ((this.dataoptions[i].type === this.axisTypeName)) {
             this.dataadd.length = 0;
             this.dataadd.splice(0, 0, this.dataoptions[i]);
           }
@@ -214,18 +314,38 @@
         var item = this.datalist.splice(index, 1);
         //添加到添加列表中
         this.dataoptions.splice(0, 0, item[0]);
-
       },
-
-    },
-    props: {
-      btnData: {
-        types: Array,
-        default() {
-          return {
-            text: '确认',
-          }
-        }
+      /**
+       * @description 插入新的动态
+       */
+      insertRecord() {
+        this.axios.post(`${this.GLOBAL.apiUrl}/insertRecord`,{
+          recordImg:this.imgUpLoad.dialogImageUrl,
+          recordContent:this.editForm.recordText,
+          timeAxisType:this.btnData.text,
+          userId:sessionStorage.getItem("ID")
+        }).then((response) =>{
+          console.log(response)
+        })
+      },
+      //el-uploader 图片上传处理函数
+      beforeImgUpload(file) {
+        this.imgUpLoad.postData.key = `upload_pic_${file.name}`
+      },
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePictureCardPreview(file) {
+        // console.log(file)
+        this.imgUpLoad.dialogImageUrl = file.url;
+        this.imgUpLoad.dialogVisible = true;
+      },
+      handlePictureSuccess(res) {
+        this.imgUpLoad.dialogImageUrl = `${this.imgUpLoad.qiniuaddr}/${res.key}`
+        console.log(this.imgUpLoad.dialogImageUrl)
+      },
+      handleError(res) {
+        console.log(res)
       }
     },
     watch: {
@@ -264,6 +384,9 @@
 
 
 <style lang="less" scoped>
+    .header {
+        box-shadow: 0 0 5px #7f7f7f;
+    }
 
     html * {
         -webkit-font-smoothing: antialiased;
@@ -275,13 +398,6 @@
         -moz-box-sizing: border-box;
         box-sizing: border-box;
     }
-
-    body {
-        font-size: 100%;
-        color: #7f8c97;
-        background-color: #e9f0f5;
-    }
-
 
     img {
         max-width: 100%;
@@ -539,7 +655,7 @@
             width: 700px;
             border: 1px solid black;
             border-radius: 0.25em;
-            margin:72px auto 0 auto;
+            margin: 72px auto 0 auto;
         }
     }
 
@@ -583,9 +699,5 @@
             -moz-animation: cd-bounce-2-inverse 0.6s;
             animation: cd-bounce-2-inverse 0.6s;
         }
-    }
-
-    .header {
-
     }
 </style>

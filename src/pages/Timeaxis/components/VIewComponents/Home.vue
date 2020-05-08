@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Branch :btnData="{text: ''}"></Branch>
+    <Branch :btnData="{text: '全部'}"></Branch>
   </div>
 </template>
 
