@@ -43,7 +43,7 @@
                         </el-input>
                     </el-form-item>
                     <div>
-                        <button @click="editInfo" class="CommonButton">提交</button>
+                        <button @click.prevent="editInfo" class="CommonButton">提交</button>
                     </div>
                 </el-form>
             </div>

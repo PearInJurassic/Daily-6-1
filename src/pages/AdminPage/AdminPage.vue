@@ -24,7 +24,7 @@
                             <el-dropdown-item>冻结</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
-                    <span>王小虎</span>
+                    <span>管理员</span>
                 </el-header>
 
                 <el-main>
@@ -34,6 +34,8 @@
                         <el-table-column label="是否匿名" prop="anonym" width="140">
                         </el-table-column>
                         <el-table-column label="地区信息" prop="areaId" width="140">
+                        </el-table-column>
+                        <el-table-column label="被举报次数" prop="tipoffNum" width="140">
                         </el-table-column>
                         <el-table-column label="转发次数" prop="forwardNum">
                         </el-table-column>
@@ -84,6 +86,7 @@
         // 请求后端数据,查询数据源
         this.$axios.get(`${this.GLOBAL.apiUrl}/getrequireauditpost`)
           .then((response) => {
+            console.log(response)
             let data = response.data.postList;
             for (let index in data) {
               this.reportTableData.push(data[index])
@@ -95,11 +98,21 @@
         this.selectUser = row.userId,
         this.dialogVisible=true
       },
+      /**
+       * @description 冻结用户
+       */
       confirmFrezze() {
+        // let data = new FormData();
+        // data.append("userId",this.selectUser)
         this.$axios.post(`${this.GLOBAL.apiUrl}/freeze`,{
           userId:this.selectUser
-        }).then((response) => {
-          console.log(response)
+        })
+          .then(() => {
+            // console.log(response)
+          this.$message({
+            message:"冻结成功",
+            type:'success',
+          })
         })
         this.dialogVisible = false
       },

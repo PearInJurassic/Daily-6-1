@@ -36,13 +36,11 @@
        * @description 取消关注
        */
       cancelFollow() {
+        let data = new FormData();
+        data.append('userId',sessionStorage.getItem("ID"));
+        data.append('followId',this.followInfo.userId,)
         // let user = row.userId
-        this.axios.get(`${this.GLOBAL}/cancelFollow`, {
-          params: {
-            userId: sessionStorage.getItem("ID"),
-            followId: this.followInfo.userId,
-          }
-        })
+        this.axios.post(`${this.GLOBAL.apiUrl}/cancelFollow`, data)
           .then((response) => {
             console.log(response)
           })

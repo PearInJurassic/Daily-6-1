@@ -57,7 +57,6 @@
         required: true,
       },
       likeInfo: {
-        type:Number,
         required: true,
       }
     },

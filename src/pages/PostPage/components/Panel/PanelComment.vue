@@ -14,12 +14,22 @@
             </div>
         </div>
         <div class="Comment">
-            <component :is="PostCommentAll"
-                       :key="index"
-                       :text="item[0].commentContent"
-                       v-for="(item,index) in commentNum">
-            </component>
-            <div style="width:280px;height:30px;background-color: #3a8ee6"></div>
+            <p v-if="commentNum.length==0">暂无评论，我来发表第一篇评论！</p>
+            <el-collapse @change="change" accordion v-model="activeName">
+                <el-collapse-item :key="index"
+                                  :name="item[0].commentId"
+                                  v-for="(item,index) in commentNum">
+                    <template slot="title">
+                        <div class="CommentPanel">
+                            <PostCommentAll :headComment="item[0]"></PostCommentAll>
+                        </div>
+                    </template>
+                    <PostCommentChild :headComment="item[index]"
+                                      :key="index" v-for="(i,index) in item">
+                    </PostCommentChild>
+                </el-collapse-item>
+            </el-collapse>
+            <div style="width:280px;height:30px;background-color: #3c3d3e"></div>
         </div>
         <div class="IconGroup" style="display: flex">
             <div class="Icon">
@@ -38,8 +48,9 @@
         </div>
         <div class="CommentAdder">
             <el-input
-                    :row="2"
+                    maxlength="130"
                     placehoder="请输入评论"
+                    show-word-limit
                     type="textarea"
                     v-model="commentText">
             </el-input>
@@ -50,11 +61,14 @@
 
 <script>
   import PostCommentAll from "@/pages/PostPage/components/Post/PostCommentAll";
+  import PostCommentChild from "@/pages/PostPage/components/Post/PostCommentChild";
 
   export default {
     name: "PanelComment",
     data() {
       return {
+        // replyTarget: `"@":`,
+        activeName: 1,
         headUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
         reportUrl: require("@/assets/Post/report.png"),
         like: this.isLike,
@@ -63,7 +77,7 @@
         commentNum: [],
         commentText: '',
         PostCommentAll: "PostCommentAll",
-        followUrl: require("@/assets/Post/follow.png")
+        followUrl: require("@/assets/Post/follow.png"),
       }
     },
     props: {
@@ -80,10 +94,14 @@
     computed: {
       likeUrl() {
         return require(`@/assets/Post/${this.likeImgArr[this.like]}`);
-      }
+      },
+      // commentContentAll() {
+      //   return this.replyTarget + this.commentText
+      // }
     },
     components: {
-      PostCommentAll
+      PostCommentAll,
+      PostCommentChild
     },
     methods: {
       /**
@@ -117,17 +135,21 @@
        * @description 发布评论
        */
       addComment() {
+        let pattern = /^("@)(\d)+/;
+        let r = this.commentText.match(pattern);
+        let replyCommentId = (r == null) ? 0 : r[0].split('@')[1];
         this.axios.post(`${this.GLOBAL.apiUrl}/comment/createcomment`, {
           "commentContent": this.commentText,
           "postId": this.item.postId,
           "userId": sessionStorage.getItem("ID"),
           "anonym": 0,
-          "replyCommentId": 0
+          replyCommentId
         })
           .then((response) => {
+            // this.commentNum.push(response.data.newComment);
             console.log(response)
           })
-        this.commentNum.push(this.commentText);
+        // this.commentNum.push(this.commentText);
         this.commentText = ''
       },
       /**
@@ -145,13 +167,13 @@
                 postId: this.item.postId,
               }
             })
-              .then((response) => {
-                console.log(response)
+              .then(() => {
+                this.$message({
+                  type: 'success',
+                  message: '举报成功！'
+                });
+                // console.log(response)
               })
-            this.$message({
-              type: 'success',
-              message: '举报成功！'
-            });
           })
           .catch(() => {
             this.$message({
@@ -169,8 +191,11 @@
             userId: sessionStorage.getItem('ID'),
             followId: this.postInfo.userId,
           }
-        }).then((response) => {
-          console.log(response)
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '关注成功！'
+          });
         })
       },
       /**
@@ -182,6 +207,7 @@
             postId: this.item.postId
           }
         }).then((response) => {
+          console.log(response)
           let commentList = response.data.commentList;
           for (let index in commentList) {
             this.commentNum.push(commentList[index])
@@ -200,26 +226,40 @@
         }).then((response) => {
           this.likeNums = response.data.likeNum;
         })
+      },
+      /**
+       * @description 点击某栏后的操作
+       * @param activeNum 点击某栏后获得的栏号，此处是评论的id
+       */
+      change(activeNum) {
+        this.commentText = `"@${activeNum}":`
       }
     },
     created() {
       //获取评论列表。
       this.getComments();
       this.getLikeNums();
-    }
+    },
+
   }
 </script>
 
 <style lang="less" scoped>
     @import "~@/CSS/Common.less";
 
+    p {
+        margin: 15px auto;
+    }
+
     .PosterInfo {
         display: flex;
         justify-content: space-between;
     }
+
     .LikeNum {
         color: #7f7f7f;
     }
+
     .Icon {
         background-color: white;
     }
@@ -259,4 +299,23 @@
         margin: 2px 0 -30px 0;
     }
 
+    .CommentPanel {
+        width: 100%;
+    }
+</style>
+
+<style lang="less">
+    .Comment {
+        .el-collapse-item__header {
+            display: flex;
+            min-height: 65px;
+            max-height: 105px;
+            line-height: 15px;
+            background-color: whitesmoke;
+        }
+    }
+
+    .el-icon-arrow-right {
+
+    }
 </style>

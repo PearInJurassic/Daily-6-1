@@ -34,7 +34,6 @@
        * @description 初始化渲染帖子列表。
        */
       init() {
-
         // let url=location.search;//获取url
         // let userID = url.split('=')[1];
         // sessionStorage.setItem('ID',userID);

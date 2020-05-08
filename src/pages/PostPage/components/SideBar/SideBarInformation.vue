@@ -1,11 +1,11 @@
 <template>
-    <div class="Information" :style="anonyStyle">
+    <div :style="anonyStyle" class="Information">
         <div class="InformationMain">
             <div class="Avatar">
                 <el-avatar :size="52" :src="userAvatar"></el-avatar>
             </div>
             <div>
-                <p>{{NiceName}}</p>
+                <p>{{userNickName}}</p>
             </div>
         </div>
         <div class="InformationButton">
@@ -31,8 +31,6 @@
     name: "SideBarInformation",
     data() {
       return {
-        NiceName: this.userNickName,
-        headUrl: this.userAvatar,
         isAnonymous: 0,
         anonymousImgAdd: ['Anonymous.png', 'Anonymous-fill.png'],
         anonyStyle: {
@@ -40,12 +38,12 @@
         },
       }
     },
-    props:{
-      userAvatar:{
-        required:true
+    props: {
+      userAvatar: {
+        required: true
       },
-      userNickName:{
-        required:true
+      userNickName: {
+        required: true
       }
     },
     computed: {
@@ -68,7 +66,7 @@
         this.isAnonymous ? this.isAnonymous = 0 : this.isAnonymous = 1;
         if (this.isAnonymous) this.anonyStyle.backgroundColor = "#2c2d2c";
         else this.anonyStyle.backgroundColor = "white";
-        if(this.isAnonymous) {
+        if (this.isAnonymous) {
           this.$notify({
             title: '提示',
             message: '您已经进入匿名状态',

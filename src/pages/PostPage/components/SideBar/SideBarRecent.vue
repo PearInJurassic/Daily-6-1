@@ -1,12 +1,17 @@
 <template>
     <div class="SideBarRecent">
-        <LineWordLine>我的最近动态</LineWordLine>
-        <component :is="RecentContent"
-                   :key="index"
-                   :recentInfo="recentNum[index]"
-                   :avatar="avatarUrl"
-                   v-for="(i,index) in recentNum">
-        </component>
+
+            <LineWordLine>我的最近动态</LineWordLine>
+            <component :avatar="avatarUrl"
+                       :is="RecentContent"
+                       :key="index"
+                       :recentInfo="recentNum[index]"
+                       v-for="(i,index) in recentNum">
+            </component>
+        <el-tooltip placement="top" v-if="recentNum.length==0">
+            <div slot="content">啊哦！<br/>最近没有发布过动态哦<br/>点击新增帖子分享你最近的生活吧！</div>
+            <el-button style="width: 100%;border-width: 0">最近没有动态</el-button>
+        </el-tooltip>
     </div>
 </template>
 
@@ -18,14 +23,15 @@
     name: "SideBarRecent",
     data() {
       return {
-        avatarUrl:this.userAvatar,
+        avatarUrl: this.userAvatar,
         RecentContent: "PostRecent",
-        recentNum: []
+        recentNum: [],
+        tips: true,
       }
     },
-    props:{
-      userAvatar:{
-        required:true,
+    props: {
+      userAvatar: {
+        required: true,
       }
     },
     components: {
@@ -33,6 +39,9 @@
       LineWordLine
     },
     created() {
+      if (this.recentNum.length == 0) {
+        this.tips = true
+      }
       this.axios.get(`${this.GLOBAL.apiUrl}/listpost`, {
         params: {
           userId: sessionStorage.getItem('ID'),

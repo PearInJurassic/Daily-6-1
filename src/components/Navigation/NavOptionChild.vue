@@ -44,7 +44,7 @@
     },
     methods: {
       change(index) {
-        console.log(index)
+        // console.log(index)
         this.$router.push(this.pageUrl[index]);
       }
     }

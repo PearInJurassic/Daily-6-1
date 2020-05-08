@@ -4,6 +4,9 @@
             <el-tabs v-model="activeName">
                 <el-tab-pane label="帖子" name="first">
                     <div class="ItemContent">
+                        <div class="tip" v-if="isPostListNull">
+                            <img :src="tipUrl" width="975px">
+                        </div>
                         <PersonItems :key="index"
                                      :postItem="userPostList[index]"
                                      v-for="(item,index) in userPostList">
@@ -17,6 +20,9 @@
                 </el-tab-pane>
                 <slot name="record">
                     <el-tab-pane label="动态" name="second">
+                        <div class="tip" v-if="isRecordListNull">
+                            <img :src="tipUrl" width="975px">
+                        </div>
                         <div class="ItemContent">
                             <PersonItems :key="index"
                                          :recordItem="userRecordList[index]"
@@ -40,7 +46,10 @@
     name: "ContentPersonTab",
     data() {
       return {
+        tipUrl:require("@/assets/Person/tip.png"),
         activeName: 'first',
+        isPostListNull:true,
+        isRecordListNull:true,
         userPostList: [],
         userRecordList: []
       }
@@ -66,13 +75,15 @@
         .then((response) => {
           let postList = response.data.userPostList
           let recordList = response.data.userRecordList
-          console.log(response)
+          // console.log(response)
           for (let index in postList) {
             this.userPostList.push(postList[index])
           }
           for (let index in recordList) {
             this.userRecordList.push(recordList[index])
           }
+          if(postList.length) this.isPostListNull = false;
+          if(recordList.length) this.isRecordListNull = false;
           // console.log(this.userPostList)
         })
     }
@@ -81,7 +92,9 @@
 
 <style lang="less" scoped>
     @import "~@/CSS/Common.less";
-
+    .tip {
+        margin-top: 16%;
+    }
     .TabContent {
         margin-top: 50px;
         .setSize(975px, 600px);

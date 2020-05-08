@@ -24,7 +24,7 @@ module.exports = {
       "BMap": "BMap"
     }
   },
-  devServer:{
-    proxy:'http://localhost:8080'
-  }
+  // devServer:{
+  //   proxy:'http://localhost:8080'
+  // }
 }

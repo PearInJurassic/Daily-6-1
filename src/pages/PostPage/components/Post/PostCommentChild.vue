@@ -6,7 +6,7 @@
                     <el-avatar :src="user.userImg"></el-avatar>
                 </div>
                 <div class="CommentText">
-                    <p>{{shortText}}</p>
+                    <p>{{headComment.commentContent}}</p>
                 </div>
             </div>
         </div>
@@ -15,7 +15,7 @@
 
 <script>
   export default {
-    name: "PostCommentAll",
+    name: "PostCommentChild",
     data() {
       return {
         user:{
@@ -29,16 +29,14 @@
         required: true
       }
     },
-    computed: {
-      shortText() {
-        if (this.headComment.commentContent.length > 45)
-          return this.headComment.commentContent.slice(0, 45) + "..."
-        else return this.headComment.commentContent
-      }
+    methods:{
+      change(activeNames) {
+        this.$emit('selecHeadComment',activeNames)
+      },
     },
     created() {
       let userId=this.headComment.userId;
-        // console.log(this.headComment.userId)
+      // console.log(this.headComment.userId)
       this.axios.get(`${this.GLOBAL.apiUrl}/getUserInfo`,{
         params:{
           userId
@@ -60,7 +58,7 @@
     .Comment {
         display: flex;
         justify-content: left;
-        .setMaxSize(280px,70px)
+
     }
     .CommentText {
         width: calc(100% - 50px);
