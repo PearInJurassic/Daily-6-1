@@ -67,6 +67,7 @@
       }
     },
     created() {
+      let l = new Set();
       let userId = this.isOthers ? sessionStorage.getItem('viewId') : sessionStorage.getItem('ID')
       this.axios.get(`${this.GLOBAL.apiUrl}/getUserFollowInfo`, {
         params: {
@@ -77,10 +78,12 @@
           let list = response.data.userFollowInfo
           for (let index in list) {
             this.followList.push(list[index])
+            l.add(list[index])
           }
           // console.log(list)
         })
-      // console.log(this.followList)
+      console.log(this.followList)
+      console.log(l)
     }
   }
 </script>

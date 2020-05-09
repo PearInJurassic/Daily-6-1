@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div class="Item">
+        <div>
+        <div class="Item" >
 <!--            <slot name="post">-->
 <!--            <el-image :src="postItem.postImg" fit="cover" style="width: 275px;height: 275px">-->
 <!--            </el-image>-->
@@ -13,6 +14,7 @@
 
             </slot>
         </div>
+        </div>
     </div>
 </template>
 
@@ -21,14 +23,25 @@
     name: "PersonItems",
     data() {
       return{
-        personPostList:[],
-        personTimeList:[],
-        imgUrl:require("@/assets/plumeria.jpg"),
+        detailShowState:false,
       }
     },
     props:{
       postItem:{},
       recordItem:{},
+    },
+    methods:{
+
+    },
+    created() {
+      this.axios.get(`${this.GLOBAL.apiUrl}/getUserInfo`,{
+        params:{
+          userId:sessionStorage.getItem("ID")
+        }
+      }).then((response) => {
+        this.userInfo=response.data.userInfo.user;
+        // console.log(response)
+      })
     }
   }
 </script>

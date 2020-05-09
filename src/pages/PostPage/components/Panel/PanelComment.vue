@@ -144,6 +144,7 @@
             }
           })
             .then(() => {
+              this.likeNums++;
               this.$emit("childRemoveLike")
             })
         }

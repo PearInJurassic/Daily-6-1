@@ -1,6 +1,12 @@
 <template>
     <div>
         <div class="TabContent">
+            <PostDetail :itemInfo="selectPostItem"
+                        :isLike="1"
+                        :pInfo="userInfo"
+                        v-if="detailShowState"
+                        @detailState="detailShowState=false">
+            </PostDetail>
             <el-tabs v-model="activeName">
                 <el-tab-pane label="帖子" name="first">
                     <div class="ItemContent">
@@ -9,10 +15,12 @@
                         </div>
                         <PersonItems :key="index"
                                      :postItem="userPostList[index]"
-                                     v-for="(item,index) in userPostList">
+                                     v-for="(item,index) in userPostList"
+                                     >
                             <template>
                                 <el-image :src="userPostList[index].postImg" fit="cover"
-                                          style="width: 275px;height: 275px">
+                                          style="width: 275px;height: 275px"
+                                          @click="postDetail(userPostList[index])">
                                 </el-image>
                             </template>
                         </PersonItems>
@@ -41,11 +49,14 @@
 
 <script>
   import PersonItems from "@/pages/PostPage/components/Person/PersonItems";
-
+import PostDetail from "@/pages/PostPage/components/Post/PostDetail";
   export default {
     name: "ContentPersonTab",
     data() {
       return {
+        userInfo:{},
+        selectPostItem:{},
+        detailShowState:true,
         tipUrl:require("@/assets/Person/tip.png"),
         activeName: 'first',
         isPostListNull:true,
@@ -58,9 +69,15 @@
       isOthers: {}
     },
     components: {
-      PersonItems
+      PersonItems,
+      PostDetail
     },
-    methods: {},
+    methods: {
+      postDetail(selectItem) {
+        this.detailShowState=true;
+        this.selectPostItem=selectItem;
+      },
+    },
     created() {
       let userId = this.isOthers
         ?
