@@ -64,6 +64,7 @@
       },
       //点击确定按钮后更新vuex的state(起始和中止日期)的值
       postdate(){
+        console.log(this.value2)
         this.$store.commit('setDate',this.value2);
         alert("更新成功！");
       }

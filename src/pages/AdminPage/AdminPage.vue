@@ -162,7 +162,7 @@
         this.detailDialogVisible=false;
       },
       /**
-       * 冻结用户染色
+       * @description 冻结用户列被染色
        */
       tableFrozeClass({row,rowIndex}) {
         console.log(row) //删除会认为row没有被使用过而报错.

@@ -2,52 +2,67 @@
     <div class="Branch">
         <div class="header">
             <h1 style="display:inline-block">{{axisTypeName}}时间轴</h1>
-            <el-button @click="addpage" id="btn">添加</el-button>
+            <el-button @click="dialogFormVisible = true" id="btn">添加</el-button>
             <el-button :style="{ display: editbtn }" id="btn2" v-on:click="setVisible">编辑</el-button>
             <el-button :style="{ display: editcancel }" id="btn3" v-on:click="setVisible">取消编辑</el-button>
         </div>
         <section class="cd-container" id="cd-timeline">
-
-            <div :key="i" id="block1" v-for="(data,i) in datalist">
-                <div class="cd-timeline-block" v-if=" (i%2===0 && (data.type===axisTypeName || axisTypeName===''))">
+            <div :key="i" id="block1" v-for="(recordData,i) in datalist">
+                <div class="cd-timeline-block"
+                     v-if=" (i%2===0 && (recordData.record.timeAxisType===axisTypeName || axisTypeName===''))">
                     <div class="cd-timeline-img cd-picture">
-                        <img alt="Picture" src="@/assets/NavBar/TimeLine.png">
+                        <img alt="动态图片" src="@/assets/NavBar/TimeLine.png">
                     </div>
 
                     <div class="cd-timeline-content" style="float:left">
-
                         <div class="insertmap">
-                            <p style="position:absolute;left:5px;top:5px">{{data.date}}</p>
-                            <img :src=data.url alt="Picture" style="position: relative;top:20px">
+                            <p style="position:absolute;left:5px;top:5px">
+                                {{recordData.record.recordCreateTime}}
+                            </p>
+                            <el-image :src=recordData.record.recordImg alt="Picture"
+                                      fit="scale-down"
+                                      style="width: 150px;height:150px;top:20px">
+                            </el-image>
                         </div>
                         <div class="contentpage">
-                            <h2 style="display:inline;position:absolute;left:280px;top:40px">{{data.title}}</h2>
-                            <el-button :style="{ display: visibleDelete }" @click="fun(i)" circle class="DeleteBtn"
+                            <h2 style="display:inline;position:absolute;left:280px;top:40px">
+                                {{recordData.record.recordContent}}
+                            </h2>
+                            <el-button :style="{ display: visibleDelete }" @click="deleteRecord(i)" circle
+                                       class="DeleteBtn"
                                        icon="el-icon-delete" type="danger"></el-button>
-                            <a class="cd-read-more" href="http://www.helloweba.com/view-blog-285.html"
-                               style="position:absolute;left:240px;bottom:50px"
-                               target="_blank">查看全文</a>
+                            <el-button @click="postDetail(recordData.record.postId)"
+                                       style="position:absolute;left:70%;bottom:50px">
+                                查看原帖
+                            </el-button>
                         </div>
                     </div>
                 </div>
-
-                <div class="cd-timeline-block" v-if="(i%2!==0 && (data.type===axisTypeName || axisTypeName===''))">
+                <div class="cd-timeline-block"
+                     v-if="(i%2!==0 && (recordData.record.timeAxisType===axisTypeName || axisTypeName===''))">
                     <div class="cd-timeline-img cd-picture">
                         <img alt="Picture" src="@/assets/NavBar/TimeLine.png">
                     </div>
-
                     <div class="cd-timeline-content" style="float:right">
                         <div class="insertmap">
-                            <p style="position:absolute;left:5px;top:5px">{{data.date}}</p>
-                            <img :src=data.url alt="Picture" style="position: relative;top:20px">
+                            <p style="position:absolute;left:5px;top:5px">
+                                {{recordData.record.recordCreateTime}}
+                            </p>
+                            <el-image :src=recordData.record.recordImg alt="Picture"
+                                      fit="scale-down"
+                                      style="width: 150px;height:150px;top:20px"></el-image>
                         </div>
                         <div class="contentpage">
-                            <h2 style="display:inline;position:absolute;left:280px;top:40px">{{data.title}}</h2>
-                            <el-button :style="{ display: visibleDelete }" @click="fun(i)" circle class="DeleteBtn"
+                            <h2 style="display:inline;position:absolute;left:280px;top:40px">
+                                {{recordData.record.recordContent}}
+                            </h2>
+                            <el-button :style="{ display: visibleDelete }" @click="deleteRecord(i)" circle
+                                       class="DeleteBtn"
                                        icon="el-icon-delete" type="danger"></el-button>
-                            <a class="cd-read-more" href="http://www.helloweba.com/view-blog-285.html"
-                               style="position:absolute;left:240px;bottom:50px"
-                               target="_blank">查看全文</a>
+                            <el-button @click="postDetail(recordData.record.postId)"
+                                       style="position:absolute;left:70%;bottom:50px">
+                                查看原帖
+                            </el-button>
                         </div>
                     </div>
 
@@ -55,7 +70,13 @@
             </div>
 
         </section>
-
+        <!--        关联贴的详情-->
+        <PostDetail :isLike="1"
+                    :itemInfo="selectPostInfo"
+                    :pInfo="userInfo"
+                    @detailState="detailDialogVisible = false"
+                    v-if="detailDialogVisible"></PostDetail>
+        <!--        新增动态面板-->
         <el-dialog :modal-append-to-body="modal" :visible.sync="dialogFormVisible" title="动态添加" width="30%">
             <div class="logo">
                 <img src="@/assets/NavBar/logo.png">
@@ -63,12 +84,12 @@
             <div class="PicturePanel">
                 <el-upload
                         :action="imgUpLoad.domain"
+                        :before-upload="beforeImgUpload"
                         :data="imgUpLoad.postData"
+                        :on-error="handleError"
                         :on-preview="handlePictureCardPreview"
                         :on-remove="handleRemove"
                         :on-success="handlePictureSuccess"
-                        :on-error="handleError"
-                        :before-upload="beforeImgUpload"
                         list-type="picture-card">
                     <i class="el-icon-plus"></i>
                 </el-upload>
@@ -88,8 +109,8 @@
                         </el-input>
                     </el-form-item>
                     <el-form-item label="关联帖子（按时间）">
-                        <el-select placeholder="请选择你要进行关联的帖子" v-model="form.region" value-key="id">
-                            <el-option :key="item.id" :label="item.title" :value="item"
+                        <el-select placeholder="请选择你要进行关联的帖子" v-model="editForm.postIdLinkTo" value-key="id">
+                            <el-option :key="item.postId" :label="item.postCreateTime" :value="item.postId"
                                        v-for="item in postListLink"></el-option>
                         </el-select>
                     </el-form-item>
@@ -102,11 +123,13 @@
 
 <script>
   import LineWordLine from "@/components/LineWordLine";
+  import PostDetail from "@/pages/PostPage/components/Post/PostDetail";
 
   export default {
     name: "Branch",
     components: {
-      LineWordLine
+      LineWordLine,
+      PostDetail,
     },
     data() {
       return {
@@ -123,10 +146,13 @@
         },
         editForm: {
           recordText: '',
+          postIdLinkTo: '',
         },
-
+        userInfo: {},
+        selectPostInfo: {},
         modal: false,
         axisTypeName: this.btnData.text, //选择的时间轴类型
+        detailDialogVisible: false,//详情页是否可见
         state: false,
         editstate: false,//是否处于编辑状态
         editbtn: '',//编辑按钮显示
@@ -136,21 +162,21 @@
         dialogFormVisible: false,
         start: '',
         end: '',
-        form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        },
-        //json文档传入的总列表，展示在时间轴上
+        // form: {
+        //   name: '',
+        //   region: '',
+        //   date1: '',
+        //   date2: '',
+        //   delivery: false,
+        //   type: [],
+        //   resource: '',
+        //   desc: ''
+        // },
+        //总列表，展示在时间轴上
         datalist: [],
         //添加列表总列表(datalist用时间筛选后剩下的)
         dataoptions: [],
-        //根据类别划分的添加列表
+        //可供连接的用户已发贴列表
         postListLink: []
       }
     },
@@ -178,20 +204,21 @@
       this.init();
       this.getToken();
       this.getPostList();
-      // this.geApitData();
-      //在页面加载时读取sessionStorage里的状态信息
-      if (sessionStorage.getItem("store")) {
-        this.$store.replaceState(Object.assign({}, this.$store.state, JSON.parse(sessionStorage.getItem("store"))))
-      }
+      this.getUserInfo();
 
-      //在页面刷新时将vuex里的信息保存到sessionStorage里
-      window.addEventListener("beforeunload", () => {
-        sessionStorage.setItem("store", JSON.stringify(this.$store.state))
-      })
+      // //在页面加载时读取sessionStorage里的状态信息
+      // if (sessionStorage.getItem("store")) {
+      //   this.$store.replaceState(Object.assign({}, this.$store.state, JSON.parse(sessionStorage.getItem("store"))))
+      // }
+      //
+      // //在页面刷新时将vuex里的信息保存到sessionStorage里
+      // window.addEventListener("beforeunload", () => {
+      //   sessionStorage.setItem("store", JSON.stringify(this.$store.state))
+      // })
     },
     methods: {
       /**
-       * @description 初始化获得列表
+       * @description 初始化获得动态列表
        */
       init() {
         let data = new FormData();
@@ -199,8 +226,8 @@
         data.append('timeAxisType', this.axisTypeName)
         this.axios.post(`${this.GLOBAL.apiUrl}/getRecordListByUserIdAndType`, data)
           .then((response) => {
-            console.log(response)
             this.datalist = response.data.recordList;
+            // console.log(this.datalist)
           })
       },
       /**
@@ -220,64 +247,57 @@
         })
       },
       /**
-       * @description 获得当前用户的所有帖子
+       * @description 获得当前用户的所有帖子用以关联动态
        */
       getPostList() {
         this.axios.get(`${this.GLOBAL.apiUrl}/userPostAndRecordList`, {
           params: {
-            userId:sessionStorage.getItem("ID")
+            userId: sessionStorage.getItem("ID")
           }
         }).then((response) => {
           let postList = response.data.userPostList
-          for(let index in postList) {
-            this.postListLink.push(postList[index].postCreateTime.split('.')[0]);
+          for (let index in postList) {
+            this.postListLink.push(postList[index]);
           }
           // console.log(this.postListLink)
-        }).catch((error) =>{
+        }).catch((error) => {
           console.log(error)
         })
       },
-      geApitData() {
-        // this.axios({
-        //   method: "get",
-        //   url: "data/index"
-        // })
-        //   .then((response) => {
-        //     console.log(response)
-        //
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
-        //json地址
-        var url = "/test.json";
-        var _this = this;
-        this.axios.get(url)
-          .then(function (result) {
-            _this.datalist = result.data.datalist;
+      /**
+       * @description 查看原帖
+       */
+      postDetail(postIdLinkedTo) {
+        if (postIdLinkedTo == null) {
+          this.$alert('这条动态没有关联信息', '发生错误', {
+            confirmButtonText: '确定',
+          });
+        } else {
+          let data = new FormData;
+          data.append("postId", postIdLinkedTo)
+          this.axios.get(`${this.GLOBAL.apiUrl}/getpostbypostid`, {
+            params: {
+              postId: postIdLinkedTo
+            }
           })
-        this.sort();
-      },
-      //点击添加按钮后添加动态
-      add(item) {
-        let obj1 = {id: item.id, title: item.title, msg: item.msg, date: item.date, type: item.type, url: item.url};
-        this.dialogFormVisible = false;
-        //添加到时间轴列表
-        this.datalist.splice(0, 0, obj1);
-        this.sort();
-        //从选择列表中删去
-        this.dataoptions.splice(item.id, 1);
-      },
-      //点击添加按钮
-      addpage() {
-        this.dialogFormVisible = true;
-        var i;
-        for (i = 0; i < this.dataoptions.length; i++) {
-          if ((this.dataoptions[i].type === this.axisTypeName)) {
-            this.dataadd.length = 0;
-            this.dataadd.splice(0, 0, this.dataoptions[i]);
-          }
+            .then((response) => {
+              this.selectPostInfo = response.data.post;
+            })
+          this.detailDialogVisible = true;
         }
+      },
+      /**
+       * @description 获取自己的信息
+       */
+      getUserInfo() {
+        this.axios.get(`${this.GLOBAL.apiUrl}/getUserInfo`, {
+          params: {
+            userId: sessionStorage.getItem("ID")
+          }
+        }).then((response) => {
+          this.userInfo = response.data.userInfo.user;
+          // console.log(response)
+        })
       },
       sort() {                     // 排序
         this.datalist.sort(this.compare("date"));
@@ -290,12 +310,14 @@
           return new Date(val1.replace(/-/, '/')) - new Date(val2.replace(/-/, '/'));
         }
       },
-      //比较ab两个日期的大小,a比b大则返回值大于0
-      datecompare(a, b) {
+      /**
+       * @description 比较日期的大小
+       */
+      compareDate(a, b) {
+        console.log(a,b)
         return new Date(a.replace(/-/, '/')) - new Date(b.replace(/-/, '/'));
       },
       setVisible: function () {
-
         if (this.editstate === false) {
           this.visibleDelete = ''
           this.editstate = true
@@ -308,23 +330,42 @@
           this.editcancel = 'none'
         }
       },
-      //点击删除动态按钮响应
-      fun(index) {
-        //从动态列表中删去
-        var item = this.datalist.splice(index, 1);
-        //添加到添加列表中
-        this.dataoptions.splice(0, 0, item[0]);
+      /**
+       * @description 删除动态
+       */
+      deleteRecord(index) {
+        this.axios.get(`${this.GLOBAL.apiUrl}/deleteRecord`, {
+          params: {
+            recordId: this.datalist[index].record.recordId
+          }
+        }).then((response) => {
+          if (response.data.success) {
+            this.datalist.splice(index, 1);
+            this.$message({
+              message:"删除动态成功",
+              type:"success"
+            })
+          } else {
+            this.$message({
+              message:"删除失败",
+              type:"warning"
+            })
+          }
+          console.log(response)
+        })
       },
       /**
        * @description 插入新的动态
        */
       insertRecord() {
-        this.axios.post(`${this.GLOBAL.apiUrl}/insertRecord`,{
-          recordImg:this.imgUpLoad.dialogImageUrl,
-          recordContent:this.editForm.recordText,
-          timeAxisType:this.btnData.text,
-          userId:sessionStorage.getItem("ID")
-        }).then((response) =>{
+        // console.log(this.editForm.postIdLinkTo)
+        this.axios.post(`${this.GLOBAL.apiUrl}/insertRecord`, {
+          recordImg: this.imgUpLoad.dialogImageUrl,
+          recordContent: this.editForm.recordText,
+          timeAxisType: this.btnData.text,
+          postId: this.editForm.postIdLinkTo,
+          userId: sessionStorage.getItem("ID")
+        }).then((response) => {
           console.log(response)
         })
       },
@@ -351,33 +392,29 @@
     watch: {
       //监听时间轴开始日期变化
       getstart(newVal) {
-        //删掉时间轴展示列表里的时间范围外的动态
+        // 删掉时间轴展示列表里的时间范围外的动态
+        // console.log(newVal)
         var i;
         for (i = 0; i < this.datalist.length; i++) {
-          if (this.datecompare(this.datalist[i].date, newVal) < 0) {
-            var item = this.datalist.splice(i, 1);
+          if (this.compareDate(this.datalist[i].record.recordCreateTime.split('T')[0], newVal) < 0) {
+            this.datalist.splice(i, 1);
             i--;
-            //添加到添加列表中
-            this.dataoptions.splice(0, 0, item[0]);
           }
         }
       },
       //监听时间轴中止日期变化
       getend(newVal) {
-        //删掉时间轴展示列表里的时间范围外的动态
+        // 删掉时间轴展示列表里的时间范围外的动态
         var i;
         for (i = 0; i < this.datalist.length; i++) {
           //从展示列表删去
-          if (this.datecompare(this.datalist[i].date, newVal) > 0) {
-            var item = this.datalist.splice(i, 1);
+          if (this.compareDate(this.datalist[i].record.recordCreateTime.split('T')[0], newVal) > 0) {
+            this.datalist.splice(i, 1);
             i--;
-            //添加到添加列表中
-            this.dataoptions.splice(0, 0, item[0]);
           }
         }
       }
     }
-
   }
 
 </script>
@@ -524,6 +561,7 @@
     }
 
     .cd-timeline-content {
+        display: flex;
         position: relative;
         border: 1px solid black;
         background: white;
@@ -606,6 +644,7 @@
             margin-left: 0;
             padding: 1.6em;
             width: 45%;
+            min-height: 200px;
         }
 
         .cd-timeline-content::before {
