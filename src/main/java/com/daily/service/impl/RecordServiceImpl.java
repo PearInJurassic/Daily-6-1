@@ -99,6 +99,8 @@ public class RecordServiceImpl implements RecordService {
     public boolean insertRecord(Record record) {
         if (record.getRecordId() != null) {
             try {
+                record.setRecordCreateTime(new Date());
+                record.setRecordUpdateTime(new Date());
                 int effectedNum = recordDao.insertRecord(record);
                 if (effectedNum > 0) {
                     return true;
@@ -113,10 +115,12 @@ public class RecordServiceImpl implements RecordService {
         }
     }
 
+
     @Override
     public boolean updateRecord(Record record) {
         if (record.getRecordId() != null) {
             try {
+                record.setRecordUpdateTime(new Date());
                 int effectedNum = recordDao.updateRecord(record);
                 if (effectedNum > 0) {
                     return true;

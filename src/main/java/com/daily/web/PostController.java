@@ -35,9 +35,10 @@ public class PostController {
 
     @Autowired
     private UserService userService;
+
     /**
      * 广场上获取所有的帖子信息
-     * 
+     *
      * @return
      */
     @RequestMapping(value = "/listpost", method = RequestMethod.GET)
@@ -108,7 +109,6 @@ public class PostController {
         modelMap.put("frozenList", frozenList);
         return modelMap;
     }
-
 
     @RequestMapping(value = "/searchpostbycontent", method = RequestMethod.GET)
     private Map<String, Object> searchPostByContent(String str) {
