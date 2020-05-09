@@ -4,7 +4,7 @@
             <div :key="index"
                  @click="gotoOthers(followList[index].userId)"
                  class="Avatar"
-                 v-for="(item,index) in followList">
+                 v-for="(item,index) in followList.slice(0,5)">
                 <el-avatar :size="72"
                            :src="followList[index].userImg">
                 </el-avatar>
@@ -31,6 +31,7 @@
   import PersonFollowItems from "@/pages/PostPage/components/Person/PersonFollowItems";
 
   export default {
+
     name: "ContentPersonFollow",
     data() {
       return {
@@ -46,6 +47,7 @@
       PersonFollowItems
     },
     methods: {
+      //TODO 最多显示五个头像 添加关注的时候要记得查重
       /**
        * @description 展示关注列表
        */
@@ -57,16 +59,15 @@
        * @param otherId 其他用户的ID
        */
       gotoOthers(otherId) {
-
         if (otherId == sessionStorage.getItem('ID')) {
           this.$router.push('/personpage')
-        }
-        else
+        } else {
           this.$router.push(`/others/${otherId}`)
+        }
       }
     },
     created() {
-      let userId = this.isOthers?sessionStorage.getItem('viewId'):sessionStorage.getItem('ID')
+      let userId = this.isOthers ? sessionStorage.getItem('viewId') : sessionStorage.getItem('ID')
       this.axios.get(`${this.GLOBAL.apiUrl}/getUserFollowInfo`, {
         params: {
           userId
@@ -79,6 +80,7 @@
           }
           // console.log(list)
         })
+      // console.log(this.followList)
     }
   }
 </script>

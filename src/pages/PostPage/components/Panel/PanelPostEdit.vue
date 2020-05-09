@@ -1,10 +1,11 @@
 <template>
-    <div class="Panel" v-show="isShow">
+    <div class="Panel" v-if="isShow">
         <div @click="finishEdit(`close`)"
              class="Mask"></div>
         <div class="EditPanel">
             <div class="PicturePanel">
                 <el-upload
+                        ref="pictureUploader"
                         :action="domain"
                         :data="postData"
                         :on-preview="handlePictureCardPreview"
@@ -100,6 +101,8 @@
           .then(() => {
             this.postText='';
             this.dialogImageUrl='';
+            this.$refs.pictureUploader.clearFiles();
+            console.log(this.dialogImageUrl)
             Bus.$emit("finishEdit", flag);
             // console.log(response)
           })

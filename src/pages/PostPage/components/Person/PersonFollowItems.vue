@@ -18,6 +18,7 @@
 
 <script>
   export default {
+    inject: ['reload'],
     name: "PersonFollowItems",
     props: {
       followInfo: {}
@@ -40,8 +41,14 @@
         data.append('userId',sessionStorage.getItem("ID"));
         data.append('followId',this.followInfo.userId,)
         // let user = row.userId
-        this.axios.post(`${this.GLOBAL.apiUrl}/cancelFollow`, data)
+        this.axios.get(`${this.GLOBAL.apiUrl}/cancelFollow`, {
+          params:{
+            userId:sessionStorage.getItem("ID"),
+            followId:this.followInfo.userId,
+          }
+        })
           .then((response) => {
+            this.reload();
             console.log(response)
           })
           .catch((error) => {

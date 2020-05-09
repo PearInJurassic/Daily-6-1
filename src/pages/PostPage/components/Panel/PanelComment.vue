@@ -2,7 +2,9 @@
     <div class="ContentAll">
         <div class="PosterInfo">
             <div class="Avatar">
+                <div @click="gotoPerson(postInfo.userId)" class="avatar">
                 <el-avatar :size="42" :src="postInfo.userImg"></el-avatar>
+                </div>
                 <el-tooltip class="item" effect="dark" content="关注用户" placement="right">
                 <button class="IconButton" id="followButton">
                     <img :src="followUrl" @click="follow" alt="关注按钮">
@@ -108,6 +110,17 @@
       PostCommentChild
     },
     methods: {
+      //TODO 评论页面点击头像进入个人空间
+      /**
+       * @description 跳转到个人空间
+       */
+      gotoPerson(otherId) {
+        if (otherId == sessionStorage.getItem('ID')) {
+          this.$router.push('/personpage')
+        } else {
+          this.$router.push(`/others/${otherId}`)
+        }
+      },
       /**
        * @description 传递点赞按钮事件的函数
        */
@@ -308,8 +321,12 @@
     }
 
     .Avatar {
-        margin-bottom: 9px;
+        display: flex;
+        .avatar:hover {
+            cursor: pointer;
+        }
     }
+
 </style>
 
 <style lang="less">

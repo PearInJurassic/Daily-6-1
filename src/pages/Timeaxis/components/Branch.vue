@@ -126,6 +126,7 @@
   import PostDetail from "@/pages/PostPage/components/Post/PostDetail";
 
   export default {
+    inject: ['reload'],
     name: "Branch",
     components: {
       LineWordLine,
@@ -366,6 +367,12 @@
           postId: this.editForm.postIdLinkTo,
           userId: sessionStorage.getItem("ID")
         }).then((response) => {
+          this.dialogFormVisible=false;
+          this.$message({
+            message:"添加成功",
+            type:"success",
+          })
+          this.reload();
           console.log(response)
         })
       },
