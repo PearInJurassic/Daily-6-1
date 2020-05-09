@@ -97,23 +97,20 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public boolean insertRecord(Record record) {
-        if (record.getRecordId() != null) {
-            try {
-                record.setRecordCreateTime(new Date());
-                record.setRecordUpdateTime(new Date());
-                int effectedNum = recordDao.insertRecord(record);
-                if (effectedNum > 0) {
-                    return true;
-                } else {
-                    throw new RuntimeException("增加动态失败");
-                }
-            } catch (Exception e) {
-                throw new RuntimeException("增加动态失败:" + e.toString());
+        try {
+            record.setRecordCreateTime(new Date());
+            record.setRecordUpdateTime(new Date());
+            int effectedNum = recordDao.insertRecord(record);
+            if (effectedNum > 0) {
+                return true;
+            } else {
+                throw new RuntimeException("增加动态失败");
             }
-        } else {
-            throw new RuntimeException("增加动态失败");
+        } catch (Exception e) {
+            throw new RuntimeException("增加动态失败:" + e.toString());
         }
     }
+
 
 
     @Override
