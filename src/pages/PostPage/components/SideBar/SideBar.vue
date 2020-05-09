@@ -1,7 +1,9 @@
 <template>
+    <div>
     <div class="SideBar" id="SideBar">
         <SideBarInformation :userAvatar="userInfo.userImg" :userNickName="userInfo.userName"></SideBarInformation>
         <SideBarRecent :userAvatar="userInfo.userImg"></SideBarRecent>
+    </div>
     </div>
 </template>
 
@@ -45,11 +47,11 @@
 <style lang="less" scoped>
     @outlineColor: #989899;
     .SideBar {
+        margin-left: -315px;
         position: fixed;
         z-index: 5;
         width: 315px;
         height: 600px;
         padding-top: 30px;
-
     }
 </style>

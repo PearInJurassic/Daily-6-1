@@ -3,14 +3,18 @@
         <div class="PosterInfo">
             <div class="Avatar">
                 <el-avatar :size="42" :src="postInfo.userImg"></el-avatar>
+                <el-tooltip class="item" effect="dark" content="关注用户" placement="right">
                 <button class="IconButton" id="followButton">
                     <img :src="followUrl" @click="follow" alt="关注按钮">
                 </button>
+                </el-tooltip>
             </div>
             <div class="Icon">
+                <el-tooltip class="item" effect="dark" content="举报该帖" placement="left">
                 <button class="IconButton" id="reportButton">
                     <img :src="reportUrl" @click="reportPost" alt="举报按钮">
                 </button>
+                </el-tooltip>
             </div>
         </div>
         <div class="Comment">
@@ -301,6 +305,10 @@
 
     .CommentPanel {
         width: 100%;
+    }
+
+    .Avatar {
+        margin-bottom: 9px;
     }
 </style>
 

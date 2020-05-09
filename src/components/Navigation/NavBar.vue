@@ -3,7 +3,6 @@
         <div class="MidDiv">
             <NavLogo></NavLogo>
             <NavSearch></NavSearch>
-
             <NavOption></NavOption>
         </div>
     </div>
@@ -20,7 +19,31 @@
       NavSearch,
       NavOption
     },
-
+    methods:{
+      /**
+       * @description 进行欢迎信息的初始化
+       */
+      init() {
+        let isFirstLoginFlag =sessionStorage.getItem("isFirstLogin");
+        this.axios.get(`${this.GLOBAL.apiUrl}/getUserInfo`,{
+          params:{
+            userId:sessionStorage.getItem("ID")
+          }
+        }).then((response) =>{
+          if( isFirstLoginFlag == 1 ) {
+            let userNickName = response.data.userInfo.user.userName;
+            this.$notify({
+              title: 'HI',
+              message: `欢迎回来，亲爱的${userNickName}`
+            });
+            sessionStorage.setItem("isFirstLogin",0)
+          }
+        })
+      }
+    },
+    created() {
+      this.init()
+    }
   }
 </script>
 

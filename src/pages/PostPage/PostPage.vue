@@ -1,4 +1,5 @@
 <template>
+    <div>
     <div id="PostPage">
         <PostPanel v-show="isEditPanelShow"></PostPanel>
         <Nav-bar></Nav-bar>
@@ -6,6 +7,7 @@
         <router-view v-if="isRouterAlive">
             <PageCenterPost></PageCenterPost>
         </router-view>
+    </div>
     </div>
 </template>
 

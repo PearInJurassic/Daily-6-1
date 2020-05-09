@@ -112,6 +112,7 @@
               if (userType === 0) {
                 window.location.href = `./PostPage?id=${userID}`;
                 sessionStorage.setItem("ID", userID);
+                sessionStorage.setItem("isFirstLogin",1)
               } else {
                 window.location.href = "./AdminPage";
                 sessionStorage.setItem("adminId", userID)
@@ -130,8 +131,6 @@
               })
             }
           })
-
-
       },
       finishSignIn() {
         this.dialogVisible = false;
@@ -149,7 +148,7 @@
     .LoginPanelAll {
         display: flex;
         .setSize(100%, 100%);
-        justify-content: right;
+        justify-content: flex-end;
     }
 
     .LoginFront {

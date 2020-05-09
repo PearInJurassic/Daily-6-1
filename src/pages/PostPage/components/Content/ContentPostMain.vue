@@ -46,6 +46,7 @@
           }
         })
           .then((response) => {
+            // console.log(response)
             this.loading=false
             this.likeList = [...response.data.likeList];
             // console.log(this.likeList)

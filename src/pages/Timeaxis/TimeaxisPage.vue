@@ -1,8 +1,8 @@
 <template>
     <div id="app">
-        <div id="navigation">
-            <NavBar></NavBar>
-        </div>
+<!--        <div id="navigation">-->
+<!--            <NavBar></NavBar>-->
+<!--        </div>-->
         <div id="sidebar">
             <Side></Side>
         </div>
@@ -16,13 +16,13 @@
 <script>
 
   // @ is an alias to /src
-  import NavBar from '@/components/Navigation/NavBar.vue'
+  // import NavBar from '@/components/Navigation/NavBar.vue'
   import Side from "@/pages/Timeaxis/components/Side/Side";
 
   export default {
     name: 'Home',
     components: {
-      NavBar,
+      // NavBar,
       Side
     },
     created() {

@@ -16,6 +16,24 @@
       body, html {
         font: 12px/1.5 tahoma,arial,"Hiragino Sans GB",宋体,sans-serif;
       }
+      ::-webkit-scrollbar {
+         width: 6px;
+         height: 6px;
+         background: transparent;
+       }
+
+      ::-webkit-scrollbar-thumb {
+         background: transparent;
+         border-radius: 4px;
+       }
+
+      :hover::-webkit-scrollbar-thumb {
+         background: hsla(0, 0%, 53%, 0.4);
+       }
+
+      :hover::-webkit-scrollbar-track {
+         background: hsla(0, 0%, 53%, 0.1);
+       }
     </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=kMx8eaAZu4WzbNLXynTng4En0pmG7WGF"></script>
   </head>
