@@ -2,7 +2,7 @@
     <div class="NavBar">
         <div class="MidDiv">
             <NavLogo></NavLogo>
-            <NavSearch></NavSearch>
+            <NavSearch v-if="visible"></NavSearch>
             <NavOption></NavOption>
         </div>
     </div>
@@ -14,6 +14,19 @@
   import NavOption from "@/components/Navigation/NavOption";
   export default {
     name: "NavBar",
+    data() {
+      return {
+        windowWidth: document.documentElement.clientWidth,
+      }
+    },
+    computed:{
+      visible(){
+        if(this.windowWidth <650){
+          return false;
+        }
+        return true;
+      }
+    },
     components: {
       NavLogo,
       NavSearch,
@@ -43,6 +56,11 @@
     },
     created() {
       this.init()
+    },
+    watch:{
+      '$store.state.screenWidth':function(val){ //监听屏幕宽度变化
+        this.windowWidth=val;
+      }
     }
   }
 </script>
@@ -63,6 +81,8 @@
         .NavStyle();
         width: 100%;
         align-items: center;
+        display: flex;
+        justify-content: space-between;
         max-width: 975px;
         margin: 0 auto;
     }

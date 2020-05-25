@@ -21,6 +21,7 @@
     name: "ContentPostMain",
     data() {
       return {
+        windowWidth:document.documentElement.clientWidth,
         PostAll: "PostAll",
         postNum: [],
         img:"",
@@ -86,7 +87,12 @@
         }
         this.loading=false;
       })
-    }
+    },
+    watch:{
+      '$store.state.screenWidth':function(val){ //监听屏幕宽度变化
+        this.windowWidth=val;
+      }
+    },
   }
 </script>
 
@@ -95,12 +101,12 @@
     .ContentAll {
         display: flex;
         max-width: 1025px;
-        min-width: 650px;
+        min-width: 350px;
     }
 
     .ContentCenter {
         max-width: 1025px;
-        min-width: 650px;
+        min-width: 350px;
 
         padding-top: 30px;
     }

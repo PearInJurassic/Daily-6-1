@@ -90,10 +90,11 @@
        */
       finishEdit(flag) {
         let that = this;
+        let anonym = this.$store.state.isAnonymous;
         this.axios.post(`${this.GLOBAL.apiUrl}/addpost`, {
           postImg: that.dialogImageUrl,
           postContent: that.postText,
-          anonym: 0,
+          anonym,
           areaId: 0,
           userId: sessionStorage.getItem('ID'),
           forwardPostId: -1,

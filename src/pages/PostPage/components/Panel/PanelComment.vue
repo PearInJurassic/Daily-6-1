@@ -2,10 +2,13 @@
     <div class="ContentAll">
         <div class="PosterInfo">
             <div class="Avatar">
-                <div @click="gotoPerson(postInfo.userId)" class="avatar">
+                <div @click="gotoPerson(postInfo.userId)" class="avatar" v-if="!item.anonym">
                     <el-avatar :size="42" :src="postInfo.userImg"></el-avatar>
                 </div>
-                <el-tooltip class="item" content="关注用户" effect="dark" placement="right">
+                <div @click="gotoPerson(postInfo.userId)" class="avatar" v-if="item.anonym">
+                    <el-avatar :size="42" :src="anonymousAvatar"></el-avatar>
+                </div>
+                <el-tooltip class="item" content="关注用户" effect="dark" placement="right" v-if="!item.anonym">
                     <button class="IconButton" id="followButton">
                         <img :src="followUrl" @click="follow" alt="关注按钮">
                     </button>
@@ -101,16 +104,15 @@
       likeUrl() {
         return require(`@/assets/Post/${this.likeImgArr[this.like]}`);
       },
-      // commentContentAll() {
-      //   return this.replyTarget + this.commentText
-      // }
+      anonymousAvatar() {
+        return this.ANONYMOUS_AVATAR;
+      }
     },
     components: {
       PostCommentAll,
       PostCommentChild
     },
     methods: {
-      //TODO 评论页面点击头像进入个人空间
       /**
        * @description 跳转到个人空间
        */
@@ -156,11 +158,12 @@
         let pattern = /^("@)(\d)+/;
         let r = this.commentText.match(pattern);
         let replyCommentId = (r == null) ? 0 : r[0].split('@')[1];
+        let anonym=this.$store.state.isAnonymous;
         this.axios.post(`${this.GLOBAL.apiUrl}/comment/createcomment`, {
           "commentContent": this.commentText,
           "postId": this.item.postId,
           "userId": sessionStorage.getItem("ID"),
-          "anonym": 0,
+          anonym,
           replyCommentId
         })
           .then((response) => {
@@ -351,9 +354,10 @@
             line-height: 15px;
             background-color: whitesmoke;
         }
+        .el-collapse-item__wrap {
+            background-color: #eeeeee;
+        }
     }
 
-    .el-icon-arrow-right {
 
-    }
 </style>

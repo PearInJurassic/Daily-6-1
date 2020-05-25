@@ -51,6 +51,7 @@ import 'echarts/extension/bmap/bmap'
 
 Vue.prototype.$echarts = echarts
 Vue.prototype.$layer = layer(Vue);
+Vue.prototype.ANONYMOUS_AVATAR = require(`@/assets/Anonymous/anonymous0.jpg`)
 Vue.prototype.GLOBAL = global_variable
 Vue.config.productionTip = false
 Vue.use(ElementUI);

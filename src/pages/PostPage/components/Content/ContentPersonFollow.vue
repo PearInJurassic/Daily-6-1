@@ -48,7 +48,6 @@
       PersonFollowItems
     },
     methods: {
-      //TODO 最多显示五个头像 添加关注的时候要记得查重
       /**
        * @description 展示关注列表
        */

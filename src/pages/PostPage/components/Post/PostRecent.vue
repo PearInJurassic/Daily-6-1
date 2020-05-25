@@ -1,6 +1,12 @@
 <template>
     <div>
-        <div class="RecentPost">
+        <PostDetail :itemInfo="recentInfo"
+                    :isLike="1"
+                    :pInfo="posterInfo"
+                    @detailState="changeDetailState"
+                    v-if="detailShowState">
+        </PostDetail>
+        <div class="RecentPost" @click="detailPost()">
             <div class="Avatar">
                 <el-avatar :src="posterInfo.userImg" @error="errHandler"></el-avatar>
             </div>
@@ -12,10 +18,12 @@
 </template>
 
 <script>
+    import PostDetail from "@/pages/PostPage/components/Post/PostDetail";
   export default {
     name: "PostRecent",
     data() {
       return {
+        detailShowState:false,
         posterInfo:'',
         shortContent: this.recentInfo.postContent.substr(0, 35) + "......",
       }
@@ -24,6 +32,9 @@
       recentInfo: {
         required: true
       },
+    },
+    components:{
+      PostDetail
     },
     methods:{
       errHandler() {

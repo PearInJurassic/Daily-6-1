@@ -3,7 +3,8 @@
         <div class="followPerson">
             <div class="Avatar">
                 <el-avatar :size="65"
-                           :src="followInfo.userImg"></el-avatar>
+                           :src="followInfo.userImg">
+                </el-avatar>
             </div>
             <div class="NickName">
                 <span>{{followInfo.userName}}</span>
