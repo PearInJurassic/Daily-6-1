@@ -153,24 +153,28 @@ public class PostDaoTest {
     }
 
     @Test
+    @Ignore
     public void testIncForwardNum() {
         int i = postDao.incForwardNum(4);
         assertEquals(1, i);
     }
 
     @Test
+    @Ignore
     public void testDecForwardNum() {
         int i = postDao.decForwardNum(4);
         assertEquals(1, i);
     }
 
     @Test
+    @Ignore
     public void testQueryForwardNum() {
         int i = postDao.queryForwardNum(4);
         assertEquals(0, i);
     }
 
     @Test
+    @Ignore
     public void testQueryPostByContent() {
         List<Post> postList = postDao.queryPostByContent("测试");
         for (Post post : postList) {
@@ -179,6 +183,7 @@ public class PostDaoTest {
     }
 
     @Test
+    @Ignore
     public void testQueryPostByContentAndUserId() {
         List<Post> postList = postDao.queryPostByContentAndUserId("测试", 1);
         for (Post post : postList) {
@@ -187,6 +192,7 @@ public class PostDaoTest {
     }
 
     @Test
+    @Ignore
     public void testCountPostNumByUserId(){
         int num=postDao.countPostNumByUserId(7);
         System.out.println(num);

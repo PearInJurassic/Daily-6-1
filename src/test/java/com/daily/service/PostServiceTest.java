@@ -17,6 +17,7 @@ package com.daily.service;
 */
 
 import com.daily.entity.Post;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class PostServiceTest {
     private PostService postService;
 
     @Test
+    @Ignore
     public void testGetPostList() {
         List<Post> areaList = postService.getPostList();
         // 验证预期值和实际值是否相符

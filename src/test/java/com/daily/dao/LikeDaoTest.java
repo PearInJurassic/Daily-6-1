@@ -10,6 +10,7 @@ package com.daily.dao;
 
 import com.daily.entity.Like;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -34,12 +35,14 @@ public class LikeDaoTest {
     LikeDao likeDao;
 
     @Test
+    @Ignore
     public void testQueryLikeNumByPostId() {
         int num = likeDao.queryLikeNumByPostId(3);
         assertEquals(2, num);
     }
 
     @Test
+    @Ignore
     public void testQueryLikeByPostIdAndUserId() {
 
         int num = likeDao.queryLikeByPostIdAndUserId(4, 8);
@@ -47,6 +50,7 @@ public class LikeDaoTest {
     }
 
     @Test
+    @Ignore
     public void testInsertLike() {
         Like like = new Like();
         like.setPostId(4);
@@ -56,6 +60,7 @@ public class LikeDaoTest {
     }
 
     @Test
+    @Ignore
     public void testDeleteLike() {
         int num = likeDao.deleteLike(3, 5);
         assertEquals(1, num);

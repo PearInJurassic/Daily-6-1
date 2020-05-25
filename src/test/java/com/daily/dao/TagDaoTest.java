@@ -9,6 +9,7 @@
 package com.daily.dao;
 
 import com.daily.entity.Tag;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class TagDaoTest {
     private TagDao tagDao;
 
     @Test
+    @Ignore
     public void testQueryTagByPostId() {
         List<Tag> areaList = tagDao.queryTagByPostId(1);
 
@@ -40,6 +42,7 @@ public class TagDaoTest {
     }
 
     @Test
+    @Ignore
     public void testInsertTag() {
         Tag tag = new Tag();
         tag.setTagContent("生活");
@@ -50,6 +53,7 @@ public class TagDaoTest {
     }
 
     @Test
+    @Ignore
     public void testDeleteTag() {
         int i = tagDao.deleteTag(2);
         // 验证预期值和实际值是否相符

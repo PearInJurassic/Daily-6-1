@@ -51,7 +51,7 @@ public class PostController {
         List<Integer> isLikeList = new ArrayList<>();
         for (Post post : postList) {
             List<Tag> tags = tagService.getTagByPostId(post.getPostId());
-            likeList.add(likeService.getLikeNumByPostId(post.getPostId()));
+            likeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(),userId));
             tagList.add(tags);
             isLikeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
         }
