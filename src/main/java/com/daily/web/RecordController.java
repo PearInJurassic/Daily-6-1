@@ -29,7 +29,7 @@ public class RecordController {
      * @return Map<recordList, List<RecordExpand>>
      */
     @RequestMapping(value = "/getRecordListByUserIdAndType", method = RequestMethod.POST)
-    private Map<String, Object> getRecordListByUserIdAndType(int userId, String timeAxisType) {
+    private Map<String, Object> getRecordListByUserIdAndType(Integer userId, String timeAxisType) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<RecordExpand> recordList=recordService.getRecordListByUserIdAndType(userId,timeAxisType);
         modelMap.put("recordList", recordList);
@@ -43,7 +43,7 @@ public class RecordController {
      * @return Map<recordList, List<RecordExpand>>
      */
     @RequestMapping(value = "/getRecordListByUserIdAndTime", method = RequestMethod.POST)
-    private Map<String, Object> getRecordListByUserIdAndTime(int userId, Date beginTime, Date endTime) {
+    private Map<String, Object> getRecordListByUserIdAndTime(Integer userId, Date beginTime, Date endTime) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<RecordExpand> recordList=recordService.getRecordListByUserIdAndTime(userId,beginTime,endTime);
         modelMap.put("recordList", recordList);
@@ -58,7 +58,7 @@ public class RecordController {
      */
     @RequestMapping(value = "/getRecordListByUserIdAndTypeAndTime", method = RequestMethod.POST)
     private Map<String, Object> getRecordListByUserIdAndTypeAndTime
-            (int userId,String timeAxisType,Date beginTime,Date endTime) {
+            (Integer userId,String timeAxisType,Date beginTime,Date endTime) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<RecordExpand> recordList=recordService.
                 getRecordListByUserIdAndTypeAndTime(userId,timeAxisType,beginTime,endTime);
@@ -101,7 +101,7 @@ public class RecordController {
      * @return Map<success, boolean>
      */
     @RequestMapping(value = "/deleteRecord", method = RequestMethod.GET)
-    private Map<String, Object> deleteRecord(int recordId) {
+    private Map<String, Object> deleteRecord(Integer recordId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         modelMap.put("success",recordService.deleteRecord(recordId));
         return modelMap;

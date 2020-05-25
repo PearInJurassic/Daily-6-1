@@ -83,7 +83,7 @@ public class UserController {
      * @return Map<userInfo,UserExpand>
      */
     @RequestMapping(value = "/freeze", method = RequestMethod.POST)
-    private Map<String, Object> freeze(int userId) {
+    private Map<String, Object> freeze(Integer userId) {
         int result = userService.freezeUserById(userId);
         Map<String, Object> modelMap = new HashMap<String, Object>();
         if (result == 1) {
@@ -100,7 +100,7 @@ public class UserController {
      * @return Map<userInfo,UserExpand>
      */
     @RequestMapping(value = "/deluser", method = RequestMethod.POST)
-    private Map<String, Object> del(@RequestParam int userId) {
+    private Map<String, Object> del(@RequestParam Integer userId) {
         int result = userService.delUserById(userId);
         Map<String, Object> modelMap = new HashMap<String, Object>();
         if (result == 1) {
@@ -120,7 +120,7 @@ public class UserController {
      * @return Map<userInfo,UserExpand>
      */
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
-    private Map<String, Object> getUserInfo(int userId) {
+    private Map<String, Object> getUserInfo(Integer userId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         UserExpand userExpand = userService.getUserInfoByUserId(userId);
         modelMap.put("userInfo", userExpand);
@@ -149,12 +149,40 @@ public class UserController {
      *         Map<userRecordList, List<Record>>
      */
     @RequestMapping(value = "/userPostAndRecordList", method = RequestMethod.GET)
-    private Map<String, Object> userPostAndRecordList(int userId) {
+    private Map<String, Object> userPostAndRecordList(Integer userId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<Post> userPostList = postService.getPostByUserId(userId);
         List<RecordExpand> userRecordList = recordService.getRecordListByUserId(userId);
         modelMap.put("userPostList", userPostList);
         modelMap.put("userRecordList", userRecordList);
+        return modelMap;
+    }
+
+    /*
+     * 根据用户ID得到用户动态列表
+     *
+     * @param userId
+     * @return Map<userRecordList, List<Record>>
+     */
+    @RequestMapping(value = "/userRecordList", method = RequestMethod.GET)
+    private Map<String, Object> userRecordList(Integer userId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<RecordExpand> userRecordList = recordService.getRecordListByUserId(userId);
+        modelMap.put("userRecordList", userRecordList);
+        return modelMap;
+    }
+
+    /*
+     * 根据用户ID得到用户帖子列表
+     *
+     * @param userId
+     * @return Map<userPostList, List<Post>>
+     */
+    @RequestMapping(value = "/userPostList", method = RequestMethod.GET)
+    private Map<String, Object> userPostList(Integer userId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Post> userPostList = postService.getPostByUserId(userId);
+        modelMap.put("userPostList", userPostList);
         return modelMap;
     }
 
@@ -166,7 +194,7 @@ public class UserController {
      *         Map<userSelectedRecordList, List<Record>>
      */
     @RequestMapping(value = "/userSelectedPostAndRecordList", method = RequestMethod.GET)
-    private Map<String, Object> userSelectedPostAndRecordList(int userId, String keyWord) {
+    private Map<String, Object> userSelectedPostAndRecordList(Integer userId, String keyWord) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<Post> userSelectedPostList = postService.getPostByContentAndUserId(keyWord, userId);
         List<RecordExpand> userSelectedRecordList = recordService.getRecordListByUserIdAndKeyWord(userId, keyWord);
@@ -182,7 +210,7 @@ public class UserController {
      * @return boolean
      */
     @RequestMapping(value = "/cancelFollow", method = RequestMethod.GET)
-    private Map<String, Object> cancelFollow(int userId, int followId) {
+    private Map<String, Object> cancelFollow(Integer userId, Integer followId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         modelMap.put("success", userService.cancelFollow(userId, followId));
         return modelMap;
@@ -195,7 +223,7 @@ public class UserController {
      * @return boolean
      */
     @RequestMapping(value = "/addFollow", method = RequestMethod.GET)
-    private Map<String, Object> addFollow(int userId, int followId) {
+    private Map<String, Object> addFollow(Integer userId, Integer followId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         modelMap.put("success", userService.addFollow(userId, followId));
         return modelMap;
@@ -208,7 +236,7 @@ public class UserController {
      * @return boolean
      */
     @RequestMapping(value = "/addFollowByUserIdAndPostId", method = RequestMethod.GET)
-    private Map<String, Object> addFollowByUserIdAndPostId(int userId, int postId) {
+    private Map<String, Object> addFollowByUserIdAndPostId(Integer userId, Integer postId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         modelMap.put("success", userService.addFollowByUserIdAndPostId(userId, postId));
         return modelMap;

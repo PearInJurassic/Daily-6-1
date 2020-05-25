@@ -22,7 +22,7 @@ public class UserFollowController {
      * @return Map<userFollowInfo, List<UserFollowInfo>>
      */
     @RequestMapping(value = "/getUserFollowInfo", method = RequestMethod.GET)
-    private Map<String, Object> getUserFollowInfo(int userId) {
+    private Map<String, Object> getUserFollowInfo(Integer userId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<UserFollowInfo> userFollowInfoList=userFollowService.getUserFollowInfoByUserId(userId);
         modelMap.put("userFollowInfo", userFollowInfoList);
