@@ -10,7 +10,8 @@
             </div>
             <div class="Operation">
                 <button @click="gotoOthers" class="CommonButton">查看详情</button>
-                <button @click="cancelFollow" class="CommonButton">取消关注</button>
+                <button @click="cancelFollow" lcass="CommonButton"
+                v-if="cancelButtonDisable!=1">取消关注</button>
             </div>
         </div>
     </div>
@@ -21,30 +22,32 @@
     inject: ['reload'],
     name: "PersonFollowItems",
     props: {
-      followInfo: {}
+      followInfo: {},
+      cancelButtonDisable:{}
     },
     methods: {
       /**
        * @description 跳转页面
        */
       gotoOthers() {
-        if (this.followInfo.userId === sessionStorage.getItem('ID'))
+        if (this.followInfo.userId == sessionStorage.getItem('ID')) {
           this.$router.push('/personpage')
-        else
+        } else {
           this.$router.push(`/others/${this.followInfo.userId}`)
+        }
       },
       /**
        * @description 取消关注
        */
       cancelFollow() {
         let data = new FormData();
-        data.append('userId',sessionStorage.getItem("ID"));
-        data.append('followId',this.followInfo.userId,)
+        data.append('userId', sessionStorage.getItem("ID"));
+        data.append('followId', this.followInfo.userId,)
         // let user = row.userId
         this.axios.get(`${this.GLOBAL.apiUrl}/cancelFollow`, {
-          params:{
-            userId:sessionStorage.getItem("ID"),
-            followId:this.followInfo.userId,
+          params: {
+            userId: sessionStorage.getItem("ID"),
+            followId: this.followInfo.userId,
           }
         })
           .then((response) => {
@@ -55,6 +58,9 @@
             console.log(error)
           })
       },
+    },
+    created() {
+      console.log(this.cancelButtonDisable)
     }
   }
 </script>

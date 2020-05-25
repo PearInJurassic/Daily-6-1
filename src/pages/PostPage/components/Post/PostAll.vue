@@ -7,9 +7,13 @@
                           style="width:650px; ">
                 </el-image>
             </div>
-            <div class="PostInfo" style="display: flex">
-                <div class="Avatar">
+            <div class="PostInfo" style="display: flex;justify-content: space-between">
+                <div style="display: flex">
+                <div class="Avatar" @click="gotoPerson(posterInfo.userId)">
                     <el-avatar :size="68" :src="posterInfo.userImg"></el-avatar>
+                </div>
+                <div class="Icon userName" style="width: 50px">
+                    {{posterInfo.userName}}
                 </div>
                 <div class="Icon">
                     <button @click="pressLikeButton" class="IconButton" id="likeButton">
@@ -21,7 +25,8 @@
                         <img alt="转发按钮" src="@/assets/Post/resend.png">
                     </button>
                 </div>
-                <div class="Icon" v-if="itemInfo.userId == loginUserId">
+                </div>
+                <div class="Icon" id="delete" v-if="itemInfo.userId == loginUserId">
                     <button class="IconButton" id="DeleteButton" @click="pressDeleteButton">
                         <img alt="删除按钮" src="@/assets/Post/delete.png">
                     </button>
@@ -53,7 +58,7 @@
       return {
         loginUserId:0,
         like: this.likeInfo,
-        likeImgArr: ['like.png', 'like-fill.png'],
+        likeImgArr: ['like.png', 'like-fill.png','like-fill.png','like-fill.png'],
         detailShowState: false,
         posterInfo:{}
       }
@@ -78,7 +83,7 @@
       pressLikeButton() {
         this.like > 0 ? this.like = 0 : this.like = 1;
         let that = this;
-        if (this.like === 1) {
+        if (this.like == 1) {
           this.axios.post(`${this.GLOBAL.apiUrl}/addlike`, {
             userId: sessionStorage.getItem("ID"),
             postId: that.itemInfo.postId,
@@ -89,6 +94,8 @@
               userId: sessionStorage.getItem("ID"),
               postId: that.itemInfo.postId,
             }
+          }).then((response)=>{
+            console.log(response)
           })
         }
       },
@@ -121,6 +128,16 @@
        */
       openDetail() {
         this.detailShowState = true;
+      },
+      /**
+       * @description 跳转到个人空间
+       */
+      gotoPerson(otherId) {
+        if (otherId == sessionStorage.getItem('ID')) {
+          this.$router.push('/personpage')
+        } else {
+          this.$router.push(`/others/${otherId}`)
+        }
       },
     },
     components: {
@@ -156,8 +173,13 @@
     p {
         padding: 5px 10px;
     }
-    #DeleteButton {
-        margin-left: 800%;
+    #delete {
+        margin-right: 20px;
+    }
+
+    .userName{
+        font-size: 15px;
+        padding-bottom: 10px;
     }
 
     .PostContent {

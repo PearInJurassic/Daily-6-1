@@ -3,7 +3,7 @@
         <div class="TabContent">
             <PostDetail :itemInfo="selectPostItem"
                         :isLike="1"
-                        :pInfo="userInfo"
+                        :pInfo="selectPosterInfo"
                         v-if="detailShowState"
                         @detailState="detailShowState=false">
             </PostDetail>
@@ -35,7 +35,7 @@
                             <PersonItems :key="index"
                                          :recordItem="userRecordList[index]"
                                          v-for="(item,index) in userRecordList">
-                                <el-image :src="userRecordList[index].postImg" fit="cover"
+                                <el-image :src="userRecordList[index].record.recordImg" fit="cover"
                                           style="width: 275px;height: 275px">
                                 </el-image>
                             </PersonItems>
@@ -56,7 +56,8 @@ import PostDetail from "@/pages/PostPage/components/Post/PostDetail";
       return {
         userInfo:{},
         selectPostItem:{},
-        detailShowState:true,
+        selectPosterInfo:{},
+        detailShowState:false,
         tipUrl:require("@/assets/Person/tip.png"),
         activeName: 'first',
         isPostListNull:true,
@@ -76,9 +77,11 @@ import PostDetail from "@/pages/PostPage/components/Post/PostDetail";
       postDetail(selectItem) {
         this.detailShowState=true;
         this.selectPostItem=selectItem;
+        console.log("open postDetail cliked")
       },
     },
     created() {
+      //当前个人主页的用户id
       let userId = this.isOthers
         ?
         sessionStorage.getItem('viewId')
@@ -92,7 +95,7 @@ import PostDetail from "@/pages/PostPage/components/Post/PostDetail";
         .then((response) => {
           let postList = response.data.userPostList
           let recordList = response.data.userRecordList
-          // console.log(response)
+          console.log(response)
           for (let index in postList) {
             this.userPostList.push(postList[index])
           }
@@ -103,6 +106,16 @@ import PostDetail from "@/pages/PostPage/components/Post/PostDetail";
           if(recordList.length) this.isRecordListNull = false;
           // console.log(this.userPostList)
         })
+      this.axios.get(`${this.GLOBAL.apiUrl}/getUserInfo`,
+        {
+          params: {
+            userId
+          }
+        }
+      ).then((response) => {
+        this.selectPosterInfo = response.data.userInfo.user;
+        console.log(response)
+      })
     }
   }
 </script>

@@ -82,6 +82,7 @@
     },
     created(){
       this.srcList.push(this.itemInfo.postImg)
+      // console.log(this.pInfo)
     }
   }
 </script>

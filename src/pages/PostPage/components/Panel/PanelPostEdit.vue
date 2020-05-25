@@ -85,7 +85,7 @@
         })
       },
       /**
-       * @description 使用事件总线发送完成编辑信号
+       * @description 使用事件总线发送完成编辑信号 由ContentPostMain处理
        * @param {string} flag 完成信号,可能有"finish"正常结束，和“close"直接关闭。
        */
       finishEdit(flag) {

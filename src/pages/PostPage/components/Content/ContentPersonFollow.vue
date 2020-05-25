@@ -20,6 +20,7 @@
                 direction="ltr"
                 title="关注列表">
             <PersonFollowItems :followInfo="followList[index]"
+                               :cancelButtonDisable="isOthers"
                                :key="index"
                                v-for="(item,index) in followList">
             </PersonFollowItems>
@@ -67,7 +68,8 @@
       }
     },
     created() {
-      let l = new Set();
+      console.log(`isOthers:${this.isOthers}`)
+
       let userId = this.isOthers ? sessionStorage.getItem('viewId') : sessionStorage.getItem('ID')
       this.axios.get(`${this.GLOBAL.apiUrl}/getUserFollowInfo`, {
         params: {
@@ -78,12 +80,10 @@
           let list = response.data.userFollowInfo
           for (let index in list) {
             this.followList.push(list[index])
-            l.add(list[index])
           }
           // console.log(list)
         })
-      console.log(this.followList)
-      console.log(l)
+      // console.log(this.isOthers)
     }
   }
 </script>
