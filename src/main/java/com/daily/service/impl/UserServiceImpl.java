@@ -111,10 +111,10 @@ public class UserServiceImpl implements UserService {
                 if (effectedNum > 0) {
                     return true;
                 } else {
-                    throw new RuntimeException("用户信息更新失败");
+                    throw new RuntimeException("用户ID已得到，但更新失败");
                 }
             } catch (Exception e) {
-                throw new RuntimeException("用户信息更新失败:" + e.toString());
+                throw new RuntimeException("用户信息更新出现如下异常:" + e.toString());
             }
         } else {
             throw new RuntimeException("用户信息更新失败");
