@@ -7,6 +7,7 @@ import com.daily.entity.RecordExpand;
 import com.daily.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -95,6 +96,7 @@ public class RecordServiceImpl implements RecordService {
         return recordExpandList;
     }
 
+    @Transactional
     @Override
     public boolean insertRecord(Record record) {
         try {
@@ -107,7 +109,7 @@ public class RecordServiceImpl implements RecordService {
                 throw new RuntimeException("增加动态失败");
             }
         } catch (Exception e) {
-            throw new RuntimeException("增加动态失败:" + e.toString());
+            throw new RuntimeException("增加动态出现以下异常信息：" + e.toString());
         }
     }
 
@@ -115,20 +117,20 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public boolean updateRecord(Record record) {
-        if (record.getRecordId() != null) {
+        if (record.getRecordId() != null && record.getRecordId() != 0) {
             try {
                 record.setRecordUpdateTime(new Date());
                 int effectedNum = recordDao.updateRecord(record);
                 if (effectedNum > 0) {
                     return true;
                 } else {
-                    throw new RuntimeException("修改动态失败");
+                    throw new RuntimeException("动态ID正常，修改动态失败");
                 }
             } catch (Exception e) {
-                throw new RuntimeException("修改动态失败:" + e.toString());
+                throw new RuntimeException("修改动态出现以下异常信息：" + e.toString());
             }
         } else {
-            throw new RuntimeException("修改动态失败");
+            throw new RuntimeException("修改动态失败，动态ID为空或为0");
         }
     }
 
@@ -140,13 +142,13 @@ public class RecordServiceImpl implements RecordService {
                 if (effectedNum > 0) {
                     return true;
                 } else {
-                    throw new RuntimeException("删除动态失败");
+                    throw new RuntimeException("动态ID正常，删除动态失败");
                 }
             } catch (Exception e) {
-                throw new RuntimeException("删除动态失败:" + e.toString());
+                throw new RuntimeException("删除出现以下异常信息：" + e.toString());
             }
         } else {
-            throw new RuntimeException("删除动态失败");
+            throw new RuntimeException("删除动态失败，动态ID为0");
         }
     }
 }

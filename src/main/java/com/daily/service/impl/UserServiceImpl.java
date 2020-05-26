@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService {
                 throw new RuntimeException("用户信息更新出现如下异常:" + e.toString());
             }
         } else {
-            throw new RuntimeException("用户信息更新失败");
+            throw new RuntimeException("用户ID未得到");
         }
     }
 
@@ -132,16 +132,17 @@ public class UserServiceImpl implements UserService {
                 if (effectedNum1 > 0 && effectedNum2 > 0 && effectedNum3 > 0) {
                     return true;
                 } else {
-                    throw new RuntimeException("用户取消关注失败");
+                    throw new RuntimeException("用户ID和关注ID已得到，但取消关注失败");
                 }
             } catch (Exception e) {
-                throw new RuntimeException("用户取消关注失败:" + e.toString());
+                throw new RuntimeException("用户取消关注出现如下异常:" + e.toString());
             }
         } else {
-            throw new RuntimeException("用户取消关注失败");
+            throw new RuntimeException("用户ID和关注ID未得到");
         }
     }
 
+    @Transactional
     @Override
     public boolean addFollow(int userId, int followId) {
         if (userId != 0 && followId != 0) {
@@ -156,13 +157,13 @@ public class UserServiceImpl implements UserService {
                 if (effectedNum1 > 0 && effectedNum2 > 0 && effectedNum3 > 0) {
                     return true;
                 } else {
-                    throw new RuntimeException("用户增加关注失败");
+                    throw new RuntimeException("用户ID和关注ID已得到，但增加关注失败");
                 }
             } catch (Exception e) {
-                throw new RuntimeException("用户增加关注失败:" + e.toString());
+                throw new RuntimeException("用户增加关注出现如下异常:" + e.toString());
             }
         } else {
-            throw new RuntimeException("用户增加关注失败");
+            throw new RuntimeException("用户ID和关注ID未得到");
         }
     }
 
@@ -181,13 +182,13 @@ public class UserServiceImpl implements UserService {
                 if (effectedNum1 > 0 && effectedNum2 > 0 && effectedNum3 > 0) {
                     return true;
                 } else {
-                    throw new RuntimeException("用户增加关注失败");
+                    throw new RuntimeException("用户ID和帖子ID已得到，但增加关注失败");
                 }
             } catch (Exception e) {
-                throw new RuntimeException("用户增加关注失败:" + e.toString());
+                throw new RuntimeException("用户增加关注出现如下异常:" + e.toString());
             }
         } else {
-            throw new RuntimeException("用户增加关注失败");
+            throw new RuntimeException("用户ID和帖子ID未得到");
         }
     }
 }
