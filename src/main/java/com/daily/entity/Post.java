@@ -8,10 +8,7 @@
 */
 package com.daily.entity;
 
-import javax.persistence.Transient;
 import java.util.Date;
-
-import org.springframework.data.annotation.Transient;
 
 /**
  * @ClassName: Post
@@ -43,9 +40,6 @@ public class Post {
     private Integer userId;
 
     private Integer forwardPostId;
-
-    @Transient
-    private Integer popularity;
 
     /**
      * @return the postId
@@ -201,11 +195,4 @@ public class Post {
         this.forwardPostId = forwardPostId;
     }
 
-    public Integer getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(Integer popularity) {
-        this.popularity = popularity;
-    }
 }

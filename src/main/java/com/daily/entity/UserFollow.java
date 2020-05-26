@@ -3,36 +3,36 @@ package com.daily.entity;
 import java.util.Date;
 
 public class UserFollow {
-    //用户关注表ID
-    private int userFollowId;
+    //用户关注ID
+    private Integer userFollowId;
     //用户ID
-    private int userId;
+    private Integer userId;
     //关注用户的ID
-    private int followId;
+    private Integer followId;
     //关注时间
     private Date followTime;
 
-    public int getUserFollowId() {
+    public Integer getUserFollowId() {
         return userFollowId;
     }
 
-    public void setUserFollowId(int userFollowId) {
+    public void setUserFollowId(Integer userFollowId) {
         this.userFollowId = userFollowId;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getFollowId() {
+    public Integer getFollowId() {
         return followId;
     }
 
-    public void setFollowId(int followId) {
+    public void setFollowId(Integer followId) {
         this.followId = followId;
     }
 
