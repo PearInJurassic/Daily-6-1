@@ -1,0 +1,75 @@
+.setBorder(@borderWidth:1px){
+  border-width: @borderWidth;
+  border-color: black;
+  border-style: solid;
+}
+.setSize(@width,@height) {
+  height: @height;
+  width: @width;
+}
+.setMinSize(@width,@height) {
+  min-width: @width;
+  min-height: @height;
+}
+.setMaxSize(@width,@height) {
+  max-width: @width;
+  max-height: @height;
+}
+
+//按钮类样式
+.CommonButton {
+  .setSize(100%, 30px);
+  letter-spacing: 1px;
+  padding: 2px 0;
+  font-weight: bold;
+  border-radius: 4px;
+  border: 0 solid black;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.CommonButton:active {
+  background-color: black;
+  color: white;
+}
+
+.CommonButton:hover {
+  background-color: #aaa9a9;
+}
+
+.IconButton {
+  background-color: whitesmoke;
+  border: 0 solid black;
+  cursor: pointer;
+}
+
+//黑色背景蒙版
+.Mask {
+  background-color: #000000;
+  opacity: 0.3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+//图标和头像标准样式
+.Avatar {
+  margin: 5px 5px;
+}
+
+.Icon {
+  margin: 5px 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: whitesmoke;
+  #ResendButton {
+    img {
+      height: 32px;
+    }
+  }
+}
+

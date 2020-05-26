@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <style>
+      body
+      {
+        margin:0;
+        padding: 0;
+        height: 100%;
+      }
+      body, html {
+        font: 12px/1.5 tahoma,arial,"Hiragino Sans GB",宋体,sans-serif;
+      }
+      ::-webkit-scrollbar {
+         width: 6px;
+         height: 6px;
+         background: transparent;
+       }
+
+      ::-webkit-scrollbar-thumb {
+         background: transparent;
+         border-radius: 4px;
+       }
+
+      :hover::-webkit-scrollbar-thumb {
+         background: hsla(0, 0%, 53%, 0.4);
+       }
+
+      :hover::-webkit-scrollbar-track {
+         background: hsla(0, 0%, 53%, 0.1);
+       }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=kMx8eaAZu4WzbNLXynTng4En0pmG7WGF"></script>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
