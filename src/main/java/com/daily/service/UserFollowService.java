@@ -12,4 +12,11 @@ public interface UserFollowService {
      * @return List<UserFollowInfo>
      */
     List<UserFollowInfo> getUserFollowInfoByUserId(int userId);
+    /*
+     * 根据用户ID,关注ID查询是否存在关注
+     *
+     * @param userId,followId
+     * @return int
+     */
+    boolean isExistFollow(int userId, int followId);
 }

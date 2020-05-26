@@ -28,4 +28,17 @@ public class UserFollowController {
         modelMap.put("userFollowInfo", userFollowInfoList);
         return modelMap;
     }
+    /*
+     * 根据用户ID,关注ID查询是否存在关注
+     *
+     * @param userId,followId
+     * @return Map<isExist, boolean>
+     */
+    @RequestMapping(value = "/isExistFollow", method = RequestMethod.GET)
+    private Map<String, Object> isExistFollow(Integer userId, Integer followId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Boolean isExist=userFollowService.isExistFollow(userId,followId);
+        modelMap.put("isExist", isExist);
+        return modelMap;
+    }
 }

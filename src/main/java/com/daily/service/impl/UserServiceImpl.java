@@ -147,6 +147,9 @@ public class UserServiceImpl implements UserService {
     public boolean addFollow(int userId, int followId) {
         if (userId != 0 && followId != 0) {
             try {
+                if(userFollowDao.isFollowByTwoId(userId,followId) != 0) {
+                    throw new RuntimeException("已关注，不可重复关注。");
+                }
                 int effectedNum1 = userDao.decUserFollowNum(userId);
                 int effectedNum2 = userDao.decUserFansNum(followId);
                 UserFollow userFollow = new UserFollow();
@@ -167,11 +170,15 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Transactional
     @Override
     public boolean addFollowByUserIdAndPostId(int userId, int postId) {
         if (userId != 0 && postId != 0) {
             try {
                 int followId = postDao.queryUserByPostId(postId);
+                if(userFollowDao.isFollowByTwoId(userId,followId) != 0) {
+                    throw new RuntimeException("已关注，不可重复关注。");
+                }
                 int effectedNum1 = userDao.decUserFollowNum(userId);
                 int effectedNum2 = userDao.decUserFansNum(followId);
                 UserFollow userFollow = new UserFollow();
@@ -191,4 +198,5 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("用户ID和帖子ID未得到");
         }
     }
+
 }

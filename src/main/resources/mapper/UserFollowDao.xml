@@ -19,6 +19,14 @@
         AND
         follow_id=#{followId}
     </select>
+    <select id="isFollowByTwoId" resultType="int">
+        SELECT count(user_follow_id)
+        FROM tb_user_follow
+        WHERE
+        user_id=#{userId}
+        AND
+        follow_id=#{followId}
+    </select>
     <insert id="insertUserFollow" useGeneratedKeys="true" keyProperty="userFollowId"
             keyColumn="user_follow_id" parameterType="com.daily.entity.UserFollow">
         INSERT INTO

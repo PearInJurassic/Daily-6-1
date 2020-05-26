@@ -28,4 +28,13 @@ public class UserFollowServiceImpl implements UserFollowService {
         }
         return list;
     }
+
+    @Override
+    public boolean isExistFollow(int userId, int followId) {
+        int num=userFollowDao.isFollowByTwoId(userId,followId);
+        if(num>0)
+            return true;
+        else
+            return false;
+    }
 }

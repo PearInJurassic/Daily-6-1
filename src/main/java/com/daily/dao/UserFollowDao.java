@@ -20,6 +20,13 @@ public interface UserFollowDao {
      */
     UserFollow getUserFollowByTwoId(int userId, int followId);
     /*
+     * 根据用户ID,关注ID查询是否存在关注
+     *
+     * @param userId,followId
+     * @return int
+     */
+    int isFollowByTwoId(int userId, int followId);
+    /*
      * 新增关注
      *
      * @param userFollow
