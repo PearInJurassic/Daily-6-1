@@ -64,7 +64,7 @@ public class CommentServiceImpl implements CommentService {
             //如果不是最顶层ID
             if(bid != 0)
                 comment.setBelongCommentId(bid);
-                //如果是最顶层的
+            //如果是最顶层的
             else
                 comment.setBelongCommentId(id);
             try {

@@ -22,7 +22,6 @@ public class CommentServiceImplTest {
 
 
     @Test
-    @Ignore
     public void getCommentByCommentId() {
         Comment comment = commentService.getCommentByCommentId(1);
         assertEquals(1,comment.getPostId());
@@ -49,6 +48,7 @@ public class CommentServiceImplTest {
     }
 
     @Test
+    @Ignore
     public void createComment() {
         Comment comment = new Comment();
         comment.setCommentContent("测试新增方法");

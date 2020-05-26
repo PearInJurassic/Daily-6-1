@@ -1,67 +1,34 @@
-/**   
-* @Title: Tag.java 
-* @Package com.daily.entity 
-* @Description: TODO 
-* @author Doris   
-* @date 2020年4月30日 下午4:17:15 
-* @version V1.0   
-*/
 package com.daily.entity;
 
-/**
- * @ClassName: Tag
- * @Description: TODO
- * @author Doris
- * @date 2020年4月30日 下午4:17:15
- * 
- */
 public class Tag {
-    private Integer tagId;
-
+    //标签ID
+    private int tagId;
+    //标签内容
     private String tagContent;
+    //标签对应的帖子ID
+    private int postId;
 
-    private Integer postId;
-
-    /**
-     * @return the tagId
-     */
-    public Integer getTagId() {
+    public int getTagId() {
         return tagId;
     }
 
-    /**
-     * @param tagId the tagId to set
-     */
-    public void setTagId(Integer tagId) {
+    public void setTagId(int tagId) {
         this.tagId = tagId;
     }
 
-    /**
-     * @return the tagContent
-     */
     public String getTagContent() {
         return tagContent;
     }
 
-    /**
-     * @param tagContent the tagContent to set
-     */
     public void setTagContent(String tagContent) {
         this.tagContent = tagContent;
     }
 
-    /**
-     * @return the postId
-     */
-    public Integer getPostId() {
+    public int getPostId() {
         return postId;
     }
 
-    /**
-     * @param postId the postId to set
-     */
-    public void setPostId(Integer postId) {
+    public void setPostId(int postId) {
         this.postId = postId;
     }
-
 }
