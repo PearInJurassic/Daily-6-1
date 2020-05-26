@@ -1,136 +1,211 @@
+/**   
+* @Title: Post.java 
+* @Package com.daily.entity 
+* @Description: TODO 
+* @author Doris   
+* @date 2020年4月4日 上午11:46:18 
+* @version V1.0   
+*/
 package com.daily.entity;
 
+import javax.persistence.Transient;
 import java.util.Date;
 
-public class Post {
-    //帖子ID
-    private int postId;
-    //发帖时间
-    private Date postCreateTime;
-    //更新时间
-    private Date postUpdateTime;
-    //点赞数
-    private int likeNum;
-    //转发数
-    private int forwardNum;
-    //评论数
-    private int commentNum;
-    //举报数
-    private int tipoffNum;
-    //帖子图片
-    private String postImg;
-    //帖子内容
-    private String postContent;
-    //是否匿名（是1，否0）
-    private int anonym;
-    //帖子所属地区ID
-    private int areaId;
-    //发帖人ID
-    private int userId;
-    //该帖是否为转发帖子（是1，否0）
-    private int forward;
+import org.springframework.data.annotation.Transient;
 
-    public int getPostId() {
+/**
+ * @ClassName: Post
+ * @Description: TODO
+ * @author Doris
+ * @date 2020年4月4日 上午11:46:18
+ * 
+ */
+public class Post {
+
+    private Integer postId;
+
+    private Date postCreateTime;
+
+    private Date postUpdateTime;
+
+    private Integer forwardNum;
+
+    private Integer tipoffNum;
+
+    private String postImg;
+
+    private String postContent;
+
+    private Integer anonym;
+
+    private Integer areaId;
+
+    private Integer userId;
+
+    private Integer forwardPostId;
+
+    @Transient
+    private Integer popularity;
+
+    /**
+     * @return the postId
+     */
+    public Integer getPostId() {
         return postId;
     }
 
-    public void setPostId(int postId) {
+    /**
+     * @param postId the postId to set
+     */
+    public void setPostId(Integer postId) {
         this.postId = postId;
     }
 
+    /**
+     * @return the postCreateTime
+     */
     public Date getPostCreateTime() {
         return postCreateTime;
     }
 
+    /**
+     * @param postCreateTime the postCreateTime to set
+     */
     public void setPostCreateTime(Date postCreateTime) {
         this.postCreateTime = postCreateTime;
     }
 
+    /**
+     * @return the postUpdateTime
+     */
     public Date getPostUpdateTime() {
         return postUpdateTime;
     }
 
+    /**
+     * @param postUpdateTime the postUpdateTime to set
+     */
     public void setPostUpdateTime(Date postUpdateTime) {
         this.postUpdateTime = postUpdateTime;
     }
 
-    public int getLikeNum() {
-        return likeNum;
-    }
-
-    public void setLikeNum(int likeNum) {
-        this.likeNum = likeNum;
-    }
-
-    public int getForwardNum() {
+    /**
+     * @return the forwardNum
+     */
+    public Integer getForwardNum() {
         return forwardNum;
     }
 
-    public void setForwardNum(int forwardNum) {
+    /**
+     * @param forwardNum the forwardNum to set
+     */
+    public void setForwardNum(Integer forwardNum) {
         this.forwardNum = forwardNum;
     }
 
-    public int getCommentNum() {
-        return commentNum;
-    }
-
-    public void setCommentNum(int commentNum) {
-        this.commentNum = commentNum;
-    }
-
-    public int getTipoffNum() {
+    /**
+     * @return the tipoffNum
+     */
+    public Integer getTipoffNum() {
         return tipoffNum;
     }
 
-    public void setTipoffNum(int tipoffNum) {
+    /**
+     * @param tipoffNum the tipoffNum to set
+     */
+    public void setTipoffNum(Integer tipoffNum) {
         this.tipoffNum = tipoffNum;
     }
 
+    /**
+     * @return the postImg
+     */
     public String getPostImg() {
         return postImg;
     }
 
+    /**
+     * @param postImg the postImg to set
+     */
     public void setPostImg(String postImg) {
         this.postImg = postImg;
     }
 
+    /**
+     * @return the postContent
+     */
     public String getPostContent() {
         return postContent;
     }
 
+    /**
+     * @param postContent the postContent to set
+     */
     public void setPostContent(String postContent) {
         this.postContent = postContent;
     }
 
-    public int getAnonym() {
+    /**
+     * @return the anonym
+     */
+    public Integer getAnonym() {
         return anonym;
     }
 
-    public void setAnonym(int anonym) {
+    /**
+     * @param anonym the anonym to set
+     */
+    public void setAnonym(Integer anonym) {
         this.anonym = anonym;
     }
 
-    public int getAreaId() {
+    /**
+     * @return the areaId
+     */
+    public Integer getAreaId() {
         return areaId;
     }
 
-    public void setAreaId(int areaId) {
+    /**
+     * @param areaId the areaId to set
+     */
+    public void setAreaId(Integer areaId) {
         this.areaId = areaId;
     }
 
-    public int getUserId() {
+    /**
+     * @return the userId
+     */
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    /**
+     * @param userId the userId to set
+     */
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getForward() {
-        return forward;
+    /**
+     * @return the forwardPostId
+     */
+    public Integer getForwardPostId() {
+        return forwardPostId;
     }
 
-    public void setForward(int forward) {
-        this.forward = forward;
+    /**
+     * @param forwardPostId the forwardPostId to set
+     */
+    public void setForwardPostId(Integer forwardPostId) {
+        this.forwardPostId = forwardPostId;
+    }
+
+    public Integer getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Integer popularity) {
+        this.popularity = popularity;
     }
 }
