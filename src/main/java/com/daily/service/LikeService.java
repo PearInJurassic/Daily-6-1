@@ -10,6 +10,8 @@ package com.daily.service;
 
 import com.daily.entity.Like;
 
+import java.util.List;
+
 /**
  * @ClassName: LikeService
  * @Description: TODO
@@ -18,9 +20,12 @@ import com.daily.entity.Like;
  * 
  */
 public interface LikeService {
+    public static final String LIKENUMKEY = "likeNum";
     int getLikeNumByPostId(int postId);
 
     int getLikeByPostIdAndUserId(int postId, int userId);
+
+    List<Integer> getLikePostIdByUserId(int userId);
 
     boolean addLike(Like like);
 

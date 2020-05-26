@@ -1,26 +1,22 @@
 package com.daily.web;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.daily.entity.Comment;
+import com.daily.entity.Post;
+import com.daily.entity.Tag;
+import com.daily.service.*;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.daily.entity.Comment;
-import com.daily.entity.Post;
-import com.daily.entity.Tag;
-import com.daily.service.CommentService;
-import com.daily.service.LikeService;
-import com.daily.service.PostService;
-import com.daily.service.TagService;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 
@@ -37,9 +33,12 @@ public class PostController {
     @Autowired
     private LikeService likeService;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 广场上获取所有的帖子信息
-     * 
+     *
      * @return
      */
     @RequestMapping(value = "/listpost", method = RequestMethod.GET)
@@ -52,7 +51,7 @@ public class PostController {
         List<Integer> isLikeList = new ArrayList<>();
         for (Post post : postList) {
             List<Tag> tags = tagService.getTagByPostId(post.getPostId());
-            likeList.add(likeService.getLikeNumByPostId(post.getPostId()));
+            likeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(),userId));
             tagList.add(tags);
             isLikeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
         }
@@ -61,7 +60,7 @@ public class PostController {
         List<Post> lastpostList = new ArrayList<Post>();
         lastpostList = postService.getPostByUserId(userId);
         modelMap.put("lastpostList", lastpostList);
-        modelMap.put("likeList", likeList);
+        modelMap.put("likeList", isLikeList);
         return modelMap;
     }
 
@@ -100,9 +99,14 @@ public class PostController {
     @RequestMapping(value = "/getrequireauditpost", method = RequestMethod.GET)
     private Map<String, Object> getRequireAuditPost() {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<Post> list = new ArrayList<Post>();
-        list = postService.getRequireAuditPost();
-        modelMap.put("postList", list);
+        List<Post> postList = new ArrayList<Post>();
+        List<Integer> frozenList = new ArrayList<>();
+        postList = postService.getRequireAuditPost();
+        for (Post post : postList) {
+            frozenList.add(userService.getStateByUserId(post.getUserId()));
+        }
+        modelMap.put("postList", postList);
+        modelMap.put("frozenList", frozenList);
         return modelMap;
     }
 
@@ -190,6 +194,29 @@ public class PostController {
         Map<String, Object> modelMap = new HashMap<String, Object>();
 
         modelMap.put("success", postService.tipoffPost(postId));
+        return modelMap;
+    }
+
+    @RequestMapping(value = "/getPostNumByUserId", method = RequestMethod.GET)
+    private Map<String, Object> getPostNumByUserId(Integer userId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        int i = postService.getPostNumByUserId(userId.intValue());
+        modelMap.put("postNum", i);
+        System.out.println(userId);
+        return modelMap;
+    }
+
+    @RequestMapping(value = "/getuserlikepost", method = RequestMethod.GET)
+    private Map<String, Object> getUserLikePost(Integer userId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Integer> likePostList=new ArrayList<>();
+        List<Post> postList=new ArrayList<>();
+        likePostList=likeService.getLikePostIdByUserId(userId);
+        for (int postId : likePostList) {
+            Post post = postService.getPostByPostId(postId);
+            postList.add(post);
+        }
+        modelMap.put("postList",postList);
         return modelMap;
     }
 

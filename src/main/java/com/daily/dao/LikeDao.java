@@ -10,6 +10,8 @@ package com.daily.dao;
 
 import com.daily.entity.Like;
 
+import java.util.List;
+
 /**
  * @ClassName: LikeDao
  * @Description: TODO
@@ -23,8 +25,12 @@ public interface LikeDao {
 
     int queryLikeByPostIdAndUserId(int postId, int userId);
 
+    List<Integer> queryLikePostIdByUserId(int userId);
+
     int insertLike(Like like);
 
     int deleteLike(int postId, int userId);
+
+
 
 }
