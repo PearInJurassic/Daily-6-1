@@ -22,6 +22,7 @@ public class CommentServiceImplTest {
 
 
     @Test
+    @Ignore
     public void getCommentByCommentId() {
         Comment comment = commentService.getCommentByCommentId(1);
         assertEquals(1,comment.getPostId());
