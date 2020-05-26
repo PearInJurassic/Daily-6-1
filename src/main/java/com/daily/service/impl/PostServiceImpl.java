@@ -1,13 +1,14 @@
-/**   
-* @Title: PostServiceImpl.java 
-* @Package com.daily.service.impl 
-* @Description: TODO 
-* @author Doris   
-* @date 2020年4月5日 下午3:25:20 
-* @version V1.0   
-*/
+/**
+ * @Title: PostServiceImpl.java
+ * @Package com.daily.service.impl
+ * @Description: TODO
+ * @author Doris
+ * @date 2020年4月5日 下午3:25:20
+ * @version V1.0
+ */
 package com.daily.service.impl;
 
+import com.daily.dao.LikeDao;
 import com.daily.dao.PostDao;
 import com.daily.entity.Post;
 import com.daily.service.PostService;
@@ -15,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -23,12 +27,15 @@ import java.util.List;
  * @Description: TODO
  * @author Doris
  * @date 2020年4月5日 下午3:25:20
- * 
+ *
  */
 @Service
 public class PostServiceImpl implements PostService {
     @Autowired
     private PostDao postDao;
+
+    @Autowired
+    private LikeDao likeDao;
 
     @Override
     public List<Post> getPostList() {
@@ -236,6 +243,30 @@ public class PostServiceImpl implements PostService {
     public int getPostNumByUserId(int userId) {
         // TODO Auto-generated method stub
         return postDao.countPostNumByUserId(userId);
+    }
+
+    @Override
+    public List<Post> sortList(List<Post> postList) {
+        Integer popularity,likeNum,forwardNum,tipoffNum,time;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date now = new Date();
+        for(Post post : postList) {
+            long t = post.getPostCreateTime().getTime();
+            t = now.getTime() - t;
+            time = (int) t / 100000000;
+            forwardNum = post.getForwardNum();
+            tipoffNum = post.getTipoffNum();
+            likeNum = likeDao.queryLikeNumByPostId(post.getPostId());
+            popularity = (likeNum * 1) + (forwardNum * 5) - (tipoffNum * 10) - (time * 1);
+            post.setPopularity(popularity);
+        }
+        Collections.sort(postList, new Comparator<Post>() {
+            @Override
+            public int compare(Post post1, Post post2) {
+                return post2.getPopularity().compareTo(post1.getPopularity());
+            }
+        });
+        return postList;
     }
 
 }

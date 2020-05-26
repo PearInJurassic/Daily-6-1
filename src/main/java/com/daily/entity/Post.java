@@ -1,13 +1,14 @@
-/**   
-* @Title: Post.java 
-* @Package com.daily.entity 
-* @Description: TODO 
-* @author Doris   
-* @date 2020年4月4日 上午11:46:18 
-* @version V1.0   
-*/
+/**
+ * @Title: Post.java
+ * @Package com.daily.entity
+ * @Description: TODO
+ * @author Doris
+ * @date 2020年4月4日 上午11:46:18
+ * @version V1.0
+ */
 package com.daily.entity;
 
+import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Date;
  * @Description: TODO
  * @author Doris
  * @date 2020年4月4日 上午11:46:18
- * 
+ *
  */
 public class Post {
 
@@ -40,6 +41,10 @@ public class Post {
     private Integer userId;
 
     private Integer forwardPostId;
+
+    //人气值
+    @Transient
+    private Integer popularity;
 
     /**
      * @return the postId
@@ -195,4 +200,11 @@ public class Post {
         this.forwardPostId = forwardPostId;
     }
 
+    public Integer getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Integer popularity) {
+        this.popularity = popularity;
+    }
 }

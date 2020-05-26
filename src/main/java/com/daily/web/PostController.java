@@ -1,4 +1,4 @@
-package com.daily.web;
+package com.daily.controller;
 
 import com.daily.entity.Comment;
 import com.daily.entity.Post;
@@ -206,4 +206,33 @@ public class PostController {
         return modelMap;
     }
 
+    /**
+     * 广场上获取所有的帖子信息（经过热门算法排序）
+     *
+     * @return
+     */
+    @RequestMapping(value = "/listpostbypop", method = RequestMethod.GET)
+    private Map<String, Object> listPostByPop(int userId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Post> postList = new ArrayList<Post>();
+        List<List<Tag>> tagList = new ArrayList<List<Tag>>();
+        postList = postService.getPostList();
+        List<Integer> likeList = new ArrayList<>();
+        List<Integer> isLikeList = new ArrayList<>();
+        //热门算法排序
+        postList = postService.sortList(postList);
+        for (Post post : postList) {
+            List<Tag> tags = tagService.getTagByPostId(post.getPostId());
+            likeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(),userId));
+            tagList.add(tags);
+            isLikeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
+        }
+        modelMap.put("postList", postList);
+        modelMap.put("tagList", tagList);
+        List<Post> lastpostList = new ArrayList<Post>();
+        lastpostList = postService.getPostByUserId(userId);
+        modelMap.put("lastpostList", lastpostList);
+        modelMap.put("likeList", likeList);
+        return modelMap;
+    }
 }
