@@ -2,6 +2,7 @@ package com.daily.common;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Random;
@@ -9,6 +10,7 @@ import java.util.Random;
 public class emailTest {
 
     @Test
+    @Ignore
     public void test() throws EmailException {
         //生成6位数字随机数
         Random r = new Random();
