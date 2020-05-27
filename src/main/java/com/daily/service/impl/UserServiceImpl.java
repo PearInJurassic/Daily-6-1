@@ -75,10 +75,17 @@ public class UserServiceImpl implements UserService {
     public int freezeUserById(int userId) {
         return userDao.freezeUserById(userId);
     }
+
+    @Override
+    public int unfreezeUserById(int userId) {
+        return userDao.unfreezeUserById(userId);
+    }
+
     @Override
     public int getStateByUserId(int userId){
         return userDao.getStateByUserId(userId);
     }
+
     @Override
     public UserInfoVO getUserInfoById(int userId) {
         UserInfoVO userInfoVO = new UserInfoVO();
