@@ -7,7 +7,7 @@
                 <el-avatar :size="52"
                            :src="anonymousAvatar" v-if="this.$store.state.isAnonymous"></el-avatar>
             </div>
-            <div>
+            <div style="font-size: 17px">
                 <p>{{userNickName}}</p>
             </div>
         </div>
@@ -36,9 +36,7 @@
       return {
         isAnonymous: 0,
         anonymousImgAdd: ['Anonymous.png', 'Anonymous-fill.png'],
-        anonyStyle: {
-          backgroundColor: 'white',
-        },
+
       }
     },
     props: {
@@ -50,6 +48,13 @@
       }
     },
     computed: {
+      anonyStyle(){
+        if(!this.$store.state.isAnonymous) {
+          return {backgroundColor: 'white'}
+        } else {
+          return {backgroundColor: "#3a3b3a"}
+        }
+      },
       anonymousAvatar(){
         return this.ANONYMOUS_AVATAR;
       },

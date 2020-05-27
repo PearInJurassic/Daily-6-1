@@ -63,7 +63,7 @@
 <style scoped>
     .SideBarRecent {
         margin: 15px auto;
-        box-shadow: 0 0 3px gray;
+        box-shadow: 0 0 3px #7f7e7e;
         width: 270px;
         height: 480px;
         padding-top: 1px;
