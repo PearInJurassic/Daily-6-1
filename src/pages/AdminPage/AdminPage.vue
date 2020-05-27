@@ -54,6 +54,7 @@
                             <template slot-scope="scope">
                                 <el-button @click="handleDetail(scope.row)" size="small" type="text">查看详情</el-button>
                                 <el-button @click="handleClick(scope.row)" size="small" type="text">冻结用户</el-button>
+                                <el-button @click="handleClick2(scope.row)" size="small" type="text">取消冻结</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -68,6 +69,16 @@
             <span class="dialog-footer" slot="footer">
                 <el-button @click="cancelFreeze">取 消</el-button>
                 <el-button @click="confirmFrezze" type="primary">确 定</el-button>
+            </span>
+        </el-dialog>
+         <el-dialog
+                :visible.sync="dialogVisible2"
+                title="是否要解冻用户？"
+                width="30%">
+            <span>确定要解冻该用户吗？</span>
+            <span class="dialog-footer" slot="footer">
+                <el-button @click="cancelFreeze">取 消</el-button>
+                <el-button @click="confirmUnfrezze" type="primary">确 定</el-button>
             </span>
         </el-dialog>
         <PostDetail v-if="detailDialogVisible"
@@ -87,6 +98,7 @@
       return {
         detailDialogVisible:false,
         dialogVisible: false,
+        dialogVisible2: false,
         loading: true,
         reportTableData: [],
         selectUser:0,
@@ -116,6 +128,10 @@
       handleClick(row) {
         this.selectUser = row.userId,
         this.dialogVisible=true
+      },
+      handleClick2(row) {
+        this.selectUser = row.userId,
+        this.dialogVisible2=true
       },
       /**
        * @description 得到管理员信息
@@ -147,6 +163,12 @@
           })
         })
         this.dialogVisible = false
+      },
+      /*
+       * @description 解冻用户
+       */
+      confirmUnfrezze(){
+         this.dialogVisible2 = false
       },
       cancelFreeze() {
         this.dialogVisible = false

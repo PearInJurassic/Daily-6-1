@@ -376,6 +376,45 @@
           console.log(response)
         })
       },
+       /**
+       * @description 得到某个时间区间的动态
+       */
+      timeRecord() {
+        // var start=this.$store.state.time.starttime.replace(/-/g, '/');
+        //var end=this.$store.state.time.endtime.replace(/-/g, '/');
+        this.axios.post(`${this.GLOBAL.apiUrl}/getRecordListByUserIdAndTypeAndTime`, {
+          userId: sessionStorage.getItem("ID"),
+          timeAxisType: this.btnData.text,
+          beginTime:new Date(this.$store.state.time.starttime),
+          endTime:new Date(this.$store.state.time.endtime)
+        }).then((response) => {
+          this.datalist = response.data.recordList          
+          this.$message({
+            message:"更新成功",
+            type:"success",
+          })
+          
+          console.log(response.data.recordList)
+        })
+
+
+      // var start=this.$store.state.time.starttime.replace(/-/g, '/');
+        //var end=this.$store.state.time.endtime.replace(/-/g, '/');
+        //this.axios.get(`${this.GLOBAL.apiUrl}/getRecordListByUserIdAndTypeAndTime`, {
+          //params: {
+            //userId: sessionStorage.getItem("ID"),
+          //timeAxisType: this.btnData.text,
+          //beginTime:start,
+          //endTime:end
+         // }
+       // }).then((response) => {
+         // this.datalist = response.data.recordList          
+         // this.$message({
+          //  message:"更新成功",
+          //  type:"success",
+       // })
+       // })
+      },
       //el-uploader 图片上传处理函数
       beforeImgUpload(file) {
         this.imgUpLoad.postData.key = `upload_pic_${file.name}`
@@ -401,25 +440,29 @@
       getstart(newVal) {
         // 删掉时间轴展示列表里的时间范围外的动态
         // console.log(newVal)
-        var i;
-        for (i = 0; i < this.datalist.length; i++) {
-          if (this.compareDate(this.datalist[i].record.recordCreateTime.split('T')[0], newVal) < 0) {
-            this.datalist.splice(i, 1);
-            i--;
-          }
-        }
+      
+        //var i;
+        //for (i = 0; i < this.datalist.length; i++) {
+          //if (this.compareDate(this.datalist[i].record.recordCreateTime.split('T')[0], newVal) < 0) {
+            //this.datalist.splice(i, 1);
+            //i--;
+          //}
+        //}
+       this.timeRecord()
+       console.log(newVal)
       },
       //监听时间轴中止日期变化
       getend(newVal) {
         // 删掉时间轴展示列表里的时间范围外的动态
-        var i;
-        for (i = 0; i < this.datalist.length; i++) {
+        //var i;
+        //for (i = 0; i < this.datalist.length; i++) {
           //从展示列表删去
-          if (this.compareDate(this.datalist[i].record.recordCreateTime.split('T')[0], newVal) > 0) {
-            this.datalist.splice(i, 1);
-            i--;
-          }
-        }
+          //if (this.compareDate(this.datalist[i].record.recordCreateTime.split('T')[0], newVal) > 0) {
+            //this.datalist.splice(i, 1);
+            //i--;
+          //}
+        //}
+        console.log(newVal)
       }
     }
   }
