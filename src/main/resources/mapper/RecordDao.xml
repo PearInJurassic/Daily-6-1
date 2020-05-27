@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daily.dao.RecordDao">
+    <select id="getRecordListByUserId" resultType="com.daily.entity.Record">
+        SELECT *
+        FROM tb_record
+        WHERE
+        user_id=#{userId}
+        ORDER BY record_create_time
+        DESC
+    </select>
+    <select id="getRecordListByUserIdAndType" resultType="com.daily.entity.Record">
+        SELECT *
+        FROM tb_record
+        WHERE
+        user_id=#{userId}
+        AND
+        time_axis_type=#{timeAxisType}
+        ORDER BY record_create_time
+        DESC
+    </select>
+    <select id="getRecordListByUserIdAndTime" resultType="com.daily.entity.Record">
+        SELECT *
+        FROM tb_record
+        WHERE
+        user_id=#{userId}
+        AND
+        (record_create_time BETWEEN #{beginTime} AND #{endTime})
+        ORDER BY record_create_time
+        DESC
+    </select>
+    <select id="getRecordListByUserIdAndTypeAndTime" resultType="com.daily.entity.Record">
+        SELECT *
+        FROM tb_record
+        WHERE
+        user_id=#{userId}
+        AND
+        time_axis_type=#{timeAxisType}
+        AND
+        (record_create_time BETWEEN #{beginTime} AND #{endTime})
+        ORDER BY record_create_time
+        DESC
+    </select>
+    <select id="getRecordListByUserIdAndKeyWord" resultType="com.daily.entity.Record">
+        SELECT *
+        FROM tb_record
+        WHERE
+        user_id=#{userId}
+        AND
+        record_content like '%${keyWord}%'
+        ORDER BY record_create_time
+        DESC
+    </select>
+    <insert id="insertRecord" useGeneratedKeys="true" keyProperty="recordId"
+            keyColumn="record_id" parameterType="com.daily.entity.Record">
+        INSERT INTO
+        tb_record(record_img,record_content,record_create_time,
+        record_update_time,time_axis_type,area_id,post_id,user_id)
+        VALUES
+        (#{recordImg},#{recordContent},#{recordCreateTime},
+        #{recordUpdateTime},#{timeAxisType},#{areaId},#{postId},#{userId})
+    </insert>
+    <update id="updateRecord" parameterType="com.daily.entity.Record">
+        update tb_record
+        <set>
+            <if test="recordImg != null">record_img=#{recordImg},</if>
+            <if test="recordContent != null">record_content=#{recordContent},</if>
+            <if test="recordUpdateTime != null">record_update_time=#{recordUpdateTime},</if>
+            <if test="areaId != null">areaId=#{areaId},</if>
+            <if test="postId != null">postId=#{postId},</if>
+        </set>
+        where record_id=#{recordId}
+    </update>
+    <delete id="deleteRecord">
+        DELETE FROM
+        tb_record
+        WHERE
+        record_id=#{recordId}
+    </delete>
+</mapper>
