@@ -1,11 +1,11 @@
-/**   
-* @Title: LikeServiceImpl.java 
-* @Package com.daily.service.impl 
-* @Description: TODO 
-* @author Doris   
-* @date 2020年4月28日 下午3:47:03 
-* @version V1.0   
-*/
+/**
+ * @Title: LikeServiceImpl.java
+ * @Package com.daily.service.impl
+ * @Description: TODO
+ * @author Doris
+ * @date 2020年4月28日 下午3:47:03
+ * @version V1.0
+ */
 package com.daily.service.impl;
 
 import com.daily.cache.JedisUtil;
@@ -24,7 +24,7 @@ import java.util.List;
  * @Description: TODO
  * @author Doris
  * @date 2020年4月28日 下午3:47:03
- * 
+ *
  */
 @Service
 public class LikeServiceImpl implements LikeService {
@@ -38,13 +38,13 @@ public class LikeServiceImpl implements LikeService {
     @Override
 //    @Transactional
     public int getLikeNumByPostId(int postId) {
-        String key=LIKENUMKEY;
-        int likeNum=0;
-        if(!jedisKeys.exists(key)){
-            likeNum=likeDao.queryLikeNumByPostId(postId);
-            jedisStrings.set(key,String.valueOf(likeNum));
-        }else{
-            likeNum=Integer.parseInt(jedisStrings.get(key));
+        String key = LIKENUMKEY;
+        int likeNum = 0;
+        if (!jedisKeys.exists(key)) {
+            likeNum = likeDao.queryLikeNumByPostId(postId);
+            jedisStrings.set(key, String.valueOf(likeNum));
+        } else {
+            likeNum = Integer.parseInt(jedisStrings.get(key));
         }
 
         return likeNum;
@@ -99,14 +99,30 @@ public class LikeServiceImpl implements LikeService {
         if (userId > 0) {
             try {
                 // 删除区域信息
-                List<Integer> list=new ArrayList<>();
-                list=likeDao.queryLikePostIdByUserId(userId);
+                List<Integer> list = new ArrayList<>();
+                list = likeDao.queryLikePostIdByUserId(userId);
                 return list;
             } catch (Exception e) {
                 throw new RuntimeException("列出用户点赞的帖子失败:" + e.toString());
             }
         } else {
             throw new RuntimeException("用户id不存在！");
+        }
+    }
+
+    @Override
+    public List<Integer> getUserIdWhoLikePostByPostId(int postId) {
+        if (postId > 0) {
+            try {
+
+                List<Integer> list = new ArrayList<>();
+                list = likeDao.queryUserIdWhoLikePostByPostId(postId);
+                return list;
+            } catch (Exception e) {
+                throw new RuntimeException("获取点赞的用户id失败:" + e.toString());
+            }
+        } else {
+            throw new RuntimeException("帖子id不存在！");
         }
     }
 

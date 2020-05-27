@@ -27,6 +27,8 @@ public interface LikeService {
 
     List<Integer> getLikePostIdByUserId(int userId);
 
+    List<Integer> getUserIdWhoLikePostByPostId(int postId);
+
     boolean addLike(Like like);
 
     boolean deleteLike(int postId, int userId);

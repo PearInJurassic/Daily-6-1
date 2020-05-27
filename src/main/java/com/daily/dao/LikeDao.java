@@ -27,6 +27,8 @@ public interface LikeDao {
 
     List<Integer> queryLikePostIdByUserId(int userId);
 
+    List<Integer> queryUserIdWhoLikePostByPostId(int postId);
+
     int insertLike(Like like);
 
     int deleteLike(int postId, int userId);
