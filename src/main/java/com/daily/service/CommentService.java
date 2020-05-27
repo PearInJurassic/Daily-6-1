@@ -60,6 +60,4 @@ public interface CommentService {
      * @return List<Comment>
      */
     int getCommentNumByPostId(int postId);
-
-
 }
