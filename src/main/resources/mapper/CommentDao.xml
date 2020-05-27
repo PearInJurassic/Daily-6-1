@@ -63,4 +63,10 @@
         WHERE
         reply_comment_id=#{replyCommentId}
     </select>
+    <select id="getCommentNumByPostId" resultType="int">
+        SELECT COUNT(*)
+        FROM tb_comment
+        WHERE
+        post_id=#{postId}
+    </select>
 </mapper>

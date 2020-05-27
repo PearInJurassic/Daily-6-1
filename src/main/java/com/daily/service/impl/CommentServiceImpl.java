@@ -51,7 +51,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public boolean createComment(Comment comment) {
         //判断内容是否为空或空串
-        if(comment.getCommentContent() != null && !comment.getCommentContent().equals("")) {
+        if(comment.getCommentContent() != null && !"".equals(comment.getCommentContent())) {
             //设置新增、修改日期为当前日期
             comment.setCommentCreateTime(new Date());
             comment.setCommentUpdateTime(new Date());
@@ -59,14 +59,17 @@ public class CommentServiceImpl implements CommentService {
             int id = comment.getReplyCommentId();
             //得到回复评论的belongCommentId
             int bid = 0;
-            if(id != 0)
+            if(id != 0) {
                 bid = commentDao.getCommentByCommentId(id).getBelongCommentId();
+            }
             //如果不是最顶层ID
-            if(bid != 0)
+            if(bid != 0) {
                 comment.setBelongCommentId(bid);
+            }
             //如果是最顶层的
-            else
+            else {
                 comment.setBelongCommentId(id);
+            }
             try {
                 boolean b = commentDao.createComment(comment);
                 if(b == true) {
@@ -85,7 +88,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public boolean updateComment(Comment comment) {
         //判断内容是否为空或空串
-        if(comment.getCommentContent() != null && !comment.getCommentContent().equals("")) {
+        if(comment.getCommentContent() != null && !"".equals(comment.getCommentContent())) {
             //设置修改日期为当前日期
             comment.setCommentUpdateTime(new Date());
             try {
@@ -114,8 +117,9 @@ public class CommentServiceImpl implements CommentService {
                 List<Comment> commentList = commentDao.getCommentByReplyCommentId(rid);
                 for(Comment comment : commentList) {
                     b = deleteComment(comment.getCommentId());
-                    if(b == false)
+                    if(b == false) {
                         System.out.println("删除评论失败！");
+                    }
                 }
                 return true;
             } else {
@@ -128,7 +132,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public int getCommentNumByPostId(int postId) {
-        return commentDao.getCommentByPostId(postId).size();
+        return commentDao.getCommentNumByPostId(postId);
     }
 
 }

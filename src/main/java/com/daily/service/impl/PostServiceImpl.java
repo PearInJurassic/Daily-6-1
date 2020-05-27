@@ -8,6 +8,7 @@
 */
 package com.daily.service.impl;
 
+import com.daily.dao.CommentDao;
 import com.daily.dao.LikeDao;
 import com.daily.dao.PostDao;
 import com.daily.entity.Post;
@@ -36,6 +37,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private LikeDao likeDao;
+
+    @Autowired
+    private CommentDao commentDao;
 
     @Override
     public List<Post> getPostList() {
@@ -247,17 +251,18 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> sortList(List<Post> postList) {
-        Integer popularity,likeNum,forwardNum,tipoffNum,time;
+        Integer popularity,likeNum,commentNum,forwardNum,tipoffNum,time;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date now = new Date();
         for(Post post : postList) {
             long t = post.getPostCreateTime().getTime();
             t = now.getTime() - t;
-            time = (int) t / 100000000;
+            time = (int) t / 1000000;
             forwardNum = post.getForwardNum();
             tipoffNum = post.getTipoffNum();
             likeNum = likeDao.queryLikeNumByPostId(post.getPostId());
-            popularity = (likeNum * 1) + (forwardNum * 5) - (tipoffNum * 10) - (time * 1);
+            commentNum = commentDao.getCommentNumByPostId(post.getPostId());
+            popularity = (likeNum * 2) + (commentNum * 5) + (forwardNum * 3) - (tipoffNum * 10) - (time * 2);
             post.setPopularity(popularity);
         }
         Collections.sort(postList, new Comparator<Post>() {

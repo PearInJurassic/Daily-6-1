@@ -77,6 +77,6 @@ public class CommentServiceImplTest {
     @Test
     @Ignore
     public void getCommentNumByPostId() {
-        assertEquals(2,commentService.getCommentNumByPostId(2));
+        assertEquals(6,commentService.getCommentNumByPostId(1));
     }
 }

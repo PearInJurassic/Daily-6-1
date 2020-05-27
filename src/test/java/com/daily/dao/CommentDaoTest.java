@@ -86,4 +86,9 @@ public class CommentDaoTest {
         List<Comment> commentList = commentDao.getCommentByReplyCommentId(0);
         assertEquals(6,commentList.size());
     }
+
+    @Test
+    public void getCommentCountByPostId() {
+        assertEquals(6,commentDao.getCommentNumByPostId(1));
+    }
 }

@@ -23,7 +23,7 @@ class PostServiceImplTest {
         List<Post> postList = postService.getPostList();
         postList = postService.sortList(postList);
         for(Post post : postList) {
-            System.out.print(post.getPostId());
+            System.out.print(post.getPostContent());
             System.out.print(":");
             System.out.println(post.getPopularity());
         }
