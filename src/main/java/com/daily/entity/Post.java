@@ -8,7 +8,6 @@
  */
 package com.daily.entity;
 
-import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -43,7 +42,7 @@ public class Post {
     private Integer forwardPostId;
 
     //人气值
-    @Transient
+    //@Transient
     private Integer popularity;
 
     /**
