@@ -1,4 +1,4 @@
-package com.daily.controller;
+package com.daily.web;
 
 import com.daily.entity.Comment;
 import com.daily.entity.Post;
@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-
 public class PostController {
     @Autowired
     private PostService postService;
