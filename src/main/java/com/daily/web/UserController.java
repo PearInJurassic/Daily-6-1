@@ -259,11 +259,16 @@ public class UserController {
         email.setHostName("smtp.163.com");//邮箱的SMTP服务器，一般123邮箱的是smtp.123.com,qq邮箱为smtp.qq.com,163...
         email.setCharset("utf-8");//设置发送的字符类型
 
+        //邮件发送部署在云服务器上时，不要使用默认的端口（25），一般默认是禁掉的，除非解禁。通常改为465端口;
+        //如果使用465端口，一定要采用SSL加密方式，否则同样失败。email.setSSLOnConnect(true);
+        email.setSmtpPort(465);
+        email.setSSLOnConnect(true);
+
         email.addTo(emailCode);//设置收件人
         email.setFrom("mkxfzu@163.com","Daily 账户团队");//发送人的邮箱为自己的，用户名可以随便填
 
         //设置发送人到的邮箱和用户名和授权码(授权码是自己设置的)
-        email.setAuthentication("mkxfzu@163.com","LTMCDVCBUSFTCIYM");
+        email.setAuthentication("mkxfzu@163.com","GGSCBKKWLDQVNCHT");
 
         email.setSubject("Daily 账户安全验证码");//设置发送主题
         email.setMsg("Daily 账户安全验证码\n请为您的账户"+emailCode+"" +
