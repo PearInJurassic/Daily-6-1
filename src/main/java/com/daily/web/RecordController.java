@@ -28,10 +28,10 @@ public class RecordController {
      * @param userId,timeAxisType
      * @return Map<recordList, List<RecordExpand>>
      */
-    @RequestMapping(value = "/getRecordListByUserIdAndType", method = RequestMethod.POST)
-    private Map<String, Object> getRecordListByUserIdAndType(Integer userId, String timeAxisType) {
+    @RequestMapping(value = "/ListByUIdAndType", method = RequestMethod.GET)
+    private Map<String, Object> ListByUIdAndType(Integer uId, String type) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<RecordExpand> recordList=recordService.getRecordListByUserIdAndType(userId,timeAxisType);
+        List<RecordExpand> recordList=recordService.getRecordListByUserIdAndType(uId,type);
         modelMap.put("recordList", recordList);
         return modelMap;
     }
@@ -42,10 +42,10 @@ public class RecordController {
      * @param userId,Date1,Date2
      * @return Map<recordList, List<RecordExpand>>
      */
-    @RequestMapping(value = "/getRecordListByUserIdAndTime", method = RequestMethod.POST)
-    private Map<String, Object> getRecordListByUserIdAndTime(Integer userId, Date beginTime, Date endTime) {
+    @RequestMapping(value = "/ListByUIdAndTime", method = RequestMethod.GET)
+    private Map<String, Object> ListByUIdAndTime(Integer uId, Date begin, Date end) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<RecordExpand> recordList=recordService.getRecordListByUserIdAndTime(userId,beginTime,endTime);
+        List<RecordExpand> recordList=recordService.getRecordListByUserIdAndTime(uId,begin,end);
         modelMap.put("recordList", recordList);
         return modelMap;
     }
@@ -56,12 +56,12 @@ public class RecordController {
      * @param userId,timeAxisType,Date1,Date2
      * @return Map<recordList, List<RecordExpand>>
      */
-    @RequestMapping(value = "/getRecordListByUserIdAndTypeAndTime", method = RequestMethod.POST)
-    private Map<String, Object> getRecordListByUserIdAndTypeAndTime
-            (Integer userId,String timeAxisType,Date beginTime,Date endTime) {
+    @RequestMapping(value = "/ListByUIdAndTT", method = RequestMethod.GET)
+    private Map<String, Object> ListByUIdAndTT
+            (Integer uId,String type,Date b,Date e) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<RecordExpand> recordList=recordService.
-                getRecordListByUserIdAndTypeAndTime(userId,timeAxisType,beginTime,endTime);
+                getRecordListByUserIdAndTypeAndTime(uId,type,b,e);
         modelMap.put("recordList", recordList);
         return modelMap;
     }
