@@ -221,11 +221,13 @@
       /**
        * @description 初始化获得动态列表
        */
-      init() {
-        let data = new FormData();
-        data.append('userId', sessionStorage.getItem("ID"));
-        data.append('timeAxisType', this.axisTypeName)
-        this.axios.post(`${this.GLOBAL.apiUrl}/getRecordListByUserIdAndType`, data)
+      init() {        
+        this.axios.get(`${this.GLOBAL.apiUrl}/ListByUIdAndType`, {
+          params: {
+            uId: sessionStorage.getItem("ID"),
+            type: this.axisTypeName
+          }
+        })
           .then((response) => {
             this.datalist = response.data.recordList;
             // console.log(this.datalist)
@@ -380,40 +382,45 @@
        * @description 得到某个时间区间的动态
        */
       timeRecord() {
-        // var start=this.$store.state.time.starttime.replace(/-/g, '/');
+        //var start=this.$store.state.time.starttime.replace(/-/g, '/');
         //var end=this.$store.state.time.endtime.replace(/-/g, '/');
-        this.axios.post(`${this.GLOBAL.apiUrl}/getRecordListByUserIdAndTypeAndTime`, {
-          userId: sessionStorage.getItem("ID"),
-          timeAxisType: this.btnData.text,
-          beginTime:new Date(this.$store.state.time.starttime),
-          endTime:new Date(this.$store.state.time.endtime)
+        //this.axios.post(`${this.GLOBAL.apiUrl}/getRecordListByUserIdAndTypeAndTime`, {
+          //userId: sessionStorage.getItem("ID"),
+          //timeAxisType: this.btnData.text,
+          //beginTime:start,
+          //endTime:end
+        //}).then((response) => {
+          //this.datalist = response.data.recordList          
+          //this.$message({
+            //message:"更新成功",
+            //type:"success",
+          //})
+        //})
+         //.catch(function (error) {
+        //console.log(error);
+    //})
+
+
+       var start1=this.$store.state.time.starttime.replace(/-/g, '/');
+        var end1=this.$store.state.time.endtime.replace(/-/g, '/');
+        this.axios.get(`${this.GLOBAL.apiUrl}/ListByUIdAndTime`, {
+          params: {
+          uId: sessionStorage.getItem("ID"),
+          //type: this.btnData.text,
+          begin:start1,
+          end:end1
+          }
         }).then((response) => {
           this.datalist = response.data.recordList          
           this.$message({
             message:"更新成功",
             type:"success",
-          })
-          
-          console.log(response.data.recordList)
         })
-
-
-      // var start=this.$store.state.time.starttime.replace(/-/g, '/');
-        //var end=this.$store.state.time.endtime.replace(/-/g, '/');
-        //this.axios.get(`${this.GLOBAL.apiUrl}/getRecordListByUserIdAndTypeAndTime`, {
-          //params: {
-            //userId: sessionStorage.getItem("ID"),
-          //timeAxisType: this.btnData.text,
-          //beginTime:start,
-          //endTime:end
-         // }
-       // }).then((response) => {
-         // this.datalist = response.data.recordList          
-         // this.$message({
-          //  message:"更新成功",
-          //  type:"success",
-       // })
-       // })
+        console.log(response.data.recordList)
+        })
+        .catch(function (error) {
+        console.log(error);
+        })
       },
       //el-uploader 图片上传处理函数
       beforeImgUpload(file) {

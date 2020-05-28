@@ -34,7 +34,7 @@
                 </el-form>
                 <LineWordLine>有问题？</LineWordLine>
                 <div class="ResetPassword">
-                    <el-link>忘记密码</el-link>
+                    <el-link @click="retrieveCi">忘记密码</el-link>
                 </div>
             </div>
             <div class="SignInPanel">
@@ -51,6 +51,44 @@
             <PanelSignIn @finishSignIn="finishSignIn"></PanelSignIn>
         </el-dialog>
 
+      <el-dialog 
+              :visible.sync="dialogVisible2" 
+              title="邮箱验证" 
+              width="30%">
+        <el-form :model="form2"  :rules="rules">
+          <el-form-item label="请输入你的注册邮箱" prop="email">
+          <el-input v-model="form2.email"></el-input>
+          </el-form-item>
+          <el-button @click="emailSend" type="primary">发送验证码</el-button>
+        </el-form>      
+      </el-dialog>
+
+      <el-dialog 
+              :visible.sync="dialogVisible3" 
+              title="验证码填写" 
+              width="30%">
+        <el-form :model="form2"  :rules="rules">
+          <el-form-item label="请输入你收到的验证码">
+          <el-input v-model="form2.code"></el-input>
+          </el-form-item>
+          <el-button @click="receiveCode" type="primary">确定</el-button>
+        </el-form>      
+      </el-dialog>
+
+
+       <el-dialog 
+              :visible.sync="dialogVisible4" 
+              title="重置密码" 
+              width="30%">
+        <el-form :model="form2"  :rules="rules">
+          <el-form-item label="请输入你的新密码" prop="password">
+          <el-input v-model="form2.password"></el-input>
+          </el-form-item>
+          <el-button @click="rePassword" type="primary">确定</el-button>
+        </el-form>      
+      </el-dialog>
+
+
     </div>
 </template>
 
@@ -66,7 +104,20 @@
           username: '',
           password: '',
         },
+        form2: {
+          email: '',
+          code: '',
+          password: ''
+        },
         rules: {
+           email: [
+            {
+              required: true, message: "请输入用户名邮箱", trigger: 'blur'
+            },
+            {
+              type: 'email', message: "请输入正确的邮箱地址", trigger: 'blur'
+            }
+          ],
           username: [
             {
               required: true, message: "请输入用户名邮箱", trigger: 'blur'
@@ -88,7 +139,11 @@
           ]
         },
         loginRole: 0,
-        dialogVisible: false
+        dialogVisible: false,
+        dialogVisible2: false,
+        dialogVisible3: false,
+        dialogVisible4: false,
+        verCode: 0
       }
     },
     components: {
@@ -137,6 +192,38 @@
       },
       signIn() {
         this.dialogVisible = true;
+      },
+      retrieveCi() {
+        this.dialogVisible2 = true;
+      },
+      emailSend() {
+        console.log(this.form2.email)
+        this.axios.get(`${this.GLOBAL.apiUrl}/getVerificationCode`, {
+          params: {
+          emailCode: this.form2.email,
+          }
+        }).then((response) => {
+          this.verCode = response.data.verificationCode  
+          this.dialogVisible2 = false;
+          this.dialogVisible3 = true;
+          console.log(response.data)
+          this.$message({
+            message:"更新成功",
+            type:"success",
+        })
+        
+        })
+        .catch(function (error) {
+        console.log(error);
+        })
+        
+      },
+      receiveCode() {
+        this.dialogVisible3 = false;
+        this.dialogVisible4 = true;
+      },
+      rePassword() {
+        this.dialogVisible4 = false;
       }
     },
   }
