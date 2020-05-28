@@ -76,7 +76,8 @@
     name: "PanelComment",
     data() {
       return {
-        // replyTarget: `"@":`,
+        postIdReplyTo:-1,
+        posterNameReplyTo:"",
         activeName: 1,
         headUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
         reportUrl: require("@/assets/Post/report.png"),
@@ -155,9 +156,7 @@
        * @description 发布评论
        */
       addComment() {
-        let pattern = /^("@)(\d)+/;
-        let r = this.commentText.match(pattern);
-        let replyCommentId = (r == null) ? 0 : r[0].split('@')[1];
+        let replyCommentId = (this.postIdReplyTo == -1) ? 0 : this.postIdReplyTo;
         let anonym=this.$store.state.isAnonymous;
         this.axios.post(`${this.GLOBAL.apiUrl}/comment/createcomment`, {
           "commentContent": this.commentText,
@@ -184,6 +183,16 @@
         // this.commentNum.push(this.commentText);
         this.commentText = ''
       },
+      /**
+       * @description 删除评论
+       */
+      // deleteFromList(commentId){
+      //   for(let index in this.commentList) {
+      //     if(this.commentList[index][0].commentId == commentId) {
+      //       this.commentList.splice(index,1);
+      //     }
+      //   }
+      // },
       /**
        * @description 举报帖子
        */
@@ -239,11 +248,10 @@
             postId: this.item.postId
           }
         }).then((response) => {
-          console.log(response)
+          // console.log(response)
           let commentList = response.data.commentList;
           for (let index in commentList) {
             this.commentList.push(commentList[index])
-            // console.log(commentList[index], index)
           }
         })
       },
@@ -264,7 +272,21 @@
        * @param activeNum 点击某栏后获得的栏号，此处是评论的id
        */
       change(activeNum) {
-        this.commentText = `"@${activeNum}":`
+        this.axios.get(`${this.GLOBAL.apiUrl}/comment/getcommentbycommentid`, {
+          params: {
+            commentId:activeNum
+          }
+        }).then((response)=>{
+          let userId=response.data.comment.userId;
+          this.axios.get(`${this.GLOBAL.apiUrl}/getUserInfo`, {
+            params: {
+              userId
+            }
+          }).then((r)=>{
+            this.commentText = `"@${r.data.userInfo.user.userName}":`
+          })
+        })
+        this.postIdReplyTo = activeNum;
       }
     },
     created() {

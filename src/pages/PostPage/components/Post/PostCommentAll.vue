@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="CommentContent">
+        <div class="CommentContent" v-if="exist">
             <div class="Comment">
                 <div class="Avatar">
                     <el-avatar :src="user.userImg"></el-avatar>
@@ -18,9 +18,12 @@
     name: "PostCommentAll",
     data() {
       return {
+        exist:true,
+        loginUserId:sessionStorage.getItem("ID"),
         user:{
           userName:'',
-          userImg:''
+          userImg:'',
+          userId:-1,
         }
       }
     },
@@ -34,6 +37,19 @@
         if (this.headComment.commentContent.length > 45)
           return this.headComment.commentContent.slice(0, 45) + "..."
         else return this.headComment.commentContent
+      }
+    },
+    methods:{
+      deleteComment(){
+        this.axios.get(`${this.GLOBAL.apiUrl}/comment/deletecomment`,{
+          params:{
+            commentId:this.headComment.commentId,
+          }
+        }).then((response)=>{
+          this.$emit('deleteSuccess',this.headComment.commentId)
+          console.log(response)
+          this.exist=false;
+        })
       }
     },
     created() {
@@ -51,6 +67,7 @@
           this.user.userName='';
           this.user.userImg=this.ANONYMOUS_AVATAR;
         }
+        this.user.userId=response.data.userInfo.user.userId;
       })
     }
   }

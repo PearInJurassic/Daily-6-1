@@ -25,7 +25,7 @@
                             <img :src="likeUrl" alt="喜欢按钮">
                         </button>
                     </div>
-                    <div class="Icon">
+                    <div class="Icon" v-if="itemInfo.userId != loginUserId">
                         <button @click="forwardpostButton" class="IconButton" id="ResendButton">
                             <img alt="转发按钮" src="@/assets/Post/resend.png">
                         </button>

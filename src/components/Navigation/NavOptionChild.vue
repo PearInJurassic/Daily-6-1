@@ -45,6 +45,7 @@
       change(index) {
         // console.log(index)
         this.$router.push(this.pageUrl[index]);
+        this.$store.commit('setIsAnonymous',0);
       }
     }
   }
