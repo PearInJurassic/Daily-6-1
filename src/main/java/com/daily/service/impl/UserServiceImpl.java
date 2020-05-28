@@ -55,8 +55,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public int insertUser(RegisterDTO registerDTO) {
         //判断邮箱是否存在
-        if (userDao.existEmail(registerDTO.getEmail()) != null)
+        if (userDao.existEmail(registerDTO.getEmail()) != null) {
             return 2;
+        }
 
         User user = new User();
         BeanUtils.copyProperties(registerDTO, user);
@@ -82,6 +83,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int resetPasswordById(int userId) {
+        return 0;
+    }
+
+    @Override
     public int getStateByUserId(int userId){
         return userDao.getStateByUserId(userId);
     }
@@ -104,8 +110,9 @@ public class UserServiceImpl implements UserService {
         UserExpand userExpand = new UserExpand();
         User user = userDao.getUserByUserId(userId);
         userExpand.setUser(user);
-        if (user.getAreaId() != null && user.getAreaId() != 0)
+        if (user.getAreaId() != null && user.getAreaId() != 0) {
             userExpand.setAreaName(areaDao.getAreaNameById(user.getAreaId()));
+        }
         return userExpand;
     }
 

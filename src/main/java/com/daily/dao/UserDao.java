@@ -20,6 +20,8 @@ public interface UserDao {
 
     int unfreezeUserById(int userId);
 
+    int resetPasswordById(int userId);
+
     int getStateByUserId(int userId);
 
     Integer existEmail(String email);

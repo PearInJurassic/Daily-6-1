@@ -17,6 +17,8 @@ public interface UserService {
 
     int unfreezeUserById(int userId);
 
+    int resetPasswordById(int userId);
+
     int getStateByUserId(int userId);
 
     Integer getUserIdByEmail(String email);

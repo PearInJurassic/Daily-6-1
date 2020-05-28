@@ -96,6 +96,23 @@ public class UserController {
         }
         return modelMap;
     }
+    /*
+    * 解冻
+    * @param
+    * @return Map<userInfo,UserExpand>
+    * */
+    @RequestMapping(value = "/unfreeze", method = RequestMethod.POST)
+    private Map<String, Object> unfreeze(Integer userId){
+        int result = userService.unfreezeUserById(userId);
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        if(result == 1){
+            modelMap.put("code", 1);
+        }else{
+            modelMap.put("code", 2);
+        }
+        return modelMap;
+    }
+
 
     /*
      * 删除
