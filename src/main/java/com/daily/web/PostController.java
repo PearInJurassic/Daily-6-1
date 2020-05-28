@@ -3,6 +3,7 @@ package com.daily.web;
 import com.daily.entity.Comment;
 import com.daily.entity.Post;
 import com.daily.entity.Tag;
+import com.daily.entity.Tipoff;
 import com.daily.service.*;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -35,6 +36,9 @@ public class PostController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TipoffService tipoffService;
 
     /**
      * 广场上获取所有的帖子信息
@@ -189,11 +193,11 @@ public class PostController {
         return modelMap;
     }
 
-    @RequestMapping(value = "/tipoffpost", method = RequestMethod.GET)
-    private Map<String, Object> tipoffPost(int postId) {
+    @RequestMapping(value = "/tipoffpost", method = RequestMethod.POST)
+    private Map<String, Object> tipoffPost(Tipoff tipoff) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
 
-        modelMap.put("success", postService.tipoffPost(postId));
+        modelMap.put("success", tipoffService.addTipoff(tipoff));
         return modelMap;
     }
 

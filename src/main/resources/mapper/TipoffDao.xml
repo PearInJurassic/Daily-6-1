@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daily.dao.TipoffDao">
+
+    <select id="queryTipoff" resultType="com.daily.entity.Tipoff">
+		SELECT *
+		FROM tb_tipoff
+		WHERE
+		post_id=#{postId}
+		and
+		user_id=#{userId}
+	</select>
+
+    <insert id="insertTipoff" useGeneratedKeys="true" keyProperty="tipoffId"
+            keyColumn="tipoff_id" parameterType="com.daily.entity.Tipoff">
+		INSERT INTO
+		tb_tipoff(user_id,post_id)
+		VALUES
+		(#{userId},#{postId})
+	</insert>
+
+
+</mapper>
