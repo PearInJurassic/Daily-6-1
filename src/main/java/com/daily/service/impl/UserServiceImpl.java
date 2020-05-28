@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int resetPasswordById(int userId) {
-        return 0;
+        return userDao.resetPasswordById(userId);
     }
 
     @Override

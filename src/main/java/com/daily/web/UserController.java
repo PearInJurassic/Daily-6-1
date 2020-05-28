@@ -82,7 +82,7 @@ public class UserController {
 
     /*
      * 冻结
-     * @param
+     * @param userId
      * @return Map<userInfo,UserExpand>
      */
     @RequestMapping(value = "/freeze", method = RequestMethod.POST)
@@ -98,9 +98,9 @@ public class UserController {
     }
     /*
     * 解冻
-    * @param
+    * @param userId
     * @return Map<userInfo,UserExpand>
-    * */
+    */
     @RequestMapping(value = "/unfreeze", method = RequestMethod.POST)
     private Map<String, Object> unfreeze(Integer userId){
         int result = userService.unfreezeUserById(userId);
@@ -112,7 +112,24 @@ public class UserController {
         }
         return modelMap;
     }
-
+    /*
+    * 重置密码
+    * @param userId
+    * @return Map<userInfo,userExpand>
+    */
+    @RequestMapping(value = "/resetPassword",method = RequestMethod.POST)
+    private Map<String,Object> resetPassword(Integer userId){
+        int result = userService.resetPasswordById(userId);
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        if(result == 1){
+            modelMap.put("code",1);
+            modelMap.put("message","重置成功");
+        }
+        else{
+            modelMap.put("code",2);
+        }
+        return modelMap;
+    }
 
     /*
      * 删除

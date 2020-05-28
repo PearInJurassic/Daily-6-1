@@ -120,4 +120,9 @@ public class UserDaoTest {
 //        int i = userDao.unfreezeUserById(1323);
 //        assertEquals(1,i);
 //    }
+//    @Test
+//    public void testResetPassword(){
+//        int i = userDao.resetPasswordById(1323);
+//        assertEquals(1,i);
+//    }
 }
