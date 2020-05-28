@@ -109,4 +109,15 @@ public class UserDaoTest {
 //        // 验证预期值和实际值是否相符
 //        assertEquals("2750201946@fox.com", user.getEmail());
 //    }
+//    @Test
+//    public void testFreezeUser(){
+//        int i = userDao.freezeUserById(1323);
+//        assertEquals(1,i);
+//    }
+//
+//    @Test
+//    public void testUnfreezeUser(){
+//        int i = userDao.unfreezeUserById(1323);
+//        assertEquals(1,i);
+//    }
 }
