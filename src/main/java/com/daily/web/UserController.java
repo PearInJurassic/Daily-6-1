@@ -18,10 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @RestController
 public class UserController {
@@ -273,6 +270,20 @@ public class UserController {
                 "使用以下验证码。\n验证码："+random+"\n\n谢谢！\nDaily 账户团队");//设置发送内容
         email.send();//进行发送
         modelMap.put("verificationCode", random);
+        return modelMap;
+    }
+
+    /*
+     * 得到关注的人的所有帖子
+     *
+     * @param userId
+     * @return Map<"userFollowPostList", Object>
+     */
+    @RequestMapping(value = "/userFollowPostList", method = RequestMethod.GET)
+    private Map<String, Object> userFollowPostList(Integer userId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Post> userFollowPostList=userService.getUserFollowPostList(userId);
+        modelMap.put("userFollowPostList", userFollowPostList);
         return modelMap;
     }
 }

@@ -6,9 +6,7 @@ import com.daily.dao.UserDao;
 import com.daily.dao.UserFollowDao;
 import com.daily.dto.LoginDTO;
 import com.daily.dto.RegisterDTO;
-import com.daily.entity.User;
-import com.daily.entity.UserExpand;
-import com.daily.entity.UserFollow;
+import com.daily.entity.*;
 import com.daily.service.UserService;
 import com.daily.vo.UserInfoVO;
 import org.springframework.beans.BeanUtils;
@@ -16,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -206,4 +206,19 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public List<Post> getUserFollowPostList(int userId) {
+        List<Post> userFollowPostList=new ArrayList<Post>();
+        List<Integer> userFollowIDList=userFollowDao.getUserFollowIDListByUserId(userId);
+        List<Post> postList=postDao.queryPost();
+        for(int i=0;i<postList.size();i++) {
+            for(int j=0;j<userFollowIDList.size();j++) {
+                if(postList.get(i).getUserId().equals(userFollowIDList.get(j))) {
+                    userFollowPostList.add(postList.get(i));
+                    break;
+                }
+            }
+        }
+        return userFollowPostList;
+    }
 }

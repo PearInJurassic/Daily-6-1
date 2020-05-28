@@ -2,9 +2,13 @@ package com.daily.service;
 
 import com.daily.dto.LoginDTO;
 import com.daily.dto.RegisterDTO;
+import com.daily.entity.Post;
 import com.daily.entity.User;
 import com.daily.entity.UserExpand;
+import com.daily.entity.UserFollowInfo;
 import com.daily.vo.UserInfoVO;
+
+import java.util.List;
 
 public interface UserService {
     int login(LoginDTO loginDTO);
@@ -62,4 +66,12 @@ public interface UserService {
      * @return boolean
      */
     boolean addFollowByUserIdAndPostId(int userId, int postId);
+
+    /*
+     * 得到关注的人的所有帖子
+     *
+     * @param userId
+     * @return List<Post>
+     */
+    List<Post> getUserFollowPostList(int userId);
 }
