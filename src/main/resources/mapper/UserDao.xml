@@ -61,7 +61,7 @@
     <update id="resetPasswordById">
         update tb_user
         <set>
-            user_pwd=123456
+            user_pwd=#{userPwd}
         </set>
         where user_id=#{userId}
     </update>

@@ -83,8 +83,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int resetPasswordById(int userId) {
-        return userDao.resetPasswordById(userId);
+    public int resetPasswordById(int userId, String userPwd) {
+        return userDao.resetPasswordById(userId,userPwd);
     }
 
     @Override

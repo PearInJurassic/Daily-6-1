@@ -20,7 +20,7 @@ public interface UserDao {
 
     int unfreezeUserById(int userId);
 
-    int resetPasswordById(int userId);
+    int resetPasswordById(int userId, String userPwd);
 
     int getStateByUserId(int userId);
 
