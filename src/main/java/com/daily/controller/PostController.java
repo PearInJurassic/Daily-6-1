@@ -36,11 +36,8 @@ public class PostController {
     @Autowired
     private AreaService areaService;
 
-    /*
     @Autowired
     private UserService userService;
-
-     */
 
     /**
      * 广场上获取所有的帖子信息
@@ -109,7 +106,7 @@ public class PostController {
         List<Integer> frozenList = new ArrayList<>();
         postList = postService.getRequireAuditPost();
         for (Post post : postList) {
-            //frozenList.add(userService.getStateByUserId(post.getUserId()));
+            frozenList.add(userService.getStateByUserId(post.getUserId()));
         }
         modelMap.put("postList", postList);
         modelMap.put("frozenList", frozenList);

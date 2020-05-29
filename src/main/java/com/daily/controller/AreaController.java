@@ -96,4 +96,21 @@ public class AreaController {
         modelMap.put("success", areaService.reduceBubbleNum(areaId));
         return modelMap;
     }
+
+    /*
+     * 通过所属地区名称获取地区信息列表
+     *
+     * @param belongAreaName
+     * @return
+     */
+    @RequestMapping(value = "/getarealistbybelongareaname", method = RequestMethod.GET)
+    private Map<String, Object> getAreaListByBelongAreaName(String belongAreaName) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Area> areaList = new ArrayList<Area>();
+        Area area = areaService.getAreaByName(belongAreaName);
+        // 获取区域列表
+        areaList = areaService.getAreaListByBelongAreaId(area.getAreaId());
+        modelMap.put("areaList", areaList);
+        return modelMap;
+    }
 }
