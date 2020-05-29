@@ -41,6 +41,10 @@ public class Post {
 
     private Integer forwardPostId;
 
+    //人气值
+    private transient Integer popularity;
+
+
     /**
      * @return the postId
      */
@@ -193,6 +197,14 @@ public class Post {
      */
     public void setForwardPostId(Integer forwardPostId) {
         this.forwardPostId = forwardPostId;
+    }
+
+    public Integer getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Integer popularity) {
+        this.popularity = popularity;
     }
 
 }

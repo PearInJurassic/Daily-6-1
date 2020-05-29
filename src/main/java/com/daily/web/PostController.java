@@ -40,6 +40,9 @@ public class PostController {
     @Autowired
     private TipoffService tipoffService;
 
+    @Autowired
+    private AreaService areaService;
+
     /**
      * 广场上获取所有的帖子信息
      *
@@ -55,7 +58,7 @@ public class PostController {
         List<Integer> isLikeList = new ArrayList<>();
         for (Post post : postList) {
             List<Tag> tags = tagService.getTagByPostId(post.getPostId());
-            likeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(),userId));
+            likeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
             tagList.add(tags);
             isLikeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
         }
@@ -152,8 +155,11 @@ public class PostController {
     private Map<String, Object> addPost(@RequestBody Post post)
             throws JsonParseException, JsonMappingException, IOException {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-
-        modelMap.put("success", postService.addPost(post));
+        boolean b = postService.addPost(post);
+        if(b == true) {
+            b = areaService.addBubbleNum(post.getAreaId());
+        }
+        modelMap.put("success", b);
         Post newPost = postService.getLastPost();
         modelMap.put("newPost", newPost);
         return modelMap;
@@ -173,8 +179,12 @@ public class PostController {
     @RequestMapping(value = "/removepost", method = RequestMethod.GET)
     private Map<String, Object> removeArea(Integer postId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-
-        modelMap.put("success", postService.deletePost(postId));
+        int areaId = postService.getPostByPostId(postId).getAreaId();
+        boolean b = postService.deletePost(postId);
+        if(b == true) {
+            b = areaService.reduceBubbleNum(areaId);
+        }
+        modelMap.put("success", b);
         List<Post> postList = new ArrayList<Post>();
         postList = postService.getPostList();
         modelMap.put("postList", postList);
@@ -213,15 +223,44 @@ public class PostController {
     @RequestMapping(value = "/getuserlikepost", method = RequestMethod.GET)
     private Map<String, Object> getUserLikePost(Integer userId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<Integer> likePostList=new ArrayList<>();
-        List<Post> postList=new ArrayList<>();
-        likePostList=likeService.getLikePostIdByUserId(userId);
+        List<Integer> likePostList = new ArrayList<>();
+        List<Post> postList = new ArrayList<>();
+        likePostList = likeService.getLikePostIdByUserId(userId);
         for (int postId : likePostList) {
             Post post = postService.getPostByPostId(postId);
             postList.add(post);
         }
-        modelMap.put("postList",postList);
+        modelMap.put("postList", postList);
         return modelMap;
     }
 
+    /**
+     * 广场上获取所有的帖子信息（经过热门算法排序）
+     *
+     * @return
+     */
+    @RequestMapping(value = "/listpostbypop", method = RequestMethod.GET)
+    private Map<String, Object> listPostByPop(int userId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Post> postList = new ArrayList<Post>();
+        List<List<Tag>> tagList = new ArrayList<List<Tag>>();
+        postList = postService.getPostList();
+        List<Integer> likeList = new ArrayList<>();
+        List<Integer> isLikeList = new ArrayList<>();
+        //热门算法排序
+        postList = postService.sortList(postList);
+        for (Post post : postList) {
+            List<Tag> tags = tagService.getTagByPostId(post.getPostId());
+            likeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
+            tagList.add(tags);
+            isLikeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
+        }
+        modelMap.put("postList", postList);
+        modelMap.put("tagList", tagList);
+        List<Post> lastpostList = new ArrayList<Post>();
+        lastpostList = postService.getPostByUserId(userId);
+        modelMap.put("lastpostList", lastpostList);
+        modelMap.put("likeList", likeList);
+        return modelMap;
+    }
 }

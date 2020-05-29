@@ -8,9 +8,9 @@
 */
 package com.daily.service;
 
-import java.util.List;
-
 import com.daily.entity.Post;
+
+import java.util.List;
 
 /**
  * @ClassName: PostService
@@ -34,6 +34,8 @@ public interface PostService {
      * @return
      */
     List<Post> getPostByUserId(int userId);
+
+    int getPostNumByUserId(int userId);
 
     /**
      * 获取特定的帖子
@@ -93,5 +95,7 @@ public interface PostService {
     boolean untipoffPost(int postId);
 
     int forwardPost(int postId, int userId, String str);
+
+    List<Post> sortList(List<Post> postList);
 
 }

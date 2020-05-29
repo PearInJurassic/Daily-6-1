@@ -8,16 +8,20 @@
 */
 package com.daily.service.impl;
 
-import java.util.Date;
-import java.util.List;
-
+import com.daily.dao.CommentDao;
+import com.daily.dao.LikeDao;
+import com.daily.dao.PostDao;
+import com.daily.entity.Post;
+import com.daily.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.daily.dao.PostDao;
-import com.daily.entity.Post;
-import com.daily.service.PostService;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @ClassName: PostServiceImpl
@@ -30,6 +34,12 @@ import com.daily.service.PostService;
 public class PostServiceImpl implements PostService {
     @Autowired
     private PostDao postDao;
+
+    @Autowired
+    private LikeDao likeDao;
+
+    @Autowired
+    private CommentDao commentDao;
 
     @Override
     public List<Post> getPostList() {
@@ -233,4 +243,34 @@ public class PostServiceImpl implements PostService {
         return postDao.queryPostByAreaId(areaId);
     }
 
+    @Override
+    public int getPostNumByUserId(int userId) {
+        // TODO Auto-generated method stub
+        return postDao.countPostNumByUserId(userId);
+    }
+
+    @Override
+    public List<Post> sortList(List<Post> postList) {
+        Integer popularity,likeNum,commentNum,forwardNum,tipoffNum,time;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date now = new Date();
+        for(Post post : postList) {
+            long t = post.getPostCreateTime().getTime();
+            t = now.getTime() - t;
+            time = (int) t / 1000000;
+            forwardNum = post.getForwardNum();
+            tipoffNum = post.getTipoffNum();
+            likeNum = likeDao.queryLikeNumByPostId(post.getPostId());
+            commentNum = commentDao.getCommentNumByPostId(post.getPostId());
+            popularity = (likeNum * 2) + (commentNum * 5) + (forwardNum * 3) - (tipoffNum * 10) - (time * 2);
+            post.setPopularity(popularity);
+        }
+        Collections.sort(postList, new Comparator<Post>() {
+            @Override
+            public int compare(Post post1, Post post2) {
+                return post2.getPopularity().compareTo(post1.getPopularity());
+            }
+        });
+        return postList;
+    }
 }
