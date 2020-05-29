@@ -1,17 +1,8 @@
 <template>
     <div>
         <div>
-            <div class="Item">
-                <!--            <slot name="post">-->
-                <!--            <el-image :src="postItem.postImg" fit="cover" style="width: 275px;height: 275px">-->
-                <!--            </el-image>-->
-                <!--            </slot>-->
-                <!--            <slot name="record">-->
-                <!--                <el-image :src="imgUrl" fit="cover" style="width: 275px;height: 275px">-->
-                <!--                </el-image>-->
-                <!--            </slot>-->
+            <div :class="itemClass">
                 <slot>
-
                 </slot>
             </div>
         </div>
@@ -23,7 +14,17 @@
     name: "PersonItems",
     data() {
       return {
+        windowWidth: document.documentElement.clientWidth,
         detailShowState: false,
+      }
+    },
+    computed:{
+      itemClass() {
+        if(this.windowWidth < 500){
+          return "mobile_person_item"
+        } else {
+          return "Item"
+        }
       }
     },
     props: {
@@ -40,7 +41,12 @@
         this.userInfo = response.data.userInfo.user;
         // console.log(response)
       })
-    }
+    },
+    watch: {
+      '$store.state.screenWidth': function (val) { //监听屏幕宽度变化
+        this.windowWidth = val;
+      }
+    },
   }
 </script>
 

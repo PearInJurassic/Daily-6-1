@@ -1,6 +1,12 @@
 <template>
     <div class="ContentAll">
         <div class="ContentCenter" v-loading="loading">
+            <div>
+                <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleMenuSelect">
+                    <el-menu-item index="1">按时间排序</el-menu-item>
+                    <el-menu-item index="2">查看关注对象发帖</el-menu-item>
+                </el-menu>
+            </div>
             <component :is="PostAll"
                        :key="index"
                        :itemInfo="postNum[index]"
@@ -21,6 +27,7 @@
     name: "ContentPostMain",
     data() {
       return {
+        activeIndex:"1",
         windowWidth:document.documentElement.clientWidth,
         PostAll: "PostAll",
         postNum: [],
@@ -34,12 +41,9 @@
     },
     methods: {
       /**
-       * @description 初始化渲染帖子列表。
+       * @description 按照时间顺序展示帖子。
        */
-      init() {
-        // let url=location.search;//获取url
-        // let userID = url.split('=')[1];
-        // sessionStorage.setItem('ID',userID);
+      getPostListByTime(){
         let userID = sessionStorage.getItem("ID");
         this.axios.get(`${this.GLOBAL.apiUrl}/listpost`,{
           params:{
@@ -61,8 +65,60 @@
             console.log(error);
           });
       },
+      /**
+       * @description 初始化渲染帖子列表。
+       */
+      init() {
+        // let url=location.search;//获取url
+        // let userID = url.split('=')[1];
+        // sessionStorage.setItem('ID',userID);
+        this.getPostListByTime();
+      },
+      /**
+       * @description 按照关注列表显示帖子
+       */
+      getPostListByFollow() {
+        let userID = sessionStorage.getItem("ID");
+        this.axios.get(`${this.GLOBAL.apiUrl}/userFollowPostList`,{
+          params:{
+            userId:userID,
+          }
+        })
+          .then((response) => {
+            console.log(response)
+            this.loading=false
+            this.likeList = [...response.data.likeList];
+            // console.log(this.likeList)
+            let postData = response.data.userFollowPostList;
+            for(let index in postData) {
+              this.postNum.push(postData[index])
+            }
+            // console.log(this.postNum)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
+
+      /**
+       * @description 刷新页面
+       */
       reloadAfterDelete() {
         this.reload();
+      },
+      /**
+       * @description 选择帖子展示方式
+       */
+      handleMenuSelect(key){
+        switch (key) {
+            case "1":
+              this.getPostListByTime()
+              break;
+            case "2":
+              this.getPostListByFollow();
+              break;
+        }
+        console.log(key)
       }
     },
     created() {

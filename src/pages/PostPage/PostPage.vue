@@ -64,6 +64,8 @@
 </script>
 
 <style lang="less">
+    @import "~@/CSS/mobile.less";
+    @import "~@/CSS/smallWindow.less";
     #app {
         font-family: Avenir, Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;

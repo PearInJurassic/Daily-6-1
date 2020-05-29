@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="FollowList">
+        <div :class="followListClass">
             <div :key="index"
                  @click="gotoOthers(followList[index].userId)"
                  class="Avatar"
@@ -32,13 +32,22 @@
   import PersonFollowItems from "@/pages/PostPage/components/Person/PersonFollowItems";
 
   export default {
-
     name: "ContentPersonFollow",
     data() {
       return {
+        windowWidth:document.documentElement.clientWidth,
         followNum: 5,
         followList: [],
         drawer: false,
+      }
+    },
+    computed:{
+      followListClass(){
+        if(this.windowWidth >500) {
+          return "FollowList"
+        } else {
+          return "mobile_person_follow_list"
+        }
       }
     },
     props: {
@@ -67,8 +76,7 @@
       }
     },
     created() {
-      console.log(`isOthers:${this.isOthers}`)
-
+      // console.log(`isOthers:${this.isOthers}`)
       let userId = this.isOthers ? sessionStorage.getItem('viewId') : sessionStorage.getItem('ID')
       this.axios.get(`${this.GLOBAL.apiUrl}/getUserFollowInfo`, {
         params: {
@@ -83,6 +91,11 @@
           // console.log(list)
         })
       // console.log(this.isOthers)
+    },
+    watch:{
+      '$store.state.screenWidth': function (val) { //监听屏幕宽度变化
+        this.windowWidth = val;
+      }
     }
   }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class="ContentAll">
-        <div class="ContentCenter">
+        <div :class="personContentClass">
             <ContentPersonInfo></ContentPersonInfo>
             <ContentPersonFollow></ContentPersonFollow>
             <ContentPersonTab></ContentPersonTab>
@@ -15,11 +15,30 @@
 
   export default {
     name: "ContentPersonMain",
+    data(){
+      return{
+        windowWidth:document.documentElement.clientWidth,
+      }
+    },
+    computed:{
+      personContentClass(){
+        if(this.windowWidth>950){
+          return "ContentCenter"
+        } else {
+          return "small_person_content_all"
+        }
+      }
+    },
     components: {
       ContentPersonInfo,
       ContentPersonFollow,
       ContentPersonTab
-    }
+    },
+    watch: {
+      '$store.state.screenWidth': function (val) { //监听屏幕宽度变化
+        this.windowWidth = val;
+      }
+    },
   }
 </script>
 

@@ -52,6 +52,7 @@
     name: "PostPanel",
     data() {
       return {
+        imageList:[],
         isShow: true,
         tags: '',
         postText: '',
@@ -89,23 +90,26 @@
        * @param {string} flag 完成信号,可能有"finish"正常结束，和“close"直接关闭。
        */
       finishEdit(flag) {
+        let imageList = this.imageList.join('#')
+        // console.log(imageList)
         let that = this;
         let anonym = this.$store.state.isAnonymous;
         this.axios.post(`${this.GLOBAL.apiUrl}/addpost`, {
-          postImg: that.dialogImageUrl,
+          // postImg: that.dialogImageUrl,
+          postImg:imageList,
           postContent: that.postText,
           anonym,
           areaId: 0,
           userId: sessionStorage.getItem('ID'),
           forwardPostId: -1,
         })
-          .then(() => {
+          .then((response) => {
             this.postText='';
             this.dialogImageUrl='';
             this.$refs.pictureUploader.clearFiles();
             console.log(this.dialogImageUrl)
             Bus.$emit("finishEdit", flag);
-            // console.log(response)
+            console.log(response)
           })
       },
       beforeImgUpload(file) {
@@ -119,9 +123,12 @@
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       },
-      handlePictureSuccess(res) {
+      handlePictureSuccess(res,file,fileList) {
         this.dialogImageUrl = `${this.qiniuaddr}/${res.key}`
         console.log(this.dialogImageUrl)
+        this.imageList=fileList.map((value) =>{
+          return `${this.qiniuaddr}/${value.response.key}`;
+        })
       }
     },
     components: {

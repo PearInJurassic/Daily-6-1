@@ -1,7 +1,7 @@
 <template>
     <div class="contentDetail" v-if="isShow">
         <div @click="closeDetail" class="Mask"></div>
-        <div class="PostDetail">
+        <div :class="PostDetailClass">
             <div class="PictureDetail">
                 <div>
                     <el-image :preview-src-list="srcList"
@@ -9,8 +9,8 @@
                     </el-image>
                 </div>
                 <el-carousel height="400px">
-                    <el-carousel-item :key="item" v-for="item in 4">
-                        <el-image :src="itemInfo.postImg"
+                    <el-carousel-item :key="item" v-for="(item,index) in srcList">
+                        <el-image :src="srcList[index]"
                                   alt="图片"
                                   fit="cover"
                         >
@@ -62,12 +62,21 @@
         required: true
       }
     },
-    computed:{
-      visible(){
-        if(this.windowWidth<950){
+    computed: {
+      visible() {
+        if (this.windowWidth < 950) {
           return false;
         }
         return true;
+      },
+      PostDetailClass(){
+        if (this.windowWidth > 950) {
+          return "PostDetail"
+        } else if (this.windowWidth > 650){
+          return "small_post_picture_detail"
+        } else {
+          return "mobile_post_picture_detail"
+        }
       }
     },
     components: {
@@ -90,7 +99,9 @@
       }
     },
     created() {
-      this.srcList.push(this.itemInfo.postImg)
+      // this.srcList.push(this.itemInfo.postImg)
+      this.srcList = this.itemInfo.postImg.split('#')
+      console.log(this.srcList)
       // console.log(this.pInfo)
     },
     watch: {
@@ -114,7 +125,8 @@
     }
 
     .PostDetail {
-        max-width: 1800px;
+        width: 950px;
+        max-width: 950px;
         max-height: 600px;
         border: 0 solid black;
         border-radius: 4px;
@@ -130,7 +142,7 @@
     .PictureDetail {
         display: flex;
         .setBorder();
-        .setMinSize(600px, 600px);
+        width: 100%;
         justify-content: center;
         flex-direction: column;
     }

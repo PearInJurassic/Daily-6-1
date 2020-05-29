@@ -1,20 +1,24 @@
 <template>
     <div>
-        <div class="PersonInfo">
+        <div :class="personInfoClass">
             <div class="Avatar">
                 <el-avatar
                         :size="180"
                         :src="avatarUrl">
                 </el-avatar>
             </div>
-            <div class="Information">
+            <div :class="personInfoDetailClass">
                 <div class="UserName" v-cloak>
                     <p>{{userInfo.userNiceName}}</p>
                     <p style="font-size: 13px;padding-top: 40px;padding-left: 50px">{{userInfo.words}}</p>
                 </div>
                 <div class="DetailInfo">
                     <span>{{userInfo.postNum}} 帖子</span>
-                    <span>{{userInfo.fansNum}} 粉丝</span>
+                    <el-button type="text"
+                               style="font-size: 20px;margin-right: 20px"
+                               >
+                        {{userInfo.fansNum}} 粉丝
+                    </el-button>
                     <span>关注 {{userInfo.followNum}} 人</span>
                 </div>
                 <slot name="setting">
@@ -47,6 +51,7 @@
     name: "ContentPersonInfo",
     data() {
       return {
+        windowWidth:document.documentElement.clientWidth,
         editDialogVisible: false,
         avatarUrl: '',
         userInfo: {
@@ -55,8 +60,25 @@
           fansNum: NaN,
           followNum: NaN,
           words: '输入你的个性签名吧！',
+          fansList:[],
         }
       };
+    },
+    computed:{
+      personInfoClass(){
+        if(this.windowWidth > 500) {
+          return "PersonInfo"
+        } else {
+          return "mobile_person_info_content"
+        }
+      },
+      personInfoDetailClass(){
+        if(this.windowWidth > 500) {
+          return "Information"
+        } else {
+          return "mobile_person_info_detail"
+        }
+      }
     },
     props: {
       isOthers: {}
@@ -107,8 +129,22 @@
             this.userInfo.postNum = response.data.postNum
             // console.log(this.postNum)
           })
+        this.getFansList(userID);
       },
-
+      /**
+       * @description 展示粉丝列表
+       */
+      getFansList(userId) {
+        //TODO
+        this.axios.get(`${this.GLOBAL.apiUrl}/getUserFansInfo`, {
+            params: {
+              userId
+            }
+          }).then((response) =>{
+            this.fansList=[...response.data.userFansInfo];
+            console.log(this.fansList)
+        })
+      }
     },
     created() {
       let userID = this.isOthers
@@ -117,7 +153,12 @@
         :
         sessionStorage.getItem('ID')
       this.init(userID);
-    }
+    },
+    watch: {
+      '$store.state.screenWidth': function (val) { //监听屏幕宽度变化
+        this.windowWidth = val;
+      }
+    },
   }
 </script>
 
@@ -128,48 +169,41 @@
         display: none;
     }
 
-    .Avatar {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .UserName {
-        display: flex;
-    }
-
     .PersonInfo {
         .setSize(925px, 230px);
         padding: 20px 20px;
         background-color: white;
         display: flex;
         justify-content: right;
+        .Avatar {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .UserName {
+            display: flex;
+            font-size: 32px;
+        }
     }
 
     .Information {
         .setSize(590px, 230px);
         margin-left: 80px;
-    }
-
-    .UserName {
-        font-size: 32px;
-    }
-
-    .DetailInfo {
-        span {
-            margin-right: 40px;
-            font-size: 20px;
+        .DetailInfo {
+            span {
+                margin-right: 40px;
+                font-size: 20px;
+            }
         }
     }
-
     .Icon {
         margin-top: 40px;
-        width: 32px;
+        width: 85%;
+        background-color: white;
         display: flex;
         flex-direction: row;
-        justify-content: left;
+        justify-content: right;
     }
-
     .IconButton {
         background-color: white;
     }
