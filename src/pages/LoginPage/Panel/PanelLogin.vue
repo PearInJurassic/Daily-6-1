@@ -143,7 +143,7 @@
         dialogVisible2: false,
         dialogVisible3: false,
         dialogVisible4: false,
-        verCode: 0
+        verCode:0
       }
     },
     components: {
@@ -198,32 +198,64 @@
       },
       emailSend() {
         console.log(this.form2.email)
-        this.axios.get(`${this.GLOBAL.apiUrl}/getVerificationCode`, {
-          params: {
-          emailCode: this.form2.email,
-          }
-        }).then((response) => {
-          this.verCode = response.data.verificationCode  
-          this.dialogVisible2 = false;
-          this.dialogVisible3 = true;
-          console.log(response.data)
-          this.$message({
-            message:"更新成功",
-            type:"success",
-        })
+          this.axios.get(`${this.GLOBAL.apiUrl}/getVerificationCode`, {
+            params: {
+            emailCode: this.form2.email,
+            }
+          }).then((response) => {
+            this.verCode = response.data.verificationCode  
+            this.dialogVisible2 = false;
+            this.dialogVisible3 = true;
+            console.log(response.data.verificationCode)
+            this.$message({
+              message:"验证码已发送",
+              type:"success",
+          })
+          
+          })
+          .catch(function (error) {
+          console.log(error);
+          })
         
-        })
-        .catch(function (error) {
-        console.log(error);
-        })
         
       },
-      receiveCode() {
-        this.dialogVisible3 = false;
-        this.dialogVisible4 = true;
+      receiveCode() {       
+        if(this.verCode==this.form2.code) {
+          //进入重置密码界面
+          this.dialogVisible3 = false;
+          this.dialogVisible4 = true;
+           this.$message({
+              message:"验证码正确",
+              type:"success",
+          })
+        }
+        else {
+           this.$message({
+              message:"验证码错误",
+              type:"warning",
+          })
+        }
       },
       rePassword() {
-        this.dialogVisible4 = false;
+         this.axios.get(`${this.GLOBAL.apiUrl}/getVerificationCode`, {
+            params: {
+            emailCode: this.form2.email,
+            }
+          }).then((response) => {
+            this.verCode = response.data.verificationCode  
+            this.dialogVisible2 = false;
+            this.dialogVisible3 = true;
+            console.log(response.data.verificationCode)
+            this.$message({
+              message:"验证码已发送",
+              type:"success",
+          })
+          this.dialogVisible4 = false;
+          })
+          .catch(function (error) {
+          console.log(error);
+          })
+        
       }
     },
   }

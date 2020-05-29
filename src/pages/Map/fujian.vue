@@ -176,7 +176,9 @@
               if (this.test[num] >= this.colorlist[temp].start && this.test[num] <= this.colorlist[temp].end) {
                 this.area[i].color.push(this.colorlist[temp].color);
                 num++;
+                console.log("???")
                 break;
+                
               }
             }
 
@@ -214,6 +216,7 @@
     watch: {
       //监听时间轴开始日期变化
       gettest() {
+        console.log("hjghghff")
         this.createMap()
       }
     },
