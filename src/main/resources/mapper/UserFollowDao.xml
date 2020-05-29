@@ -11,6 +11,14 @@
         ORDER BY follow_time
         DESC
     </select>
+    <select id="getUserFansIDListByUserId" resultType="Integer">
+        SELECT user_id
+        FROM tb_user_follow
+        WHERE
+        follow_id=#{followId}
+        ORDER BY follow_time
+        DESC
+    </select>
     <select id="getUserFollowByTwoId" resultType="com.daily.entity.UserFollow">
         SELECT user_follow_id,user_id,follow_id,follow_time
         FROM tb_user_follow

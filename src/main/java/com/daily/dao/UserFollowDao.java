@@ -13,6 +13,13 @@ public interface UserFollowDao {
      */
     List<Integer> getUserFollowIDListByUserId(int userId);
     /*
+     * 根据用户ID得到粉丝列表(只需要对方id)
+     *
+     * @param userId
+     * @return List<Integer>
+     */
+    List<Integer> getUserFansIDListByUserId(int followId);
+    /*
      * 根据用户ID,关注ID得到关注
      *
      * @param userId,followId

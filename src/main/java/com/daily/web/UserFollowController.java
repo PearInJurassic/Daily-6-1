@@ -41,4 +41,17 @@ public class UserFollowController {
         modelMap.put("isExist", isExist);
         return modelMap;
     }
+    /*
+     * 根据用户ID得到用户粉丝的信息
+     *
+     * @param userId
+     * @return Map<userFansInfo, List<UserFansInfo>>
+     */
+    @RequestMapping(value = "/getUserFansInfo", method = RequestMethod.GET)
+    private Map<String, Object> getUserFansInfo(Integer userId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<UserFollowInfo> userFansInfoList=userFollowService.getUserFansInfoByUserId(userId);
+        modelMap.put("userFansInfo", userFansInfoList);
+        return modelMap;
+    }
 }

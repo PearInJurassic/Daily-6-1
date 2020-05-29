@@ -13,6 +13,13 @@ public interface UserFollowService {
      */
     List<UserFollowInfo> getUserFollowInfoByUserId(int userId);
     /*
+     * 根据用户ID得到用户粉丝的信息
+     *
+     * @param userId
+     * @return List<UserFollowInfo>
+     */
+    List<UserFollowInfo> getUserFansInfoByUserId(int userId);
+    /*
      * 根据用户ID,关注ID查询是否存在关注
      *
      * @param userId,followId
