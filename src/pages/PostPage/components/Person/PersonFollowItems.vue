@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="followPerson">
+        <div class="followPerson" v-if="exist">
             <div class="Avatar">
                 <el-avatar :size="65"
                            :src="followInfo.userImg">
@@ -11,8 +11,9 @@
             </div>
             <div class="Operation">
                 <button @click="gotoOthers" class="CommonButton">查看详情</button>
-                <button @click="cancelFollow" lcass="CommonButton"
-                v-if="cancelButtonDisable!=1">取消关注</button>
+                <button @click="cancelFollow" class="CommonButton"
+                        v-if="cancelButtonDisable!=1">取消关注
+                </button>
             </div>
         </div>
     </div>
@@ -20,11 +21,15 @@
 
 <script>
   export default {
-    inject: ['reload'],
     name: "PersonFollowItems",
+    data() {
+      return{
+        exist:true ,
+      }
+    },
     props: {
       followInfo: {},
-      cancelButtonDisable:{}
+      cancelButtonDisable: {}
     },
     methods: {
       /**
@@ -51,18 +56,15 @@
             followId: this.followInfo.userId,
           }
         })
-          .then((response) => {
-            this.reload();
-            console.log(response)
+          .then(() => {
+            this.exist=false;
+            // console.log(response)
           })
           .catch((error) => {
             console.log(error)
           })
       },
     },
-    created() {
-      console.log(this.cancelButtonDisable)
-    }
   }
 </script>
 

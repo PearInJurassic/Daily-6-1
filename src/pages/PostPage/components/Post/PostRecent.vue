@@ -72,8 +72,8 @@
         margin: 7px auto;
         .setMaxSize(250px, 80px);
         .setMinSize(250px,75px);
-        .setBorder();
-        box-shadow: 0 0 3px #2c2d2c;
+        border:1px solid #e7e7e7;
+        box-shadow: 0 0 3px #eae9e9;
         display: flex;
         justify-content: left;
     }
