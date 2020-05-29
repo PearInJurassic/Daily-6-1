@@ -74,4 +74,12 @@ public interface UserService {
      * @return List<Post>
      */
     List<Post> getUserFollowPostList(int userId);
+
+    /*
+     * 根据用户名模糊查找用户
+     *
+     * @param string
+     * @return List<User>
+     */
+    List<User> searchByUserName(String userName);
 }

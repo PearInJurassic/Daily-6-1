@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,8 +20,24 @@ import static org.junit.Assert.assertEquals;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) // 按方法名大小升序执行
 
 public class UserDaoTest {
-//    @Autowired
-//    private UserDao userDao;
+    @Autowired
+    private UserDao userDao;
+
+    @Test
+    @Ignore
+    public void searchByUserName() {
+        List<User> userList=userDao.searchByUserName("d");
+        for(int i=0;i<userList.size();i++) {
+            System.out.println(userList.get(i).getUserName());
+        }
+        assertEquals(3,userList.size());
+    }
+
+    @Test
+    @Ignore
+    public void getStateByUserId() {
+        assertEquals(1,userDao.getStateByUserId(6));
+    }
 
     @Test
     @Ignore

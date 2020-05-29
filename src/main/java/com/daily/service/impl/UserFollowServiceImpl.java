@@ -23,8 +23,12 @@ public class UserFollowServiceImpl implements UserFollowService {
         List<Integer> userFollowIDList=userFollowDao.getUserFollowIDListByUserId(userId);
         for(int i=0;i<userFollowIDList.size();i++) {
             int userFollowID=userFollowIDList.get(i);
-            UserFollowInfo userFollowInfo=userDao.getUserFollowInfoByUserId(userFollowID);
-            list.add(userFollowInfo);
+            if(userDao.getStateByUserId(userFollowID)==1) {
+                UserFollowInfo userFollowInfo = userDao.getUserFollowInfoByUserId(userFollowID);
+                list.add(userFollowInfo);
+                System.out.println(userFollowID);
+                System.out.println(userDao.getStateByUserId(userFollowID));
+            }
         }
         return list;
     }

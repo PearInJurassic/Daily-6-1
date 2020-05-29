@@ -2,11 +2,14 @@ package com.daily.web;
 
 import com.daily.entity.Area;
 import com.daily.service.AreaService;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +94,23 @@ public class AreaController {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         // 减少地区气泡数（删除帖子后）
         modelMap.put("success", areaService.reduceBubbleNum(areaId));
+        return modelMap;
+    }
+
+    /*
+     * 通过所属地区ID获取地区信息列表
+     *
+     * @param belongAreaId
+     * @return
+     */
+    @RequestMapping(value = "/getarealistbybelongareaname", method = RequestMethod.GET)
+    private Map<String, Object> getAreaListByBelongAreaName(String belongAreaName) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Area> areaList = new ArrayList<Area>();
+        Area area = areaService.getAreaByName(belongAreaName);
+        // 获取区域列表
+        areaList = areaService.getAreaListByBelongAreaId(area.getAreaId());
+        modelMap.put("areaList", areaList);
         return modelMap;
     }
 }

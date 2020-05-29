@@ -291,4 +291,18 @@ public class UserController {
         modelMap.put("userFollowPostList", userFollowPostList);
         return modelMap;
     }
+
+    /*
+     * 根据用户名模糊查找用户
+     *
+     * @param string
+     * @return Map<userList, List<User>>
+     */
+    @RequestMapping(value = "/searchByUserName", method = RequestMethod.GET)
+    private Map<String, Object> userFollowPostList(String userName) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<User> userList=userService.searchByUserName(userName);
+        modelMap.put("userList", userList);
+        return modelMap;
+    }
 }

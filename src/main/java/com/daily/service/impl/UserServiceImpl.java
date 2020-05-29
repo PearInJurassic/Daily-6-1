@@ -221,4 +221,18 @@ public class UserServiceImpl implements UserService {
         }
         return userFollowPostList;
     }
+
+    @Override
+    public List<User> searchByUserName(String userName) {
+        List<User> userList=userDao.searchByUserName(userName);
+        for(int i=0;i<userList.size();i++) {
+            userList.get(i).setEmail(null);
+            userList.get(i).setUserPwd(null);
+            if(userList.get(i).getState()==0) {
+                userList.remove(i);
+                i--;
+            }
+        }
+        return userList;
+    }
 }

@@ -3,6 +3,8 @@ package com.daily.dao;
 import com.daily.entity.User;
 import com.daily.entity.UserFollowInfo;
 
+import java.util.List;
+
 public interface UserDao {
     String getPasswordByEmail(String email);
 
@@ -79,4 +81,12 @@ public interface UserDao {
      * @return int
      */
     int updateUser(User user);
+
+    /*
+     * 根据用户名模糊查找用户
+     *
+     * @param string
+     * @return List<User>
+     */
+    List<User> searchByUserName(String userName);
 }
