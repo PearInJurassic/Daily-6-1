@@ -16,12 +16,12 @@
         data() {
             return {
 
-                test: [],
+                susu:1,
                 nineblock:[],
+
                 //地区数据(以城市为单位)，暂时只存放了福建的城市
                 colorblock:[],
                 // eslint-disable-next-line no-undef
-                colormap,
                 area: [
                     [
                         {
@@ -133,46 +133,33 @@
             }
         },
         methods: {
-            async functionx(bid)
-            {
-                let that =this
-                try  {
-                    await that.axios.get(`${that.GLOBAL.apiUrl}/area/getarealistbybelongareaid`, {
-                        params: {
-                            belongAreaId: bid
-                        }
-                    }).then((response) => {
-                        that.nineblock = response.data.areaList
-                        console.log(response.data)
 
-                    })
-                }
-                catch(error){console.log(error)}
-            },
-             async geApitData(pro_name) {
+             async geApitData(proname) {
                 // eslint-disable-next-line no-unused-vars
                 var blockid=0;
                 // eslint-disable-next-line no-unused-vars
-                let that =this
-
+                let test = new Array(9)
+                 // eslint-disable-next-line no-unused-vars
+                 var that=this
+                test=[0,0,0,0,0,0,0,0,0]
                 // eslint-disable-next-line no-undef
 
                          try {
-                             await that.axios.get(`${that.GLOBAL.apiUrl}/area/getareabyname`, {
+                             await that.axios.get(`${that.GLOBAL.apiUrl}/area/getarealistbybelongareaname`, {
                                  params: {
-                                     areaName: pro_name
+                                     belongAreaName: proname
                                  }
                              }).then((response) => {
-
-                                 blockid = response.data.area.areaId
-                                 //console.log(response.data.area.areaId)
-                                 // eslint-disable-next-line no-undef
-                                 that.functionx(blockid)
+                                // console.log(response.data)
+                                 test=response.data.areaList
+                                 that.createMap()
                              })
 
                          }
+
                          catch(error){console.log(error)}
-                 console.log(that.nineblock)
+                 that.nineblock=test
+
             },
 
 
@@ -180,6 +167,8 @@
                 /* eslint-disable */
                 // 创建Map实例
                 console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+
+
                 var map = new BMapGL.Map("fujian")
                 // 初始化地图,设置中心点坐标和地图级别
                 map.centerAndZoom(new BMapGL.Point(this.$route.query.x, this.$route.query.y), 11)
@@ -192,23 +181,20 @@
                 //开启鼠标滚轮缩放
                 map.enableScrollWheelZoom(true)
                 /* eslint-enable */
-                this.colormap=map
+
                 //给区块染色
 
                 //先定义好每块的颜色
 
 
-
-
                 // for (var i = 0; i < this.area.length; i++)
                 var num = 0
                 for (var n = 0; n < 9; n++)
-                    for (var temp = 0; temp < this.colorlist.length; temp++) {
+                    for (var temp = 0; temp < 5; temp++) {
                         if (this.nineblock[num].bubbleNum >= this.colorlist[temp].start && this.nineblock[num].bubbleNum <= this.colorlist[temp].end) {
                             this.colorblock.push(this.colorlist[temp].color);
                             console.log(this.colorlist[temp].color);
                             num++;
-                            console.log("+++");
                             break;
 
                         }
@@ -216,13 +202,15 @@
                     }
 
                 function add_overlay() {
-                    this.colormap.addOverlay(rectangle);         //增加矩形
+                    map.addOverlay(rectangle);         //增加矩形
                 }
 
 //console.log("?");
                 var m1 = 0;
                 for (var i2 = this.$route.query.x-0.2; i2 < this.$route.query.x + 0.25; i2 += 0.15)
                     for (var n2 = this.$route.query.y-0.28; n2 < this.$route.query.y + 0.02; n2 += 0.15) {
+                        console.log(i2)
+                        console.log(n2)
                         var pStart = new BMapGL.Point(i2, n2);
                         var pEnd = new BMapGL.Point(i2 + 0.15, n2 + 0.15);
                         var rectangle = new BMapGL.Polygon([
@@ -250,20 +238,21 @@
         },
         computed: {
 
-            gettest() {
-                return this.test;
+            getnineblock() {
+                return this.nineblock;
             }
         },
         watch: {
             //监听时间轴开始日期变化
-            gettest() {
+            nineblock() {
+                console.log("saahsl")
                 this.createMap()
             },
             //监听九块数组
 
         },
         mounted() {
-            this.createMap()
+
         }
     }
 </script>
