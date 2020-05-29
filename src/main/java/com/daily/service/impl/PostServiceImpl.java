@@ -109,7 +109,7 @@ public class PostServiceImpl implements PostService {
     public boolean deletePost(int postId) {
         if (postId > 0) {
             try {
-                // 删除区域信息
+                // 删除帖子信息
                 int effectedNum = postDao.deletePost(postId);
                 if (effectedNum > 0) {
                     return true;

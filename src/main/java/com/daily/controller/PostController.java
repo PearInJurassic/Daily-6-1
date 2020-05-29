@@ -33,6 +33,9 @@ public class PostController {
     @Autowired
     private LikeService likeService;
 
+    @Autowired
+    private AreaService areaService;
+
     /*
     @Autowired
     private UserService userService;
@@ -151,8 +154,11 @@ public class PostController {
     private Map<String, Object> addPost(@RequestBody Post post)
             throws JsonParseException, JsonMappingException, IOException {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-
-        modelMap.put("success", postService.addPost(post));
+        boolean b = postService.addPost(post);
+        if(b == true) {
+            b = areaService.addBubbleNum(post.getAreaId());
+        }
+        modelMap.put("success", b);
         Post newPost = postService.getLastPost();
         modelMap.put("newPost", newPost);
         return modelMap;
@@ -172,8 +178,12 @@ public class PostController {
     @RequestMapping(value = "/removepost", method = RequestMethod.GET)
     private Map<String, Object> removeArea(Integer postId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-
-        modelMap.put("success", postService.deletePost(postId));
+        int areaId = postService.getPostByPostId(postId).getAreaId();
+        boolean b = postService.deletePost(postId);
+        if(b == true) {
+            b = areaService.reduceBubbleNum(areaId);
+        }
+        modelMap.put("success", b);
         List<Post> postList = new ArrayList<Post>();
         postList = postService.getPostList();
         modelMap.put("postList", postList);

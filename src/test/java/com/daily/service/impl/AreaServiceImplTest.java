@@ -2,6 +2,7 @@ package com.daily.service.impl;
 
 import com.daily.entity.Area;
 import com.daily.service.AreaService;
+import com.daily.service.PostService;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +20,9 @@ import static org.junit.Assert.*;
 public class AreaServiceImplTest {
     @Autowired
     private AreaService areaService;
+
+    @Autowired
+    private PostService postService;
 
     @Test
     @Ignore
@@ -48,9 +52,10 @@ public class AreaServiceImplTest {
     }
 
     @Test
-    @Ignore
     public void reduceBubbleNum() {
-        assertEquals(true,areaService.reduceBubbleNum(101001));
+        Integer postId = 15;
+        System.out.println(postService.getPostByPostId(postId).getAreaId());
+        assertEquals(true,areaService.reduceBubbleNum(postService.getPostByPostId(postId).getAreaId()));
     }
 
     @Test

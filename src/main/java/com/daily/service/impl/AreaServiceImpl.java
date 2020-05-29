@@ -54,7 +54,7 @@ public class AreaServiceImpl implements AreaService {
         Area area = areaDao.getAreaById(areaId);
         //如果所属地区ID小于0（即还有上层地区,目前最上层为中国（-1））
         while(area.getBelongAreaId() >= 0) {
-            //气泡数加1
+            //气泡数减1
             area.setBubbleNum(area.getBubbleNum() - 1);
             try {
                 boolean b = areaDao.updateBubbleNum(area);
