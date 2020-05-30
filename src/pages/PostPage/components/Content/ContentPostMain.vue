@@ -91,14 +91,14 @@
             console.log(response)
             this.loading = false
             this.likeList = [...response.data.likeList];
-            // console.log(this.likeList)
+            // // console.log(this.likeList)
             let postData = response.data.userFollowPostList;
             this.postNum=[];
             this.loading=true
             for (let index in postData) {
               this.postNum.push(postData[index])
             }
-            this.loading=true
+            this.loading=false;
             // console.log(this.postNum)
           })
           .catch((error) => {
