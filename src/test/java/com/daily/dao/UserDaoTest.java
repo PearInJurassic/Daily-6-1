@@ -19,8 +19,8 @@ import static org.junit.Assert.assertEquals;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) // 按方法名大小升序执行
 
 public class UserDaoTest {
-    @Autowired
-    private UserDao userDao;
+//    @Autowired
+//    private UserDao userDao;
 
     @Test
     @Ignore
@@ -120,9 +120,9 @@ public class UserDaoTest {
 //        int i = userDao.unfreezeUserById(1323);
 //        assertEquals(1,i);
 //    }
-   @Test
-    public void testResetPassword(){
-        int i = userDao.resetPasswordById(1323,"abcd123");
-        assertEquals(1,i);
-   }
+//   @Test
+//    public void testResetPassword(){
+//        int i = userDao.resetPasswordById(1323,"abcd123");
+//        assertEquals(1,i);
+//   }
 }
