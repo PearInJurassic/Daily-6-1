@@ -29,6 +29,7 @@ public class UserFollowDaoTest {
     }
 
     @Test
+    @Ignore
     public void getUserFansIDListByUserId() {
         List<Integer> userList = userFollowDao.getUserFansIDListByUserId(101);
         // 验证预期值和实际值是否相符
@@ -45,6 +46,7 @@ public class UserFollowDaoTest {
     }
 
     @Test
+    @Ignore
     public void isFollowByTwoId() {
         int num= userFollowDao.isFollowByTwoId(102,1);
         // 验证预期值和实际值是否相符
