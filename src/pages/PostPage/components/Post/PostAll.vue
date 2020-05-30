@@ -95,6 +95,32 @@
     },
     methods: {
       /**
+       * @description 获得帖子预览信息
+       */
+      getPostAll(){
+        this.loginUserId = sessionStorage.getItem("ID")
+        let posterID = this.itemInfo.userId
+        // 请求后端数据,查询数据源
+        this.axios.get('http://47.107.77.163:8080/demo/getUserInfo',
+          {
+            params: {
+              userId: posterID
+            }
+          }
+        )
+          .then((response) => {
+            this.posterInfo={};
+            this.aimInfo.aimPosterInfo={};
+            this.posterInfo = response.data.userInfo.user;
+            this.aimInfo.aimPosterInfo= response.data.userInfo.user;
+            // console.log(response)
+            // console.log(this.posterInfo)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
+      /**
        * @Descripsion 传递点赞按钮事件的函数
        */
       pressLikeButton() {
@@ -201,25 +227,14 @@
       PostDetail
     },
     created() {
-      this.loginUserId = sessionStorage.getItem("ID")
-      let posterID = this.itemInfo.userId
-      // 请求后端数据,查询数据源
-      this.axios.get('http://47.107.77.163:8080/demo/getUserInfo',
-        {
-          params: {
-            userId: posterID
-          }
-        }
-      )
-        .then((response) => {
-          this.posterInfo = response.data.userInfo.user;
-          this.aimInfo.aimPosterInfo= response.data.userInfo.user;
-          // console.log(response)
-          // console.log(this.posterInfo)
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.getPostAll();
+    },
+    watch:{
+      immediate: true,
+      itemInfo: function(newval){
+        this.getPostAll();
+        console.log(newval)
+      }
     }
   }
 </script>

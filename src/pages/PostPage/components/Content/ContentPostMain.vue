@@ -2,15 +2,17 @@
     <div class="ContentAll">
         <div class="ContentCenter" v-loading="loading">
             <div>
-                <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleMenuSelect">
+                <el-menu :default-active="activeIndex" @select="handleMenuSelect" class="el-menu-demo"
+                         mode="horizontal">
                     <el-menu-item index="1">按时间排序</el-menu-item>
                     <el-menu-item index="2">查看关注对象发帖</el-menu-item>
+                    <el-menu-item index="3">查看热门贴</el-menu-item>
                 </el-menu>
             </div>
             <component :is="PostAll"
-                       :key="index"
                        :itemInfo="postNum[index]"
-                       :likeInfo ="likeList[index]"
+                       :key="index"
+                       :likeInfo="likeList[index]"
                        @deleteSuccess="reloadAfterDelete"
                        v-for="(item,index) in postNum">
             </component>
@@ -27,13 +29,13 @@
     name: "ContentPostMain",
     data() {
       return {
-        activeIndex:"1",
-        windowWidth:document.documentElement.clientWidth,
+        activeIndex: "1",
+        windowWidth: document.documentElement.clientWidth,
         PostAll: "PostAll",
         postNum: [],
-        img:"",
-        likeList:[],
-        loading:true
+        img: "",
+        likeList: [],
+        loading: true
       }
     },
     components: {
@@ -43,20 +45,21 @@
       /**
        * @description 按照时间顺序展示帖子。
        */
-      getPostListByTime(){
+      getPostListByTime() {
         let userID = sessionStorage.getItem("ID");
-        this.axios.get(`${this.GLOBAL.apiUrl}/listpost`,{
-          params:{
-            userId:userID,
+        this.axios.get(`${this.GLOBAL.apiUrl}/listpost`, {
+          params: {
+            userId: userID,
           }
         })
           .then((response) => {
             console.log(response)
-            this.loading=false
+            this.loading = false
             this.likeList = [...response.data.likeList];
             // console.log(this.likeList)
             let postData = response.data.postList;
-            for(let index in postData) {
+            this.postNum=[];
+            for (let index in postData) {
               this.postNum.push(postData[index])
             }
             // console.log(this.postNum)
@@ -79,27 +82,57 @@
        */
       getPostListByFollow() {
         let userID = sessionStorage.getItem("ID");
-        this.axios.get(`${this.GLOBAL.apiUrl}/userFollowPostList`,{
-          params:{
-            userId:userID,
+        this.axios.get(`${this.GLOBAL.apiUrl}/userFollowPostList`, {
+          params: {
+            userId: userID,
           }
         })
           .then((response) => {
             console.log(response)
-            this.loading=false
+            this.loading = false
             this.likeList = [...response.data.likeList];
             // console.log(this.likeList)
             let postData = response.data.userFollowPostList;
-            for(let index in postData) {
+            this.postNum=[];
+            this.loading=true
+            for (let index in postData) {
               this.postNum.push(postData[index])
             }
+            this.loading=true
             // console.log(this.postNum)
           })
           .catch((error) => {
             console.log(error);
           });
       },
-
+      /**
+       * @description 按照热门程度排序
+       */
+      getPostListByPop() {
+        let userID = sessionStorage.getItem("ID");
+        this.axios.get(`${this.GLOBAL.apiUrl}/listpostbypop`, {
+          params: {
+            userId: userID,
+          }
+        })
+          .then((response) => {
+            // console.log(response)
+            this.loading = false
+            this.likeList = [...response.data.likeList];
+            // console.log(this.likeList)
+            let postData = response.data.postList;
+            this.postNum=[];
+            this.loading=true
+            for (let index in postData) {
+              this.postNum.push(postData[index])
+            }
+            this.loading=false
+            // console.log(this.postNum)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
       /**
        * @description 刷新页面
        */
@@ -109,44 +142,49 @@
       /**
        * @description 选择帖子展示方式
        */
-      handleMenuSelect(key){
+      handleMenuSelect(key) {
         switch (key) {
-            case "1":
-              this.getPostListByTime()
-              break;
-            case "2":
-              this.getPostListByFollow();
-              break;
+          case "1":
+            this.getPostListByTime()
+            break;
+          case "2":
+            this.getPostListByFollow();
+            break;
+          case "3":
+            this.getPostListByPop();
+            break;
+          default:
+            break;
         }
         console.log(key)
       }
     },
     created() {
-        this.init();
+      this.init();
     },
     mounted() {
       Bus.$on("finishEdit", (flag) => {
         switch (flag) {
-            case 'finish':
-              console.log("finish")
-              this.reload();
-              break;
-            default:
-              break;
+          case 'finish':
+            console.log("finish")
+            this.reload();
+            break;
+          default:
+            break;
         }
         // console.log('success')
       });
-      Bus.$on("finishSearch",(list) =>{
-        this.postNum=[];
-        for(let index in list) {
+      Bus.$on("finishSearch", (list) => {
+        this.postNum = [];
+        for (let index in list) {
           this.postNum.push(list[index])
         }
-        this.loading=false;
+        this.loading = false;
       })
     },
-    watch:{
-      '$store.state.screenWidth':function(val){ //监听屏幕宽度变化
-        this.windowWidth=val;
+    watch: {
+      '$store.state.screenWidth': function (val) { //监听屏幕宽度变化
+        this.windowWidth = val;
       }
     },
   }

@@ -16,7 +16,7 @@
                     <span>{{userInfo.postNum}} 帖子</span>
                     <el-button type="text"
                                style="font-size: 20px;margin-right: 20px"
-                               >
+                               @click="drawerFans=true">
                         {{userInfo.fansNum}} 粉丝
                     </el-button>
                     <span>关注 {{userInfo.followNum}} 人</span>
@@ -35,23 +35,37 @@
 
             <el-dialog :visible.sync="editDialogVisible"
                        title="修改个人信息"
-                       width="800px">
+                       :width="personInfoEditPanelSize">
                 <PanelPersonInfoEdit :userInfo="userInfo" @finishEditInfo="closeEdit"></PanelPersonInfoEdit>
             </el-dialog>
 
+            <el-drawer
+                    :visible.sync="drawerFans"
+                    direction="ltr"
+                    title="粉丝列表">
+                <PersonFollowItems :followInfo="userInfo.fansList[index]"
+                                   :cancelButtonDisable="isOthers"
+                                   :key="index"
+                                   v-for="(item,index) in userInfo.fansList">
+                    <slot>
+                        <div></div>
+                    </slot>
+                </PersonFollowItems>
+            </el-drawer>
         </div>
     </div>
 </template>
 
 <script>
   import PanelPersonInfoEdit from "@/pages/PostPage/components/Panel/PanelPersonInfoEdit";
-
+    import PersonFollowItems from "@/pages/PostPage/components/Person/PersonFollowItems";
   export default {
     inject: ['reload'],
     name: "ContentPersonInfo",
     data() {
       return {
         windowWidth:document.documentElement.clientWidth,
+        drawerFans:false,
         editDialogVisible: false,
         avatarUrl: '',
         userInfo: {
@@ -78,13 +92,21 @@
         } else {
           return "mobile_person_info_detail"
         }
+      },
+      personInfoEditPanelSize() {
+        if(this.windowWidth > 500) {
+          return "800px";
+        } else {
+          return "100%";
+        }
       }
     },
     props: {
       isOthers: {}
     },
     components: {
-      PanelPersonInfoEdit
+      PanelPersonInfoEdit,
+      PersonFollowItems
     },
     methods: {
       editPersonInfo() {
@@ -135,14 +157,13 @@
        * @description 展示粉丝列表
        */
       getFansList(userId) {
-        //TODO
         this.axios.get(`${this.GLOBAL.apiUrl}/getUserFansInfo`, {
             params: {
               userId
             }
           }).then((response) =>{
-            this.fansList=[...response.data.userFansInfo];
-            console.log(this.fansList)
+            this.userInfo.fansList=[...response.data.userFansInfo];
+            // console.log(this.fansList)
         })
       }
     },
@@ -195,6 +216,7 @@
                 font-size: 20px;
             }
         }
+
     }
     .Icon {
         margin-top: 40px;
@@ -206,5 +228,12 @@
     }
     .IconButton {
         background-color: white;
+    }
+</style>
+<style lang="less">
+    .el-drawer {
+        .ltr{
+            width: 80%;
+        }
     }
 </style>

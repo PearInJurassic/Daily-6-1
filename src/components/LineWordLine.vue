@@ -23,7 +23,7 @@
     }
     .line {
         display: inline-block;
-        width: 130px;
+        width: 25%;
         border-top: 1px solid #ccc;
         margin: 0 6px;
     }

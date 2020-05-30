@@ -1,6 +1,6 @@
 <template>
     <div class="ContentAll">
-        <div class="ContentCenter">
+        <div :class="personContentClass">
             <ContentPersonInfo v-bind:isOthers="1">
                 <!--                不显示设置和退出按钮-->
                 <template v-slot:setting>
@@ -25,6 +25,27 @@
 
   export default {
     name: "CotentOthers",
+    data(){
+      return {
+
+          windowWidth:document.documentElement.clientWidth,
+
+      }
+    },
+    computed:{
+      personContentClass(){
+        if(this.windowWidth>950){
+          return "ContentCenter"
+        } else {
+          return "small_person_content_all"
+        }
+      }
+    },
+    watch: {
+      '$store.state.screenWidth': function (val) { //监听屏幕宽度变化
+        this.windowWidth = val;
+      }
+    },
     components: {
       ContentPersonInfo,
       ContentPersonFollow,

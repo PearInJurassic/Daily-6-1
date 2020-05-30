@@ -11,9 +11,12 @@
             </div>
             <div class="Operation">
                 <button @click="gotoOthers" class="CommonButton">查看详情</button>
-                <button @click="cancelFollow" class="CommonButton"
-                        v-if="cancelButtonDisable!=1">取消关注
-                </button>
+                <slot>
+                    <button @click="cancelFollow" class="CommonButton"
+                            v-if="cancelButtonDisable!=1">
+                        取消关注
+                    </button>
+                </slot>
             </div>
         </div>
     </div>
@@ -23,8 +26,8 @@
   export default {
     name: "PersonFollowItems",
     data() {
-      return{
-        exist:true ,
+      return {
+        exist: true,
       }
     },
     props: {
@@ -57,7 +60,7 @@
           }
         })
           .then(() => {
-            this.exist=false;
+            this.exist = false;
             // console.log(response)
           })
           .catch((error) => {
