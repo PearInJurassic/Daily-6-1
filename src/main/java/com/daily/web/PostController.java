@@ -235,20 +235,6 @@ public class PostController {
         return modelMap;
     }
 
-    @RequestMapping(value = "/getuserlikepost", method = RequestMethod.GET)
-    private Map<String, Object> getUserLikePost(Integer userId) {
-        Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<Integer> likePostList = new ArrayList<>();
-        List<Post> postList = new ArrayList<>();
-        likePostList = likeService.getLikePostIdByUserId(userId);
-        for (int postId : likePostList) {
-            Post post = postService.getPostByPostId(postId);
-            postList.add(post);
-        }
-        modelMap.put("postList", postList);
-        return modelMap;
-    }
-
     /**
      * 广场上获取所有的帖子信息（经过热门算法排序）
      *
