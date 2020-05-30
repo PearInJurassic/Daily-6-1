@@ -29,7 +29,7 @@ public class RecordServiceImpl implements RecordService {
             RecordExpand recordExpand = new RecordExpand();
             Record record = recordList.get(i);
             recordExpand.setRecord(record);
-            if(record.getAreaId() != null && record.getAreaId() != 0)
+            if(record.getAreaId() != null)
                 recordExpand.setAreaName(areaDao.getAreaNameById(record.getAreaId()));
             recordExpandList.add(recordExpand);
         });
@@ -44,7 +44,7 @@ public class RecordServiceImpl implements RecordService {
             RecordExpand recordExpand = new RecordExpand();
             Record record = recordList.get(i);
             recordExpand.setRecord(record);
-            if(record.getAreaId() != null && record.getAreaId() != 0)
+            if(record.getAreaId() != null)
                 recordExpand.setAreaName(areaDao.getAreaNameById(record.getAreaId()));
             recordExpandList.add(recordExpand);
         });
@@ -59,7 +59,7 @@ public class RecordServiceImpl implements RecordService {
             RecordExpand recordExpand = new RecordExpand();
             Record record = recordList.get(i);
             recordExpand.setRecord(record);
-            if(record.getAreaId() != null && record.getAreaId() != 0)
+            if(record.getAreaId() != null)
                 recordExpand.setAreaName(areaDao.getAreaNameById(record.getAreaId()));
             recordExpandList.add(recordExpand);
         });
@@ -74,7 +74,7 @@ public class RecordServiceImpl implements RecordService {
             RecordExpand recordExpand = new RecordExpand();
             Record record = recordList.get(i);
             recordExpand.setRecord(record);
-            if(record.getAreaId() != null && record.getAreaId() != 0)
+            if(record.getAreaId() != null)
                 recordExpand.setAreaName(areaDao.getAreaNameById(record.getAreaId()));
             recordExpandList.add(recordExpand);
         });
@@ -89,7 +89,7 @@ public class RecordServiceImpl implements RecordService {
             RecordExpand recordExpand = new RecordExpand();
             Record record = recordList.get(i);
             recordExpand.setRecord(record);
-            if(record.getAreaId() != null && record.getAreaId() != 0)
+            if(record.getAreaId() != null)
                 recordExpand.setAreaName(areaDao.getAreaNameById(record.getAreaId()));
             recordExpandList.add(recordExpand);
         });
@@ -102,6 +102,9 @@ public class RecordServiceImpl implements RecordService {
         try {
             record.setRecordCreateTime(new Date());
             record.setRecordUpdateTime(new Date());
+            if(record.getAreaId() == null) {
+                record.setAreaId(0);
+            }
             int effectedNum = recordDao.insertRecord(record);
             if (effectedNum > 0) {
                 return true;
