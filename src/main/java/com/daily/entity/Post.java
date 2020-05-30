@@ -44,6 +44,7 @@ public class Post {
     //人气值
     private transient Integer popularity;
 
+
     /**
      * @return the postId
      */
@@ -205,4 +206,5 @@ public class Post {
     public void setPopularity(Integer popularity) {
         this.popularity = popularity;
     }
+
 }

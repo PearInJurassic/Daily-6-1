@@ -96,11 +96,6 @@ public interface PostService {
 
     int forwardPost(int postId, int userId, String str);
 
-    /**
-     * 排序帖子
-     *
-     * @param postList
-     * @return
-     */
     List<Post> sortList(List<Post> postList);
+
 }

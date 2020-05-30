@@ -2,14 +2,8 @@ package com.daily.web;
 
 import com.daily.dto.LoginDTO;
 import com.daily.dto.RegisterDTO;
-import com.daily.entity.Post;
-import com.daily.entity.RecordExpand;
-import com.daily.entity.User;
-import com.daily.entity.UserExpand;
-import com.daily.service.PostService;
-import com.daily.service.QiNiuService;
-import com.daily.service.RecordService;
-import com.daily.service.UserService;
+import com.daily.entity.*;
+import com.daily.service.*;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import org.apache.commons.mail.EmailException;
@@ -30,6 +24,10 @@ public class UserController {
     private RecordService recordService;
     @Autowired
     private QiNiuService qiNiuService;
+    @Autowired
+    private TagService tagService;
+    @Autowired
+    private LikeService likeService;
 
     /*
      * 登录
@@ -287,8 +285,23 @@ public class UserController {
     @RequestMapping(value = "/userFollowPostList", method = RequestMethod.GET)
     private Map<String, Object> userFollowPostList(Integer userId) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<Post> userFollowPostList=userService.getUserFollowPostList(userId);
-        modelMap.put("userFollowPostList", userFollowPostList);
+        List<Post> postList=userService.getUserFollowPostList(userId);
+        List<Integer> isLikeList = new ArrayList<>();
+        List<List<Tag>> tagList = new ArrayList<List<Tag>>();
+
+        modelMap.put("userFollowPostList", postList);
+        for (Post post : postList) {
+            List<Tag> tags = tagService.getTagByPostId(post.getPostId());
+//            likeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
+            tagList.add(tags);
+            isLikeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
+        }
+//        modelMap.put("postList", postList);
+        modelMap.put("tagList", tagList);
+//        List<Post> lastpostList = new ArrayList<Post>();
+//        lastpostList = postService.getPostByUserId(userId);
+//        modelMap.put("lastpostList", lastpostList);
+        modelMap.put("likeList", isLikeList);
         return modelMap;
     }
 

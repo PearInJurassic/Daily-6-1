@@ -1,11 +1,11 @@
-/**   
-* @Title: LikeServiceImpl.java 
-* @Package com.daily.service.impl 
-* @Description: TODO 
-* @author Doris   
-* @date 2020年4月28日 下午3:47:03 
-* @version V1.0   
-*/
+/**
+ * @Title: LikeServiceImpl.java
+ * @Package com.daily.service.impl
+ * @Description: TODO
+ * @author Doris
+ * @date 2020年4月28日 下午3:47:03
+ * @version V1.0
+ */
 package com.daily.service.impl;
 
 import com.daily.dao.LikeDao;
@@ -14,12 +14,15 @@ import com.daily.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @ClassName: LikeServiceImpl
  * @Description: TODO
  * @author Doris
  * @date 2020年4月28日 下午3:47:03
- * 
+ *
  */
 @Service
 public class LikeServiceImpl implements LikeService {
@@ -74,6 +77,22 @@ public class LikeServiceImpl implements LikeService {
     public int getLikeByPostIdAndUserId(int postId, int userId) {
 
         return likeDao.queryLikeByPostIdAndUserId(postId, userId);
+    }
+
+    @Override
+    public List<Integer> getUserIdWhoLikePostByPostId(int postId) {
+        if (postId > 0) {
+            try {
+
+                List<Integer> list = new ArrayList<>();
+                list = likeDao.queryUserIdWhoLikePostByPostId(postId);
+                return list;
+            } catch (Exception e) {
+                throw new RuntimeException("获取点赞的用户id失败:" + e.toString());
+            }
+        } else {
+            throw new RuntimeException("帖子id不存在！");
+        }
     }
 
 }
