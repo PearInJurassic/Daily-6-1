@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,32 +87,39 @@ public class UserController {
      * @return Map<userInfo,UserExpand>
      */
     @RequestMapping(value = "/freeze", method = RequestMethod.POST)
-    private Map<String, Object> freeze(Integer userId) {
-        int result = userService.freezeUserById(userId);
+    private Map<String, Object> freeze(Integer adminId,Integer userId) {
+        int result = userService.freezeUserById(adminId,userId);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Map<String, Object> modelMap = new HashMap<String, Object>();
         if (result == 1) {
             modelMap.put("code", 1);
+            modelMap.put("message","冻结成功");
         } else {
             modelMap.put("code", 2);
+            modelMap.put("message","冻结失败");
         }
         return modelMap;
     }
+
     /*
     * 解冻
     * @param userId
     * @return Map<userInfo,UserExpand>
     */
     @RequestMapping(value = "/unfreeze", method = RequestMethod.POST)
-    private Map<String, Object> unfreeze(Integer userId){
-        int result = userService.unfreezeUserById(userId);
+    private Map<String, Object> unfreeze(Integer adminId,Integer userId){
+        int result = userService.unfreezeUserById(adminId,userId);
         Map<String, Object> modelMap = new HashMap<String, Object>();
         if(result == 1){
             modelMap.put("code", 1);
+            modelMap.put("message", "解冻成功");
         }else{
             modelMap.put("code", 2);
+            modelMap.put("message", "解冻失败");
         }
         return modelMap;
     }
+
     /*
     * 重置密码
     * @param userId
@@ -127,6 +135,7 @@ public class UserController {
         }
         else{
             modelMap.put("code",2);
+            modelMap.put("message","重置失败");
         }
         return modelMap;
     }

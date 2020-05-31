@@ -16,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -73,12 +76,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int freezeUserById(int userId) {
+    public int freezeUserById(int adminId,int userId) {
         return userDao.freezeUserById(userId);
     }
 
     @Override
-    public int unfreezeUserById(int userId) {
+    public int unfreezeUserById(int adminId,int userId) {
         return userDao.unfreezeUserById(userId);
     }
 
