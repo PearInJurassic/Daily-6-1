@@ -20,9 +20,7 @@ public interface UserDao {
 
     int unfreezeUserById(int userId);
 
-    int insertFreezeRecord(int adminId,int userId);
-
-    int insertUnfreezeRecord(int adminId,int userId);
+    int insertAdminAction(int adminId,int userId);
 
     int resetPasswordById(int userId, String userPwd);
 

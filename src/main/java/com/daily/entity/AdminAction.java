@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class adminAction {
+public class AdminAction {
     //记录id
     private Integer actionId;
     //操作类型 0为冻结 1为解冻
