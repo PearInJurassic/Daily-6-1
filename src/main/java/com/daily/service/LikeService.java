@@ -20,12 +20,9 @@ import java.util.List;
  * 
  */
 public interface LikeService {
-    public static final String LIKENUMKEY = "likeNum";
     int getLikeNumByPostId(int postId);
 
     int getLikeByPostIdAndUserId(int postId, int userId);
-
-    List<Integer> getLikePostIdByUserId(int userId);
 
     List<Integer> getUserIdWhoLikePostByPostId(int postId);
 
