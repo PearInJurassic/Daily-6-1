@@ -3,6 +3,7 @@ package com.daily.controller;
 import com.daily.entity.Comment;
 import com.daily.entity.Post;
 import com.daily.entity.Tag;
+import com.daily.entity.Tipoff;
 import com.daily.service.*;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -34,10 +35,13 @@ public class PostController {
     private LikeService likeService;
 
     @Autowired
-    private AreaService areaService;
+    private UserService userService;
 
     @Autowired
-    private UserService userService;
+    private TipoffService tipoffService;
+
+    @Autowired
+    private AreaService areaService;
 
     /**
      * 广场上获取所有的帖子信息
@@ -54,7 +58,7 @@ public class PostController {
         List<Integer> isLikeList = new ArrayList<>();
         for (Post post : postList) {
             List<Tag> tags = tagService.getTagByPostId(post.getPostId());
-            likeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(),userId));
+            likeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
             tagList.add(tags);
             isLikeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
         }
@@ -63,7 +67,7 @@ public class PostController {
         List<Post> lastpostList = new ArrayList<Post>();
         lastpostList = postService.getPostByUserId(userId);
         modelMap.put("lastpostList", lastpostList);
-        modelMap.put("likeList", likeList);
+        modelMap.put("likeList", isLikeList);
         return modelMap;
     }
 
@@ -199,13 +203,15 @@ public class PostController {
         return modelMap;
     }
 
-    @RequestMapping(value = "/tipoffpost", method = RequestMethod.GET)
-    private Map<String, Object> tipoffPost(int postId) {
+
+    @RequestMapping(value = "/tipoffpost", method = RequestMethod.POST)
+    private Map<String, Object> tipoffPost(Tipoff tipoff) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
 
-        modelMap.put("success", postService.tipoffPost(postId));
+        modelMap.put("success", tipoffService.addTipoff(tipoff));
         return modelMap;
     }
+
 
     @RequestMapping(value = "/getPostNumByUserId", method = RequestMethod.GET)
     private Map<String, Object> getPostNumByUserId(Integer userId) {
@@ -213,6 +219,20 @@ public class PostController {
         int i = postService.getPostNumByUserId(userId.intValue());
         modelMap.put("postNum", i);
         System.out.println(userId);
+        return modelMap;
+    }
+
+    @RequestMapping(value = "/getuserlikepost", method = RequestMethod.GET)
+    private Map<String, Object> getUserLikePost(Integer userId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<Integer> likePostList = new ArrayList<>();
+        List<Post> postList = new ArrayList<>();
+        likePostList = likeService.getLikePostIdByUserId(userId);
+        for (int postId : likePostList) {
+            Post post = postService.getPostByPostId(postId);
+            postList.add(post);
+        }
+        modelMap.put("postList", postList);
         return modelMap;
     }
 
@@ -233,7 +253,7 @@ public class PostController {
         postList = postService.sortList(postList);
         for (Post post : postList) {
             List<Tag> tags = tagService.getTagByPostId(post.getPostId());
-            likeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(),userId));
+            likeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
             tagList.add(tags);
             isLikeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
         }
@@ -242,7 +262,7 @@ public class PostController {
         List<Post> lastpostList = new ArrayList<Post>();
         lastpostList = postService.getPostByUserId(userId);
         modelMap.put("lastpostList", lastpostList);
-        modelMap.put("likeList", likeList);
+        modelMap.put("likeList", isLikeList);
         return modelMap;
     }
 }

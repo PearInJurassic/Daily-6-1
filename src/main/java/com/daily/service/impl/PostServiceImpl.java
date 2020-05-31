@@ -109,7 +109,7 @@ public class PostServiceImpl implements PostService {
     public boolean deletePost(int postId) {
         if (postId > 0) {
             try {
-                // 删除帖子信息
+                // 删除区域信息
                 int effectedNum = postDao.deletePost(postId);
                 if (effectedNum > 0) {
                     return true;
@@ -257,7 +257,10 @@ public class PostServiceImpl implements PostService {
         for(Post post : postList) {
             long t = post.getPostCreateTime().getTime();
             t = now.getTime() - t;
-            time = (int) t / 1000000;
+            if( t > 20 * 1000 * 3600 * 24 ) { //超过20天
+                t = 20 * 1000 * 3600 * 24;
+            }
+            time = (int) t / 10000000;
             forwardNum = post.getForwardNum();
             tipoffNum = post.getTipoffNum();
             likeNum = likeDao.queryLikeNumByPostId(post.getPostId());
@@ -273,5 +276,4 @@ public class PostServiceImpl implements PostService {
         });
         return postList;
     }
-
 }

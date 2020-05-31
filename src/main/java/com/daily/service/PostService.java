@@ -30,7 +30,7 @@ public interface PostService {
     /**
      * 通过发帖人Id获取帖子信息
      * 
-     * @param userId
+     * @param areaId
      * @return
      */
     List<Post> getPostByUserId(int userId);
@@ -59,7 +59,7 @@ public interface PostService {
     /**
      * 增加帖子信息
      * 
-     * @param post
+     * @param area
      * @return
      */
     boolean addPost(Post post);
@@ -67,7 +67,7 @@ public interface PostService {
     /**
      * 修改帖子信息
      * 
-     * @param post
+     * @param area
      * @return
      */
     boolean modifyPost(Post post);
@@ -75,7 +75,7 @@ public interface PostService {
     /**
      * 删除帖子信息
      * 
-     * @param postId
+     * @param area
      * @return
      */
     boolean deletePost(int postId);
@@ -96,11 +96,6 @@ public interface PostService {
 
     int forwardPost(int postId, int userId, String str);
 
-    /**
-     * 排序帖子
-     *
-     * @param postList
-     * @return
-     */
     List<Post> sortList(List<Post> postList);
+
 }
