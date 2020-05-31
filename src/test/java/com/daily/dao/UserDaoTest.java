@@ -1,4 +1,5 @@
 package com.daily.dao;
+import com.daily.entity.AdminAction;
 import com.daily.entity.User;
 import com.daily.entity.UserFollowInfo;
 import org.junit.FixMethodOrder;
@@ -19,8 +20,8 @@ import static org.junit.Assert.assertEquals;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) // 按方法名大小升序执行
 
 public class UserDaoTest {
-//    @Autowired
-//    private UserDao userDao;
+    @Autowired
+    private UserDao userDao;
 
     @Test
     @Ignore
@@ -125,4 +126,14 @@ public class UserDaoTest {
 //        int i = userDao.resetPasswordById(1323,"abcd123");
 //        assertEquals(1,i);
 //   }
+    @Test
+    public void testInsertAction(){
+        AdminAction action = new AdminAction();
+        action.setAdminId(1);
+        action.setActionType(0);
+        action.setUserId(1323);
+        action.setActionDate(new Date());
+        int i = userDao.insertAdminAction(action);
+        assertEquals(1,i);
+    }
 }

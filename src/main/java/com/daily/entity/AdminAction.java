@@ -9,7 +9,7 @@ public class AdminAction {
     //记录id
     private Integer actionId;
     //操作类型 0为冻结 1为解冻
-    private Integer type;
+    private Integer actionType;
     //管理员id
     private Integer adminId;
     //被冻结/解冻的用户id
@@ -25,12 +25,12 @@ public class AdminAction {
         this.actionId = actionId;
     }
 
-    public Integer getType() {
-        return type;
+    public Integer getActionType() {
+        return actionType;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setActionType(Integer type) {
+        this.actionType = type;
     }
 
     public Integer getAdminId() {
