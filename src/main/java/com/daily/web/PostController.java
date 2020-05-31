@@ -56,11 +56,25 @@ public class PostController {
         postList = postService.getPostList();
         List<Integer> likeList = new ArrayList<>();
         List<Integer> isLikeList = new ArrayList<>();
+        List<List<String>> imageList=new ArrayList<>();
         for (Post post : postList) {
             List<Tag> tags = tagService.getTagByPostId(post.getPostId());
             likeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
             tagList.add(tags);
             isLikeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
+            String imageStr=post.getPostImg();
+            System.out.println(imageStr);
+            List<String> images=new ArrayList<>();
+            if(imageStr!=null){
+                String[] strs=imageStr.split("#");
+                System.out.println(strs);
+                for (String s :
+                        strs) {
+                    images.add(s);
+                }
+
+            }
+            imageList.add(images);
         }
         modelMap.put("postList", postList);
         modelMap.put("tagList", tagList);
@@ -68,6 +82,7 @@ public class PostController {
         lastpostList = postService.getPostByUserId(userId);
         modelMap.put("lastpostList", lastpostList);
         modelMap.put("likeList", isLikeList);
+        modelMap.put("imageList",imageList);
         return modelMap;
     }
 
@@ -247,6 +262,7 @@ public class PostController {
         postList = postService.getPostList();
         List<Integer> likeList = new ArrayList<>();
         List<Integer> isLikeList = new ArrayList<>();
+        List<List<String>> imageList=new ArrayList<>();
         //热门算法排序
         postList = postService.sortList(postList);
         for (Post post : postList) {
@@ -254,6 +270,19 @@ public class PostController {
             likeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
             tagList.add(tags);
             isLikeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
+            String imageStr=post.getPostImg();
+            System.out.println(imageStr);
+            List<String> images=new ArrayList<>();
+            if(imageStr!=null){
+                String[] strs=imageStr.split("#");
+                System.out.println(strs);
+                for (String s :
+                        strs) {
+                    images.add(s);
+                }
+
+            }
+            imageList.add(images);
         }
         modelMap.put("postList", postList);
         modelMap.put("tagList", tagList);
@@ -261,6 +290,7 @@ public class PostController {
         lastpostList = postService.getPostByUserId(userId);
         modelMap.put("lastpostList", lastpostList);
         modelMap.put("likeList", likeList);
+        modelMap.put("imageList",imageList);
         return modelMap;
     }
 }
