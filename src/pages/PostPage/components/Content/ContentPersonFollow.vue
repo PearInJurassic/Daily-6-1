@@ -20,7 +20,6 @@
                 direction="ltr"
                 title="关注列表">
             <PersonFollowItems :followInfo="followList[index]"
-                               :cancelButtonDisable="isOthers"
                                :key="index"
                                v-for="(item,index) in followList">
             </PersonFollowItems>
@@ -48,6 +47,7 @@
       PersonFollowItems
     },
     methods: {
+      //TODO 最多显示五个头像 添加关注的时候要记得查重
       /**
        * @description 展示关注列表
        */
@@ -67,8 +67,7 @@
       }
     },
     created() {
-      console.log(`isOthers:${this.isOthers}`)
-
+      let l = new Set();
       let userId = this.isOthers ? sessionStorage.getItem('viewId') : sessionStorage.getItem('ID')
       this.axios.get(`${this.GLOBAL.apiUrl}/getUserFollowInfo`, {
         params: {
@@ -79,10 +78,12 @@
           let list = response.data.userFollowInfo
           for (let index in list) {
             this.followList.push(list[index])
+            l.add(list[index])
           }
           // console.log(list)
         })
-      // console.log(this.isOthers)
+      console.log(this.followList)
+      console.log(l)
     }
   }
 </script>

@@ -22,86 +22,7 @@
                 //地区数据(以城市为单位)，暂时只存放了福建的城市
                 colorblock:[],
                 // eslint-disable-next-line no-undef
-                area: [
-                    [
-                        {
-                            "name": "福州市",
-                            "id": "10001",
-                            "color": [],//对应的12块地区显示的渲染颜色
-                            "long": 119.10,//经度
-                            "lati": 25.80,//纬度
-                            "data": []//对应的12块地区的帖子数
-                        },
-                        {
-                            "name": "莆田市",
-                            "id": "10002",
-                            "color": [],//对应的12块地区显示的渲染颜色
-                            "long": 118.75,//经度
-                            "lati": 25.23,//纬度
-                            "data": []//对应的12块地区的帖子数
-                        },
-                        {
-                            "name": "泉州市",
-                            "id": "10003",
-                            "color": [],//对应的12块地区显示的渲染颜色
-                            "long": 118.57,//经度
-                            "lati": 24.68,//纬度
-                            "data": []//对应的12块地区的帖子数
-                        },
-                        {
-                            "name": "厦门市",
-                            "id": "10004",
-                            "color": [],//对应的12块地区显示的渲染颜色
-                            "long": 117.98,//经度
 
-
-                            "lati": 24.38,//纬度
-                            "data": []//对应的12块地区的帖子数
-                        },
-                        {
-                            "name": "漳州市",
-                            "id": "10005",
-                            "color": [],//对应的12块地区显示的渲染颜色
-                            "long": 117.45,//经度
-                            "lati": 24.32,//纬度
-                            "data": []//对应的12块地区的帖子数
-                        },
-                        {
-                            "name": "龙岩市",
-                            "id": "10006",
-                            "color": [],//对应的12块地区显示的渲染颜色
-                            "long": 116.83,//经度
-                            "lati": 24.90,//纬度
-                            "data": []//对应的12块地区的帖子数
-                        },
-                        {
-                            "name": "三明市",
-                            "id": "10007",
-                            "color": [],//对应的12块地区显示的渲染颜色
-                            "long": 117.42,//经度
-                            "lati": 26.07,//纬度
-                            "data": []//对应的12块地区的帖子数
-                        },
-                        {
-                            "name": "南平市",
-                            "id": "10008",
-                            "color": [],//对应的12块地区显示的渲染颜色
-                            "long": 117.87,//经度
-                            "lati": 27.15,//纬度
-                            "data": []//对应的12块地区的帖子数
-                        },
-                        {
-                            "name": "宁德市",
-                            "id": "10009",
-                            "color": [],//对应的12块地区显示的渲染颜色
-                            "long": 119.42,//经度
-                            "lati": 26.57,//纬度
-                            "data": []//对应的12块地区的帖子数
-                        }
-                    ],//福建省
-
-
-                ],
                 //色块和本块数据的关系
                 colorlist: [
                     {
@@ -166,7 +87,7 @@
             createMap() {
                 /* eslint-disable */
                 // 创建Map实例
-                console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+
 
 
                 var map = new BMapGL.Map("fujian")
@@ -193,7 +114,6 @@
                     for (var temp = 0; temp < 5; temp++) {
                         if (this.nineblock[num].bubbleNum >= this.colorlist[temp].start && this.nineblock[num].bubbleNum <= this.colorlist[temp].end) {
                             this.colorblock.push(this.colorlist[temp].color);
-                            console.log(this.colorlist[temp].color);
                             num++;
                             break;
 
@@ -245,7 +165,6 @@
         watch: {
             //监听时间轴开始日期变化
             nineblock() {
-                console.log("saahsl")
                 this.createMap()
             },
             //监听九块数组

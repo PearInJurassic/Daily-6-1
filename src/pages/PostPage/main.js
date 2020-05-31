@@ -22,6 +22,7 @@ import 'echarts/map/js/province/gansu.js'
 import 'echarts/map/js/province/guangdong.js'
 import 'echarts/map/js/province/guangxi.js'
 import 'echarts/map/js/province/guizhou.js'
+import 'echarts/map/js/province/henan.js'
 import 'echarts/map/js/province/hainan.js'
 import 'echarts/map/js/province/hebei.js'
 import 'echarts/map/js/province/heilongjiang.js'
@@ -51,7 +52,6 @@ import 'echarts/extension/bmap/bmap'
 
 Vue.prototype.$echarts = echarts
 Vue.prototype.$layer = layer(Vue);
-Vue.prototype.ANONYMOUS_AVATAR = require(`@/assets/Anonymous/anonymous0.jpg`)
 Vue.prototype.GLOBAL = global_variable
 Vue.config.productionTip = false
 Vue.use(ElementUI);

@@ -1,5 +1,5 @@
 <template>
-    <div class="contentDetail" v-if="isShow">
+    <div v-if="isShow">
         <div @click="closeDetail" class="Mask"></div>
         <div class="PostDetail">
             <div class="PictureDetail">
@@ -8,12 +8,12 @@
                               :src="url">
                     </el-image>
                 </div>
-                <el-carousel height="400px">
+                <el-carousel height="300px">
                     <el-carousel-item :key="item" v-for="item in 4">
-                        <el-image :src="itemInfo.postImg"
-                                  alt="图片"
-                                  fit="cover"
-                        >
+                        <el-image alt="图片"
+                                  fit="scale-down"
+                                  :src="itemInfo.postImg"
+                                  style="height:300px;">
                         </el-image>
                     </el-carousel-item>
                 </el-carousel>
@@ -22,7 +22,7 @@
                     <p>{{itemInfo.postContent}}</p>
                 </div>
             </div>
-            <div class="CommentDetail" v-if="visible">
+            <div class="CommentDetail">
                 <PanelComment :isLike="isLike"
                               :item="itemInfo"
                               :postInfo="pInfo"
@@ -42,7 +42,6 @@
     name: "PanelPostDetail",
     data() {
       return {
-        windowWidth: document.documentElement.clientWidth,
         isShow: true,
         srcList: [
           // 'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
@@ -55,19 +54,11 @@
       itemInfo: {
         required: true
       },
-      isLike: {
+      isLike:{
         required: true
       },
-      pInfo: {
-        required: true
-      }
-    },
-    computed:{
-      visible(){
-        if(this.windowWidth<950){
-          return false;
-        }
-        return true;
+      pInfo:{
+        required:true
       }
     },
     components: {
@@ -82,22 +73,16 @@
         this.isShow = false;
         this.$emit("detailState", this.isShow);
       },
-      childAddLike() {
+      childAddLike () {
         this.$emit("childAddLike");
       },
       childRemoveLike() {
         this.$emit('childRemoveLike')
       }
     },
-    created() {
+    created(){
       this.srcList.push(this.itemInfo.postImg)
-      // console.log(this.pInfo)
-    },
-    watch: {
-      '$store.state.screenWidth': function (val) { //监听屏幕宽度变化
-        this.windowWidth = val;
-      }
-    },
+    }
   }
 </script>
 
@@ -108,14 +93,8 @@
         font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
     }
 
-    .contentDetail {
-        display: flex;
-        max-width: 1800px;
-    }
-
     .PostDetail {
-        max-width: 1800px;
-        max-height: 600px;
+        height: 600px;
         border: 0 solid black;
         border-radius: 4px;
         box-shadow: 0 0 2px black;
@@ -130,7 +109,7 @@
     .PictureDetail {
         display: flex;
         .setBorder();
-        .setMinSize(600px, 600px);
+        .setSize(600px, 600px);
         justify-content: center;
         flex-direction: column;
     }
@@ -153,12 +132,10 @@
     }
 
     .el-carousel__item:nth-child(2n) {
-        height: 100%;
         background-color: #99a9bf;
     }
 
     .el-carousel__item:nth-child(2n+1) {
-        height: 100%;
         background-color: #d3dce6;
     }
 </style>

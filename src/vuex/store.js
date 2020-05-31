@@ -8,11 +8,8 @@ const state = {
     starttime: "hh",
     endtime: "hehe"
   },
-  isAnonymous:0,
-  screenWidth:document.documentElement.clientWidth, //屏幕宽度
-  screenHeight:document.documentElement.clientHeight, //屏幕高度
+  area: ""
 }
-
 /**
  * mutations 里面放置的是我们操作state对象属性的方法
  */
@@ -21,8 +18,8 @@ const mutations = {
     state.time.starttime = a[0];
     state.time.endtime = a[1];
   },
-  setIsAnonymous(state,i) {
-    state.isAnonymous=i;
+  setArea(state ,a) {
+    state.area = a;
   }
 }
 export default new Vuex.Store({

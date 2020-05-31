@@ -40,6 +40,15 @@
                            value="完成">
                 </el-form>
             </div>
+            <el-dialog
+                    :visible.sync="dialogVisible3"
+                    title="地区选择"
+                    width="30%">
+                <el-form :model="form2">
+                    <smallcountry></smallcountry>
+
+                </el-form>
+            </el-dialog>
         </div>
     </div>
 </template>
@@ -47,6 +56,7 @@
 <script>
   import Bus from "@/JS/bus.js"
   import LineWordLine from "@/components/LineWordLine";
+  import smallcountry from '@/pages/Map/Mapselect.vue'
 
   export default {
     name: "PostPanel",
@@ -57,6 +67,7 @@
         postText: '',
         dialogImageUrl: '',
         dialogVisible: false,
+          dialogVisible3: false,
         showModal: false,
         domain: 'https://upload.qiniup.com',
         qiniuaddr: 'http://q9stlq87q.bkt.clouddn.com',
@@ -85,16 +96,17 @@
         })
       },
       /**
-       * @description 使用事件总线发送完成编辑信号 由ContentPostMain处理
+       * @description 使用事件总线发送完成编辑信号
        * @param {string} flag 完成信号,可能有"finish"正常结束，和“close"直接关闭。
        */
       finishEdit(flag) {
+          this.dialogVisible3=true;
+          this.dialogVisible=false;
         let that = this;
-        let anonym = this.$store.state.isAnonymous;
         this.axios.post(`${this.GLOBAL.apiUrl}/addpost`, {
           postImg: that.dialogImageUrl,
           postContent: that.postText,
-          anonym,
+          anonym: 0,
           areaId: 0,
           userId: sessionStorage.getItem('ID'),
           forwardPostId: -1,
@@ -125,7 +137,8 @@
       }
     },
     components: {
-      LineWordLine
+      LineWordLine,
+        smallcountry
     },
     created() {
       this.init()

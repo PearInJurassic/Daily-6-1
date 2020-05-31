@@ -25,7 +25,7 @@
           myChart.resize()
         })
         var option = {
-          backgroundColor: "#02AFDB",
+          background: "#02AFDB",
           dataRange: {
             show: false,
             min: 0,
@@ -248,22 +248,26 @@
               that.$router.push({
                 "path": "/fujian",
                 "query": {
+                    "n":n[i],
                   "x": j[i],
                   "y": w[i],
                 }
               })
+
+
                 break;
             }
           /*if( chinaParam.name=='北京'){
 
           }*/
+
           var option = myChart.getOption();
           option.series[0].map = chinaParam.name;
           option.series[0].mapType = chinaParam.name;
           myChart.clear();
           console.log(chinaParam.name);
           myChart.setOption(option, true);
-
+          this.$store.commit('setArea',chinaParam.name);
 
         });
 

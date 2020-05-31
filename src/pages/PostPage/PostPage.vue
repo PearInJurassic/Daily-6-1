@@ -32,8 +32,7 @@
     },
     components: {
       PostPanel,
-      NavBar,
-      PageCenterPost,
+      NavBar, PageCenterPost,
     },
     methods: {
       reload() {
@@ -44,11 +43,6 @@
       }
     },
     mounted() {
-      let that = this;
-      window.onresize=function() {
-        that.$store.state.screenWidth = document.documentElement.clientWidth; //窗口宽度
-        that.$store.state.screenHeight = document.documentElement.clientHeight; //窗口高度
-      }
       Bus.$on("showEditPanel", () => {
         this.isEditPanelShow = true;
       });

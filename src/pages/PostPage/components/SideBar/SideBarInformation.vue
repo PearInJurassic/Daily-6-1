@@ -2,10 +2,7 @@
     <div :style="anonyStyle" class="Information">
         <div class="InformationMain">
             <div class="Avatar">
-                <el-avatar :size="52"
-                           :src="userAvatar" v-if="!this.$store.state.isAnonymous"></el-avatar>
-                <el-avatar :size="52"
-                           :src="anonymousAvatar" v-if="this.$store.state.isAnonymous"></el-avatar>
+                <el-avatar :size="52" :src="userAvatar"></el-avatar>
             </div>
             <div>
                 <p>{{userNickName}}</p>
@@ -50,9 +47,6 @@
       }
     },
     computed: {
-      anonymousAvatar(){
-        return this.ANONYMOUS_AVATAR;
-      },
       anonymousUrl() {
         return require(`@/assets/SideBar/${this.anonymousImgAdd[this.isAnonymous]}`);
       }
@@ -69,16 +63,10 @@
        * @description 点击匿名按钮
        */
       change() {
-        this.$store.state.isAnonymous
-          ?
-          this.$store.commit('setIsAnonymous', 0)
-          :
-          this.$store.commit('setIsAnonymous', 1)
-        if (this.$store.state.isAnonymous) {
-          this.anonyStyle.backgroundColor = "#3a3b3a";
-        }
+        this.isAnonymous ? this.isAnonymous = 0 : this.isAnonymous = 1;
+        if (this.isAnonymous) this.anonyStyle.backgroundColor = "#2c2d2c";
         else this.anonyStyle.backgroundColor = "white";
-        if (this.$store.state.isAnonymous) {
+        if (this.isAnonymous) {
           this.$notify({
             title: '提示',
             message: '您已经进入匿名状态',

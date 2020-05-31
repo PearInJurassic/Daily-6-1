@@ -21,7 +21,6 @@
     name: "ContentPostMain",
     data() {
       return {
-        windowWidth:document.documentElement.clientWidth,
         PostAll: "PostAll",
         postNum: [],
         img:"",
@@ -47,7 +46,7 @@
           }
         })
           .then((response) => {
-            console.log(response)
+            // console.log(response)
             this.loading=false
             this.likeList = [...response.data.likeList];
             // console.log(this.likeList)
@@ -78,6 +77,7 @@
             default:
               break;
         }
+
         // console.log('success')
       });
       Bus.$on("finishSearch",(list) =>{
@@ -87,12 +87,7 @@
         }
         this.loading=false;
       })
-    },
-    watch:{
-      '$store.state.screenWidth':function(val){ //监听屏幕宽度变化
-        this.windowWidth=val;
-      }
-    },
+    }
   }
 </script>
 
@@ -101,12 +96,12 @@
     .ContentAll {
         display: flex;
         max-width: 1025px;
-        min-width: 350px;
+        min-width: 650px;
     }
 
     .ContentCenter {
         max-width: 1025px;
-        min-width: 350px;
+        min-width: 650px;
 
         padding-top: 30px;
     }

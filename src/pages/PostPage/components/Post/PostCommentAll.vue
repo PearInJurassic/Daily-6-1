@@ -44,13 +44,8 @@
           userId
         }
       }).then((response) => {
-        if(!this.headComment.anonym) {
-          this.user.userName = response.data.userInfo.user.userName;
-          this.user.userImg = response.data.userInfo.user.userImg;
-        } else {
-          this.user.userName='';
-          this.user.userImg=this.ANONYMOUS_AVATAR;
-        }
+        this.user.userName = response.data.userInfo.user.userName;
+        this.user.userImg = response.data.userInfo.user.userImg;
       })
     }
   }

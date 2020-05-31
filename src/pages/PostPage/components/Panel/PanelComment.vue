@@ -2,32 +2,29 @@
     <div class="ContentAll">
         <div class="PosterInfo">
             <div class="Avatar">
-                <div @click="gotoPerson(postInfo.userId)" class="avatar" v-if="!item.anonym">
-                    <el-avatar :size="42" :src="postInfo.userImg"></el-avatar>
+                <div @click="gotoPerson(postInfo.userId)" class="avatar">
+                <el-avatar :size="42" :src="postInfo.userImg"></el-avatar>
                 </div>
-                <div @click="gotoPerson(postInfo.userId)" class="avatar" v-if="item.anonym">
-                    <el-avatar :size="42" :src="anonymousAvatar"></el-avatar>
-                </div>
-                <el-tooltip class="item" content="关注用户" effect="dark" placement="right" v-if="!item.anonym">
-                    <button class="IconButton" id="followButton">
-                        <img :src="followUrl" @click="follow" alt="关注按钮">
-                    </button>
+                <el-tooltip class="item" effect="dark" content="关注用户" placement="right">
+                <button class="IconButton" id="followButton">
+                    <img :src="followUrl" @click="follow" alt="关注按钮">
+                </button>
                 </el-tooltip>
             </div>
             <div class="Icon">
-                <el-tooltip class="item" content="举报该帖" effect="dark" placement="left">
-                    <button class="IconButton" id="reportButton">
-                        <img :src="reportUrl" @click="reportPost" alt="举报按钮">
-                    </button>
+                <el-tooltip class="item" effect="dark" content="举报该帖" placement="left">
+                <button class="IconButton" id="reportButton">
+                    <img :src="reportUrl" @click="reportPost" alt="举报按钮">
+                </button>
                 </el-tooltip>
             </div>
         </div>
         <div class="Comment">
-            <p v-if="commentList.length==0">暂无评论，我来发表第一篇评论！</p>
+            <p v-if="commentNum.length==0">暂无评论，我来发表第一篇评论！</p>
             <el-collapse @change="change" accordion v-model="activeName">
                 <el-collapse-item :key="index"
                                   :name="item[0].commentId"
-                                  v-for="(item,index) in commentList">
+                                  v-for="(item,index) in commentNum">
                     <template slot="title">
                         <div class="CommentPanel">
                             <PostCommentAll :headComment="item[0]"></PostCommentAll>
@@ -83,7 +80,7 @@
         like: this.isLike,
         likeNums: 0,
         likeImgArr: ['like.png', 'like-fill.png'],
-        commentList: [],
+        commentNum: [],
         commentText: '',
         PostCommentAll: "PostCommentAll",
         followUrl: require("@/assets/Post/follow.png"),
@@ -104,15 +101,16 @@
       likeUrl() {
         return require(`@/assets/Post/${this.likeImgArr[this.like]}`);
       },
-      anonymousAvatar() {
-        return this.ANONYMOUS_AVATAR;
-      }
+      // commentContentAll() {
+      //   return this.replyTarget + this.commentText
+      // }
     },
     components: {
       PostCommentAll,
       PostCommentChild
     },
     methods: {
+      //TODO 评论页面点击头像进入个人空间
       /**
        * @description 跳转到个人空间
        */
@@ -146,7 +144,7 @@
             }
           })
             .then(() => {
-              this.likeNums--;
+              this.likeNums++;
               this.$emit("childRemoveLike")
             })
         }
@@ -158,28 +156,16 @@
         let pattern = /^("@)(\d)+/;
         let r = this.commentText.match(pattern);
         let replyCommentId = (r == null) ? 0 : r[0].split('@')[1];
-        let anonym=this.$store.state.isAnonymous;
         this.axios.post(`${this.GLOBAL.apiUrl}/comment/createcomment`, {
           "commentContent": this.commentText,
           "postId": this.item.postId,
           "userId": sessionStorage.getItem("ID"),
-          anonym,
+          "anonym": 0,
           replyCommentId
         })
           .then((response) => {
-            console.log(this.commentList)
-            let newCommentChildList = [];
-            newCommentChildList.push(response.data.newComment)
-            if (!replyCommentId) {//如果是顶层回复
-              this.commentList.push(newCommentChildList);
-            } else {//如果是评论的回复
-                for(let index in this.commentList) {
-                  if(this.commentList[index][0].commentId == replyCommentId) {
-                    this.commentList[index].push(response.data.newComment)
-                  }
-                }
-            }
-            console.log(this.commentList)
+            // this.commentNum.push(response.data.newComment);
+            console.log(response)
           })
         // this.commentNum.push(this.commentText);
         this.commentText = ''
@@ -242,7 +228,7 @@
           console.log(response)
           let commentList = response.data.commentList;
           for (let index in commentList) {
-            this.commentList.push(commentList[index])
+            this.commentNum.push(commentList[index])
             // console.log(commentList[index], index)
           }
         })
@@ -337,7 +323,6 @@
 
     .Avatar {
         display: flex;
-
         .avatar:hover {
             cursor: pointer;
         }
@@ -354,10 +339,9 @@
             line-height: 15px;
             background-color: whitesmoke;
         }
-        .el-collapse-item__wrap {
-            background-color: #eeeeee;
-        }
     }
 
+    .el-icon-arrow-right {
 
+    }
 </style>
