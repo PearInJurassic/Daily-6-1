@@ -50,7 +50,8 @@ public interface PostService {
 
     List<Post> getPostByContentAndUserId(String str, int userId);
 
-    List<Integer> getAreaByContent(String str);
+    List<Integer> getAreaByContent(String ContentStr,String AreaNameStr);
+
 
     List<Post> getPostByAreaId(int areaId);
 

@@ -226,9 +226,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Integer> getAreaByContent(String str) {
+    public List<Integer> getAreaByContent(String contentstr,String areaNameStr) {
 
-        return postDao.queryAreaByContent(str);
+        return postDao.queryAreaByContent(contentstr,areaNameStr);
     }
 
     @Override

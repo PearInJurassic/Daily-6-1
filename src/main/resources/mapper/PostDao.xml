@@ -62,11 +62,14 @@
 	</select>
 
 	<select id="queryAreaByContent" resultType="java.lang.Integer">
-		SELECT area_id
-		FROM tb_post
+		SELECT tb_area.area_id
+		FROM tb_post,tb_area
 		WHERE
-		post_content like '%${str}%'
-		
+		tb_post.post_content like '%${contentStr}%'
+		AND
+		tb_area.area_name like '${areaNameStr}_'
+		AND
+		tb_post.area_id=tb_area.area_id
 	</select>
 
 	<select id="queryLastPost" resultType="com.daily.entity.Post">

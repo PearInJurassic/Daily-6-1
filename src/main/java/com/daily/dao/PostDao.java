@@ -1,11 +1,11 @@
-/**   
-* @Title: PostDao.java 
-* @Package com.daily.dao 
-* @Description: TODO 
-* @author Doris   
-* @date 2020年4月5日 上午11:40:13 
-* @version V1.0   
-*/
+/**
+ * @Title: PostDao.java
+ * @Package com.daily.dao
+ * @Description: TODO
+ * @author Doris
+ * @date 2020年4月5日 上午11:40:13
+ * @version V1.0
+ */
 package com.daily.dao;
 
 import com.daily.entity.Post;
@@ -18,19 +18,19 @@ import java.util.List;
  * @Description: TODO
  * @author Doris
  * @date 2020年4月27日 上午11:40:13
- * 
+ *
  */
 public interface PostDao {
     /**
      * 查询所有帖子
-     * 
+     *
      * @return postList
      */
     List<Post> queryPost();
 
     /**
      * 根据UserId找出该用户的所有帖子
-     * 
+     *
      * @return postList
      */
     List<Post> queryPostByUserId(int UserId);
@@ -39,7 +39,7 @@ public interface PostDao {
 
     /**
      * 根据postId找出userId
-     * 
+     *
      * @return userId
      */
     int queryUserByPostId(int postId);
@@ -48,43 +48,44 @@ public interface PostDao {
 
     /**
      * 搜索帖子
-     * 
+     *
      * @return userId
      */
     List<Post> queryPostByContent(@Param("str") String str);
 
     /**
      * 搜索某一用户的帖子
-     * 
+     *
      * @return userId
      */
     List<Post> queryPostByContentAndUserId(String str, int userId);
 
     /**
      * 搜索某一用户的帖子
-     * 
+     *
      * @return userId
      */
-    List<Integer> queryAreaByContent(@Param("str") String str);
+    List<Integer> queryAreaByContent(String contentStr,String areaNameStr);
+
 
     /**
      * 根据postId找出帖子
-     * 
+     *
      * @return userId
      */
     Post queryPostByPostId(int postId);
 
     /**
      * 获取数据库最后一个帖子
-     * 
+     *
      * @return userId
      */
     Post queryLastPost();
 
     /**
      * 增加帖子
-     * 
-     * 
+     *
+     *
      * @param
      * @return
      */
@@ -92,7 +93,7 @@ public interface PostDao {
 
     /**
      * 修改帖子
-     * 
+     *
      * @param post
      * @return
      */
@@ -100,7 +101,7 @@ public interface PostDao {
 
     /**
      * 删除帖子
-     * 
+     *
      * @param postId
      * @return
      */
@@ -108,7 +109,7 @@ public interface PostDao {
 
     /**
      * 增加评论数
-     * 
+     *
      * @param postId
      * @return
      */
@@ -116,7 +117,7 @@ public interface PostDao {
 
     /**
      * 减少评论数
-     * 
+     *
      * @param postId
      * @return
      */
@@ -124,7 +125,7 @@ public interface PostDao {
 
     /**
      * 查询评论数
-     * 
+     *
      * @param postId
      * @return
      */
@@ -132,7 +133,7 @@ public interface PostDao {
 
     /**
      * 增加点赞数
-     * 
+     *
      * @param postId
      * @return
      */
@@ -140,7 +141,7 @@ public interface PostDao {
 
     /**
      * 减少点赞数
-     * 
+     *
      * @param postId
      * @return
      */
@@ -148,7 +149,7 @@ public interface PostDao {
 
     /**
      * 查询点赞数
-     * 
+     *
      * @param postId
      * @return
      */
@@ -156,7 +157,7 @@ public interface PostDao {
 
     /**
      * 增加举报数
-     * 
+     *
      * @param postId
      * @return
      */
@@ -164,7 +165,7 @@ public interface PostDao {
 
     /**
      * 减少举报数
-     * 
+     *
      * @param postId
      * @return
      */
@@ -172,7 +173,7 @@ public interface PostDao {
 
     /**
      * 查询点赞数
-     * 
+     *
      * @param postId
      * @return
      */
@@ -180,7 +181,7 @@ public interface PostDao {
 
     /**
      * 增加举报数
-     * 
+     *
      * @param postId
      * @return
      */
@@ -188,7 +189,7 @@ public interface PostDao {
 
     /**
      * 减少举报数
-     * 
+     *
      * @param postId
      * @return
      */
@@ -196,7 +197,7 @@ public interface PostDao {
 
     /**
      * 查询点赞数
-     * 
+     *
      * @param postId
      * @return
      */

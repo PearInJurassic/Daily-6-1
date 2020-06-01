@@ -142,10 +142,11 @@ public class PostController {
     }
 
     @RequestMapping(value = "/searchareabycontent", method = RequestMethod.GET)
-    private Map<String, Object> searchAreaByContent(String str) {
+    private Map<String, Object> searchAreaByContent(String contentstr,String areaNameStr) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<Integer> areaList = new ArrayList<Integer>();
-        areaList = postService.getAreaByContent(str);
+        areaList = postService.getAreaByContent(contentstr,areaNameStr);
+
         modelMap.put("areaList", areaList);
         List<List<Post>> postList = new ArrayList<List<Post>>();
 
