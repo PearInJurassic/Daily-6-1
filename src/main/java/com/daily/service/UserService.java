@@ -2,6 +2,7 @@ package com.daily.service;
 
 import com.daily.dto.LoginDTO;
 import com.daily.dto.RegisterDTO;
+import com.daily.entity.AdminAction;
 import com.daily.entity.User;
 import com.daily.entity.UserExpand;
 import com.daily.vo.UserInfoVO;
@@ -15,9 +16,11 @@ public interface UserService {
 
     int delUserById(int userId);
 
-    int freezeUserById(int adminId,int userId);
+    int adminFreezeUserById(int adminId,int userId);
 
-    int unfreezeUserById(int adminId,int userId);
+    int adminUnfreezeUserById(int adminId,int userId);
+
+    List<AdminAction> getAdminAction();
 
     int resetPasswordById(int userId, String userPwd);
 

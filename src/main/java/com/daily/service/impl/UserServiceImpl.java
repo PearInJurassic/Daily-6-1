@@ -6,6 +6,7 @@ import com.daily.dao.UserDao;
 import com.daily.dao.UserFollowDao;
 import com.daily.dto.LoginDTO;
 import com.daily.dto.RegisterDTO;
+import com.daily.entity.AdminAction;
 import com.daily.entity.User;
 import com.daily.entity.UserExpand;
 import com.daily.entity.UserFollow;
@@ -76,13 +77,44 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int freezeUserById(int adminId,int userId) {
-        return userDao.freezeUserById(userId);
+    public int adminFreezeUserById(int adminId,int userId) {
+        int result;
+        AdminAction adminAction = new AdminAction();
+        adminAction.setActionType(0);
+        adminAction.setActionDate(new Date());
+        adminAction.setUserId(userId);
+        adminAction.setAdminId(adminId);
+        if(userDao.getStateByUserId(userId) == 1){
+            result = userDao.freezeUserById(userId);
+            userDao.insertAdminAction(adminAction);
+        }
+        else{
+            result = 0;
+        }
+        return result;
     }
 
     @Override
-    public int unfreezeUserById(int adminId,int userId) {
-        return userDao.unfreezeUserById(userId);
+    public int adminUnfreezeUserById(int adminId,int userId) {
+        int result;
+        AdminAction adminAction = new AdminAction();
+        adminAction.setActionType(1);
+        adminAction.setActionDate(new Date());
+        adminAction.setUserId(userId);
+        adminAction.setAdminId(adminId);
+        if(userDao.getStateByUserId(userId) == 0){
+            result = userDao.unfreezeUserById(userId);
+            userDao.insertAdminAction(adminAction);
+        }
+        else{
+            result = 0;
+        }
+        return result;
+    }
+
+    @Override
+    public List<AdminAction> getAdminAction() {
+        return userDao.getAdminAction();
     }
 
     @Override

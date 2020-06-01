@@ -4,6 +4,8 @@ import com.daily.entity.AdminAction;
 import com.daily.entity.User;
 import com.daily.entity.UserFollowInfo;
 
+import java.util.List;
+
 public interface UserDao {
     String getPasswordByEmail(String email);
 
@@ -22,6 +24,8 @@ public interface UserDao {
     int unfreezeUserById(int userId);
 
     int insertAdminAction(AdminAction action);
+
+    List<AdminAction> getAdminAction();
 
     int resetPasswordById(int userId, String userPwd);
 

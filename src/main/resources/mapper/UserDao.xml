@@ -54,26 +54,30 @@
 		#{userId}
 	</delete>
     <update id="freezeUserById">
-        update tb_user
+        UPDATE tb_user
         <set>
             state=0
         </set>
-        where user_id=#{userId}
+        WHERE user_id=#{userId}
     </update>
     <update id="unfreezeUserById">
-        update tb_user
+        UPDATE tb_user
         <set>
             state=1
         </set>
-        where user_id=#{userId}
+        WHERE user_id=#{userId}
     </update>
     <update id="resetPasswordById">
-        update tb_user
+        UPDATE tb_user
         <set>
             user_pwd=#{userPwd}
         </set>
-        where user_id=#{userId}
+        WHERE user_id=#{userId}
     </update>
+    <select id="getAdminAction" resultType="com.daily.entity.AdminAction">
+        SELECT *
+        FROM tb_admin_action
+    </select>
     <select id="getStateByUserId" resultType="java.lang.Integer">
 		SELECT state
 		FROM tb_user

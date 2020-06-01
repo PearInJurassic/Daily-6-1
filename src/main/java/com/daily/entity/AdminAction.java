@@ -2,6 +2,7 @@ package com.daily.entity;
 
 import lombok.Data;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
@@ -49,8 +50,9 @@ public class AdminAction {
         this.userId = userId;
     }
 
-    public Date getActionDate() {
-        return actionDate;
+    public String getActionDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(actionDate);
     }
 
     public void setActionDate(Date actionDate) {

@@ -2,10 +2,7 @@ package com.daily.web;
 
 import com.daily.dto.LoginDTO;
 import com.daily.dto.RegisterDTO;
-import com.daily.entity.Post;
-import com.daily.entity.RecordExpand;
-import com.daily.entity.User;
-import com.daily.entity.UserExpand;
+import com.daily.entity.*;
 import com.daily.service.PostService;
 import com.daily.service.QiNiuService;
 import com.daily.service.RecordService;
@@ -88,7 +85,7 @@ public class UserController {
      */
     @RequestMapping(value = "/freeze", method = RequestMethod.POST)
     private Map<String, Object> freeze(Integer adminId,Integer userId) {
-        int result = userService.freezeUserById(adminId,userId);
+        int result = userService.adminFreezeUserById(adminId,userId);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Map<String, Object> modelMap = new HashMap<String, Object>();
         if (result == 1) {
@@ -108,7 +105,7 @@ public class UserController {
     */
     @RequestMapping(value = "/unfreeze", method = RequestMethod.POST)
     private Map<String, Object> unfreeze(Integer adminId,Integer userId){
-        int result = userService.unfreezeUserById(adminId,userId);
+        int result = userService.adminUnfreezeUserById(adminId,userId);
         Map<String, Object> modelMap = new HashMap<String, Object>();
         if(result == 1){
             modelMap.put("code", 1);
@@ -156,6 +153,19 @@ public class UserController {
             modelMap.put("code", 2);
             modelMap.put("message", "删除失败");
         }
+        return modelMap;
+    }
+
+    /*
+     * 获取管理员操作列表
+     * @param
+     * @return List<AdminAction>
+     */
+    @RequestMapping(value = "/getAdminAction",method = RequestMethod.GET)
+    private Map<String,Object> getAdminAction(){
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<AdminAction> actions = userService.getAdminAction();
+        modelMap.put("adminAction",actions);
         return modelMap;
     }
 

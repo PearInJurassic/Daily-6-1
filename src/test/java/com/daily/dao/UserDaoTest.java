@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -126,14 +127,44 @@ public class UserDaoTest {
 //        int i = userDao.resetPasswordById(1323,"abcd123");
 //        assertEquals(1,i);
 //   }
+
     @Test
-    public void testInsertAction(){
+    public void testInsertFreezeAction(){
         AdminAction action = new AdminAction();
+        int i,userId = 1323;
         action.setAdminId(1);
         action.setActionType(0);
-        action.setUserId(1323);
+        action.setUserId(userId);
         action.setActionDate(new Date());
-        int i = userDao.insertAdminAction(action);
-        assertEquals(1,i);
+        if(userDao.getStateByUserId(userId) == 1) {
+            i = userDao.insertAdminAction(action);
+            userDao.freezeUserById(userId);
+        }
+        else {
+            i = 0;
+        }
+    }
+
+    @Test
+    public void testInsertUnfreezeAction(){
+        AdminAction action = new AdminAction();
+        int i,userId = 1323;
+        action.setAdminId(1);
+        action.setActionType(1);
+        action.setUserId(userId);
+        action.setActionDate(new Date());
+        if(userDao.getStateByUserId(userId) == 0) {
+            i = userDao.insertAdminAction(action);
+            userDao.unfreezeUserById(userId);
+        }
+        else {
+            i = 0;
+        }
+    }
+
+    @Test
+    public void testGetAdminAction(){
+        List<AdminAction> actions = userDao.getAdminAction();
+        int i = actions.size();
     }
 }
