@@ -11,6 +11,10 @@ const state = {
   isAnonymous:0,
   screenWidth:document.documentElement.clientWidth, //屏幕宽度
   screenHeight:document.documentElement.clientHeight, //屏幕高度
+  area: "",
+  city_name: "",
+  highLight: [],//高亮地区id列表
+  belongedId: 0
 }
 
 /**
@@ -23,7 +27,19 @@ const mutations = {
   },
   setIsAnonymous(state,i) {
     state.isAnonymous=i;
-  }
+  },
+  setArea(state ,a) {
+    state.area = a;
+  },
+  setCity(state,a) {
+    state.city_name = a;
+  },
+  setHighLight(state,a) {
+    state.highLight = a;
+  },
+  setBelongedId(state,a) {
+    state.belongedId = a;
+  },
 }
 export default new Vuex.Store({
   state,

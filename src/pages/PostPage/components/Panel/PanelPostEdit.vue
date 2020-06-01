@@ -36,10 +36,44 @@
                     <el-form-item label="Tags（请以空格分隔）">
                         <el-input :disabled="true" v-model="tags"></el-input>
                     </el-form-item>
+                    <el-form-item>
+                    <input @click="chooseArea" class="CommonButton" id="TextEditButton2" type="button"
+                           value="选择地区">
+                    </el-form-item>
                     <input @click="finishEdit(`finish`)" class="CommonButton" id="TextEditButton" type="button"
                            value="完成">
                 </el-form>
             </div>
+            <el-dialog
+                    :visible.sync="dialogVisible3"
+                    title="地区选择"
+                    width="40%">
+                <el-form :model="form2">
+                    <div>
+                        <smallcountry></smallcountry>
+                    </div>
+
+                    <span>
+                        <el-select v-model="value" placeholder="请选择你所在的区块" @change="showMessage">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </span>
+
+                    <span>
+                          【从下至上从左到右依次为区域1-9块】
+                    </span>
+
+                    <div>
+                        <el-button @click="finishChoose" class="CommonButton">确定</el-button>
+                    </div>
+
+                </el-form>
+            </el-dialog>
         </div>
     </div>
 </template>
@@ -47,17 +81,48 @@
 <script>
   import Bus from "@/JS/bus.js"
   import LineWordLine from "@/components/LineWordLine";
+  import smallcountry from '@/pages/Map/Mapselect.vue'
 
   export default {
     name: "PostPanel",
     data() {
       return {
-        imageList:[],
+          options: [{
+              value: '1',
+              label: '区域1'
+          }, {
+              value: '2',
+              label: '区域2'
+          }, {
+              value: '3',
+              label: '区域3'
+          }, {
+              value: '4',
+              label: '区域4'
+          }, {
+              value: '5',
+              label: '区域5'
+          }, {
+              value: '6',
+              label: '区域6'
+          }, {
+              value: '7',
+              label: '区域7'
+          }, {
+              value: '8',
+              label: '区域8'
+          }, {
+              value: '9',
+              label: '区域9'
+          }],
+          value: '',
+          num: -1,
         isShow: true,
         tags: '',
         postText: '',
         dialogImageUrl: '',
         dialogVisible: false,
+          dialogVisible3: false,
         showModal: false,
         domain: 'https://upload.qiniup.com',
         qiniuaddr: 'http://q9stlq87q.bkt.clouddn.com',
@@ -85,31 +150,33 @@
           // console.log(response)
         })
       },
+        chooseArea() {
+            this.dialogVisible3=true;
+        },
+        finishChoose() {
+            this.dialogVisible3=false;
+        },
       /**
-       * @description 使用事件总线发送完成编辑信号 由ContentPostMain处理
+       * @description 使用事件总线发送完成编辑信号
        * @param {string} flag 完成信号,可能有"finish"正常结束，和“close"直接关闭。
        */
       finishEdit(flag) {
-        let imageList = this.imageList.join('#')
-        // console.log(imageList)
         let that = this;
-        let anonym = this.$store.state.isAnonymous;
         this.axios.post(`${this.GLOBAL.apiUrl}/addpost`, {
-          // postImg: that.dialogImageUrl,
-          postImg:imageList,
+          postImg: that.dialogImageUrl,
           postContent: that.postText,
-          anonym,
-          areaId: 0,
+          anonym: 0,
+          areaId: this.$store.state.belongedId+this.num,
           userId: sessionStorage.getItem('ID'),
           forwardPostId: -1,
         })
-          .then((response) => {
+          .then(() => {
             this.postText='';
             this.dialogImageUrl='';
             this.$refs.pictureUploader.clearFiles();
             console.log(this.dialogImageUrl)
             Bus.$emit("finishEdit", flag);
-            console.log(response)
+            // console.log(response)
           })
       },
       beforeImgUpload(file) {
@@ -123,16 +190,18 @@
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       },
-      handlePictureSuccess(res,file,fileList) {
+      handlePictureSuccess(res) {
         this.dialogImageUrl = `${this.qiniuaddr}/${res.key}`
         console.log(this.dialogImageUrl)
-        this.imageList=fileList.map((value) =>{
-          return `${this.qiniuaddr}/${value.response.key}`;
-        })
-      }
+      },
+        showMessage(e) {
+            //选择的区块编号
+            this.num = e
+        },
     },
     components: {
-      LineWordLine
+      LineWordLine,
+        smallcountry
     },
     created() {
       this.init()
