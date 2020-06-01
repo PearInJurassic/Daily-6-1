@@ -63,7 +63,7 @@ public class PostController {
             tagList.add(tags);
             isLikeList.add(likeService.getLikeByPostIdAndUserId(post.getPostId(), userId));
             String imageStr=post.getPostImg();
-            System.out.println(imageStr);
+//            System.out.println(imageStr);
             List<String> images=new ArrayList<>();
             if(imageStr!=null){
                 String[] strs=imageStr.split("#");
@@ -142,10 +142,11 @@ public class PostController {
     }
 
     @RequestMapping(value = "/searchareabycontent", method = RequestMethod.GET)
-    private Map<String, Object> searchAreaByContent(String str) {
+    private Map<String, Object> searchAreaByContent(String contentstr,String areaNameStr) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<Integer> areaList = new ArrayList<Integer>();
-        areaList = postService.getAreaByContent(str);
+        areaList = postService.getAreaByContent(contentstr,areaNameStr);
+
         modelMap.put("areaList", areaList);
         List<List<Post>> postList = new ArrayList<List<Post>>();
 
@@ -232,20 +233,6 @@ public class PostController {
         int i = postService.getPostNumByUserId(userId.intValue());
         modelMap.put("postNum", i);
         System.out.println(userId);
-        return modelMap;
-    }
-
-    @RequestMapping(value = "/getuserlikepost", method = RequestMethod.GET)
-    private Map<String, Object> getUserLikePost(Integer userId) {
-        Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<Integer> likePostList = new ArrayList<>();
-        List<Post> postList = new ArrayList<>();
-        likePostList = likeService.getLikePostIdByUserId(userId);
-        for (int postId : likePostList) {
-            Post post = postService.getPostByPostId(postId);
-            postList.add(post);
-        }
-        modelMap.put("postList", postList);
         return modelMap;
     }
 

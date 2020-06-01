@@ -1,11 +1,11 @@
-/**   
-* @Title: PostService.java 
-* @Package com.daily.service 
-* @Description: TODO 
-* @author Doris   
-* @date 2020年4月5日 下午2:44:19 
-* @version V1.0   
-*/
+/**
+ * @Title: PostService.java
+ * @Package com.daily.service
+ * @Description: TODO
+ * @author Doris
+ * @date 2020年4月5日 下午2:44:19
+ * @version V1.0
+ */
 package com.daily.service;
 
 import com.daily.entity.Post;
@@ -17,20 +17,20 @@ import java.util.List;
  * @Description: TODO
  * @author Doris
  * @date 2020年4月27日 下午2:44:19
- * 
+ *
  */
 public interface PostService {
     /**
      * 获取所有帖子列表
-     * 
+     *
      * @return
      */
     List<Post> getPostList();
 
     /**
      * 通过发帖人Id获取帖子信息
-     * 
-     * @param areaId
+     *
+     * @param userId
      * @return
      */
     List<Post> getPostByUserId(int userId);
@@ -39,7 +39,7 @@ public interface PostService {
 
     /**
      * 获取特定的帖子
-     * 
+     *
      * @return
      */
     Post getPostByPostId(int postId);
@@ -50,7 +50,8 @@ public interface PostService {
 
     List<Post> getPostByContentAndUserId(String str, int userId);
 
-    List<Integer> getAreaByContent(String str);
+    List<Integer> getAreaByContent(String ContentStr,String AreaNameStr);
+
 
     List<Post> getPostByAreaId(int areaId);
 
@@ -58,24 +59,24 @@ public interface PostService {
 
     /**
      * 增加帖子信息
-     * 
-     * @param area
+     *
+     * @param post
      * @return
      */
     boolean addPost(Post post);
 
     /**
      * 修改帖子信息
-     * 
-     * @param area
+     *
+     * @param post
      * @return
      */
     boolean modifyPost(Post post);
 
     /**
      * 删除帖子信息
-     * 
-     * @param area
+     *
+     * @param postId
      * @return
      */
     boolean deletePost(int postId);

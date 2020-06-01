@@ -1,11 +1,11 @@
-/**   
-* @Title: PostServiceImpl.java 
-* @Package com.daily.service.impl 
-* @Description: TODO 
-* @author Doris   
-* @date 2020年4月5日 下午3:25:20 
-* @version V1.0   
-*/
+/**
+ * @Title: PostServiceImpl.java
+ * @Package com.daily.service.impl
+ * @Description: TODO
+ * @author Doris
+ * @date 2020年4月5日 下午3:25:20
+ * @version V1.0
+ */
 package com.daily.service.impl;
 
 import com.daily.dao.CommentDao;
@@ -28,7 +28,7 @@ import java.util.List;
  * @Description: TODO
  * @author Doris
  * @date 2020年4月5日 下午3:25:20
- * 
+ *
  */
 @Service
 public class PostServiceImpl implements PostService {
@@ -226,9 +226,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Integer> getAreaByContent(String str) {
+    public List<Integer> getAreaByContent(String contentstr,String areaNameStr) {
 
-        return postDao.queryAreaByContent(str);
+        return postDao.queryAreaByContent(contentstr,areaNameStr);
     }
 
     @Override
@@ -257,7 +257,10 @@ public class PostServiceImpl implements PostService {
         for(Post post : postList) {
             long t = post.getPostCreateTime().getTime();
             t = now.getTime() - t;
-            time = (int) t / 1000000;
+            if( t > 20 * 1000 * 3600 * 24 ) { //超过20天
+                t = 20 * 1000 * 3600 * 24;
+            }
+            time = (int) t / 10000000;
             forwardNum = post.getForwardNum();
             tipoffNum = post.getTipoffNum();
             likeNum = likeDao.queryLikeNumByPostId(post.getPostId());

@@ -8,11 +8,10 @@
 */
 package com.daily.dao;
 
-import java.util.List;
-
+import com.daily.entity.Post;
 import org.apache.ibatis.annotations.Param;
 
-import com.daily.entity.Post;
+import java.util.List;
 
 /**
  * @ClassName: PostDao
@@ -63,10 +62,11 @@ public interface PostDao {
 
     /**
      * 搜索某一用户的帖子
-     * 
+     *
      * @return userId
      */
-    List<Integer> queryAreaByContent(@Param("str") String str);
+    List<Integer> queryAreaByContent(String contentStr,String areaNameStr);
+
 
     /**
      * 根据postId找出帖子
@@ -86,7 +86,7 @@ public interface PostDao {
      * 增加帖子
      * 
      * 
-     * @param anonym
+     * @param
      * @return
      */
     int insertPost(Post post);
@@ -203,4 +203,5 @@ public interface PostDao {
      */
     int queryForwardNum(int postId);
 
+    int countPostNumByUserId(int userId);
 }
