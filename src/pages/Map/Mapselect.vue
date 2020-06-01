@@ -4,21 +4,8 @@
 
         <div id="fujian">
         </div>
-        <div>
-            <el-select v-model="value" placeholder="请选择你所在的区块" @change="showMessage($event)">
-                <el-option
-                        v-for="item in options"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                </el-option>
-            </el-select>
 
-        </div>
 
-        <div>
-            <el-button type="primary" plain>确定</el-button>
-        </div>
     </div>
 </template>
 
@@ -37,35 +24,8 @@
         },
         data() {
             return {
-                options: [{
-                    value: '1',
-                    label: '区域1'
-                }, {
-                    value: '2',
-                    label: '区域2'
-                }, {
-                    value: '3',
-                    label: '区域3'
-                }, {
-                    value: '4',
-                    label: '区域4'
-                }, {
-                    value: '5',
-                    label: '区域5'
-                }, {
-                    value: '6',
-                    label: '区域6'
-                }, {
-                    value: '7',
-                    label: '区域7'
-                }, {
-                    value: '8',
-                    label: '区域8'
-                }, {
-                    value: '9',
-                    label: '区域9'
-                }],
-                value: '',
+
+
                 nineblock:[],
 
                 //地区数据(以城市为单位)，暂时只存放了福建的城市
@@ -78,10 +38,7 @@
         },
         methods: {
 
-            showMessage(e) {
-                //选择的区块编号
-                this.num = e.value
-            },
+
             async geApitData(x,y,proname) {
                 // eslint-disable-next-line no-unused-vars
                 var blockid=0;
@@ -100,6 +57,8 @@
                     }).then((response) => {
                         // console.log(response.data)
                         test=response.data.areaList
+                        this.$store.commit('setBelongedId',test[0].belongAreaId);
+                        console.log(this.$store.state.belongedId)
                         that.createMap(x,y)
                     })
 
@@ -350,7 +309,7 @@
                     option.series[0].map = chinaParam.name;
                     option.series[0].mapType = chinaParam.name;
                     myChart.clear();
-                    console.log(chinaParam.name);
+
                     myChart.setOption(option, true);
                     this.$store.commit('setArea',chinaParam.name);
 
@@ -405,8 +364,7 @@
                 var m1 = 0;
                 for (var i2 = x-0.2; i2 < x+ 0.25; i2 += 0.15)
                     for (var n2 = y-0.28; n2 < y + 0.02; n2 += 0.15) {
-                        console.log(i2)
-                        console.log(n2)
+
                         var pStart = new BMapGL.Point(i2, n2);
                         var pEnd = new BMapGL.Point(i2 + 0.15, n2 + 0.15);
                         var rectangle = new BMapGL.Polygon([

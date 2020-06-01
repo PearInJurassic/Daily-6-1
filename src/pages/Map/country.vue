@@ -25,16 +25,9 @@
           myChart.resize()
         })
         var option = {
-          background: "#02AFDB",
-          dataRange: {
-            show: false,
-            min: 0,
-            max: 1000000,
-            text: ['High', 'Low'],
-            realtime: true,
-            calculable: true,
-            color: ['orangered', 'yellow', 'lightskyblue']
-          },
+
+          backgroundColor: "LightPink",
+
           /*title: {
               show:true,
               text: '标题--中国地图',
@@ -45,17 +38,41 @@
             trigger: 'item'
           },
           //左侧小导航图标
-          visualMap: {
-            show: true,
-            x: 'left',
-            y: 'bottom',
-            splitList: [
-              {start: 10, end: 20},
-              {start: 6, end: 10},
-              {start: 0, end: 6},
-            ],
-            color: ['#1E90FF', '#7FFFAA', '#F0E68C']
-          },
+            visualMap: {//颜色的设置  dataRange
+
+                show:false,
+
+                x: 'left',
+
+                y: 'center',
+
+                splitList: [
+
+                    {start: 1500,color:'#000000'},
+
+                    {start: 800, end: 1499,color:'#DB2828'},
+
+                    {start: 600, end: 799,color:'#E85C72'},
+
+                    {start: 400, end: 599,color:'#EE8D8D'},
+
+                    {start: 200, end: 399,color:'#E3AEAE'},
+
+                    {start: 100, end: 199,color:'#ef60dd'},
+
+                    {start: 0, end: 99,color: 'rgba(252,129,151,0.87)'},
+
+
+
+                ],
+
+                //            min: 0,
+
+                //            max: 2500,
+
+                //            calculable : true,//颜色呈条状
+
+            },
           //配置属性
           series: [{
             name: '数量',
@@ -255,6 +272,7 @@
               })
 
 
+             // console.log(chinaParam.name)
                 break;
             }
           /*if( chinaParam.name=='北京'){

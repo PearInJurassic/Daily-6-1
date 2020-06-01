@@ -15,24 +15,25 @@
         },
         data() {
             return {
-
+                flag:false,
                 susu:1,
                 nineblock:[],
-
+                highLightBlock:[],
                 //地区数据(以城市为单位)，暂时只存放了福建的城市
                 colorblock:[],
+                colorblock2:[],
                 // eslint-disable-next-line no-undef
 
                 //色块和本块数据的关系
                 colorlist: [
                     {
                         "color": "#CCEEFF",
-                        "start": 0,
-                        "end": 100
+                        "start": -1,
+                        "end": 0
                     },
                     {
                         "color": "#77DDFF",
-                        "start": 101,
+                        "start": 1,
                         "end": 1000
                     },
                     {
@@ -73,6 +74,7 @@
                              }).then((response) => {
                                 // console.log(response.data)
                                  test=response.data.areaList
+                                 console.log(test)
                                  that.createMap()
                              })
 
@@ -81,6 +83,7 @@
                          catch(error){console.log(error)}
                  that.nineblock=test
 
+                 this.$store.commit('setCity',this.$route.query.n);
             },
 
 
@@ -107,50 +110,85 @@
 
                 //先定义好每块的颜色
 
-
-                // for (var i = 0; i < this.area.length; i++)
-                var num = 0
-                for (var n = 0; n < 9; n++)
-                    for (var temp = 0; temp < 5; temp++) {
-                        if (this.nineblock[num].bubbleNum >= this.colorlist[temp].start && this.nineblock[num].bubbleNum <= this.colorlist[temp].end) {
-                            this.colorblock.push(this.colorlist[temp].color);
-                            num++;
-                            break;
-
+                if( this.flag==false) {
+                    // for (var i = 0; i < this.area.length; i++)
+                    var num = 0
+                    for (var n = 0; n < 9; n++)
+                        for (var temp = 0; temp < 5; temp++) {
+                            if (this.nineblock[num].bubbleNum >= this.colorlist[temp].start && this.nineblock[num].bubbleNum <= this.colorlist[temp].end) {
+                                this.colorblock.push(this.colorlist[temp].color);
+                                num++;
+                                break;
+                            }
                         }
+                }
 
-                    }
+
 
                 function add_overlay() {
                     map.addOverlay(rectangle);         //增加矩形
                 }
 
 //console.log("?");
-                var m1 = 0;
-                for (var i2 = this.$route.query.x-0.2; i2 < this.$route.query.x + 0.25; i2 += 0.15)
-                    for (var n2 = this.$route.query.y-0.28; n2 < this.$route.query.y + 0.02; n2 += 0.15) {
-                        console.log(i2)
-                        console.log(n2)
-                        var pStart = new BMapGL.Point(i2, n2);
-                        var pEnd = new BMapGL.Point(i2 + 0.15, n2 + 0.15);
-                        var rectangle = new BMapGL.Polygon([
-                            new BMapGL.Point(pStart.lng, pStart.lat),
-                            new BMapGL.Point(pEnd.lng, pStart.lat),
-                            new BMapGL.Point(pEnd.lng, pEnd.lat),
-                            new BMapGL.Point(pStart.lng, pEnd.lat)
-                        ], {
-                            strokeColor: "white",
-                            strokeWeight: 2,
-                            strokeOpacity: 0.5,
-                            fillColor: this.colorblock[m1],
-                        });  //创建矩形
-                        //添加覆盖物
-                        m1++;
-                        //console.log("!");
-                        add_overlay();
+               if(this.flag==false) {
+                   var m1 = 0;
+                   for (var n2 = this.$route.query.y - 0.28; n2 < this.$route.query.y + 0.02; n2 += 0.15)
+                   for (var i2 = this.$route.query.x - 0.2; i2 < this.$route.query.x + 0.25; i2 += 0.15)
+                        {
 
-                    }
+                           var pStart = new BMapGL.Point(i2, n2);
+                           var pEnd = new BMapGL.Point(i2 + 0.15, n2 + 0.15);
+                           var rectangle = new BMapGL.Polygon([
+                               new BMapGL.Point(pStart.lng, pStart.lat),
+                               new BMapGL.Point(pEnd.lng, pStart.lat),
+                               new BMapGL.Point(pEnd.lng, pEnd.lat),
+                               new BMapGL.Point(pStart.lng, pEnd.lat)
+                           ], {
+                               strokeColor: "white",
+                               strokeWeight: 2,
+                               strokeOpacity: 0.5,
+                               fillColor: this.colorblock[m1],
+                           });  //创建矩形
+                           //添加覆盖物
+                           m1++;
+                           //console.log("!");
+                           add_overlay();
 
+                       }
+               }
+               else {
+                   // eslint-disable-next-line no-redeclare
+                   var m1 = 0;
+                   // eslint-disable-next-line no-redeclare
+                   for (var n2 = this.$route.query.y - 0.28; n2 < this.$route.query.y + 0.02; n2 += 0.15)
+                       // eslint-disable-next-line no-redeclare
+                   for (var i2 = this.$route.query.x - 0.2; i2 < this.$route.query.x + 0.25; i2 += 0.15)
+                       // eslint-disable-next-line no-redeclare
+                        {
+
+                           // eslint-disable-next-line no-redeclare
+                           var pStart = new BMapGL.Point(i2, n2);
+                           // eslint-disable-next-line no-redeclare
+                           var pEnd = new BMapGL.Point(i2 + 0.15, n2 + 0.15);
+                           // eslint-disable-next-line no-redeclare
+                           var rectangle = new BMapGL.Polygon([
+                               new BMapGL.Point(pStart.lng, pStart.lat),
+                               new BMapGL.Point(pEnd.lng, pStart.lat),
+                               new BMapGL.Point(pEnd.lng, pEnd.lat),
+                               new BMapGL.Point(pStart.lng, pEnd.lat)
+                           ], {
+                               strokeColor: "white",
+                               strokeWeight: 2,
+                               strokeOpacity: 0.5,
+                               fillColor: this.colorblock2[m1],
+                           });  //创建矩形
+                           //添加覆盖物
+                           m1++;
+                           //console.log("!");
+                           add_overlay();
+
+                       }
+               }
 
                     }
             //},
@@ -160,7 +198,11 @@
 
             getnineblock() {
                 return this.nineblock;
-            }
+            },
+            gethighlight() {
+                return this.$store.state.highLight;
+            },
+
         },
         watch: {
             //监听时间轴开始日期变化
@@ -168,7 +210,29 @@
                 this.createMap()
             },
             //监听九块数组
+            gethighlight() {
+                //console.log(this.$store.state.highLight)
+                //收到高亮id列表后进行高亮操作
+                this.highLightBlock = this.$store.state.highLight;
+                this.colorblock2=this.colorblock;
+                //console.log(this.highLightBlock)
+                for(var i = 0;i<this.highLightBlock.length;i++){
+                    // eslint-disable-next-line no-unused-vars
+                    //his.highLightBlock[i]
+                    this.highLightBlock[i]=this.highLightBlock[i]%10
+                }
+                for(var n=0;n<9;n++) {
+                    for(var k=0;k<this.highLightBlock.length;k++) {
+                        if(this.highLightBlock[k]==n+1) {
 
+                            this.colorblock2[n]="orange"
+                        }
+                    }
+                }
+                this.flag=true;
+                console.log(this.colorblock2);
+                this.createMap()
+            }
         },
         mounted() {
 

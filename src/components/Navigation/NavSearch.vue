@@ -18,18 +18,35 @@
     },
     methods:{
       search() {
-        this.axios.get(`${this.GLOBAL.apiUrl}/searchpostbycontent`,{
-          params:{
-            str:this.searchContent
+          if (this.$route.path === "/fujian") {
+              //接收接口数据
+
+              //对页面进行渲染（用vuex传递高亮地区id）
+              this.axios.get(`${this.GLOBAL.apiUrl}/searchareabycontent`, {
+                  params: {
+                      contentStr: this.searchContent,
+                      areaNameStr: this.$store.state.city_name
+                  }
+              }).then((response) => {
+
+                  this.$store.commit('setHighLight', response.data.areaList);
+                  //console.log("aaaaaa")
+                  //console.log(this.$store.state.city_name)
+              })
+          } else {
+              this.axios.get(`${this.GLOBAL.apiUrl}/searchpostbycontent`, {
+                  params: {
+                      str: this.searchContent
+                  }
+              }).then((response) => {
+                  Bus.$emit("finishSearch", response.data.postList)
+                  this.$message({
+                      message: '搜索完成',
+                      duration: 500,
+                      showClose: true,
+                  })
+              })
           }
-        }).then((response)=>{
-          Bus.$emit("finishSearch",response.data.postList)
-          this.$message({
-            message:'搜索完成',
-            duration:500,
-            showClose:true,
-          })
-        })
       }
     }
   }
