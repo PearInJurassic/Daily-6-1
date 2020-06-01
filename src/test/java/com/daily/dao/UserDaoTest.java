@@ -21,8 +21,8 @@ import static org.junit.Assert.assertEquals;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) // 按方法名大小升序执行
 
 public class UserDaoTest {
-    @Autowired
-    private UserDao userDao;
+//    @Autowired
+//    private UserDao userDao;
 
     @Test
     @Ignore
@@ -128,43 +128,43 @@ public class UserDaoTest {
 //        assertEquals(1,i);
 //   }
 
-    @Test
-    public void testInsertFreezeAction(){
-        AdminAction action = new AdminAction();
-        int i,userId = 1323;
-        action.setAdminId(1);
-        action.setActionType(0);
-        action.setUserId(userId);
-        action.setActionDate(new Date());
-        if(userDao.getStateByUserId(userId) == 1) {
-            i = userDao.insertAdminAction(action);
-            userDao.freezeUserById(userId);
-        }
-        else {
-            i = 0;
-        }
-    }
-
-    @Test
-    public void testInsertUnfreezeAction(){
-        AdminAction action = new AdminAction();
-        int i,userId = 1323;
-        action.setAdminId(1);
-        action.setActionType(1);
-        action.setUserId(userId);
-        action.setActionDate(new Date());
-        if(userDao.getStateByUserId(userId) == 0) {
-            i = userDao.insertAdminAction(action);
-            userDao.unfreezeUserById(userId);
-        }
-        else {
-            i = 0;
-        }
-    }
-
-    @Test
-    public void testGetAdminAction(){
-        List<AdminAction> actions = userDao.getAdminAction();
-        int i = actions.size();
-    }
+//    @Test
+//    public void testInsertFreezeAction(){
+//        AdminAction action = new AdminAction();
+//        int i,userId = 1323;
+//        action.setAdminId(1);
+//        action.setActionType(0);
+//        action.setUserId(userId);
+//        action.setActionDate(new Date());
+//        if(userDao.getStateByUserId(userId) == 1) {
+//            i = userDao.insertAdminAction(action);
+//            userDao.freezeUserById(userId);
+//        }
+//        else {
+//            i = 0;
+//        }
+//    }
+//
+//    @Test
+//    public void testInsertUnfreezeAction(){
+//        AdminAction action = new AdminAction();
+//        int i,userId = 1323;
+//        action.setAdminId(1);
+//        action.setActionType(1);
+//        action.setUserId(userId);
+//        action.setActionDate(new Date());
+//        if(userDao.getStateByUserId(userId) == 0) {
+//            i = userDao.insertAdminAction(action);
+//            userDao.unfreezeUserById(userId);
+//        }
+//        else {
+//            i = 0;
+//        }
+//    }
+//
+//    @Test
+//    public void testGetAdminAction(){
+//        List<AdminAction> actions = userDao.getAdminAction();
+//        int i = actions.size();
+//    }
 }

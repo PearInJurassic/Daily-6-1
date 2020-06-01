@@ -15,25 +15,25 @@ import java.util.List;
 @SpringBootTest
 
 public class UserServiceTest {
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
 
-    @Test
-    public void testAdminFreezeUserById() {
-         userService.adminFreezeUserById(1,1323);
-    }
-
-    @Test
-    public void testAdminUnfreezeUserById(){
-        userService.adminUnfreezeUserById(1,1324);
-    }
-
-    @Test
-    public void testGetAdminAction(){
-        List<AdminAction> actions = userService.getAdminAction();
-        for(AdminAction a:actions){
-            System.out.printf("%s %s %s %s %s\n",a.getActionId(),a.getActionType(),a.getAdminId(),a.getUserId(),a.getActionDate());
-        }
-    }
+//    @Test
+//    public void testAdminFreezeUserById() {
+//         userService.adminFreezeUserById(1,1323);
+//    }
+//
+//    @Test
+//    public void testAdminUnfreezeUserById(){
+//        userService.adminUnfreezeUserById(1,1324);
+//    }
+//
+//    @Test
+//    public void testGetAdminAction(){
+//        List<AdminAction> actions = userService.getAdminAction();
+//        for(AdminAction a:actions){
+//            System.out.printf("%s %s %s %s %s\n",a.getActionId(),a.getActionType(),a.getAdminId(),a.getUserId(),a.getActionDate());
+//        }
+//    }
 
 }
