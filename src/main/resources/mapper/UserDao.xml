@@ -37,6 +37,14 @@
 		(#{userType},#{userName},#{userPwd},#{userImg},#{areaId},
 		#{userDate},#{gender},#{profile},#{state},#{fansNum},#{followNum},#{email})
 	</insert>
+    <insert id="insertAdminAction" useGeneratedKeys="true"
+            keyColumn="action_id" parameterType="com.daily.entity.AdminAction">
+        INSERT INTO
+        tb_admin_action(action_type,admin_id,user_id,action_date)
+        VALUES
+        (#{actionType},#{adminId},#{userId},#{actionDate})
+    </insert>
+
     <delete id="delUserById">
 		DELETE FROM
 		tb_user

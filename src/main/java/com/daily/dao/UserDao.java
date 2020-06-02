@@ -1,5 +1,6 @@
 package com.daily.dao;
 
+import com.daily.entity.AdminAction;
 import com.daily.entity.User;
 import com.daily.entity.UserFollowInfo;
 
@@ -21,6 +22,12 @@ public interface UserDao {
     int freezeUserById(int userId);
 
     int unfreezeUserById(int userId);
+
+    int insertAdminAction(AdminAction action);
+
+    List<AdminAction> getAdminAction();
+
+    int resetPasswordById(int userId, String userPwd);
 
     int getStateByUserId(int userId);
 

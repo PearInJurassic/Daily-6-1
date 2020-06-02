@@ -77,17 +77,58 @@ public class UserController {
 
     /*
      * 冻结
-     * @param
+     * @param userId
      * @return Map<userInfo,UserExpand>
      */
     @RequestMapping(value = "/freeze", method = RequestMethod.POST)
-    private Map<String, Object> freeze(Integer userId) {
-        int result = userService.freezeUserById(userId);
+    private Map<String, Object> freeze(Integer adminId,Integer userId) {
+        int result = userService.adminFreezeUserById(adminId,userId);
         Map<String, Object> modelMap = new HashMap<String, Object>();
         if (result == 1) {
             modelMap.put("code", 1);
+            modelMap.put("message","冻结成功");
         } else {
             modelMap.put("code", 2);
+            modelMap.put("message","冻结失败");
+        }
+        return modelMap;
+    }
+
+    /*
+     * 解冻
+     * @param userId
+     * @return Map<userInfo,UserExpand>
+     */
+    @RequestMapping(value = "/unfreeze", method = RequestMethod.POST)
+    private Map<String, Object> unfreeze(Integer adminId,Integer userId){
+        int result = userService.adminUnfreezeUserById(adminId,userId);
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        if(result == 1){
+            modelMap.put("code", 1);
+            modelMap.put("message", "解冻成功");
+        }else{
+            modelMap.put("code", 2);
+            modelMap.put("message", "解冻失败");
+        }
+        return modelMap;
+    }
+
+    /*
+     * 重置密码
+     * @param userId
+     * @return Map<userInfo,userExpand>
+     */
+    @RequestMapping(value = "/resetPassword",method = RequestMethod.POST)
+    private Map<String,Object> resetPassword(Integer userId, String userPwd){
+        int result = userService.resetPasswordById(userId,userPwd);
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        if(result == 1){
+            modelMap.put("code",1);
+            modelMap.put("message","重置成功");
+        }
+        else{
+            modelMap.put("code",2);
+            modelMap.put("message","重置失败");
         }
         return modelMap;
     }
@@ -108,6 +149,19 @@ public class UserController {
             modelMap.put("code", 2);
             modelMap.put("message", "删除失败");
         }
+        return modelMap;
+    }
+
+    /*
+     * 获取管理员操作列表
+     * @param
+     * @return List<AdminAction>
+     */
+    @RequestMapping(value = "/getAdminAction",method = RequestMethod.GET)
+    private Map<String,Object> getAdminAction(){
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<AdminAction> actions = userService.getAdminAction();
+        modelMap.put("adminAction",actions);
         return modelMap;
     }
 
