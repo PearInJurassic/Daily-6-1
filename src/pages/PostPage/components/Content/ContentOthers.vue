@@ -24,12 +24,11 @@
   import ContentPersonTab from "@/pages/PostPage/components/Content/ContentPersonTab";
 
   export default {
+    inject:['reload'],
     name: "CotentOthers",
     data(){
       return {
-
           windowWidth:document.documentElement.clientWidth,
-
       }
     },
     computed:{
@@ -44,13 +43,13 @@
     watch: {
       '$store.state.screenWidth': function (val) { //监听屏幕宽度变化
         this.windowWidth = val;
-      }
+      },
     },
     components: {
       ContentPersonInfo,
       ContentPersonFollow,
       ContentPersonTab
-    }
+    },
   }
 </script>
 

@@ -117,7 +117,7 @@
         this.reload();
       },
       quit() {
-        window.location.href = "/index.html";
+        window.location.href = "./index.html";
       },
 
       init(userID) {

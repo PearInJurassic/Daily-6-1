@@ -39,7 +39,8 @@
     name: "Side",
     data() {
       return {
-        axisUrl: ['/timeaxispage', '/timeaxispage/about', '/timeaxispage/workline', '/timeaxispage/moodline', '/timeaxispage/other']
+        axisUrl: [`/timeaxispage/id=${sessionStorage.getItem('ID')}`,
+          '/timeaxispage/about', '/timeaxispage/workline', '/timeaxispage/moodline', '/timeaxispage/other']
       }
     },
     components: {
@@ -47,7 +48,7 @@
     },
     methods: {
       jump(value) {
-        this.$router.push(this.axisUrl[value])
+        this.$router.push(`${this.axisUrl[value]}`)
       }
     }
   }

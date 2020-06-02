@@ -1,4 +1,8 @@
 module.exports = {
+  outputDir: 'daily6+1',
+  assetsDir:'static',
+  publicPath:'./',
+
   pages:{
     'index':{
       entry:'src/pages/LoginPage/main.js',
@@ -24,7 +28,4 @@ module.exports = {
       "BMap": "BMap"
     }
   },
-  // devServer:{
-  //   proxy:'http://localhost:8080'
-  // }
 }

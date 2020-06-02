@@ -16,19 +16,23 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path:'/',
+    path:'',
     component: PageCenterPost,
   },
   {
-    path:'/homepage',
+    path:'/postpage/:id',
+    component: PageCenterPost,
+  },
+  {
+    path:'/homepage/:id',
     component:PageCenterPost
   },
   {
-    path: '/personpage',
+    path: '/personpage/:id',
     component: PersonPage
   },
   {
-    path: '/timeaxispage',
+    path: '/timeaxispage/:id',
     component: TimeaxisPage,
     children:[
       {
@@ -61,20 +65,21 @@ const routes = [
     component: OthersPage
   },
   {
-    path: '/mapspage',
+    path: '/mapspage/:id',
     component: MapPage,
     children: [
 
     ]
   },
   {
-    path: '/fujian',
+    path: '/fujian/:id',
     component: fujian
   }
 
 ]
 
 const router =new VueRouter({
+  mode: 'hash',
   routes
 })
 

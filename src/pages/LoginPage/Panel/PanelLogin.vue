@@ -165,11 +165,11 @@
             if (state === 1) {
               let userID = response.data.userId;
               if (userType === 0) {
-                window.location.href = `./PostPage?id=${userID}`;
+                window.location.href = `./PostPage.html`;
                 sessionStorage.setItem("ID", userID);
                 sessionStorage.setItem("isFirstLogin",1)
               } else {
-                window.location.href = "./AdminPage";
+                window.location.href = "./AdminPage.html";
                 sessionStorage.setItem("adminId", userID)
               }
             } else if (state === 2) {

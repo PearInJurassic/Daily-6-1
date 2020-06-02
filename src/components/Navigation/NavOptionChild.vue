@@ -15,7 +15,7 @@
     data() {
       return {
         iconAlt: ["可视化地图", "时间轴", "个人空间"],
-        pageUrl: ['/', '/mapspage', '/timeaxispage', '/personpage'],
+        pageUrl: ['/postpage', '/mapspage', '/timeaxispage', '/personpage'],
 
         list: [
           {
@@ -44,7 +44,7 @@
     methods: {
       change(index) {
         // console.log(index)
-        this.$router.push(this.pageUrl[index]);
+        this.$router.push(`${this.pageUrl[index]}/id=${sessionStorage.getItem('ID')}`);
         this.$store.commit('setIsAnonymous',0);
       }
     }
