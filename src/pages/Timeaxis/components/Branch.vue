@@ -9,7 +9,7 @@
         <section class="cd-container" id="cd-timeline">
             <div :key="i" id="block1" v-for="(recordData,i) in datalist">
                 <div class="cd-timeline-block"
-                     v-if=" (i%2===0 && (recordData.record.timeAxisType===axisTypeName || axisTypeName===''))">
+                     v-if=" (i%2===0 && (recordData.record.timeAxisType===axisTypeName || axisTypeName==='全部'))">
                     <div class="cd-timeline-img cd-picture">
                         <img alt="动态图片" src="@/assets/NavBar/TimeLine.png">
                     </div>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="cd-timeline-block"
-                     v-if="(i%2!==0 && (recordData.record.timeAxisType===axisTypeName || axisTypeName===''))">
+                     v-if="(i%2!==0 && (recordData.record.timeAxisType===axisTypeName || axisTypeName==='全部'))">
                     <div class="cd-timeline-img cd-picture">
                         <img alt="Picture" src="@/assets/NavBar/TimeLine.png">
                     </div>
@@ -108,6 +108,18 @@
                                 v-model="editForm.recordText">
                         </el-input>
                     </el-form-item>
+
+                    <el-form-item label="选择该动态所属类型：">
+                      <el-select v-model="value" @change="showMessage">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
                     <el-form-item label="关联帖子（按时间）">
                         <el-select placeholder="请选择你要进行关联的帖子" v-model="editForm.postIdLinkTo" value-key="id">
                             <el-option :key="item.postId" :label="item.postCreateTime" :value="item.postId"
@@ -134,14 +146,29 @@
     },
     data() {
       return {
+        options: [{
+              value: '日常',
+              label: '日常'
+          }, {
+              value: '工作',
+              label: '工作'
+          }, {
+              value: '心情',
+              label: '心情'
+          }, {
+              value: '吃喝玩乐',
+              label: '吃喝玩乐'
+          }],
+        value: '',
+        num: '',
         imgUpLoad: {
-          domain: 'https://upload.qiniup.com',
+          domain: 'https://upload-z2.qiniup.com',
           postData: {
             key: null,
             token: '',
           },
           dialogImageUrl: '',
-          qiniuaddr: 'http://q9stlq87q.bkt.clouddn.com',
+          qiniuaddr: 'http://qbnsczfc7.bkt.clouddn.com',
           dialogVisible: false,
           showModal: false,
         },
@@ -221,17 +248,31 @@
       /**
        * @description 初始化获得动态列表
        */
-      init() {        
-        this.axios.get(`${this.GLOBAL.apiUrl}/ListByUIdAndType`, {
-          params: {
-            uId: sessionStorage.getItem("ID"),
-            type: this.axisTypeName
-          }
-        })
-          .then((response) => {
-            this.datalist = response.data.recordList;
-            // console.log(this.datalist)
+      init() {
+        if(this.axisTypeName=="全部") {
+           this.axios.get(`${this.GLOBAL.apiUrl}/userRecordList`, {
+            params: {
+              userId: sessionStorage.getItem("ID"),
+            }
           })
+            .then((response) => {
+              this.datalist = response.data.userRecordList;
+              console.log(response.data.userRecordList)
+            })
+        } 
+        
+        else {         
+          this.axios.get(`${this.GLOBAL.apiUrl}/ListByUIdAndType`, {
+            params: {
+              uId: sessionStorage.getItem("ID"),
+              type: this.axisTypeName
+            }
+          })
+            .then((response) => {
+              this.datalist = response.data.recordList;
+              console.log(this.datalist)
+            })
+        }
       },
       /**
        * @description 获取七牛云token
@@ -241,7 +282,7 @@
           params: {
             accessKey: "RwC4uI5jbCfE3IUuokEP7paXOQQA14mcD87MQ6ml",
             secretKey: "o6cPmo7R-QUW4113k1MNNiNjWHOyznj-FERyP_xa",
-            bucket: "dailydata"
+            bucket: "dailydata2"
           }
         }).then((response) => {
           this.imgUpLoad.postData.token = response.data.token
@@ -365,7 +406,7 @@
         this.axios.post(`${this.GLOBAL.apiUrl}/insertRecord`, {
           recordImg: this.imgUpLoad.dialogImageUrl,
           recordContent: this.editForm.recordText,
-          timeAxisType: this.btnData.text,
+          timeAxisType: this.num,
           postId: this.editForm.postIdLinkTo,
           userId: sessionStorage.getItem("ID")
         }).then((response) => {
@@ -400,8 +441,8 @@
         //console.log(error);
     //})
 
-
-       var start1=this.$store.state.time.starttime.replace(/-/g, '/');
+      if(this.axisTypeName=="全部") {
+        var start1= this.$store.state.time.starttime.replace(/-/g, '/');
         var end1=this.$store.state.time.endtime.replace(/-/g, '/');
         this.axios.get(`${this.GLOBAL.apiUrl}/ListByUIdAndTime`, {
           params: {
@@ -421,6 +462,29 @@
         .catch(function (error) {
         console.log(error);
         })
+        }
+        else {
+          var start2=this.$store.state.time.starttime.replace(/-/g, '/');
+          var end2=this.$store.state.time.endtime.replace(/-/g, '/');
+          this.axios.get(`${this.GLOBAL.apiUrl}/ListByUIdAndTT`, {
+          params: {
+          uId: sessionStorage.getItem("ID"),
+          type: this.btnData.text,
+          begin:start2,
+          end:end2
+          }
+        }).then((response) => {
+          this.datalist = response.data.recordList          
+          this.$message({
+            message:"更新成功",
+            type:"success",
+        })
+        console.log(response.data.recordList)
+        })
+        .catch(function (error) {
+        console.log(error);
+        })
+        }
       },
       //el-uploader 图片上传处理函数
       beforeImgUpload(file) {
@@ -440,7 +504,11 @@
       },
       handleError(res) {
         console.log(res)
-      }
+      },
+      showMessage(e) {
+        //选择的时间轴类型
+        this.num = e
+      },
     },
     watch: {
       //监听时间轴开始日期变化

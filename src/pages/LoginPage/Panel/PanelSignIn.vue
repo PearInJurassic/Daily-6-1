@@ -9,6 +9,19 @@
                 <el-form-item label="邮箱" prop="email">
                     <el-input v-model="signInForm.email"></el-input>
                 </el-form-item>
+
+                <el-form-item label="验证码">
+                  <el-col :span="9">
+                    <el-input v-model="signInForm.code" label="请输入验证码" @keyup.enter.native="onSubmit"></el-input>
+                  </el-col>
+                  <el-col :span="1">
+                    <p></p>
+                  </el-col>
+                  <el-col :span="3">
+                    <el-button @click="getCode" :disabled="btnState==1?true:false">{{btntxt}}</el-button>
+                  </el-col>
+                </el-form-item>
+
                 <el-form-item label="密码" prop="password">
                     <el-input show-password v-model="signInForm.password"></el-input>
                 </el-form-item>
@@ -31,10 +44,14 @@
     name: "PanelSignIn",
     data() {
       return {
+        btntxt: "获取验证码",
+        verCode: 0,
+        btnState: 0,
         signInForm: {
           email: '',
           password: '',
           nickName: '',
+          code: ''
         },
         rules: {
           email: [
@@ -68,6 +85,38 @@
       LineWordLine
     },
     methods: {
+      getCode() {
+        this.$notify({
+              title: '验证码已发送',
+              message: `验证码已发送至${this.signInForm.email}`,
+              type: 'success',
+              duration: 3500,
+        });
+          this.axios.get(`${this.GLOBAL.apiUrl}/getVerificationCode`, {
+            params: {
+            emailCode: this.signInForm.email,
+            }
+          }).then((response) => {
+            this.verCode = response.data.verificationCode  
+            console.log(this.verCode)
+            this.btntxt = "重新发送"
+          })
+          .catch(function (error) {
+          console.log(error);
+          })
+        
+      },
+      onSubmit() {
+        if(this.signInForm.code == this.verCode) {
+            this.btnState=1;
+            this.$notify({
+              title: '验证码通过',
+              message: '验证码通过',
+              type: 'success',
+              duration: 3500,
+        });
+        }
+      },
       success() {
         this.axios.post('http://47.107.77.163:8080/demo/register', {
           "userType": 0,

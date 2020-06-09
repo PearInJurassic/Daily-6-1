@@ -34,21 +34,21 @@
                     {
                         "color": "#77DDFF",
                         "start": 1,
-                        "end": 1000
+                        "end": 10
                     },
                     {
                         "color": "#33CCFF",
-                        "start": 1001,
-                        "end": 5000
+                        "start": 11,
+                        "end": 100
                     },
                     {
                         "color": "#00BBFF",
-                        "start": 5001,
-                        "end": 10000
+                        "start": 101,
+                        "end": 1000
                     },
                     {
                         "color": "#0066FF",
-                        "start": 10001,
+                        "start": 1001,
                         "end": 100000
                     },
                 ]
