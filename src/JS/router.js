@@ -72,7 +72,7 @@ const routes = [
     ]
   },
   {
-    path: '/fujian/:id',
+    path: '/fujian',
     component: fujian
   }
 
