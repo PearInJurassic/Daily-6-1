@@ -59,12 +59,12 @@
     data() {
       return {
         userId: 1,
-        domain: 'https://upload.qiniup.com',
+        domain: 'https://upload-z2.qiniup.com',
+        qiniuaddr: 'http://qbnsczfc7.bkt.clouddn.com',
         postData:{
           key:null,
           token:''
         },
-        qiniuaddr: 'http://q9stlq87q.bkt.clouddn.com',
         imageUrl: '',
         nickName: '',
         personText: '',
@@ -89,7 +89,7 @@
           params: {
             accessKey: "RwC4uI5jbCfE3IUuokEP7paXOQQA14mcD87MQ6ml",
             secretKey: "o6cPmo7R-QUW4113k1MNNiNjWHOyznj-FERyP_xa",
-            bucket: "dailydata"
+            bucket: "dailydata2"
           }
         }).then((response) =>{
           this.postData.token=response.data.token

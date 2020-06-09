@@ -11,6 +11,7 @@
                         :on-preview="handlePictureCardPreview"
                         :on-remove="handleRemove"
                         :on-success="handlePictureSuccess"
+                        :on-error="handleErr"
                         :before-upload="beforeImgUpload"
                         list-type="picture-card">
                     <i class="el-icon-plus"></i>
@@ -48,11 +49,10 @@
                     :visible.sync="dialogVisible3"
                     title="地区选择"
                     width="40%">
-                <el-form :model="form2">
+                <el-form>
                     <div>
                         <smallcountry></smallcountry>
                     </div>
-
                     <span>
                         <el-select v-model="value" placeholder="请选择你所在的区块" @change="showMessage">
                             <el-option
@@ -63,15 +63,12 @@
                             </el-option>
                         </el-select>
                     </span>
-
                     <span>
                           【从下至上从左到右依次为区域1-9块】
                     </span>
-
                     <div>
                         <el-button @click="finishChoose" class="CommonButton">确定</el-button>
                     </div>
-
                 </el-form>
             </el-dialog>
         </div>
@@ -124,8 +121,8 @@
         dialogVisible: false,
           dialogVisible3: false,
         showModal: false,
-        domain: 'https://upload.qiniup.com',
-        qiniuaddr: 'http://q9stlq87q.bkt.clouddn.com',
+        domain: 'https://upload-z2.qiniup.com',
+        qiniuaddr: 'http://qbnsczfc7.bkt.clouddn.com',
         postData: {
           key: '',
           token: ''
@@ -142,12 +139,11 @@
           params: {
             accessKey: "RwC4uI5jbCfE3IUuokEP7paXOQQA14mcD87MQ6ml",
             secretKey: "o6cPmo7R-QUW4113k1MNNiNjWHOyznj-FERyP_xa",
-            bucket: "dailydata"
+            bucket: "dailydata2"
           }
         }).then((response) => {
           this.postData.token = response.data.token
           // this.postData.key = response.data.key
-          // console.log(response)
         })
       },
         chooseArea() {
@@ -193,6 +189,9 @@
       handlePictureSuccess(res) {
         this.dialogImageUrl = `${this.qiniuaddr}/${res.key}`
         console.log(this.dialogImageUrl)
+      },
+      handleErr(err){
+        console.log(err)
       },
         showMessage(e) {
             //选择的区块编号
