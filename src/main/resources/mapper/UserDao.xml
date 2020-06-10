@@ -66,6 +66,13 @@
         </set>
         where user_id=#{userId}
     </update>
+    <update id="resetPasswordById">
+        update tb_user
+        <set>
+            user_pwd=#{userPwd}
+        </set>
+        where user_id=#{userId}
+    </update>
     <select id="getStateByUserId" resultType="java.lang.Integer">
 		SELECT state
 		FROM tb_user
