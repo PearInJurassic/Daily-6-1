@@ -190,16 +190,6 @@
         dialogFormVisible: false,
         start: '',
         end: '',
-        // form: {
-        //   name: '',
-        //   region: '',
-        //   date1: '',
-        //   date2: '',
-        //   delivery: false,
-        //   type: [],
-        //   resource: '',
-        //   desc: ''
-        // },
         //总列表，展示在时间轴上
         datalist: [],
         //添加列表总列表(datalist用时间筛选后剩下的)
@@ -210,12 +200,6 @@
     },
     props: {
       btnData: {
-        types: Array,
-        default() {
-          return {
-            text: '确认',
-          }
-        }
       }
     },
     computed: {
@@ -229,6 +213,7 @@
       }
     },
     created() {
+      console.log(this.btnData)
       this.init();
       this.getToken();
       this.getPostList();
@@ -259,9 +244,8 @@
               this.datalist = response.data.userRecordList;
               console.log(response.data.userRecordList)
             })
-        } 
-        
-        else {         
+        }
+        else {
           this.axios.get(`${this.GLOBAL.apiUrl}/ListByUIdAndType`, {
             params: {
               uId: sessionStorage.getItem("ID"),
@@ -269,8 +253,9 @@
             }
           })
             .then((response) => {
+              console.log(response)
               this.datalist = response.data.recordList;
-              console.log(this.datalist)
+              // console.log(this.datalist)
             })
         }
       },
@@ -423,24 +408,6 @@
        * @description 得到某个时间区间的动态
        */
       timeRecord() {
-        //var start=this.$store.state.time.starttime.replace(/-/g, '/');
-        //var end=this.$store.state.time.endtime.replace(/-/g, '/');
-        //this.axios.post(`${this.GLOBAL.apiUrl}/getRecordListByUserIdAndTypeAndTime`, {
-          //userId: sessionStorage.getItem("ID"),
-          //timeAxisType: this.btnData.text,
-          //beginTime:start,
-          //endTime:end
-        //}).then((response) => {
-          //this.datalist = response.data.recordList          
-          //this.$message({
-            //message:"更新成功",
-            //type:"success",
-          //})
-        //})
-         //.catch(function (error) {
-        //console.log(error);
-    //})
-
       if(this.axisTypeName=="全部") {
         var start1= this.$store.state.time.starttime.replace(/-/g, '/');
         var end1=this.$store.state.time.endtime.replace(/-/g, '/');

@@ -109,13 +109,13 @@
                 //给区块染色
 
                 //先定义好每块的颜色
-
                 if( this.flag==false) {
                     // for (var i = 0; i < this.area.length; i++)
                     var num = 0
                     for (var n = 0; n < 9; n++)
                         for (var temp = 0; temp < 5; temp++) {
-                            if (this.nineblock[num].bubbleNum >= this.colorlist[temp].start && this.nineblock[num].bubbleNum <= this.colorlist[temp].end) {
+                            if (this.nineblock[num].bubbleNum >= this.colorlist[temp].start
+                              && this.nineblock[num].bubbleNum <= this.colorlist[temp].end) {
                                 this.colorblock.push(this.colorlist[temp].color);
                                 num++;
                                 break;

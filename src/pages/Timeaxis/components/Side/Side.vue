@@ -40,7 +40,10 @@
     data() {
       return {
         axisUrl: [`/timeaxispage/id=${sessionStorage.getItem('ID')}`,
-          '/timeaxispage/about', '/timeaxispage/workline', '/timeaxispage/moodline', '/timeaxispage/other']
+          `/timeaxispage/id=${sessionStorage.getItem('ID')}/about`,
+          `/timeaxispage/id=${sessionStorage.getItem('ID')}/workline`,
+          `/timeaxispage/id=${sessionStorage.getItem('ID')}/moodline`,
+          `/timeaxispage/id=${sessionStorage.getItem('ID')}/other`]
       }
     },
     components: {
@@ -48,7 +51,7 @@
     },
     methods: {
       jump(value) {
-        this.$router.push(`${this.axisUrl[value]}`)
+        this.$router.push(this.axisUrl[value])
       }
     }
   }

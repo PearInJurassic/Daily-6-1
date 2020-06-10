@@ -12,6 +12,9 @@ export default {
   name: 'WorkLine',
   components: {
     Branch
+  },
+  created(){
+
   }
 }
 

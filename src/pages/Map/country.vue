@@ -12,22 +12,16 @@
   export default {
     name: 'country',
     mounted() {
-
       this.chinamap();
-
     },
     methods: {
-
-
       chinamap() {
         var myChart = echarts.init(document.getElementById("chinaMap"));
         window.addEventListener('resize', function () {
           myChart.resize()
         })
         var option = {
-
           backgroundColor: "LightPink",
-
           /*title: {
               show:true,
               text: '标题--中国地图',
@@ -50,7 +44,7 @@
 
                     {start: 1500,color:'#000000'},
 
-                    {start: 800, end: 1499,color:'#DB2828'},
+                    {start: 800, end: 1499,color:'#ef6565'},
 
                     {start: 600, end: 799,color:'#E85C72'},
 
@@ -58,11 +52,9 @@
 
                     {start: 200, end: 399,color:'#E3AEAE'},
 
-                    {start: 100, end: 199,color:'#ef60dd'},
+                    {start: 100, end: 199,color:'#ea77db'},
 
                     {start: 0, end: 99,color: 'rgba(252,129,151,0.87)'},
-
-
 
                 ],
 
@@ -107,8 +99,6 @@
               {name: '四川', value: randomData()}, {name: '宁夏', value: randomData()},
               {name: '海南', value: randomData()}, {name: '台湾', value: randomData()},
               {name: '香港', value: randomData()}, {name: '澳门', value: randomData()}
-
-
             ]
           }]
         };
@@ -148,12 +138,12 @@
 
         /**
          *  使用刚指定的配置项和数据显示图表。
-         *  */
+         **/
         myChart.setOption(option);
 
         //获取随机数
         function randomData() {
-          return Math.round(Math.random() * (12 - 1) + 1)
+          return Math.round(Math.random() * (1500 - 1) + 1)
         }
 
 

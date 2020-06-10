@@ -32,6 +32,35 @@ const routes = [
     component: PersonPage
   },
   {
+    path: '/timeaxispage',
+    component: TimeaxisPage,
+    children:[
+      {
+        path:'',
+        component:Home
+      },
+      {
+        path:'about',
+        component: About
+      },
+      {
+        path: 'workline',
+        name: 'WorkLine',
+        component: WorkLine
+      },
+      {
+        path: 'moodline',
+        name: 'MoodLine',
+        component: MoodLine
+      },
+      {
+        path: 'other',
+        name: 'Other',
+        component: Other
+      },
+    ]
+  },
+  {
     path: '/timeaxispage/:id',
     component: TimeaxisPage,
     children:[
