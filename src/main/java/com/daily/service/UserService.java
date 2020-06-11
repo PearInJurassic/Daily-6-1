@@ -24,7 +24,7 @@ public interface UserService {
 
     List<AdminAction> getAdminAction();
 
-    int resetPasswordById(int userId, String userPwd);
+    int resetPasswordById(String userEmail, String userPwd);
 
     int getStateByUserId(int userId);
 

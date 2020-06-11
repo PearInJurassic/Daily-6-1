@@ -113,9 +113,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int resetPasswordById(int userId, String userPwd) {
-        return userDao.resetPasswordById(userId,userPwd);
+    public int resetPasswordById(String userEmail, String userPwd) {
+        User user = userDao.getUserByEmail(userEmail);
+        return userDao.resetPasswordById(user.getUserId(),userPwd);
     }
+
     @Override
     public int getStateByUserId(int userId){
         return userDao.getStateByUserId(userId);

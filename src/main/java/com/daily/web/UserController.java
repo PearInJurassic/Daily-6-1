@@ -119,8 +119,8 @@ public class UserController {
      * @return Map<userInfo,userExpand>
      */
     @RequestMapping(value = "/resetPassword",method = RequestMethod.POST)
-    private Map<String,Object> resetPassword(Integer userId, String userPwd){
-        int result = userService.resetPasswordById(userId,userPwd);
+    private Map<String,Object> resetPassword(String userEmail, String userPwd){
+        int result = userService.resetPasswordById(userEmail,userPwd);
         Map<String, Object> modelMap = new HashMap<String, Object>();
         if(result == 1){
             modelMap.put("code",1);
