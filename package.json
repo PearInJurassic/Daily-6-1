@@ -18,7 +18,7 @@
     "jquery": "^3.5.0",
     "json-loader": "^0.5.7",
     "mockjs": "^1.1.0",
-    "postcss": "^7.0.28",
+    "postcss": "^8.2.10",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
     "vue-layer": "^1.2.0",
